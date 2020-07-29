@@ -1,0 +1,37 @@
+
+@namespace DiagramBuilder
+
+<div class=@SideBarClassName>
+    <DiagramSymbolpalette @ref="@DiagramSymbolpalette"></DiagramSymbolpalette>
+    <DiagramOverview @ref="@DiagramOverview"></DiagramOverview>
+    <DiagramMoreShapes @ref="DiagramMoreShapes"></DiagramMoreShapes>
+</div>
+
+@code {
+    public DiagramMain Parent;
+    public string SideBarClassName = "sidebar";
+    public DiagramSymbolpalette DiagramSymbolpalette;
+    public DiagramOverview DiagramOverview;
+    public DiagramMoreShapes DiagramMoreShapes;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        if (firstRender)
+        {
+            if (this.DiagramSymbolpalette != null)
+                this.DiagramSymbolpalette.Parent = this;
+            if (this.DiagramOverview != null)
+                this.DiagramOverview.Parent = this;
+            if (this.DiagramMoreShapes != null)
+                this.DiagramMoreShapes.Parent = this;
+
+            StateHasChanged();
+        }
+    }
+
+    public void StateChanged()
+    {
+        StateHasChanged();
+    }
+}

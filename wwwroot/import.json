@@ -1,0 +1,60 @@
+{
+    "components": [
+        "accordion",
+        "button",
+        "color-picker",
+        "context-menu",
+        "dialog",
+        "drop-down-button",
+        "drop-down-list",
+        "menu",
+        "numerictextbox",
+        "slider",
+        "spinner",
+        "split-button",
+        "toolbar",
+        "tooltip",
+        "uploader",
+        "diagram",
+        "list-view",
+        "smithchart",
+        "symbol-palette"
+    ],
+    "minified": "false",
+    "injectables": {
+        "diagram": [
+            "HierarchicalTree",
+            "MindMap",
+            "RadialTree",
+            "ComplexHierarchicalTree",
+            "DataBinding",
+            "Snapping",
+            "PrintAndExport",
+            "BpmnDiagrams",
+            "SymmetricLayout",
+            "ConnectorBridging",
+            "UndoRedo",
+            "LayoutAnimation",
+            "DiagramContextMenu",
+            "LineRouting",
+            "ConnectorEditing"
+        ],
+        "list-view": [
+            "Virtualization"
+        ],
+        "smithchart": [
+            "SmithchartLegend",
+            "TooltipRender"
+        ],
+        "symbol-palette": [
+            "BpmnDiagrams"
+        ]
+    },
+    "themes": [
+        "material"
+    ],
+    "version": "18.2.45-patch",
+    "name": "syncfusion-blazor-global",
+    "isBlazor": "true",
+    "isMinified": false
+}

@@ -1,0 +1,30 @@
+
+@using Syncfusion.Blazor.Diagrams
+
+@namespace DiagramBuilder
+
+<div class="db-overview-parent">
+    @{ 
+        if (Parent != null && Parent.SideBarClassName.Contains(" show-overview"))
+        {
+            <SfOverview ID="overview" Width="225px" Height="200px" SourceID="@SourceDiagramID"></SfOverview>
+        }
+     }
+</div>
+
+@code {
+    internal DiagramLeftSideBar Parent;
+    string SourceDiagramID;
+
+    public void SetDiagramID(string Id)
+    {
+        SourceDiagramID = Id;
+        StateHasChanged();
+    }
+
+    public void StateChanged()
+    {
+        StateHasChanged();
+    }
+
+}

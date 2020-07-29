@@ -1,0 +1,95 @@
+﻿@using Syncfusion.Blazor.Popups
+@using Syncfusion.Blazor.DropDowns
+@using Syncfusion.Blazor.Diagrams
+
+@inject IJSRuntime jsRuntime
+@namespace DiagramBuilder
+
+<SfDialog @ref="@ExportDialog" @bind-Visible="@ExportDialogVisible" AllowDragging="true" Width="400px" ShowCloseIcon="true">
+    <DialogEvents OnOpen="OnDialogOpenning"></DialogEvents>
+    <DialogTemplates>
+        <Header>Export Diagram</Header>
+        <Content>
+            <div id="exportDialogContent">
+                <div class="row">
+                    <div class="row"> File Name </div> <div class="row db-dialog-child-prop-row">
+                        <input type="text" id="exportfileName" value="@DiagramfileName">
+                    </div>
+                </div>
+                <div class="row db-dialog-prop-row">
+                    <div class="col-xs-6 db-col-left">
+                        <div class="row"> Format </div>
+                        <div class="row db-dialog-child-prop-row">
+                            <SfDropDownList ID="exportFormat" TValue="Formats" TItem="string" Placeholder="JPG" @bind-Value="@fVal" DataSource="@FormatValues">
+
+                            </SfDropDownList>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 db-col-right">
+                        <div class="row"> Region </div> <div class="row db-dialog-child-prop-row">
+                            <SfDropDownList ID="exportRegion" TValue="Regions" TItem="string" Placeholder="Content" @bind-Value="@rVal" DataSource="@RegionValues">
+
+                            </SfDropDownList>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Content>
+    </DialogTemplates>
+    <DialogAnimationSettings Effect="@DialogEffect.None"></DialogAnimationSettings>
+    <DialogButtons>
+        <DialogButton OnClick="@BtnSave" Content="Export" CssClass="e-flat e-db-primary" IsPrimary="true">
+        </DialogButton>
+        <DialogButton OnClick="@btnCancelClick" Content="Cancel" CssClass="e-flat" IsPrimary="true">
+        </DialogButton>
+    </DialogButtons>
+</SfDialog>
+@code {
+    internal DiagramMenuBar Parent;
+    public string DiagramfileName = "Untitled Diagram";
+    public SfDialog ExportDialog;
+    public bool ExportDialogVisible = false;
+
+    private async Task OnDialogOpenning(Syncfusion.Blazor.Popups.BeforeOpenEventArgs args)
+    {
+        DiagramfileName = await jsRuntime.InvokeAsync<string>("getDiagramFileName", "export");
+    }
+    private async Task BtnSave()
+    {
+        IExportOptions options = new IExportOptions()
+        {
+            Mode = ExportModes.Download,
+            MultiplePage = true,
+            Region = (DiagramRegions) Enum.Parse(typeof(DiagramRegions), rVal.ToString(), true),
+            FileName = DiagramfileName,
+            Margin = new DiagramMargin() { Bottom = 0, Left = 0, Right = 0, Top = 0 },
+            Stretch = Stretch.None,
+            Format = (FileFormats)(Enum.Parse(typeof(FileFormats), fVal.ToString(), true))
+        };
+        await Parent.ExportDiagram(options);
+        await ExportDialog.Hide();
+    }
+    private async Task btnCancelClick()
+    {
+        await ExportDialog.Hide();
+    }
+    public IEnumerable<string> FormatValues = Enum.GetNames(typeof(Formats));
+    public Formats fVal { get; set; } = Formats.JPG;
+    public enum Formats
+    {
+        JPG,
+        PNG,
+        BMP,
+        SVG,
+    }
+
+    public IEnumerable<string> RegionValues = Enum.GetNames(typeof(Regions));
+
+    public Regions rVal { get; set; } = Regions.PageSettings;
+
+    public enum Regions
+    {
+        Content,
+        PageSettings,
+    }
+}

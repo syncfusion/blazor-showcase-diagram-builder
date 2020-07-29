@@ -1,0 +1,217 @@
+﻿@using Syncfusion.Blazor.Navigations
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.SplitButtons
+@using Syncfusion.Blazor.DropDowns
+
+@namespace DiagramBuilder
+
+<style>
+    #toolbarEditor .e-hscroll-bar{
+        overflow-x: initial !important;
+    }
+    /*#toolbarEditor .e-split-colorpicker {
+        width: 150px;
+        display: none;
+    }
+    #toolbarEditor .db-color-btn {
+        left: 0px;
+        z-index: 99999;
+    }
+    #toolbarEditor .e-split-btn-wrapper {
+        width: 100%;
+        padding: 0;
+    }
+
+    #toolbarEditor .db-prop-row {
+        width: 100%;
+        margin: 0px;
+    }
+    #toolbarEditor .e-split-btn-wrapper .e-dropdown-btn {
+        height: 29px;
+        width: 100%;
+    }
+    #toolbarEditor .db-col-left 
+    {
+        border:none;
+        width:100%;
+        padding:0px;
+    }
+    #toolbarEditor .db-color-container{
+        width: 100%;
+    }
+    #toolbarEditor .db-color-input{
+        width: 100%;
+    }
+    #e-split-btn_33_dropdownbtn-popup, #e-split-btn_34_dropdownbtn-popup .e-container .e-color-palette {
+        margin-top: 3px;
+    }
+    #toolbarEditor .db-color-btn {
+        width: 100%;
+    }
+    #toolbarEditor #borderColorPickerBtn{
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+    #toolbarEditor #FillColorPickerBtn{
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }*/
+    #toolbarEditor .e-toolbar .e-toolbar-items:not(.e-tbar-pos) .e-toolbar-item:first-child {
+        margin-left: 45px;
+    }
+
+</style>
+<div class='db-toolbar-editor'>
+    <div class='db-toolbar-container'>
+        <div ID="toolbarEditor" class="e-control e-toolbar e-lib e-keyboard">
+            <SfToolbar @ref="@Toolbar" OverflowMode="@OverflowMode.Scrollable">
+                <ToolbarEvents Clicked="@ToolbarEditorClick"></ToolbarEvents>
+                <ToolbarItems>
+                    <ToolbarItem @ref="@UndoItem" PrefixIcon="sf-icon-Undo tb-icons" TooltipText="Undo" CssClass="tb-item-start tb-item-undo"></ToolbarItem>
+                    <ToolbarItem @ref="@RedoItem" PrefixIcon="sf-icon-Redo tb-icons" TooltipText="Redo" CssClass="tb-item-end tb-item-redo"></ToolbarItem>
+                    <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
+                    <ToolbarItem @ref="@ZoomInItem" PrefixIcon="sf-icon-ZoomOut tb-icons" TooltipText="Zoom Out(Ctrl + -)" CssClass="tb-item-start"></ToolbarItem>
+                    <ToolbarItem @ref="@ZoomItem" PrefixIcon="tb-item-end tb-zoom-dropdown-btn">
+                        <Template>
+                            <SfDropDownButton ID="btnZoomIncrement" @ref="@ZoomItemDropdown" Content="@ZoomItemDropdownContent">
+                                <DropDownButtonEvents ItemSelected="@DrawZoomChange"></DropDownButtonEvents>
+                                <DropDownMenuItems>
+                                    <DropDownMenuItem Text="400%"></DropDownMenuItem>
+                                    <DropDownMenuItem Text="300%"></DropDownMenuItem>
+                                    <DropDownMenuItem Text="200%"></DropDownMenuItem>
+                                    <DropDownMenuItem Text="150%"></DropDownMenuItem>
+                                    <DropDownMenuItem Text="100%"></DropDownMenuItem>
+                                    <DropDownMenuItem Text="75%"></DropDownMenuItem>
+                                    <DropDownMenuItem Text="50%"></DropDownMenuItem>
+                                    <DropDownMenuItem Text="25%"></DropDownMenuItem>
+                                    <DropDownMenuItem Separator="true"></DropDownMenuItem>
+                                    <DropDownMenuItem Text="Fit To Screen"></DropDownMenuItem>
+                                </DropDownMenuItems>
+                            </SfDropDownButton>
+                        </Template>
+                    </ToolbarItem>
+                    <ToolbarItem @ref="@ZoomOutItem" PrefixIcon="sf-icon-ZoomIn tb-icons" TooltipText="Zoom In(Ctrl + +)" CssClass="tb-item-end"></ToolbarItem>
+                    <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
+                    <ToolbarItem @ref="@PanItem" PrefixIcon="sf-icon-Pan tb-icons" TooltipText="Pan Tool" CssClass="@PanItemCssClass"></ToolbarItem>
+                    <ToolbarItem @ref="@PointerItem" PrefixIcon="sf-icon-Selector tb-icons" TooltipText="Pointer" CssClass="@PointerItemCssClass"></ToolbarItem>
+                    <ToolbarItem @ref="@DrawShapeItem" TooltipText="Draw Shapes" CssClass="@DrawShapeItemCssClass">
+                        <Template>
+                            <SfDropDownButton ID="btnDrawShape" IconCss="sf-icon-DrawingMode">
+                                <DropDownButtonEvents ItemSelected="@DrawShapeChange"></DropDownButtonEvents>
+                                <DropDownMenuItems>
+                                    <DropDownMenuItem IconCss="sf-icon-Square" Text="Rectangle"></DropDownMenuItem>
+                                    <DropDownMenuItem IconCss="sf-icon-Ellipse" Text="Ellipse"></DropDownMenuItem>
+                                    <DropDownMenuItem IconCss="sf-icon-Triangle" Text="Polygon"></DropDownMenuItem>
+                                </DropDownMenuItems>
+                            </SfDropDownButton>
+                        </Template>
+                    </ToolbarItem>
+                    <ToolbarItem @ref="@DrawConnectorItem" TooltipText="Draw Connectors" CssClass="@DrawConnectorItemCssClass">
+                        <Template>
+                            <SfDropDownButton ID="btnDrawConnector" IconCss="sf-icon-ConnectorMode">
+                                <DropDownButtonEvents ItemSelected="@DrawConnectorChange"></DropDownButtonEvents>
+                                <DropDownMenuItems>
+                                    <DropDownMenuItem IconCss="sf-icon-StraightLine" Text="Straight Line"></DropDownMenuItem>
+                                    <DropDownMenuItem IconCss="sf-icon-ConnectorMode" Text="Orthogonal Line"></DropDownMenuItem>
+                                    <DropDownMenuItem IconCss="sf-icon-BeizerLine" Text="Bezier"></DropDownMenuItem>
+                                </DropDownMenuItems>
+                            </SfDropDownButton>
+                        </Template>
+                    </ToolbarItem>
+                    <ToolbarItem @ref="@TextItem" PrefixIcon="sf-icon-TextInput tb-icons" TooltipText="Text Tool" CssClass="@TextItemCssClass"></ToolbarItem>
+                    <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
+                    <ToolbarItem @ref="@GroupItem" PrefixIcon="sf-icon-Group tb-icons" TooltipText="Group" CssClass="tb-item-start tb-item-align-category"></ToolbarItem>
+                    <ToolbarItem @ref="@UngroupItem" PrefixIcon="sf-icon-Lock tb-icons" TooltipText="Ungroup" CssClass="tb-item-end tb-item-ungroup"></ToolbarItem>
+                    <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
+                    <ToolbarItem @ref="@LockItem" PrefixIcon="sf-icon-Lock tb-icons" TooltipText="Lock" CssClass="tb-item-start tb-item-lock-category"></ToolbarItem>
+                    <ToolbarItem @ref="@DeleteItem" PrefixIcon="sf-icon-Delete tb-icons" TooltipText="Delete" CssClass="tb-item-end tb-item-lock-category"></ToolbarItem>
+                    <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
+                    <ToolbarItem @ref="@LayerItem" PrefixIcon="sf-icon-Layers tb-icons" TooltipText="Show Layers" CssClass="tb-item-start tb-custom-diagram-disable"></ToolbarItem>
+                    @*<ToolbarItem @ref="@ThemeItem" PrefixIcon="db-theme-svg tb-icons" TooltipText="Themes" CssClass="tb-item-end tb-custom-diagram-disable"></ToolbarItem>*@
+                    <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
+                    <ToolbarItem @ref="@OrderItem" TooltipText="Order" CssClass="tb-item-end tb-item-order tb-dropdown-btn-icon">
+                        <Template>
+                            <SfDropDownButton ID="orderCommandList" IconCss="sf-icon-Order">
+                                <DropDownButtonEvents ItemSelected="@OrderCommandsChange"></DropDownButtonEvents>
+                                <DropDownMenuItems>
+                                    <DropDownMenuItem IconCss="sf-icon-Sendback" Text="Send To Back"></DropDownMenuItem>
+                                    <DropDownMenuItem IconCss="sf-icon-BringFront" Text="Bring To Front"></DropDownMenuItem>
+                                    <DropDownMenuItem IconCss="sf-icon-SendBackward" Text="Send Backward"></DropDownMenuItem>
+                                    <DropDownMenuItem IconCss="sf-icon-BringForward" Text="Bring Forward"></DropDownMenuItem>
+                                </DropDownMenuItems>
+                            </SfDropDownButton>
+                        </Template>
+                    </ToolbarItem>
+                    <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
+                    <ToolbarItem @ref="@AlignLeftItem" PrefixIcon="sf-icon-AlignLeft tb-icons" TooltipText="Align Left" CssClass="tb-item-start tb-item-align-category"></ToolbarItem>
+                    <ToolbarItem @ref="@AlignCenterItem" PrefixIcon="sf-icon-AlignHorizontally tb-icons" TooltipText="Align Center" CssClass="tb-item-middle tb-item-align-category"></ToolbarItem>
+                    <ToolbarItem @ref="@AlignRightItem" PrefixIcon="sf-icon-AlignRight tb-icons" TooltipText="Align Right" CssClass="tb-item-middle tb-item-align-category"></ToolbarItem>
+                    <ToolbarItem @ref="@AlignTopItem" PrefixIcon="sf-icon-AilgnTop tb-icons" TooltipText="Align Top" CssClass="tb-item-middle tb-item-align-category"></ToolbarItem>
+                    <ToolbarItem @ref="@AlignMiddleItem" PrefixIcon="sf-icon-AlignVertically tb-icons" TooltipText="Align Middle" CssClass="tb-item-middle tb-item-align-category"></ToolbarItem>
+                    <ToolbarItem @ref="@AlignBottomItem" PrefixIcon="sf-icon-AlignBottom tb-icons" TooltipText="Align Bottom" CssClass="tb-item-middle tb-item-align-category"></ToolbarItem>
+                    <ToolbarItem @ref="@AlignVerticalItem" PrefixIcon="sf-icon-DistributeHorizontal tb-icons" TooltipText="Distribute Objects Vertically" CssClass="tb-item-middle tb-item-space-category"></ToolbarItem>
+                    <ToolbarItem @ref="@AlignHorizontalItem" PrefixIcon="sf-icon-DistributeVertical tb-icons" TooltipText="Distribute Objects Horizontally" CssClass="tb-item-end tb-item-space-category"></ToolbarItem>
+                </ToolbarItems>
+            </SfToolbar>
+        </div>
+    </div>
+    <div class="db-toolbar-hide-btn">
+        <SfButton ID="btnHideToolbar" IconCss="@MenuHideIconCss" OnClick="@HideToolBar"></SfButton>
+    </div>
+</div>
+<DiagramLayerDialog @ref="@LayerItemDialog"></DiagramLayerDialog>
+
+@code {
+
+
+
+    internal DiagramMain Parent;
+
+    SfToolbar Toolbar;
+
+    string MenuHideIconCss = "sf-icon-Collapse tb-icons";
+    ToolbarItem UndoItem;
+    ToolbarItem RedoItem;
+    ToolbarItem ZoomInItem;
+    ToolbarItem ZoomItem;
+    SfDropDownButton ZoomItemDropdown;
+    public string ZoomItemDropdownContent = "100%";
+    ToolbarItem ZoomOutItem;
+    ToolbarItem PanItem;
+    string PanItemCssClass = "tb-item-start";
+    ToolbarItem PointerItem;
+    string PointerItemCssClass = "tb-item-middle tb-item-selected";
+    ToolbarItem DrawShapeItem;
+    string DrawShapeItemCssClass = "tb-item-middle tb-drawtools-dropdown-btn tb-custom-diagram-disable";
+    ToolbarItem DrawConnectorItem;
+    string DrawConnectorItemCssClass = "tb-item-middle tb-drawtools-dropdown-btn tb-custom-diagram-disable";
+    ToolbarItem TextItem;
+    string TextItemCssClass = "tb-item-end tb-custom-diagram-disable";
+    ToolbarItem GroupItem;
+    ToolbarItem UngroupItem;
+    ToolbarItem LockItem;
+    ToolbarItem DeleteItem;
+    ToolbarItem LayerItem;
+    DiagramLayerDialog LayerItemDialog;
+    ToolbarItem OrderItem;
+    ToolbarItem AlignLeftItem;
+    ToolbarItem AlignCenterItem;
+    ToolbarItem AlignRightItem;
+    ToolbarItem AlignTopItem;
+    ToolbarItem AlignMiddleItem;
+    ToolbarItem AlignBottomItem;
+    ToolbarItem AlignVerticalItem;
+    ToolbarItem AlignHorizontalItem;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        if (firstRender)
+        {
+            if (LayerItemDialog != null)
+            {
+                LayerItemDialog.Parent = this;
+            }
+        }
+    }
+}
