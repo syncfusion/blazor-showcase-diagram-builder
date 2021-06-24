@@ -58548,8 +58548,9 @@ namespace DiagramBuilder
                         break;
                 }
             }
-            await SymbolPalette.AddPalettes(AddPalettes).ConfigureAwait(true);
+            SymbolPalette.AddPalettes(AddPalettes);
             await SymbolPalette.RemovePalettes(RemovePalettes.ToArray()).ConfigureAwait(true);
+            StateHasChanged();
         }
     }
 }

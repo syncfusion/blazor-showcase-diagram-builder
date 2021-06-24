@@ -11,6 +11,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Syncfusion.Blazor;
 using DiagramBuilder.Shared;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
+using Microsoft.Extensions.Options;
 
 namespace DiagramBuilder
 {
@@ -35,8 +38,26 @@ namespace DiagramBuilder
             });
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSyncfusionBlazor(true); 
+            services.AddSyncfusionBlazor(); 
             services.AddScoped<SampleService>();
+            // Register the Syncfusion locale service to customize the SyncfusionBlazor component locale culture
+            services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(SyncfusionLocalizer));
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                // Define the list of cultures your app will support
+                var supportedCultures = new List<CultureInfo>()
+                {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("de"),
+                    new CultureInfo("fr"),
+                    new CultureInfo("ar"),
+                    new CultureInfo("zh"),
+                };
+                // Set the default culture
+                options.DefaultRequestCulture = new RequestCulture("en-US");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +65,7 @@ namespace DiagramBuilder
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 #pragma warning restore CA1822 // Mark members as static
         {
+            app.UseRequestLocalization(app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>().Value);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

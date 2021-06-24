@@ -20,8 +20,9 @@
                 <DropDownButtonEvents OnOpen="@DropDownButtonOpen"></DropDownButtonEvents>
             </ChildContent>
             <PopupContent>
-                <SfContextMenu @ref="ContextMenu" Items="@FileMenuItems">
-                    <ContextMenuEvents TValue="ContextMenuItemModel" Created="OnMenuCreated" ItemSelected="@MenuClick"></ContextMenuEvents>
+                <SfContextMenu @ref="ContextMenu" Items="FileMenuItems" TValue="ContextMenuItemModel">
+                    <MenuFieldSettings Text="Content"></MenuFieldSettings>
+                    <MenuEvents TValue="ContextMenuItemModel" Created="OnMenuCreated" ItemSelected="@MenuClick"></MenuEvents>
                 </SfContextMenu>
             </PopupContent>
         </SfDropDownButton>
@@ -30,8 +31,9 @@
                 <DropDownButtonEvents OnOpen="@DropDownfileOpenButtonOpen"></DropDownButtonEvents>
             </ChildContent>
             <PopupContent>
-                <SfContextMenu @ref="ContextMenu" Items="@EditMenuItems">
-                  <ContextMenuEvents TValue="ContextMenuItemModel" Created="OnMenuCreated" ItemSelected="@MenuClick"></ContextMenuEvents>
+                <SfContextMenu @ref="ContextMenu" Items="EditMenuItems" TValue="ContextMenuItemModel">
+                    <MenuFieldSettings Text="Content"></MenuFieldSettings>
+                  <MenuEvents TValue="ContextMenuItemModel" Created="OnMenuCreated" ItemSelected="@MenuClick"></MenuEvents>
                 </SfContextMenu>
             </PopupContent>
         </SfDropDownButton>
@@ -40,8 +42,9 @@
                 <DropDownButtonEvents OnOpen="@DropDownViewButtonOpen"></DropDownButtonEvents>
             </ChildContent>
             <PopupContent>
-                <SfContextMenu @ref="ContextMenu" Items="@ViewMenuItems">
-                   <ContextMenuEvents TValue="ContextMenuItemModel" Created="OnMenuCreated" ItemSelected="@MenuClick"></ContextMenuEvents>
+                <SfContextMenu @ref="ContextMenu" Items="ViewMenuItems">
+                    <MenuFieldSettings Text="Content"></MenuFieldSettings>
+                   <MenuEvents TValue="ContextMenuItemModel" Created="OnMenuCreated" ItemSelected="@MenuClick"></MenuEvents>
                 </SfContextMenu>
             </PopupContent>
         </SfDropDownButton>
@@ -50,8 +53,9 @@
                 <DropDownButtonEvents OnOpen="@DropDownArrangeButtonOpen"></DropDownButtonEvents>
             </ChildContent>
             <PopupContent>
-                <SfContextMenu @ref="ContextMenu" Items="@ArrangeMenuItems">
-                    <ContextMenuEvents TValue="ContextMenuItemModel" Created="OnMenuCreated" ItemSelected="@MenuClick"></ContextMenuEvents>
+                <SfContextMenu @ref="ContextMenu" Items="ArrangeMenuItems">
+                    <MenuFieldSettings Text="Content"></MenuFieldSettings>
+                    <MenuEvents TValue="ContextMenuItemModel" Created="OnMenuCreated" ItemSelected="@MenuClick"></MenuEvents>
                 </SfContextMenu>
             </PopupContent>
         </SfDropDownButton>
@@ -60,8 +64,9 @@
                 <DropDownButtonEvents OnOpen="@DropDownWindowButtonOpen"></DropDownButtonEvents>
             </ChildContent>
             <PopupContent>
-                <SfContextMenu @ref="ContextMenu" Items="@WindowMenuItems" >
-                   <ContextMenuEvents TValue="ContextMenuItemModel" Created="OnMenuCreated" ItemSelected="@MenuClick"></ContextMenuEvents>
+                <SfContextMenu @ref="ContextMenu" Items="WindowMenuItems" >
+                    <MenuFieldSettings Text="Content"></MenuFieldSettings>
+                   <MenuEvents TValue="ContextMenuItemModel" Created="OnMenuCreated" ItemSelected="@MenuClick"></MenuEvents>
                 </SfContextMenu>
             </PopupContent>
         </SfDropDownButton>
@@ -78,6 +83,7 @@
 </div>
 
 @code {
+
     internal DiagramMain Parent;
     DiagramPrintDialog PrintDialogBox;
     DiagramExportDialog ExportDialogBox;
@@ -90,13 +96,13 @@
     SfDropDownButton FileButton;
     Syncfusion.Blazor.Inputs.SfUploader UploadFiles;
     string ExtensionType = ".png, .jpg, .jpeg";
-    SfContextMenu< ContextMenuItemModel> ContextMenu;
+    SfContextMenu<ContextMenuItemModel> ContextMenu;
     private List<string> DisableCollection;
     private void DropDownButtonOpen() {
         this.ItemSelection();
         for (int i = 0; i < FileMenuItems.Count; i++)
         {
-            if (DisableCollection.IndexOf(FileMenuItems[i].Text) > -1)
+            if (DisableCollection.IndexOf(FileMenuItems[i].Content) > -1)
             {
                 FileMenuItems[i].Disabled = true;
             }
@@ -116,7 +122,7 @@
         this.ItemSelection();
         for(int i =0; i<EditMenuItems.Count; i++)
         {
-            if(DisableCollection.IndexOf(EditMenuItems[i].Text) > -1)
+            if(DisableCollection.IndexOf(EditMenuItems[i].Content) > -1)
             {
                 EditMenuItems[i].Disabled = true;
             }
@@ -132,7 +138,7 @@
         this.ItemSelection();
         for (int i = 0; i < ViewMenuItems.Count; i++)
         {
-            if (DisableCollection.IndexOf(ViewMenuItems[i].Text) > -1)
+            if (DisableCollection.IndexOf(ViewMenuItems[i].Content) > -1)
             {
                 ViewMenuItems[i].Disabled = true;
             }
@@ -148,7 +154,7 @@
         this.ItemSelection();
         for (int i = 0; i < ArrangeMenuItems.Count; i++)
         {
-            if (DisableCollection.IndexOf(ArrangeMenuItems[i].Text) > -1)
+            if (DisableCollection.IndexOf(ArrangeMenuItems[i].Content) > -1)
             {
                 ArrangeMenuItems[i].Disabled = true;
             }
@@ -167,102 +173,102 @@
     public class ContextMenuItemModel
     {
         public List<ContextMenuItemModel> Items { get; set; }
-        public string Text { get; set; }
+        public string Content { get; set; }
         public string Id { get; set; }
         public string IconCss { get; set; }
         public Boolean Separator { get; set; }
         public Boolean Disabled { get; set; }
     }
     private List<  ContextMenuItemModel> FileMenuItems = new List<  ContextMenuItemModel>{
-                new   ContextMenuItemModel {Id ="FileMenuItemsNew", Text = "New" },
-                new   ContextMenuItemModel {Id ="FileMenuItemsOpen", Text = "Open" },
+                new   ContextMenuItemModel {Id ="FileMenuItemsNew", Content = "New" },
+                new   ContextMenuItemModel {Id ="FileMenuItemsOpen", Content = "Open" },
                 new   ContextMenuItemModel { Separator = true },
-                new   ContextMenuItemModel { Id ="FileMenuItemsSave",Text = "Save", IconCss="sf-icon-Save" },
-                new   ContextMenuItemModel { Id ="FileMenuItemsSaveAs",Text = "Save As" },
-                new   ContextMenuItemModel {Id ="FileMenuItemsExport", Text = "Export", IconCss="sf-icon-Export" },
+                new   ContextMenuItemModel { Id ="FileMenuItemsSave",Content = "Save", IconCss="sf-icon-Save" },
+                new   ContextMenuItemModel { Id ="FileMenuItemsSaveAs",Content = "Save As" },
+                new   ContextMenuItemModel {Id ="FileMenuItemsExport", Content = "Export", IconCss="sf-icon-Export" },
                 new   ContextMenuItemModel { Separator = true},
-                new   ContextMenuItemModel { Id ="FileMenuItemsPrint",Text = "Print",  IconCss="sf-icon-Print" }
+                new   ContextMenuItemModel { Id ="FileMenuItemsPrint",Content = "Print",  IconCss="sf-icon-Print" }
             };
 
     private List<  ContextMenuItemModel> EditMenuItems = new List<  ContextMenuItemModel>{
-                new   ContextMenuItemModel {Id ="EditMenuItemsUndo", Text= "Undo", IconCss="sf-icon-Undo" },
-                new   ContextMenuItemModel { Id ="EditMenuItemsUndo",Text= "Redo", IconCss="sf-icon-Redo" },
+                new   ContextMenuItemModel {Id ="EditMenuItemsUndo", Content= "Undo", IconCss="sf-icon-Undo" },
+                new   ContextMenuItemModel { Id ="EditMenuItemsUndo",Content= "Redo", IconCss="sf-icon-Redo" },
                 new   ContextMenuItemModel { Separator= true },
-                new   ContextMenuItemModel { Id ="EditMenuItemsCut",Text= "Cut", IconCss="sf-icon-Cut" },
-                new   ContextMenuItemModel { Id ="EditMenuItemsCopy",Text= "Copy", IconCss="sf-icon-Copy" },
-                new   ContextMenuItemModel {Id ="EditMenuItemsPaste", Text= "Paste", IconCss="sf-icon-Paste" },
-                new   ContextMenuItemModel {Id ="EditMenuItemsDelete", Text= "Delete", IconCss="sf-icon-Delete" },
+                new   ContextMenuItemModel { Id ="EditMenuItemsCut",Content= "Cut" },
+                new   ContextMenuItemModel { Id ="EditMenuItemsCopy",Content= "Copy"},
+                new   ContextMenuItemModel {Id ="EditMenuItemsPaste", Content= "Paste", IconCss="sf-icon-Paste" },
+                new   ContextMenuItemModel {Id ="EditMenuItemsDelete", Content= "Delete", IconCss="sf-icon-Delete" },
                 new   ContextMenuItemModel { Separator= true },
-                new   ContextMenuItemModel {Id ="EditMenuItemsDuplicate", Text= "Duplicate"  },
+                new   ContextMenuItemModel {Id ="EditMenuItemsDuplicate", Content= "Duplicate"  },
                 new   ContextMenuItemModel { Separator= true},
-                new   ContextMenuItemModel { Id ="EditMenuItemsEditTooltip",Text= "Edit Tooltip" },
+                new   ContextMenuItemModel { Id ="EditMenuItemsEditTooltip",Content= "Edit Tooltip" },
                 new   ContextMenuItemModel { Separator= true },
-                new   ContextMenuItemModel { Id ="EditMenuItemsSelectAll",Text= "Select All" },
+                new   ContextMenuItemModel { Id ="EditMenuItemsSelectAll",Content= "Select All" },
             };
     private List<  ContextMenuItemModel> ViewMenuItems = new List<  ContextMenuItemModel>{
-         new   ContextMenuItemModel { Id ="ViewMenuItemsZoomIn",Text="Zoom In", IconCss="sf-icon-ZoomIn" },
-                new   ContextMenuItemModel { Id ="ViewMenuItemsZoomOut",Text="Zoom Out", IconCss="sf-icon-ZoomOut" },
+         new   ContextMenuItemModel { Id ="ViewMenuItemsZoomIn",Content="Zoom In", IconCss="sf-icon-ZoomIn" },
+                new   ContextMenuItemModel { Id ="ViewMenuItemsZoomOut",Content="Zoom Out", IconCss="sf-icon-ZoomOut" },
                 new   ContextMenuItemModel { Separator= true },
-                new   ContextMenuItemModel { Text="Fit To Screen" },
+                new   ContextMenuItemModel { Content="Fit To Screen" },
                 new   ContextMenuItemModel { Separator= true },
-                new   ContextMenuItemModel { Text="Show Rulers" },
-                new   ContextMenuItemModel { Text="Show Guides" ,IconCss="sf-icon-Selection"},
-                new   ContextMenuItemModel { Text="Show Grid" ,IconCss="sf-icon-Selection"},
+                new   ContextMenuItemModel { Content="Show Rulers" },
+                new   ContextMenuItemModel { Content="Show Guides" ,IconCss="sf-icon-Selection"},
+                new   ContextMenuItemModel { Content="Show Grid" ,IconCss="sf-icon-Selection"},
                 new   ContextMenuItemModel { Separator= true },
-                new   ContextMenuItemModel { Text="Snap To Grid" }
+                new   ContextMenuItemModel { Content="Snap To Grid" }
             };
     private List<  ContextMenuItemModel> ArrangeMenuItems = new List<  ContextMenuItemModel>
     {
-                new   ContextMenuItemModel { Id ="ArrangeMenuItemsSendToBack",Text="Send To Back", IconCss="sf-icon-Sendback" },
-                new   ContextMenuItemModel { Id ="ArrangeMenuItemsBringToFront",Text= "Bring To Front", IconCss="sf-icon-BringFront" },
-                new   ContextMenuItemModel { Text="Send Backward", IconCss="sf-icon-SendBackward" },
-                new   ContextMenuItemModel { Text="Bring Forward", IconCss="sf-icon-BringForward" },
+                new   ContextMenuItemModel { Id ="ArrangeMenuItemsSendToBack",Content="Send To Back", IconCss="sf-icon-Sendback" },
+                new   ContextMenuItemModel { Id ="ArrangeMenuItemsBringToFront",Content= "Bring To Front", IconCss="sf-icon-BringFront" },
+                new   ContextMenuItemModel { Content="Send Backward", IconCss="sf-icon-SendBackward" },
+                new   ContextMenuItemModel { Content="Bring Forward", IconCss="sf-icon-BringForward" },
                 new   ContextMenuItemModel { Separator= true },
                 new   ContextMenuItemModel
                 {
-                    Text = "Align Objects",
+                    Content = "Align Objects",
                     Items = new List<  ContextMenuItemModel>
     {
-                        new   ContextMenuItemModel { Text="Left", IconCss="sf-icon-AlignLeft" },
-                        new   ContextMenuItemModel { Text="Right", IconCss="sf-icon-AlignRight" },
-                        new   ContextMenuItemModel { Text="Center", IconCss="sf-icon-AlignHorizontally" },
-                        new   ContextMenuItemModel { Text="Top", IconCss="sf-icon-AilgnTop"},
-                        new   ContextMenuItemModel { Text="Bottom", IconCss="sf-icon-AlignBottom" },
-                        new   ContextMenuItemModel { Text="Middle", IconCss="sf-icon-AlignVertically" }
+                        new   ContextMenuItemModel { Content="Left", IconCss="sf-icon-AlignLeft" },
+                        new   ContextMenuItemModel { Content="Right", IconCss="sf-icon-AlignRight" },
+                        new   ContextMenuItemModel { Content="Center", IconCss="sf-icon-AlignHorizontally" },
+                        new   ContextMenuItemModel { Content="Top", IconCss="sf-icon-AilgnTop"},
+                        new   ContextMenuItemModel { Content="Bottom", IconCss="sf-icon-AlignBottom" },
+                        new   ContextMenuItemModel { Content="Middle", IconCss="sf-icon-AlignVertically" }
                     }
                 },
                 new   ContextMenuItemModel
                 {
-                    Text = "Distribute Objects",
+                    Content = "Distribute Objects",
                     Items = new List<  ContextMenuItemModel>
     {
-                        new   ContextMenuItemModel {Text="Horizontally", IconCss="sf-icon-DistributeHorizontal" },
-                        new   ContextMenuItemModel {Text="Vertically", IconCss="sf-icon-DistributeVertical" }
+                        new   ContextMenuItemModel {Content="Horizontally", IconCss="sf-icon-DistributeHorizontal" },
+                        new   ContextMenuItemModel {Content="Vertically", IconCss="sf-icon-DistributeVertical" }
                     }
                 },
                 new   ContextMenuItemModel {
-                    Text = "Match Size",
+                    Content = "Match Size",
                     Items = new List<  ContextMenuItemModel>
     {
-                        new   ContextMenuItemModel { Text="Both Width and Height" },
-                        new   ContextMenuItemModel { Text="Width" },
-                        new   ContextMenuItemModel { Text="Height" },
+                        new   ContextMenuItemModel { Content="Both Width and Height" },
+                        new   ContextMenuItemModel { Content="Width" },
+                        new   ContextMenuItemModel { Content="Height" },
                     }
                 },
                 new   ContextMenuItemModel { Separator= true },
-                new   ContextMenuItemModel { Text="Lock" },
-                new   ContextMenuItemModel { Text="Unlock" },
+                new   ContextMenuItemModel { Content="Lock" },
+                new   ContextMenuItemModel { Content="Unlock" },
                 new   ContextMenuItemModel { Separator= true },
-                new   ContextMenuItemModel { Id ="ArrangeMenuItemsGroup",Text="Group" },
-                new   ContextMenuItemModel { Id ="ArrangeMenuItemsUngroup",Text="Ungroup" }
+                new   ContextMenuItemModel { Id ="ArrangeMenuItemsGroup",Content="Group" },
+                new   ContextMenuItemModel { Id ="ArrangeMenuItemsUngroup",Content="Ungroup" }
             };
     private List<  ContextMenuItemModel> WindowMenuItems = new List<  ContextMenuItemModel>
         {
-                new   ContextMenuItemModel { Text="Show Toolbar",IconCss="sf-icon-Selection" },
-                new   ContextMenuItemModel { Text="Show Stencil",IconCss="sf-icon-Selection" },
-                new   ContextMenuItemModel { Text="Show Properties",IconCss="sf-icon-Selection" },
-                new   ContextMenuItemModel { Text="Show Layers" },
-                new   ContextMenuItemModel { Text="Show Pager" ,IconCss="sf-icon-Selection"},
+                new   ContextMenuItemModel { Content="Show Toolbar",IconCss="sf-icon-Selection" },
+                new   ContextMenuItemModel { Content="Show Stencil",IconCss="sf-icon-Selection" },
+                new   ContextMenuItemModel { Content="Show Properties",IconCss="sf-icon-Selection" },
+                new   ContextMenuItemModel { Content="Show Layers" },
+                new   ContextMenuItemModel { Content="Show Pager" ,IconCss="sf-icon-Selection"},
                // new MenuItem { Text="Themes" }
             };
   private bool IsParent(string Text)
@@ -303,7 +309,7 @@
         bool Arrange = false;
 
         Syncfusion.Blazor.Diagrams.SfDiagram diagram = Parent.DiagramContent.Diagram;
-        string commandType = args.Item.Text.Replace(" ", "");
+        string commandType = args.Item.Content.Replace(" ", "");
         switch (commandType.ToLower())
         {
             case "new":
@@ -547,15 +553,15 @@
 
         StateHasChanged();
         if(Edit)
-            await EditButton.Toggle();
+            EditButton.Toggle();
         if (File)
-            await FileButton.Toggle();
+            FileButton.Toggle();
         if (Window)
-            await WindowButton.Toggle();
+            WindowButton.Toggle();
         if (view)
-            await ViewButton.Toggle();
+            ViewButton.Toggle();
         if (Arrange)
-            await ArrangeButton.Toggle();
+            ArrangeButton.Toggle();
 
         Parent.DiagramContent.StateChanged();
     }
@@ -581,7 +587,6 @@
         }
         DiagramNode GetNode = diagram.GetNode(node.Id);
         GetNode.Constraints = constraints;
-        await diagram.DataBind();
     }
 
     private async Task lockConnector(DiagramConnector node, SfDiagram diagram)
@@ -598,7 +603,6 @@
 
         DiagramConnector GetNode = diagram.GetConnector(node.Id);
         GetNode.Constraints = constraints;
-        await diagram.DataBind();
     }
     public async Task OpenUploadBox(bool isOpen, string extensionType)
     {

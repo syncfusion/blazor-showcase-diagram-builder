@@ -18,8 +18,8 @@
             <div class="row">
                 <div class="col-xs-3 temp-left-pane">
                     <SfListView @ref="@MoreShapesList" ID="moreShapesList" ShowCheckBox="true" DataSource="@ListViewData">
-                        <ListViewFieldSettings Id="Id" Text="Text" IsChecked="Checked"></ListViewFieldSettings>
-                        <ListViewEvents TValue="ListViewDataFields" Selected="@ListViewSelectionChange">
+                        <ListViewFieldSettings TValue="ListViewDataFields" Id="Id" Text="Text" IsChecked="Checked"></ListViewFieldSettings>
+                        <ListViewEvents TValue="ListViewDataFields" Clicked="@ListViewSelectionChange">
                         </ListViewEvents>
                     </SfListView>
                 </div>
@@ -67,7 +67,7 @@
         MoreShapesVisible = true;
         StateHasChanged();
     }
-    private void ListViewSelectionChange(Syncfusion.Blazor.Lists.SelectEventArgs<ListViewDataFields> args)
+    private void ListViewSelectionChange(Syncfusion.Blazor.Lists.ClickEventArgs<ListViewDataFields> args)
     {
         ShapeImageLoaction = "./assets/dbstyle/shapes_images/" + args.Text.ToLower() + ".png";
 
@@ -79,8 +79,8 @@
                 break;
             }
         }
-    (args.Data as ListViewDataFields).Checked = args.IsChecked;
-        SelectedItems.Add(args.Data as ListViewDataFields);
+        (args.ItemData as ListViewDataFields).Checked = args.IsChecked;
+        SelectedItems.Add(args.ItemData as ListViewDataFields);
 
         StateHasChanged();
     }

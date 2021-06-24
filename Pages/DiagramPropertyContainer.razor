@@ -20,7 +20,7 @@
             <div class="row db-prop-row">
                 <SfDropDownList TValue="string" TItem="PaperListFields" PopupHeight="230px" DataSource="@PaperList" @bind-Value="@PaperListValue">
                     <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-                    <DropDownListEvents TValue="string" ValueChange="@OnPaperListValueChange"></DropDownListEvents>
+                    <DropDownListEvents TValue="string" TItem="PaperListFields" ValueChange="@OnPaperListValueChange"></DropDownListEvents>
                 </SfDropDownList>
             </div>
             <div class="row db-prop-row" id="pageOrientation">
@@ -197,9 +197,9 @@
                             <SfCheckBox ID="gradient" Label="Gradient" @onchange="@EnableGradient" @bind-Checked="@IsGradient"></SfCheckBox>
                         </div>
                         <div class="col-xs-4 db-col-center">
-                            <SfDropDownList ID="gradientDirectionDropdown" TValue="string" TItem="GradientDirectionsFields" PopupWidth="200px" Index="0" DataSource="@GradientDirections" @bind-Value="@NodeGradientDirection">
+                            <SfDropDownList ID="gradientDirectionDropdown" TValue="string" Index="NodeGradientDircIndex" TItem="GradientDirectionsFields" PopupWidth="200px" DataSource="@GradientDirections" @bind-Value="@NodeGradientDirection">
                                 <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-                                <DropDownListEvents TValue="string" ValueChange="@OnGradientDirectionChange"></DropDownListEvents>
+                                <DropDownListEvents TValue="string" TItem="GradientDirectionsFields" ValueChange="@OnGradientDirectionChange"></DropDownListEvents>
                             </SfDropDownList>
                         </div>
                         <div class="col-xs-4 db-col-right">
@@ -241,7 +241,7 @@
                             </div>
                         </div>
                         <div class="col-xs-4 db-col-center">
-                            <SfDropDownList TValue="string" TItem="BorderStylesFields" PopupWidth="160px" Index="0" DataSource="@BorderStyles">
+                            <SfDropDownList TValue="string" TItem="BorderStylesFields" Index ="NodeStrokeValue" PopupWidth="160px" DataSource="@BorderStyles">
                                 <DropDownListTemplates TItem="BorderStylesFields">
                                     <ItemTemplate>
                                         <div class='db-ddl-template-style'>
@@ -255,7 +255,7 @@
                                     </ValueTemplate>
                                 </DropDownListTemplates>
                                 <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-                                <DropDownListEvents TValue="string" ValueChange="@OnStrokeDashArrayChange"></DropDownListEvents>
+                                <DropDownListEvents TValue="string" TItem="BorderStylesFields" ValueChange="@OnStrokeDashArrayChange"></DropDownListEvents>
                             </SfDropDownList>
                         </div>
                         <div class="col-xs-4 db-col-right">
@@ -293,7 +293,7 @@
                 <div class="col-xs-6 db-col-left">
                     <SfDropDownList ID="lineTypeDropdown" TValue="string" TItem="LineTypeFields" PopupHeight="230px" DataSource="@LineType" @bind-Value="@ConnectorType">
                         <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-                        <DropDownListEvents TValue="string" ValueChange="@OnConnectorTypeChange"></DropDownListEvents>
+                        <DropDownListEvents TValue="string" TItem="LineTypeFields" ValueChange="@OnConnectorTypeChange"></DropDownListEvents>
                     </SfDropDownList>
                 </div>
             </div>
@@ -319,7 +319,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-8 db-col-left">
-                    <SfDropDownList TValue="string" TItem="BorderStylesFields" PopupWidth="160px" Index="0" DataSource="@BorderStyles">
+                    <SfDropDownList TValue="string" TItem="BorderStylesFields" PopupWidth="160px" DataSource="@BorderStyles">
                         <DropDownListTemplates TItem="BorderStylesFields">
                             <ItemTemplate>
                                 <div class='db-ddl-template-style'>
@@ -333,7 +333,7 @@
                             </ValueTemplate>
                         </DropDownListTemplates>
                         <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-                        <DropDownListEvents TValue="string" ValueChange="@OnStrokeDashArrayChange"></DropDownListEvents>
+                        <DropDownListEvents TValue="string" TItem="BorderStylesFields" ValueChange="@OnStrokeDashArrayChange"></DropDownListEvents>
                     </SfDropDownList>
                 </div>
                 <div class="col-xs-4 db-col-right">
@@ -352,9 +352,9 @@
             </div>
             <div class="row">
                 <div class="col-xs-8 db-col-left">
-                    <SfDropDownList ID="sourceType" TValue="string" TItem="DecoratorListFields" PopupWidth="160px" Index="0" DataSource="@DecoratorList" @bind-Value="@ConnectorSrcShape">
+                    <SfDropDownList ID="sourceType" TValue="string" TItem="DecoratorListFields" PopupWidth="160px" DataSource="@DecoratorList" @bind-Value="@ConnectorSrcShape">
                         <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-                        <DropDownListEvents TValue="string" ValueChange="@OnConnectorSourceShapeChange"></DropDownListEvents>
+                        <DropDownListEvents TValue="string" TItem="DecoratorListFields" ValueChange="@OnConnectorSourceShapeChange"></DropDownListEvents>
                     </SfDropDownList>
                 </div>
                 <div class="col-xs-4 db-col-right">
@@ -373,9 +373,9 @@
             </div>
             <div class="row">
                 <div class="col-xs-8 db-col-left">
-                    <SfDropDownList ID="targetType" TValue="string" TItem="DecoratorListFields" PopupWidth="160px" Index="0" DataSource="@DecoratorList" @bind-Value="@ConnectortarShape">
+                    <SfDropDownList ID="targetType" TValue="string" TItem="DecoratorListFields" PopupWidth="160px" DataSource="@DecoratorList" @bind-Value="@ConnectortarShape">
                         <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-                        <DropDownListEvents TValue="string" ValueChange="@OnConnectorTargetShapeChange"></DropDownListEvents>
+                        <DropDownListEvents TValue="string" TItem="DecoratorListFields" ValueChange="@OnConnectorTargetShapeChange"></DropDownListEvents>
                     </SfDropDownList>
                 </div>
                 <div class="col-xs-4 db-col-right">
@@ -418,7 +418,7 @@
                 <div class="col-xs-8 db-col-left">
                     <SfDropDownList ID="fontFamily" TValue="string" TItem="FontFamilyListFields" DataSource="@FontFamilyList" @bind-Value="@TextFontFamily">
                         <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-                        <DropDownListEvents TValue="string" ValueChange="@OnFontFamilyChange"></DropDownListEvents>
+                        <DropDownListEvents TValue="string" TItem="FontFamilyListFields" ValueChange="@OnFontFamilyChange"></DropDownListEvents>
                     </SfDropDownList>
                 </div>
                 <div class="col-xs-4 db-col-right">
@@ -431,7 +431,7 @@
                 <div class="col-xs-6 db-col-left" id="textPositionDiv">
                     <SfDropDownList ID="ddlTextPosition" TValue="string" TItem="TextPositionFields" DataSource="@TextPosition" @bind-Value="@TextPositionValue">
                         <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-                        <DropDownListEvents TValue="string" ValueChange="@OnTextPositionChange"></DropDownListEvents>
+                        <DropDownListEvents TValue="string" TItem="TextPositionFields" ValueChange="@OnTextPositionChange"></DropDownListEvents>
                     </SfDropDownList>
                 </div>
                 <div class="col-xs-6 db-col-right" id="textColorDiv">
@@ -696,10 +696,11 @@
     public string NodeGradientColor { get; set; }
     public string NodeGradientDirection { get; set; } = "";
     public string NodeStrokeColor { get; set; }
-    public string NodeStrokeDashArray { get; set; }
+    public string NodeStrokeDashArray { get; set; } = "1,2";
     public double NodeStrokeWidth { get; set; }
     public double NodeOpacity { get; set; }
-
+    public int NodeGradientDircIndex { get; set; } = 0;
+    public int NodeStrokeValue { get; set; } = 0;
 
     // Text properties
     public string TextFontFamily { get; set; } = "";
@@ -772,6 +773,7 @@
             {
                 NodeStrokeColor = node.Style.StrokeColor;
             }
+            UpdateNodeStrokeValue(NodeStrokeDashArray.ToString());
             if (node.Shape.Type == Shapes.Text && node.Shape.TextContent != "")
             {
                 jsRuntime.InvokeAsync<object>("objectTypeChange", "annotation", true);
@@ -982,19 +984,19 @@
 
     public void OnFillColorChange(ColorPickerEventArgs args)
     {
-        OnUpdateNodeProperties("Fill", ((JObject)args.CurrentValue).ToObject<GetCurrentValue>().hex);
+        OnUpdateNodeProperties("Fill", (args.CurrentValue).Hex);
     }
 
     public void OnStrokeColorChange(ColorPickerEventArgs args)
     {
-        OnUpdateNodeProperties("StrokeColor", ((JObject)args.CurrentValue).ToObject<GetCurrentValue>().hex);
-        OnUpdateConnectorProperties("StrokeColor", ((JObject)args.CurrentValue).ToObject<GetCurrentValue>().hex);
+        OnUpdateNodeProperties("StrokeColor", (args.CurrentValue).Hex);
+        OnUpdateConnectorProperties("StrokeColor", (args.CurrentValue).Hex);
     }
 
-    public void OnStrokeDashArrayChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string> args)
+    public void OnStrokeDashArrayChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, BorderStylesFields> args)
     {
-        OnUpdateNodeProperties("StrokeDashArray", args.Value);
-        OnUpdateConnectorProperties("StrokeDashArray", args.Value);
+        OnUpdateNodeProperties("StrokeDashArray", args.Value == "None" ? "":args.Value);
+        OnUpdateConnectorProperties("StrokeDashArray", args.Value == "None" ? "":args.Value);
     }
 
     public void OnNodeOpacityChange(double Value)
@@ -1015,7 +1017,7 @@
         OnUpdateConnectorProperties("StrokeWidth", args.Value.ToString());
     }
 
-    public void OnGradientDirectionChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string> args)
+    public void OnGradientDirectionChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, GradientDirectionsFields> args)
     {
         NodeGradientDirection = args.Value;
         OnUpdateNodeProperties("GradientDirection", args.Value);
@@ -1023,7 +1025,7 @@
 
     public void OnNodeGradientColorChange(ColorPickerEventArgs args)
     {
-        string Color = ((JObject)args.CurrentValue).ToObject<GetCurrentValue>().hex;
+        string Color = (args.CurrentValue).Hex;
         NodeGradientColor = Color;
         OnUpdateNodeProperties("GradientColor", Color);
     }
@@ -1091,6 +1093,7 @@
                             break;
                         case "StrokeDashArray":
                             Node.Style.StrokeDashArray = Value;
+                            UpdateNodeStrokeValue(Value);
                             break;
                         case "StrokeWidth":
                             NodeStrokeWidth = Double.Parse(Value);
@@ -1154,7 +1157,32 @@
             }
         }
     }
-
+private void UpdateNodeStrokeValue(string strokeVal)
+    {
+        switch (strokeVal)
+        {
+            case "1,2":
+                NodeStrokeDashArray = "1,2";
+                NodeStrokeValue = 1;
+                break;
+            case "3,3":
+                NodeStrokeDashArray = "3,3";
+               NodeStrokeValue = 2;
+                break;
+            case "5,3":
+                NodeStrokeDashArray = "5,3";
+                NodeStrokeValue = 3;
+                break;
+            case "4,4,1":
+                NodeStrokeDashArray = "4,4,1";
+                NodeStrokeValue = 4;
+                break;
+            default:
+                NodeStrokeDashArray = "";
+                NodeStrokeValue = 0;
+                break;
+        }
+    }
     public void GetGradient(string GradientDirection, string ColorValue)
     {
         DiagramGradient gradientValue = GetGradientDirectionValue(GradientDirection);
@@ -1181,17 +1209,25 @@
     {
         DiagramGradient GradientValue = new DiagramGradient();
         int x1 = 0; int x2 = 0; int y1 = 0; int y2 = 0;
-        if (Direction == "LeftToRight") {
+        if (Direction == "LeftToRight")
+ {
             x1 = 100;
+NodeGradientDircIndex = 3;
         }
-        else if (Direction == "BottomToTop") {
+        else if (Direction == "BottomToTop")
+ {
             y2 = 100;
+NodeGradientDircIndex = 0;
         }
-        else if (Direction == "RightToLeft") {
+        else if (Direction == "RightToLeft")
+ {
             x2 = 100;
+NodeGradientDircIndex = 2;
         }
-        else {
+        else 
+{
             y1 = 100;
+NodeGradientDircIndex = 1;
         }
         GradientValue = new DiagramGradient() { X1 = x1, Y1 = y1, X2 = x2, Y2 = y2 };
         return GradientValue;
@@ -1203,10 +1239,12 @@
         if (GradientValue.Y1 == 0 && GradientValue.Y2 == 0)
         {
             direction = (GradientValue.X1 == 100 && GradientValue.X2 == 0) ? "LeftToRight": "RightToLeft";
+            NodeGradientDircIndex = (GradientValue.X1 == 100 && GradientValue.X2 == 0) ? 3 : 2;
         }
         else
         {
             direction = (GradientValue.Y1 == 100 && GradientValue.Y2 == 0) ? "TopToBottom": "BottomToTop";
+            NodeGradientDircIndex = (GradientValue.Y1 == 100 && GradientValue.Y2 == 0) ? 1 : 0;
         }
         return direction;
     }
@@ -1271,7 +1309,7 @@
     }
 
 
-    public void OnFontFamilyChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string> args)
+    public void OnFontFamilyChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, FontFamilyListFields> args)
     {
         OnUpdateTextProperties("FontFamily", args.Value);
     }
@@ -1282,15 +1320,14 @@
         OnUpdateTextProperties("FontSize", args.Value.ToString());
     }
 
-    public void OnTextPositionChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string> args)
+    public void OnTextPositionChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, TextPositionFields> args)
     {
         OnUpdateTextProperties("TextPosition", args.Value);
     }
 
     public void OnTextColorChange(ColorPickerEventArgs args)
     {
-        OnUpdateTextProperties("FontColor", ((JObject)args.CurrentValue).ToObject<GetCurrentValue>
-        ().hex);
+        OnUpdateTextProperties("FontColor", (args.CurrentValue).Hex);
     }
 
     public void OnTextOpacityChange(double Value)
@@ -1791,7 +1828,7 @@
 
     // Connector Properties
 
-    public void OnConnectorTypeChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string> args)
+    public void OnConnectorTypeChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, LineTypeFields> args)
     {
         OnUpdateConnectorProperties("Type", args.Value);
     }
@@ -1801,7 +1838,7 @@
         OnUpdateConnectorProperties("Opacity", (Value / 100).ToString());
     }
 
-    public void OnConnectorSourceShapeChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string> args)
+    public void OnConnectorSourceShapeChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, DecoratorListFields> args)
     {
         OnUpdateConnectorProperties("SourceDecoratorShape", args.Value);
     }
@@ -1812,7 +1849,7 @@
         OnUpdateConnectorProperties("SourceDecoratorSize", args.Value.ToString());
     }
 
-    public void OnConnectorTargetShapeChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string> args)
+    public void OnConnectorTargetShapeChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, DecoratorListFields> args)
     {
         OnUpdateConnectorProperties("TargetDecoratorShape", args.Value);
     }
@@ -1969,7 +2006,7 @@
     }
 
     // Page Settings
-    public void OnPaperListValueChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string> args)
+    public void OnPaperListValueChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, PaperListFields> args)
     {
         OnUpdateDiagramProperties("PaperList", args.Value);
     }
@@ -1986,7 +2023,7 @@
 
     public void OnPageBgColorChange(ColorPickerEventArgs args)
     {
-        OnUpdateDiagramProperties("PageBgColor", ((JObject)args.CurrentValue).ToObject<GetCurrentValue>().hex);
+        OnUpdateDiagramProperties("PageBgColor", (args.CurrentValue).Hex);
     }
 
     public void OnShowPageBreaksChange(Microsoft.AspNetCore.Components.ChangeEventArgs args)
