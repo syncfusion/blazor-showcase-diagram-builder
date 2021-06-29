@@ -30,7 +30,7 @@
                     </SfRadioButton>
                 </div>
                 <div class="col-xs-3 db-prop-col-style">
-                    <SfRadioButton ID="pageLandscape" Name="pageSettings" TChecked="bool" TValue="bool" Label="Landscape" @bind-Checked="@PageLandscapeValue" @onchange="@OnPageLandscapeChange"></SfRadioButton>
+                    <SfRadioButton ID="pageLandscape" Name="pageSettings" TChecked="bool" TValue="bool" Value="true" Label="Landscape" @bind-Checked="@PageLandscapeValue" @onchange="@OnPageLandscapeChange"></SfRadioButton>
                 </div>
             </div>
             <div class="row db-prop-row" id='pageDimension' style="display:none">
@@ -319,7 +319,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-8 db-col-left">
-                    <SfDropDownList TValue="string" TItem="BorderStylesFields" PopupWidth="160px" DataSource="@BorderStyles">
+                    <SfDropDownList TValue="string" TItem="BorderStylesFields" Index ="ConnectorStrokeValue" PopupWidth="160px" DataSource="@BorderStyles">
                         <DropDownListTemplates TItem="BorderStylesFields">
                             <ItemTemplate>
                                 <div class='db-ddl-template-style'>
@@ -713,7 +713,7 @@
     // Connector Properties
     public string ConnectorType { get; set; } = "";
     public string ConnectorStrokeColor { get; set; }
-    public string ConnectorStrokeDashArray { get; set; }
+    public string ConnectorStrokeDashArray { get; set; } = "1,2";
     public double ConnectorStrokeWidth { get; set; }
     public string ConnectorSrcShape { get; set; } = "";
     public double ConnectorSrcShapeSize { get; set; }
@@ -722,6 +722,7 @@
     public bool OnConnectorBridge { get; set; }
     public double ConnectorBridgeSize { get; set; }
     public double ConnectorOpacity { get; set; }
+    public int ConnectorStrokeValue { get; set; } = 0;
 
     // Diagram Properties
     public string PaperListValue { get; set; } = "Letter";
@@ -745,7 +746,7 @@
             NodeOffsetY = node.OffsetY;
             NodeWidth = node.Width;
             NodeHeight = node.Height;
-            NodeAspectRatio = ((node.Constraints & ~NodeConstraints.AspectRatio) != 0) ? false : true;
+            NodeAspectRatio = ((node.Constraints & NodeConstraints.AspectRatio) != 0) ? true : false;
             NodeRotateAngle = node.RotateAngle;
 
             NodeStrokeWidth = node.Style.StrokeWidth;
@@ -1183,6 +1184,32 @@ private void UpdateNodeStrokeValue(string strokeVal)
                 break;
         }
     }
+    private void UpdateConnectorStrokeValue(string strokeVal)
+    {
+        switch (strokeVal)
+        {
+            case "1,2":
+                ConnectorStrokeDashArray = "1,2";
+                ConnectorStrokeValue = 1;
+                break;
+            case "3,3":
+                ConnectorStrokeDashArray = "3,3";
+                ConnectorStrokeValue = 2;
+                break;
+            case "5,3":
+                ConnectorStrokeDashArray = "5,3";
+                ConnectorStrokeValue = 3;
+                break;
+            case "4,4,1":
+                ConnectorStrokeDashArray = "4,4,1";
+                ConnectorStrokeValue = 4;
+                break;
+            default:
+                ConnectorStrokeDashArray = "";
+                ConnectorStrokeValue = 0;
+                break;
+        }
+    }
     public void GetGradient(string GradientDirection, string ColorValue)
     {
         DiagramGradient gradientValue = GetGradientDirectionValue(GradientDirection);
@@ -1327,6 +1354,7 @@ NodeGradientDircIndex = 1;
 
     public void OnTextColorChange(ColorPickerEventArgs args)
     {
+        TextColor = (args.CurrentValue).Hex;
         OnUpdateTextProperties("FontColor", (args.CurrentValue).Hex);
     }
 
@@ -1674,19 +1702,19 @@ NodeGradientDircIndex = 1;
                     ConnectorAnnotation.HorizontalAlignment = HorizontalAlignment.Right;
                     break;
                 case "Align Center":
-                    ConnectorAnnotation.Style.TextAlign = TextAlign.Center;
+                    ConnectorAnnotation.HorizontalAlignment = HorizontalAlignment.Center;
                     break;
                 case "Align Left":
-                    ConnectorAnnotation.Style.TextAlign = TextAlign.Center;
+                    ConnectorAnnotation.HorizontalAlignment = HorizontalAlignment.Left;
                     break;
                 case "Align Top":
-                    ConnectorAnnotation.Style.TextAlign = TextAlign.Center;
+                    ConnectorAnnotation.VerticalAlignment = VerticalAlignment.Top;
                     break;
                 case "Align Middle":
-                    ConnectorAnnotation.Style.TextAlign = TextAlign.Center;
+                    ConnectorAnnotation.VerticalAlignment = VerticalAlignment.Center;
                     break;
                 case "Align Bottom":
-                    ConnectorAnnotation.Style.TextAlign = TextAlign.Center;
+                    ConnectorAnnotation.VerticalAlignment = VerticalAlignment.Bottom;
                     break;
             }
         }
@@ -1892,6 +1920,7 @@ NodeGradientDircIndex = 1;
                         break;
                     case "StrokeDashArray":
                         Connector.Style.StrokeDashArray = Value;
+                        UpdateConnectorStrokeValue(Value);
                         break;
                     case "StrokeWidth":
                         ConnectorStrokeWidth = Connector.Style.StrokeWidth = Connector.SourceDecorator.Style.StrokeWidth = Connector.TargetDecorator.Style.StrokeWidth = Double.Parse(Value);
@@ -2023,6 +2052,7 @@ NodeGradientDircIndex = 1;
 
     public void OnPageBgColorChange(ColorPickerEventArgs args)
     {
+        PageBgColorValue =(args.CurrentValue).Hex;
         OnUpdateDiagramProperties("PageBgColor", (args.CurrentValue).Hex);
     }
 
@@ -2097,7 +2127,7 @@ NodeGradientDircIndex = 1;
                     Parent.DiagramContent.DiagramOrientation = (Value == "true") ? PageOrientation.Landscape : PageOrientation.Portrait;
                     break;
                 case "PagePortrait":
-                    Parent.DiagramContent.DiagramOrientation = (Value == "true") ? PageOrientation.Portrait : PageOrientation.Landscape;
+                    Parent.DiagramContent.DiagramOrientation = (Value == "on") ? PageOrientation.Portrait : PageOrientation.Landscape;
                     break;
                 case "PageBgColor":
                     Parent.DiagramContent.DiagramBgColor = Value;

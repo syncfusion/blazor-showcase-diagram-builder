@@ -446,12 +446,12 @@ input, button, select, textarea {
     stroke: #E0E0E0;
 }
 
-.e-contextmenu-wrapper.e-diagram-menu ul {
+.e-contextmenu-container.e-diagram-menu ul {
     font-size: 12px;
     padding: 0px;
 }
 
-.e-diagram-menu.e-contextmenu-wrapper .e-contextmenu .e-menu-item .e-caret {
+.e-diagram-menu.e-contextmenu-container .e-contextmenu .e-menu-item .e-caret {
     font-size: 10px;
 }
 
@@ -579,7 +579,7 @@ input, button, select, textarea {
 }
 
 .e-dropdown-popup,
-.e-contextmenu-wrapper ul.e-contextmenu  {
+.e-contextmenu-container ul.e-contextmenu  {
     border: 0.5px solid #cccccc;
     border-radius: 5px;
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.35);
@@ -596,13 +596,13 @@ input, button, select, textarea {
 }
 
 .e-dropdown-popup ul .e-item,
-.e-contextmenu-wrapper ul .e-menu-item {
+.e-contextmenu-container ul .e-menu-item {
     height: 24px;
     line-height: 24px;
     padding: 0px 8px;
 }
 
-.e-contextmenu-wrapper ul .e-menu-item.e-separator,
+.e-contextmenu-container ul .e-menu-item.e-separator,
 .e-dropdown-popup ul .e-item.e-separator {
     margin: 0px;
 }
@@ -618,7 +618,7 @@ input, button, select, textarea {
             padding: 0;
             width: 1px;
         }
-.e-contextmenu-wrapper ul .e-menu-item .e-menu-icon,
+.e-contextmenu-container ul .e-menu-item .e-menu-icon,
 .e-dropdown-popup ul .e-item .e-menu-icon {
     font-size: 12px;
     line-height: 24px;
@@ -626,23 +626,23 @@ input, button, select, textarea {
     color:#888888;
 }
 
-.e-contextmenu-wrapper ul .e-menu-item.e-blankicon,
-.e-dropdown-popup ul .e-item.e-blank-icon {
+.e-contextmenu-container ul .e-menu-item .e-blankicon,
+.e-dropdown-popup ul .e-item .e-blank-icon {
     padding-left: 32px;
 }
 
-.e-contextmenu-wrapper ul .e-menu-item .e-caret {
+.e-contextmenu-container ul .e-menu-item .e-caret {
     line-height: 24px;
     font-size: 12px;
 }
 
-.e-contextmenu-wrapper ul .e-menu-item.e-focused,
+.e-contextmenu-container ul .e-menu-item.e-focused,
 .e-dropdown-popup ul .e-item:hover {
     background-color: #E4F0FE;
     color: rgba(0, 0, 0, 0.87);
 }
 
-.e-contextmenu-wrapper ul .e-menu-item.e-selected,
+.e-contextmenu-container ul .e-menu-item.e-selected,
 .e-dropdown-popup ul .e-item:active {
     background-color: #F0F0F0;
     color: rgba(0, 0, 0, 0.87);
