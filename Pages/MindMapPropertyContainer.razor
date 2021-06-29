@@ -41,7 +41,7 @@
         <div class="col-xs-6 db-col-left">
             <SfDropDownList TValue="string" TItem="DefaultDropDownField" PopupHeight="230px" DataSource="@MindMapLevels" @bind-Value="@MindMapLevelValue">
                 <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-                <DropDownListEvents TValue="string" ValueChange="@OnMindMapLevelChange"></DropDownListEvents>
+                <DropDownListEvents TValue="string" TItem="DefaultDropDownField" ValueChange="@OnMindMapLevelChange"></DropDownListEvents>
             </SfDropDownList>
         </div>
     </div>
@@ -69,10 +69,12 @@
             </div>
         </div>
         <div class="col-xs-4 db-col-center">
-            <SfDropDownList ID="strokeStyle" TValue="string" TItem="BorderStylesFields" PopupWidth="160px" Index="0" DataSource="@BorderStyles" @bind-Value="@StrokeStyleValue"
-                            ValueTemplate="<div class='db-ddl-template-style'><span class='${ClassName}'></span></div>"
-                            ItemTemplate="<div class='db-ddl-template-style'><span class='${ClassName}'></span></div>">
-                <DropDownListEvents TValue="string" ValueChange="@OnStrokeDashArrayChange"></DropDownListEvents>
+            <SfDropDownList ID="strokeStyle" TValue="string" TItem="BorderStylesFields" PopupWidth="160px" Index="0" DataSource="@BorderStyles" @bind-Value="@StrokeStyleValue">
+                <DropDownListTemplates TItem="BorderStylesFields">
+                    <ValueTemplate><div class='db-ddl-template-style'><span class='@((context as BorderStylesFields).ClassName)'></span></div></ValueTemplate>
+                    <ItemTemplate><div class='db-ddl-template-style'><span class='@((context as BorderStylesFields).ClassName)'></span></div></ItemTemplate>
+                </DropDownListTemplates>
+                <DropDownListEvents TValue="string" TItem="BorderStylesFields" ValueChange="@OnStrokeDashArrayChange"></DropDownListEvents>
                 <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
             </SfDropDownList>
         </div>
@@ -103,7 +105,7 @@
         <div class="col-xs-8 db-col-left">
             <SfDropDownList ID="MindmapFontFamilyList" TValue="string" TItem="FontFamilyListFields" DataSource="@FontFamilyList" @bind-Value="@TextFontFamily">
                 <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-                <DropDownListEvents TValue="string" ValueChange="@OnFontFamilyChange"></DropDownListEvents>
+                <DropDownListEvents TValue="string" TItem="FontFamilyListFields" ValueChange="@OnFontFamilyChange"></DropDownListEvents>
             </SfDropDownList>
         </div>
         <div class="col-xs-4 db-col-right">
@@ -332,7 +334,6 @@
                     Node.Height = 50;
                 }
             }
-            await Diagram.DataBind();
         }
         for (var i = 0; i < Diagram.Connectors.Count; i++)
         {
@@ -352,28 +353,27 @@
                     Connector.Type = Segments.Straight;
                     break;
             }
-            await Diagram.DataBind();
         }
         await Diagram.EndGroupAction();
         await Diagram.DoLayout();
     }
 
-    public void OnMindMapLevelChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string> args)
+    public void OnMindMapLevelChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, DefaultDropDownField> args)
     {
         MindMapLevel = args.Value;
     }
 
     public async Task OnFillColorChange(ColorPickerEventArgs args)
     {
-        await UpdateMindMapProperties("Fill", ((JObject)args.CurrentValue).ToObject<DiagramPropertyContainer.GetCurrentValue>().hex);
+        await UpdateMindMapProperties("Fill", (args.CurrentValue).Hex);
     }
 
     public async Task OnStrokeColorChange(ColorPickerEventArgs args)
     {
-        await UpdateMindMapProperties("StrokeColor", ((JObject)args.CurrentValue).ToObject<DiagramPropertyContainer.GetCurrentValue>().hex);
+        await UpdateMindMapProperties("StrokeColor", (args.CurrentValue).Hex);
     }
 
-    public async Task OnStrokeDashArrayChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string> args)
+    public async Task OnStrokeDashArrayChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, BorderStylesFields> args)
     {
         await UpdateMindMapProperties("StrokeDashArray", args.Value);
     }
@@ -388,7 +388,7 @@
         await UpdateMindMapProperties("StrokeWidth", args.Value.ToString());
     }
 
-    public async Task OnFontFamilyChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string> args)
+    public async Task OnFontFamilyChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, FontFamilyListFields> args)
     {
         await UpdateMindMapProperties("FontFamily", args.Value);
     }
@@ -405,7 +405,7 @@
 
     public async Task OnTextColorChange(ColorPickerEventArgs args)
     {
-        await UpdateMindMapProperties("FontColor", ((JObject)args.CurrentValue).ToObject<DiagramPropertyContainer.GetCurrentValue>().hex);
+        await UpdateMindMapProperties("FontColor",(args.CurrentValue).Hex);
     }
 
     public async Task OnTextOpacityChange(double Value)

@@ -31,7 +31,6 @@ namespace DiagramBuilder
                 Parent.DiagramContent.DiagramDrawingObject = new DiagramNode() { Shape = new DiagramShape() { Type = Shapes.Basic, BasicShape = BasicShapes.Polygon }, Style = new NodeShapeStyle() { StrokeWidth = 2 } };
             }
             Parent.DiagramContent.DiagramTool = DiagramTools.ContinuousDraw;
-            await diagram.DataBind().ConfigureAwait(true);
             await removeSelectedToolbarItem("shape").ConfigureAwait(true);
             Parent.DiagramContent.StateChanged();
             //document.getElementById("btnDrawShape").classList.add("tb-item-selected");
@@ -54,7 +53,6 @@ namespace DiagramBuilder
             Parent.DiagramContent.DiagramTool = DiagramTools.ContinuousDraw;
             await diagram.ClearSelection().ConfigureAwait(true);
             await removeSelectedToolbarItem("connector").ConfigureAwait(true);
-            await diagram.DataBind().ConfigureAwait(true);
             Parent.DiagramContent.StateChanged();
             //document.getElementById("btnDrawConnector').classList.add('tb-item-selected');
         }
@@ -173,7 +171,6 @@ namespace DiagramBuilder
                 case "text tool":
                     Parent.DiagramContent.DiagramDrawingObject = new DiagramNode() { Shape = new DiagramShape() { Type = Shapes.Text } };
                     Parent.DiagramContent.DiagramTool = DiagramTools.ContinuousDraw;
-                    await diagram.DataBind().ConfigureAwait(true);
                     break;
                 case "delete":
                     await DeleteData().ConfigureAwait(true);
@@ -281,7 +278,6 @@ namespace DiagramBuilder
                     connector.Constraints = ConnectorConstraints.Default;
                 }
             }
-            await diagram.DataBind().ConfigureAwait(true);
         }
         private async Task removeSelectedToolbarItem(string tool)
         {

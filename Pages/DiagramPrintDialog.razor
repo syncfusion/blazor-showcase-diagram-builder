@@ -23,7 +23,7 @@
                     <div class="row db-dialog-child-prop-row">
                         <SfDropDownList ID="printPaperSizeDropdown" TValue="string" TItem="DiagramPropertyContainer.PaperListFields" @bind-Value="@PaparSz" Text="@PaparSz" DataSource="@PaperList">
                             <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-                            <DropDownListEvents TValue="string" ValueChange="PaperChanged"></DropDownListEvents>
+                            <DropDownListEvents TValue="string" TItem="DiagramPropertyContainer.PaperListFields" ValueChange="PaperChanged"></DropDownListEvents>
                         </SfDropDownList>
                     </div>
                 </div>
@@ -82,7 +82,7 @@
     double PageHeight = 816;
     double PageWidth = 1056;
 
-    private void PaperChanged(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string> args)
+    private void PaperChanged(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, DiagramPropertyContainer.PaperListFields> args)
     {
         DiagramPropertyContainer.PaperSize Size= Parent.Parent.DiagramPropertyPanel.GetPaperSize(args.Value);
         PageHeight = Size.PageHeight;
