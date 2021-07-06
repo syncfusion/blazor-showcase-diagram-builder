@@ -259,7 +259,7 @@
                             </SfDropDownList>
                         </div>
                         <div class="col-xs-4 db-col-right">
-                            <SfNumericTextBox ID="nodeStrokeWidth" Min="0" Step="0.5"  ValidateDecimalOnType="true" Decimals=2 Value="@NodeStrokeWidth">
+                            <SfNumericTextBox ID="nodeStrokeWidth" Min="0" Max="50" Step="0.5"  ValidateDecimalOnType="true" Decimals=2 Value="@NodeStrokeWidth">
                                 <NumericTextBoxEvents TValue="double" ValueChange="@OnStrokeWidthChange"></NumericTextBoxEvents>
                             </SfNumericTextBox>
                         </div>
@@ -337,7 +337,7 @@
                     </SfDropDownList>
                 </div>
                 <div class="col-xs-4 db-col-right">
-                    <SfNumericTextBox ID="lineWidth" Min="0.5" Step="0.5"  ValidateDecimalOnType="true" Decimals=2 Value="@ConnectorStrokeWidth">
+                    <SfNumericTextBox ID="lineWidth" Min="0.5" Max="50" Step="0.5"  ValidateDecimalOnType="true" Decimals=2 Value="@ConnectorStrokeWidth">
                         <NumericTextBoxEvents TValue="double" ValueChange="@OnStrokeWidthChange"></NumericTextBoxEvents>
                     </SfNumericTextBox>
                 </div>
