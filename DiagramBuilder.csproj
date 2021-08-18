@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Syncfusion.Blazor" Version="19.1.0.69" />
-    <PackageReference Include="Syncfusion.Licensing" Version="19.1.0.69" />
+    <PackageReference Include="Syncfusion.Blazor" Version="19.2.0.56" />
   </ItemGroup>
 
 </Project>
