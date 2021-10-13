@@ -38,7 +38,10 @@ namespace DiagramBuilder
             });
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSyncfusionBlazor(); 
+            services.AddSyncfusionBlazor(options =>
+            {
+                options.IgnoreScriptIsolation = false;
+            }); 
             services.AddScoped<SampleService>();
             // Register the Syncfusion locale service to customize the SyncfusionBlazor component locale culture
             services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(SyncfusionLocalizer));
