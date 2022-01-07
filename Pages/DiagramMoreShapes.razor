@@ -4,9 +4,6 @@
 @namespace DiagramBuilder
 
 <div id="moreShapesDiv" class="db-palette-more-shapes">
-    <div id="overviewspan" class="@OverviewSpanClassName" @onclick="@ShowHideOverview">
-        <span></span>
-    </div>
     <div class="db-palette-more-shapes-text" @onclick="@MoreShapesClick">More Shapes</div>
 </div>
 <SfDialog @ref="@MoreShapesPalette" ID="moreShapesDialog" @bind-Visible="MoreShapesVisible" Width="695px" Height="470px" ShowCloseIcon="true" IsModal="true" AllowDragging="true">
@@ -17,7 +14,7 @@
         <Content>
             <div class="row">
                 <div class="col-xs-3 temp-left-pane">
-                    <SfListView @ref="@MoreShapesList" ID="moreShapesList" ShowCheckBox="true" DataSource="@ListViewData">
+                    <SfListView @ref="@MoreShapesList" ID="moreShapesList" ShowCheckBox="true" DataSource="@ListViewData" EnablePersistence="true">
                         <ListViewFieldSettings TValue="ListViewDataFields" Id="Id" Text="Text" IsChecked="Checked"></ListViewFieldSettings>
                         <ListViewEvents TValue="ListViewDataFields" Clicked="@ListViewSelectionChange">
                         </ListViewEvents>
@@ -55,17 +52,12 @@
     {
         new ListViewDataFields(){ Text= "Flow", Id="flowShapes", Checked= true },
         new ListViewDataFields(){ Text= "Basic", Id="basicShapes", Checked= true },
-        new ListViewDataFields(){ Text= "BPMN", Id="bpmnShapes", Checked= true },
         new ListViewDataFields(){ Text= "Connectors", Id="connectorsShapes", Checked= true },
-        new ListViewDataFields(){ Text= "Electrical", Id="electricalShapes", Checked= false },
-        new ListViewDataFields(){ Text= "Network", Id="networkShapes", Checked= false },
-        new ListViewDataFields(){ Text= "Floorplan", Id="floorShapes", Checked= false }
     };
 
     private void MoreShapesClick()
     {
         MoreShapesVisible = true;
-        StateHasChanged();
     }
     private void ListViewSelectionChange(Syncfusion.Blazor.Lists.ClickEventArgs<ListViewDataFields> args)
     {
@@ -81,8 +73,6 @@
         }
         (args.ItemData as ListViewDataFields).Checked = args.IsChecked;
         SelectedItems.Add(args.ItemData as ListViewDataFields);
-
-        StateHasChanged();
     }
 
     private async Task BtnSave()
@@ -97,14 +87,5 @@
     private async Task btnCancelClick()
     {
         await MoreShapesPalette.Hide();
-    }
-
-    public void ShowHideOverview()
-    {
-        OverviewSpanClassName = (OverviewSpanClassName.Contains(" active")) ? OverviewSpanClassName.Replace(" active", "") : OverviewSpanClassName + " active";
-        StateHasChanged();
-        Parent.SideBarClassName = (Parent.SideBarClassName.Contains(" show-overview")) ? Parent.SideBarClassName.Replace(" show-overview", "") : Parent.SideBarClassName + " show-overview";
-        Parent.StateChanged();
-        Parent.DiagramOverview.StateChanged();
     }
 }

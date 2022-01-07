@@ -1,8 +1,8 @@
-@using Syncfusion.Blazor.Popups
+﻿@using Syncfusion.Blazor.Popups
 
 @namespace DiagramBuilder
 
-<SfDialog ID="openTemplateDialog" Width="695px" Height="470px" IsModal="true" ShowCloseIcon="true" AllowDragging="true" @bind-Visible="@IsOpenDialogVisible">
+<SfDialog ID="openTemplateDialog" Width="695px" IsModal="true" ShowCloseIcon="true" AllowDragging="true" @bind-Visible="@IsOpenDialogVisible">
     <DialogTemplates>
         <Header>
             Create New Diagram
@@ -20,20 +20,6 @@
                             <div class=@ClassName @onclick="@ShowFlowChartTemplates">
                                 <span>Flow Chart</span>
                             </div>
-                            @*if (this.Value == "Mind Map")
-                                ClassName = "row db-diagram-template-parent-text mindmap-template active";
-                            else
-                                ClassName = "row db-diagram-template-parent-text mindmap-template";
-                            <div class=@ClassName @onclick="@ShowMindMapTemplates">
-                                <span>Mind Map</span>
-                            </div>
-                            if (this.Value == "Org Chart")
-                                ClassName = "row db-diagram-template-parent-text orgchart-template active";
-                            else
-                                ClassName = "row db-diagram-template-parent-text orgchart-template";
-                            <div class=@ClassName @onclick="@ShowOrgChartTemplates">
-                                <span>Org Chart</span>
-                            </div>*@
                         }
                     </div>
                     <div class="col-xs-9 diagramTemplates temp-right-pane" style="padding-left:0px;padding-right:0px">
@@ -47,20 +33,6 @@
                                             </div>
                                         </div>
                                     }
-                                    @*else if (this.Value == "Mind Map")
-                                    {
-                                        <div class="db-diagram-template-image-div" id="mindmap_child0" @onclick="@BlankMindMapDiagram">
-                                            <div class="db-diagram-template-svg-image" style="background-image: url(&quot;./assets/dbstyle/common_images/blank_diagram_mind.svg&quot;);">
-                                            </div>
-                                        </div>
-                                    }
-                                    else if (this.Value == "Org Chart")
-                                    {
-                                        <div class="db-diagram-template-image-div" id="orgchart_child0" @onclick="@BlankOrgChartDiagram">
-                                            <div class="db-diagram-template-svg-image" style="background-image: url(&quot;./assets/dbstyle/common_images/blank_diagram_org.svg&quot;);">
-                                            </div>
-                                        </div>
-                                    }*@
                                 }
                                 <div class="db-diagram-template-text">
                                     <span id="diagramTemplateText">Blank Diagram</span>
@@ -78,94 +50,6 @@
                                             <span id="diagramTemplateText">Credit Card Processing</span>
                                         </div>
                                     }
-                                    @*else if (this.Value == "Mind Map")
-                                    {
-                                        <div class="db-diagram-template-image-div" id="mindmap_child1" @onclick="@BusinessPlanningDiagram">
-                                            <div class="db-diagram-template-svg-image" style="background-image: url(&quot;./assets/dbstyle/mindmap_images/BusinessPlanning.SVG&quot;);">
-                                            </div>
-                                        </div>
-                                        <div class="db-diagram-template-text">
-                                            <span id="diagramTemplateText">Business Planning</span>
-                                        </div>
-                                    }
-                                    else if (this.Value == "Org Chart")
-                                    {
-                                        <div class="db-diagram-template-image-div" id="orgchart_child1" @onclick="@OrgRenderingStyle1Diagram">
-                                            <div class="db-diagram-template-svg-image" style="background-image: url(&quot;./assets/dbstyle/orgchart_images/OrgRenderingStyle_1.svg&quot;);">
-                                            </div>
-                                        </div>
-                                        <div class="db-diagram-template-text">
-                                            <span id="diagramTemplateText">Org Template Style - 1</span>
-                                        </div>
-                                    }*@
-                                }
-                            </div>
-                            <div id="" class="db-diagram-template-div" style="">
-                                @{
-                                    if (this.Value == "Flow Diagram")
-                                    {
-                                        <div class="db-diagram-template-image-div" id="flowchart_child2" @onclick="@BankTellerFlowDiagram">
-                                            <div class="db-diagram-template-svg-image" style="background-image: url(&quot;./assets/dbstyle/flowchart_Images/Bank_Teller_Flow.svg&quot;);">
-                                            </div>
-                                        </div>
-                                        <div class="db-diagram-template-text">
-                                            <span id="diagramTemplateText">Banking Teller Process Flow</span>
-                                        </div>
-                                    }
-                                    @*else if (this.Value == "Mind Map")
-                                    {
-                                        <div class="db-diagram-template-image-div" id="mindmap_child2" @onclick="@TQMDiagram">
-                                            <div class="db-diagram-template-svg-image" style="background-image: url(&quot;./assets/dbstyle/mindmap_images/TQM.SVG&quot;);">
-                                            </div>
-                                        </div>
-                                        <div class="db-diagram-template-text">
-                                            <span id="diagramTemplateText">Quality Management</span>
-                                        </div>
-                                    }
-                                    else if (this.Value == "Org Chart")
-                                    {
-                                        <div class="db-diagram-template-image-div" id="orgchart_child2" @onclick="@OrgRenderingStyle2Diagram">
-                                            <div class="db-diagram-template-svg-image" style="background-image: url(&quot;./assets/dbstyle/orgchart_images/OrgRenderingStyle_2.svg&quot;);">
-                                            </div>
-                                        </div>
-                                        <div class="db-diagram-template-text">
-                                            <span id="diagramTemplateText">Org Template Style - 2</span>
-                                        </div>
-                                    }*@
-                                }
-                            </div>
-                            <div id="" class="db-diagram-template-div" style="">
-                                @{
-                                    if (this.Value == "Flow Diagram")
-                                    {
-                                        <div class="db-diagram-template-image-div" id="flowchart_child3" @onclick="@DeveloperWorkFlowDiagram">
-                                            <div class="db-diagram-template-svg-image" style="background-image: url(&quot;./assets/dbstyle/flowchart_Images/Developer_Workflow.SVG&quot;);">
-                                            </div>
-                                        </div>
-                                        <div class="db-diagram-template-text">
-                                            <span id="diagramTemplateText">Agile"s Developer Workflow</span>
-                                        </div>
-                                    }
-                                    @*else if (this.Value == "Mind Map")
-                                    {
-                                        <div class="db-diagram-template-image-div" id="mindmap_child3" @onclick="@SoftwareLifeCycleDiagram">
-                                            <div class="db-diagram-template-svg-image" style="background-image: url(&quot;./assets/dbstyle/mindmap_images/SoftwareLifeCycle.SVG&quot;);">
-                                            </div>
-                                        </div>
-                                        <div class="db-diagram-template-text">
-                                            <span id="diagramTemplateText">Software Life Cycle</span>
-                                        </div>
-                                    }
-                                    else if (this.Value == "Org Chart")
-                                    {
-                                        <div class="db-diagram-template-image-div" id="orgchart_child3" @onclick="@OrgRenderingStyle3Diagram">
-                                            <div class="db-diagram-template-svg-image" style="background-image: url(&quot;./assets/dbstyle/orgchart_images/OrgRenderingStyle_3.svg&quot;);">
-                                            </div>
-                                        </div>
-                                        <div class="db-diagram-template-text">
-                                            <span id="diagramTemplateText">Org Template Style - 3</span>
-                                        </div>
-                                    }*@
                                 }
                             </div>
                         </div>
@@ -234,7 +118,6 @@
         LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/BlankDiagram.json");
         CurrentDiagramVisibility("mindmap-diagram");
         await Task.Delay(2500);
-        Parent.MindMapPropertyPanel.bindMindMapProperties();
     }
 
     public void BlankOrgChartDiagram()
@@ -243,10 +126,10 @@
         StateHasChanged();
     }
 
-    public void CreditProcessDiagram()
+    public async Task CreditProcessDiagram()
     {
-        LoadTemplate(@"./wwwroot/assets/dbstyle/flowchart_Images/CreditCardFlow.json");
-        jsRuntime.InvokeAsync<string>("diagramNameChange", "Credit Card Processing", true);
+        await Parent.DiagramContent.CreditProcessDiagram();
+        IsOpenDialogVisible = false;
     }
 
     public async Task BusinessPlanningDiagram()
@@ -254,7 +137,6 @@
         LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/BusinessPlanning.json");
         CurrentDiagramVisibility("mindmap-diagram");
         await Task.Delay(2500);
-        Parent.MindMapPropertyPanel.bindMindMapProperties();
     }
 
     public void OrgRenderingStyle1Diagram()
@@ -273,7 +155,6 @@
         LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/TQM.json");
         CurrentDiagramVisibility("mindmap-diagram");
         await Task.Delay(2500);
-        Parent.MindMapPropertyPanel.bindMindMapProperties();
     }
 
     public void OrgRenderingStyle2Diagram()
@@ -292,7 +173,6 @@
         LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/SoftwareDevelopmentLifeCycle.json");
         CurrentDiagramVisibility("mindmap-diagram");
         await Task.Delay(2500);
-        Parent.MindMapPropertyPanel.bindMindMapProperties();
     }
 
     public void OrgRenderingStyle3Diagram()
@@ -314,7 +194,5 @@
         Parent.PropertyPanelClassName += " " + DiagramName;
         Parent.DiagramBuilderClassName += " hide-palette custom-diagram";
         Parent.DiagramContent.DiagramContainerClassName += " " + DiagramName;
-        Parent.DiagramContent.StateChanged();
-        Parent.StateChanged();
     }
 }

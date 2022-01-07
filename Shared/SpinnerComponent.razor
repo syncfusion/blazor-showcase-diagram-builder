@@ -11,6 +11,7 @@
 </div>
 
 @code {
+    internal MainLayout Parent;
 
     [Parameter]
     public string HideClass { get; set; }
@@ -23,6 +24,7 @@
 
     public void ShowasTrans()
     {
+        
         this.TransClass = "sb-trans";
         this.HideClass = string.Empty;
         this.StateHasChanged();
@@ -30,6 +32,7 @@
 
     public void Show()
     {
+
         this.TransClass = string.Empty;
         HideClass = string.Empty;
         this.HideInnerClass = string.Empty;
@@ -41,7 +44,6 @@
         TransClass = string.Empty;
         HideClass = "sb-hide";
         this.HideInnerClass = "sb-hide";
-        //await JsRuntime.InvokeAsync<object>("showSpinnerDiagram");
         this.StateHasChanged();
     }
 }

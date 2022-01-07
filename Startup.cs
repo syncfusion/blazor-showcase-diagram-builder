@@ -41,14 +41,14 @@ namespace DiagramBuilder
             services.AddSyncfusionBlazor(options =>
             {
                 options.IgnoreScriptIsolation = false;
-            }); 
+            });
             services.AddScoped<SampleService>();
             // Register the Syncfusion locale service to customize the SyncfusionBlazor component locale culture
-            services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(SyncfusionLocalizer));
+            //services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(SyncfusionLocalizer));
             services.Configure<RequestLocalizationOptions>(options =>
             {
                 // Define the list of cultures your app will support
-                var supportedCultures = new List<CultureInfo>()
+                List<CultureInfo> supportedCultures = new List<CultureInfo>()
                 {
                     new CultureInfo("en-US"),
                     new CultureInfo("de"),

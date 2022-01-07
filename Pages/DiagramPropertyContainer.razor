@@ -3,9 +3,10 @@
 @using Syncfusion.Blazor.DropDowns
 @using Syncfusion.Blazor.Inputs
 @using Syncfusion.Blazor.Navigations
-@using Syncfusion.Blazor.Diagrams
+@using Syncfusion.Blazor.Diagram
 @using Syncfusion.Blazor.Popups
 @using System.Collections.ObjectModel
+@using Syncfusion.Blazor.SplitButtons
 @using Newtonsoft.Json.Linq
 @using System.Drawing
 @inject IJSRuntime js
@@ -13,35 +14,108 @@
 @namespace DiagramBuilder
 
 <div id="generalDiagramContainer" class="db-general-diagram-prop-container">
-        <div id='diagramPropertyContainer' class="db-diagram-prop-container">
+    <div id='diagramPropertyContainer' class="db-diagram-prop-container" style="display:@DiagramPropertyVisibility" >
+        <div class="row db-prop-header-text">
+            Page Settings
+        </div>
+        <div class="row db-prop-row">
+            <SfDropDownList TValue="string" TItem="PaperListFields" PopupHeight="230px" DataSource="@PaperList" @bind-Value="@PaperListValue">
+                <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+                <DropDownListEvents TValue="string" TItem="PaperListFields" ValueChange="@OnPaperListValueChange"></DropDownListEvents>
+            </SfDropDownList>
+        </div>
+        <div class="row db-prop-row" id="pageOrientation" style="display:@PageOrientationVisibility">
+            <div class="col-xs-3 db-prop-col-style" style="margin-right: 8px;width: 30%;">
+                <SfRadioButton  Name="pageSettings" TChecked="bool" TValue="bool" Label="Portrait" @bind-Checked="@PageLandscapeValue"  @onchange="@OnPagePortraitChange" Value="false">
+
+                </SfRadioButton>
+            </div>
+            <div class="col-xs-3 db-prop-col-style">
+                <SfRadioButton  Name="pageSettings" TChecked="bool" TValue="bool" Label="Landscape" @bind-Checked="@PageLandscapeValue" @onchange="@OnPageLandscapeChange" Value="true"></SfRadioButton>
+            </div>
+        </div>
+        <div class="row db-prop-row" id='pageDimension' style="display:@PageDimensionVisibility">
+            <div class="col-xs-6 db-col-left">
+                <div class="db-text-container">
+                    <div class="db-text">
+                        <span>W</span>
+                    </div>
+                    <div class="db-text-input">
+                        <SfNumericTextBox Value="@PageWidth" ID="pageWidth" ValidateDecimalOnType="true" Decimals=0 Format="n0">
+                            <NumericTextBoxEvents TValue="double" ValueChange="@OnPageWidthChange"></NumericTextBoxEvents>
+                        </SfNumericTextBox>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 db-col-right">
+                <div class="db-text-container">
+                    <div class="db-text">
+                        <span>H</span>
+                    </div>
+                    <div class="db-text-input">
+                        <SfNumericTextBox Value="@PageHeight" ID="pageHeight" ValidateDecimalOnType="true" Decimals=0 Format="n0">
+                            <NumericTextBoxEvents TValue="double" ValueChange="@OnPageHeightChange"></NumericTextBoxEvents>
+                        </SfNumericTextBox>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row db-prop-row">
+            <div class="col-xs-6 db-col-left">
+                        <SfDropDownButton  @ref="dropdownBtnPage" IconCss="sf-icon-ColorPickers tb-icons"  CssClass="e-caret-hide" Width="36px">
+                            <PopupContent>
+                            <SfColorPicker Inline="true" ID="pageBgColor"  OnClose="ClickHandlerPage" Value="@PageBgColorValue" ValueChange="@OnPageBgColorChange" ></SfColorPicker>
+                            </PopupContent>
+                        </SfDropDownButton>
+            </div>
+            <div class="col-xs-6 db-col-right">
+                   <span style="margin-left: -70px; line-height: 28px; font-size: smaller;">Background Color</span>
+            </div>
+        </div>
+        <div class="row db-prop-row" style="margin-top:10px">
+            <SfCheckBox ID="showPageBreaks" Label="Page Breaks" @bind-Checked="@ShowPageBreaksValue" @onchange="@OnShowPageBreaksChange"></SfCheckBox>
+        </div>
+    </div>
+    <div id='nodePropertyContainer' class="@nodePanelClass" style="display:@NodePropertyVisibility">
+        <div class="db-node-behaviour-prop">
             <div class="row db-prop-header-text">
-                Page Settings
+                Dimensions
             </div>
             <div class="row db-prop-row">
-                <SfDropDownList TValue="string" TItem="PaperListFields" PopupHeight="230px" DataSource="@PaperList" @bind-Value="@PaperListValue">
-                    <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-                    <DropDownListEvents TValue="string" TItem="PaperListFields" ValueChange="@OnPaperListValueChange"></DropDownListEvents>
-                </SfDropDownList>
-            </div>
-            <div class="row db-prop-row" id="pageOrientation">
-                <div class="col-xs-3 db-prop-col-style" style="margin-right: 8px;width: 30%;">
-                    <SfRadioButton ID="pagePortrait" Name="pageSettings" TChecked="bool" TValue="bool" Label="Portrait" @bind-Checked="@PagePortraitValue" @onchange="@OnPagePortraitChange">
-                        
-                    </SfRadioButton>
+                <div class="col-xs-6 db-col-left">
+                    <div class="db-text-container">
+                        <div class="db-text">
+                            <span>X</span>
+                        </div>
+                        <div class="db-text-input">
+                            <SfNumericTextBox Value="@NodeOffsetX" ID="nodeOffsetX" ValidateDecimalOnType="true" Decimals=0 Format="n0">
+                                <NumericTextBoxEvents TValue="double" ValueChange="@OnNodeOffsetXChange"></NumericTextBoxEvents>
+                            </SfNumericTextBox>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-xs-3 db-prop-col-style">
-                    <SfRadioButton ID="pageLandscape" Name="pageSettings" TChecked="bool" TValue="bool" Value="true" Label="Landscape" @bind-Checked="@PageLandscapeValue" @onchange="@OnPageLandscapeChange"></SfRadioButton>
+                <div class="col-xs-6 db-col-right">
+                    <div class="db-text-container">
+                        <div class="db-text">
+                            <span>Y</span>
+                        </div>
+                        <div class="db-text-input">
+                            <SfNumericTextBox Value="@NodeOffsetY" ID="nodeOffsetY" ValidateDecimalOnType="true" Decimals=0 Format="n0">
+                                <NumericTextBoxEvents TValue="double" ValueChange="@OnNodeOffsetYChange"></NumericTextBoxEvents>
+                            </SfNumericTextBox>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="row db-prop-row" id='pageDimension' style="display:none">
+            <div class="row db-prop-row">
                 <div class="col-xs-6 db-col-left">
                     <div class="db-text-container">
                         <div class="db-text">
                             <span>W</span>
                         </div>
                         <div class="db-text-input">
-                            <SfNumericTextBox Value="@PageWidth" ID="pageWidth"  ValidateDecimalOnType="true" Decimals=0 Format="n0">
-                                <NumericTextBoxEvents TValue="double" ValueChange="@OnPageWidthChange"></NumericTextBoxEvents>
+                            <SfNumericTextBox Value="@NodeWidth" ID="nodeWidth" Min="1" ValidateDecimalOnType="true" Decimals=0 Format="n0">
+                                <NumericTextBoxEvents TValue="double" ValueChange="@OnNodeWidthChange"></NumericTextBoxEvents>
                             </SfNumericTextBox>
                         </div>
                     </div>
@@ -52,8 +126,8 @@
                             <span>H</span>
                         </div>
                         <div class="db-text-input">
-                            <SfNumericTextBox Value="@PageHeight" ID="pageHeight"  ValidateDecimalOnType="true" Decimals=0 Format="n0">
-                                <NumericTextBoxEvents TValue="double" ValueChange="@OnPageHeightChange"></NumericTextBoxEvents>
+                            <SfNumericTextBox Value="@NodeHeight" ID="nodeHeight" Min="1" ValidateDecimalOnType="true" Decimals=0 Format="n0">
+                                <NumericTextBoxEvents TValue="double" ValueChange="@OnNodeHeightChange"></NumericTextBoxEvents>
                             </SfNumericTextBox>
                         </div>
                     </div>
@@ -61,468 +135,406 @@
             </div>
             <div class="row db-prop-row">
                 <div class="col-xs-6 db-col-left">
-                    <div class="db-color-container">
-                        <div class="db-color-input" style="width:100%">
-                            <SfColorPicker ID="pageBgColor" Mode="ColorPickerMode.Palette" Value="@PageBgColorValue" ValueChange="@OnPageBgColorChange"></SfColorPicker>
-                        </div>
-                        <div class="db-color-btn">
-                            <SfButton ID="pageBgColorPickerBtn" IconCss="sf-icon-ColorPickers tb-icons"></SfButton>
-                        </div>
-                    </div>
+                    <SfCheckBox ID="aspectRatio" Label="Aspect Ratio" @bind-Checked="@NodeAspectRatio" @onchange="@OnChangeAspectRatio"></SfCheckBox>
                 </div>
             </div>
             <div class="row db-prop-row">
-                <SfCheckBox ID="showPageBreaks" Label="Page Breaks" @bind-Checked="@ShowPageBreaksValue" @onchange="@OnShowPageBreaksChange"></SfCheckBox>
-            </div>
-        </div>
-        <div id='nodePropertyContainer' class="db-node-prop-container" style="display:none">
-            <div class="db-node-behaviour-prop">
-                <div class="row db-prop-header-text">
-                    Dimensions
-                </div>
-                <div class="row db-prop-row">
-                    <div class="col-xs-6 db-col-left">
-                        <div class="db-text-container">
-                            <div class="db-text">
-                                <span>X</span>
-                            </div>
-                            <div class="db-text-input">
-                                <SfNumericTextBox Value="@NodeOffsetX" ID="nodeOffsetX"  ValidateDecimalOnType="true" Decimals=0 Format="n0">
-                                    <NumericTextBoxEvents TValue="double" ValueChange="@OnNodeOffsetXChange"></NumericTextBoxEvents>
-                                </SfNumericTextBox>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-6 db-col-right">
-                        <div class="db-text-container">
-                            <div class="db-text">
-                                <span>Y</span>
-                            </div>
-                            <div class="db-text-input">
-                                <SfNumericTextBox Value="@NodeOffsetY" ID="nodeOffsetY"  ValidateDecimalOnType="true" Decimals=0 Format="n0">
-                                    <NumericTextBoxEvents TValue="double" ValueChange="@OnNodeOffsetYChange"></NumericTextBoxEvents>
-                                </SfNumericTextBox>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row db-prop-row">
-                    <div class="col-xs-6 db-col-left">
-                        <div class="db-text-container">
-                            <div class="db-text">
-                                <span>W</span>
-                            </div>
-                            <div class="db-text-input">
-                                <SfNumericTextBox Value="@NodeWidth" ID="nodeWidth" Min="1"  ValidateDecimalOnType="true" Decimals=0 Format="n0">
-                                    <NumericTextBoxEvents TValue="double" ValueChange="@OnNodeWidthChange"></NumericTextBoxEvents>
-                                </SfNumericTextBox>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-6 db-col-right">
-                        <div class="db-text-container">
-                            <div class="db-text">
-                                <span>H</span>
-                            </div>
-                            <div class="db-text-input">
-                                <SfNumericTextBox Value="@NodeHeight" ID="nodeHeight" Min="1"  ValidateDecimalOnType="true" Decimals=0 Format="n0">
-                                    <NumericTextBoxEvents TValue="double" ValueChange="@OnNodeHeightChange"></NumericTextBoxEvents>
-                                </SfNumericTextBox>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row db-prop-row">
-                    <div class="col-xs-6 db-col-left">
-                        <SfCheckBox ID="aspectRatio" Label="Aspect Ratio" @bind-Checked="@NodeAspectRatio" @onchange="@OnChangeAspectRatio"></SfCheckBox>
-                    </div>
-                </div>
-                <div class="row db-prop-row">
-                    <div class="col-xs-6 db-col-left">
-                        <span class="db-prop-text-style">Rotate</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-6 db-col-left">
-                        <div class="db-text-container">
-                            <div class="db-text">
-                                <SfButton ID="rotateIconBtn" IconCss="sf-icon-Rotate1 tb-icons"></SfButton>
-                            </div>
-                            <div class="db-text-input">
-                                <SfNumericTextBox ID="nodeRotateAngle" Format="n0"  ValidateDecimalOnType="true" Decimals=0 Value="@NodeRotateAngle">
-                                    <NumericTextBoxEvents TValue="double" ValueChange="@OnNodeRotateAngleChange"></NumericTextBoxEvents>
-                                </SfNumericTextBox>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="db-prop-separator">
-                </div>
-                <div class="row db-prop-header-text">
-                    Insert
-                </div>
-                <div class="row db-prop-row">
-                    <div class="col-xs-6 db-col-left">
-                        <SfToolbar ID="toolbarNodeInsert" OverflowMode="@OverflowMode.Scrollable">
-                            <ToolbarEvents Clicked="@ToolbarInsertClick"></ToolbarEvents>
-                            <ToolbarItems>
-                                <ToolbarItem PrefixIcon="sf-icon-InsertLink tb-icons" TooltipText="Insert Link" CssClass="tb-item-start"></ToolbarItem>
-                                <ToolbarItem PrefixIcon="sf-icon-InsertImage tb-icons" TooltipText="Insert Image" CssClass="tb-item-end"></ToolbarItem>
-                            </ToolbarItems>
-                        </SfToolbar>
-                    </div>
-                </div>
-                <div class="db-prop-separator">
+                <div class="col-xs-6 db-col-left">
+                    <span class="db-prop-text-style">Rotate</span>
                 </div>
             </div>
-            <div id='nodeStyleProperties' class="db-node-style-prop">
-                <div class="row db-background-style">
-                    <div class="row db-prop-header-text">
-                        Background and Border Styles
-                    </div>
-                    <div class="row db-prop-row">
-                        <div class="col-xs-6 db-col-left">
-                            <div class="db-color-container">
-                                <div class="db-color-input">
-                                    <SfColorPicker ID="nodeFillColor" Mode="ColorPickerMode.Palette" Value="@NodeFillColor" ValueChange="@OnFillColorChange"></SfColorPicker>
-                                </div>
-                                <div class="db-color-btn">
-                                    <SfButton ID="fillColorIconBtn" IconCss="sf-icon-ColorPickers tb-icons"></SfButton>
-                                </div>
-                            </div>
+            <div class="row">
+                <div class="col-xs-6 db-col-left">
+                    <div class="db-text-container">
+                        <div class="db-text">
+                            <SfButton ID="rotateIconBtn" IconCss="sf-icon-Rotate1 tb-icons"></SfButton>
                         </div>
-                    </div>
-                    <div id='gradientStyle' class="row db-prop-row db-gradient-style-hide">
-                        <div class="col-xs-4 db-col-left">
-                            <SfCheckBox ID="gradient" Label="Gradient" @onchange="@EnableGradient" @bind-Checked="@IsGradient"></SfCheckBox>
-                        </div>
-                        <div class="col-xs-4 db-col-center">
-                            <SfDropDownList ID="gradientDirectionDropdown" TValue="string" Index="NodeGradientDircIndex" TItem="GradientDirectionsFields" PopupWidth="200px" DataSource="@GradientDirections" @bind-Value="@NodeGradientDirection">
-                                <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-                                <DropDownListEvents TValue="string" TItem="GradientDirectionsFields" ValueChange="@OnGradientDirectionChange"></DropDownListEvents>
-                            </SfDropDownList>
-                        </div>
-                        <div class="col-xs-4 db-col-right">
-                            <div class="db-color-container">
-                                <div class="db-color-input">
-                                    <SfColorPicker ID="nodeGradientColor" Value="@NodeGradientColor" Mode="ColorPickerMode.Palette" ValueChange="@OnNodeGradientColorChange"></SfColorPicker>
-                                </div>
-                                <div class="db-color-btn">
-                                    <SfButton ID="gradientColorIconBtn" IconCss="sf-icon-ColorPickers tb-icons"></SfButton>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row db-border-style">
-                    <div class="row db-prop-header-text db-border-style-header">
-                        Border/Line Styles
-                    </div>
-                    <div class="row db-prop-row">
-                        <div class="col-xs-4 db-col-right">
-                            <span class="db-prop-text-style">Stroke Color</span>
-                        </div>
-                        <div class="col-xs-4 db-col-center">
-                            <span class="db-prop-text-style">Stroke Style</span>
-                        </div>
-                        <div class="col-xs-4 db-col-left">
-                            <span class="db-prop-text-style">Stroke Width</span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-4 db-col-left">
-                            <div class="db-color-container">
-                                <div class="db-color-input">
-                                    <SfColorPicker ID="nodeStrokeColor" Mode="ColorPickerMode.Palette" Value="@NodeStrokeColor" ValueChange="@OnStrokeColorChange"></SfColorPicker>
-                                </div>
-                                <div class="db-color-btn">
-                                    <SfButton ID="strokeColorIconBtn" IconCss="sf-icon-Pickers tb-icons"></SfButton>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-4 db-col-center">
-                            <SfDropDownList TValue="string" TItem="BorderStylesFields" Index ="NodeStrokeValue" PopupWidth="160px" DataSource="@BorderStyles">
-                                <DropDownListTemplates TItem="BorderStylesFields">
-                                    <ItemTemplate>
-                                        <div class='db-ddl-template-style'>
-                                            <span class=@((context as BorderStylesFields).ClassName)></span>
-                                        </div>
-                                    </ItemTemplate>
-                                    <ValueTemplate>
-                                        <div class='db-ddl-template-style'>
-                                            <span class=@((context as BorderStylesFields).ClassName)></span>
-                                        </div>
-                                    </ValueTemplate>
-                                </DropDownListTemplates>
-                                <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-                                <DropDownListEvents TValue="string" TItem="BorderStylesFields" ValueChange="@OnStrokeDashArrayChange"></DropDownListEvents>
-                            </SfDropDownList>
-                        </div>
-                        <div class="col-xs-4 db-col-right">
-                            <SfNumericTextBox ID="nodeStrokeWidth" Min="0" Max="50" Step="0.5"  ValidateDecimalOnType="true" Decimals=2 Value="@NodeStrokeWidth">
-                                <NumericTextBoxEvents TValue="double" ValueChange="@OnStrokeWidthChange"></NumericTextBoxEvents>
+                        <div class="db-text-input">
+                            <SfNumericTextBox ID="nodeRotateAngle" Format="n0" ValidateDecimalOnType="true" Decimals=0 @bind-Value="@NodeRotateAngle">
+                                <NumericTextBoxEvents TValue="double" ValueChange="@OnNodeRotateAngleChange"></NumericTextBoxEvents>
                             </SfNumericTextBox>
                         </div>
                     </div>
-                    <div class="row db-prop-row">
-                        <div class="col-xs-2 db-col-right db-prop-text-style" style="padding-top: 6px">
-                            <span class="db-prop-text-style">Opacity</span>
-                        </div>
-                        <div class="col-xs-8 db-col-left" style="padding-right:10px">
-                            <SfSlider ID="nodeOpacitySlider" Type="SliderType.MinRange" Value="@NodeOpacity" Min="0" Max="100" Step="10">
-                                <SliderEvents TValue="double" OnChange="@(e => { OnNodeOpacityChange(e.Value); })"></SliderEvents>
-                            </SfSlider>
-                        </div>
-                        <div class="col-xs-2 db-col-right">
-                            <input id="nodeOpacitySliderText" type="text" value='100%' readOnly="readonly" class="db-readonly-input" />
-                        </div>
-                    </div>
                 </div>
             </div>
-        </div>
-        <div id='connectorPropertyContainer' class="db-connector-prop-container" style="display:none">
-            <div class="row db-prop-header-text">
-                Connector Properties
-            </div>
-            <div class="row db-prop-row">
-                <div class="col-xs-6 db-col-left db-prop-text-style">
-                    <span class="db-prop-text-style">Connector Type</span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-6 db-col-left">
-                    <SfDropDownList ID="lineTypeDropdown" TValue="string" TItem="LineTypeFields" PopupHeight="230px" DataSource="@LineType" @bind-Value="@ConnectorType">
-                        <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-                        <DropDownListEvents TValue="string" TItem="LineTypeFields" ValueChange="@OnConnectorTypeChange"></DropDownListEvents>
-                    </SfDropDownList>
-                </div>
-            </div>
-            <div class="row db-prop-row">
-                <div class="col-xs-6 db-col-left">
-                    <div class="db-color-container">
-                        <div class="db-color-input">
-                            <SfColorPicker ID="lineColor" Mode="ColorPickerMode.Palette" Value="@ConnectorStrokeColor" ValueChange="@OnStrokeColorChange"></SfColorPicker>
-                        </div>
-                        <div class="db-color-btn">
-                            <SfButton ID="lineColorIconBtn" IconCss="sf-icon-Pickers tb-icons"></SfButton>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row db-prop-row">
-                <div class="col-xs-8 db-col-left db-prop-text-style">
-                    <span class="db-prop-text-style">Stroke Style</span>
-                </div>
-                <div class="col-xs-4 db-col-right db-prop-text-style">
-                    <span class="db-prop-text-style">Thickness</span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-8 db-col-left">
-                    <SfDropDownList TValue="string" TItem="BorderStylesFields" Index ="ConnectorStrokeValue" PopupWidth="160px" DataSource="@BorderStyles">
-                        <DropDownListTemplates TItem="BorderStylesFields">
-                            <ItemTemplate>
-                                <div class='db-ddl-template-style'>
-                                    <span class=@((context as BorderStylesFields).ClassName)></span>
-                                </div>
-                            </ItemTemplate>
-                            <ValueTemplate>
-                                <div class='db-ddl-template-style'>
-                                    <span class=@((context as BorderStylesFields).ClassName)></span>
-                                </div>
-                            </ValueTemplate>
-                        </DropDownListTemplates>
-                        <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-                        <DropDownListEvents TValue="string" TItem="BorderStylesFields" ValueChange="@OnStrokeDashArrayChange"></DropDownListEvents>
-                    </SfDropDownList>
-                </div>
-                <div class="col-xs-4 db-col-right">
-                    <SfNumericTextBox ID="lineWidth" Min="0.5" Max="50" Step="0.5"  ValidateDecimalOnType="true" Decimals=2 Value="@ConnectorStrokeWidth">
-                        <NumericTextBoxEvents TValue="double" ValueChange="@OnStrokeWidthChange"></NumericTextBoxEvents>
-                    </SfNumericTextBox>
-                </div>
-            </div>
-            <div class="row db-prop-row">
-                <div class="col-xs-8 db-col-left db-prop-text-style">
-                    <span class="db-prop-text-style">Start Arrow</span>
-                </div>
-                <div class="col-xs-4 db-col-right db-prop-text-style">
-                    <span class="db-prop-text-style">Size</span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-8 db-col-left">
-                    <SfDropDownList ID="sourceType" TValue="string" TItem="DecoratorListFields" PopupWidth="160px" DataSource="@DecoratorList" @bind-Value="@ConnectorSrcShape">
-                        <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-                        <DropDownListEvents TValue="string" TItem="DecoratorListFields" ValueChange="@OnConnectorSourceShapeChange"></DropDownListEvents>
-                    </SfDropDownList>
-                </div>
-                <div class="col-xs-4 db-col-right">
-                    <SfNumericTextBox ID="sourceSize" Min="1" Step="1"  ValidateDecimalOnType="true" Decimals=0 Value="@ConnectorSrcShapeSize">
-                        <NumericTextBoxEvents TValue="double" ValueChange="@OnConnectorSourceShapeSizeChange"></NumericTextBoxEvents>
-                    </SfNumericTextBox>
-                </div>
-            </div>
-            <div class="row db-prop-row">
-                <div class="col-xs-8 db-col-left db-prop-text-style">
-                    <span class="db-prop-text-style">End Arrow</span>
-                </div>
-                <div class="col-xs-4 db-col-right db-prop-text-style">
-                    <span class="db-prop-text-style">Size</span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-8 db-col-left">
-                    <SfDropDownList ID="targetType" TValue="string" TItem="DecoratorListFields" PopupWidth="160px" DataSource="@DecoratorList" @bind-Value="@ConnectortarShape">
-                        <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-                        <DropDownListEvents TValue="string" TItem="DecoratorListFields" ValueChange="@OnConnectorTargetShapeChange"></DropDownListEvents>
-                    </SfDropDownList>
-                </div>
-                <div class="col-xs-4 db-col-right">
-                    <SfNumericTextBox ID="targetSize" Min="1" Step="1"  ValidateDecimalOnType="true" Decimals=0 Value="@ConnectortarShapeSize">
-                        <NumericTextBoxEvents TValue="double" ValueChange="@OnConnectorTargetShapeSizeChange"></NumericTextBoxEvents>
-                    </SfNumericTextBox>
-                </div>
-            </div>
-            <div class="row db-prop-row">
-                <div class="col-xs-8 db-col-left" style="margin-top:5px">
-                    <SfCheckBox ID="lineJump" Label="Bridging" @bind-Checked="@OnConnectorBridge" @onchange="@OnConnectorBridgingChange"></SfCheckBox>
-                </div>
-                <div class="col-xs-4 db-col-right" id="lineJumpSizeDiv" style="display:none">
-                    <SfNumericTextBox ID="lineJumpSize" Min="1" Step="1"  ValidateDecimalOnType="true" Decimals=0 Value="@ConnectorBridgeSize">
-                        <NumericTextBoxEvents TValue="double" ValueChange="@OnConnectorBridgeSizeChange"></NumericTextBoxEvents>
-                    </SfNumericTextBox>
-                </div>
-            </div>
-            <div class="row db-prop-row">
-                <div class="col-xs-2 db-col-right db-prop-text-style" style="padding-top: 6px">
-                    <span class="db-prop-text-style">Opacity</span>
-                </div>
-                <div class="col-xs-8 db-col-left" style="padding-right:10px">
-                    <SfSlider ID="connectorOpacitySlider" Type="SliderType.MinRange" Value="@ConnectorOpacity" Min="0" Max="100" Step="10">
-                        <SliderEvents TValue="double" OnChange="@(e => { OnConnectorOpacityChange(e.Value); })"></SliderEvents>
-                    </SfSlider>
-                </div>
-                <div class="col-xs-2 db-col-right">
-                    <input type="text" id="connectorOpacitySliderText" value='100%' readonly="readonly" class="db-readonly-input" />
-                </div>
-            </div>
-        </div>
-        <div id='textPropertyContainer' class="db-text-prop-container" style="display:none">
             <div class="db-prop-separator">
             </div>
             <div class="row db-prop-header-text">
-                Text
-            </div>
-            <div class="row db-prop-row">
-                <div class="col-xs-8 db-col-left">
-                    <SfDropDownList ID="fontFamily" TValue="string" TItem="FontFamilyListFields" DataSource="@FontFamilyList" @bind-Value="@TextFontFamily">
-                        <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-                        <DropDownListEvents TValue="string" TItem="FontFamilyListFields" ValueChange="@OnFontFamilyChange"></DropDownListEvents>
-                    </SfDropDownList>
-                </div>
-                <div class="col-xs-4 db-col-right">
-                    <SfNumericTextBox ID="fontSizeTextProperties" Min="1" Step="1"  ValidateDecimalOnType="true" Decimals=0 Value="@TextFontSize">
-                        <NumericTextBoxEvents TValue="double" ValueChange="@OnTextFontSizeChanged"></NumericTextBoxEvents>
-                    </SfNumericTextBox>
-                </div>
-            </div>
-            <div class="row db-prop-row">
-                <div class="col-xs-6 db-col-left" id="textPositionDiv">
-                    <SfDropDownList ID="ddlTextPosition" TValue="string" TItem="TextPositionFields" DataSource="@TextPosition" @bind-Value="@TextPositionValue">
-                        <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-                        <DropDownListEvents TValue="string" TItem="TextPositionFields" ValueChange="@OnTextPositionChange"></DropDownListEvents>
-                    </SfDropDownList>
-                </div>
-                <div class="col-xs-6 db-col-right" id="textColorDiv">
-                    <div class="db-color-container">
-                        <div class="db-color-input">
-                            <SfColorPicker ID="textColor" Value="@TextColor" Mode="ColorPickerMode.Palette" ValueChange="@OnTextColorChange"></SfColorPicker>>
-                        </div>
-                        <div class="db-color-btn">
-                            <SfButton ID="fontColorBtn" IconCss="sf-icon-ColorPickers tb-icons"></SfButton>
-                        </div>
-                    </div>
-                </div>
+                Insert
             </div>
             <div class="row db-prop-row">
                 <div class="col-xs-6 db-col-left">
-                    <SfToolbar ID="toolbarTextStyle" OverflowMode="@OverflowMode.Scrollable">
-                        <ToolbarEvents Clicked="@OnTextStyleClick"></ToolbarEvents>
+                    <SfToolbar ID="toolbarNodeInsert" OverflowMode="@OverflowMode.Scrollable">
+                        <ToolbarEvents Clicked="@ToolbarInsertClick"></ToolbarEvents>
                         <ToolbarItems>
-                            <ToolbarItem PrefixIcon="sf-icon-Bold tb-icons" TooltipText="Bold" CssClass="@BoldCss"></ToolbarItem>
-                            <ToolbarItem PrefixIcon="sf-icon-Italic tb-icons" TooltipText="Italic" CssClass="@ItalicCss"></ToolbarItem>
-                            <ToolbarItem PrefixIcon="sf-icon-Underline tb-icons" TooltipText="Underline" CssClass="@UnderlineCss"></ToolbarItem>
-                        </ToolbarItems>
-                    </SfToolbar>
-                </div>
-                <div class="col-xs-6 db-col-right">
-                    <SfToolbar ID="toolbarTextSubAlignment" OverflowMode="@OverflowMode.Scrollable">
-                        <ToolbarEvents Clicked="@OnTextSubAlignmentClick"></ToolbarEvents>
-                        <ToolbarItems>
-                            <ToolbarItem PrefixIcon="sf-icon-ParaAlignLeft tb-icons" TooltipText="Align Text Left" CssClass="@AlignTextLeftCss"></ToolbarItem>
-                            <ToolbarItem PrefixIcon="sf-icon-ParaAlignCenter tb-icons" TooltipText="Align Text Center" CssClass="@AlignTextCenterCss"></ToolbarItem>
-                            <ToolbarItem PrefixIcon="sf-icon-ParaAlignRight tb-icons" TooltipText="Align Text Right" CssClass="@AlignTextRightCss"></ToolbarItem>
+                            <ToolbarItem PrefixIcon="e-icons sf-icon-InsertLink tb-icons" TooltipText="Insert Link" CssClass="tb-item-start"></ToolbarItem>
+                            <ToolbarItem PrefixIcon="e-icons sf-icon-InsertImage tb-icons" TooltipText="Insert Image" CssClass="tb-item-end"></ToolbarItem>
                         </ToolbarItems>
                     </SfToolbar>
                 </div>
             </div>
-            <div class="row db-prop-row" id='toolbarTextAlignmentDiv'>
-                <SfToolbar ID="toolbarTextAlignment" OverflowMode="@OverflowMode.Scrollable">
-                    <ToolbarEvents Clicked="@OnTextAlignmentClick"></ToolbarEvents>
-                    <ToolbarItems>
-                        <ToolbarItem PrefixIcon="sf-icon-TextLeft tb-icons" TooltipText="Align Right" CssClass="@HorAlignRightCss"></ToolbarItem>
-                        <ToolbarItem PrefixIcon="sf-icon-TextVerticalCenter tb-icons" TooltipText="Align Center" CssClass="@HorAlignCenterCss"></ToolbarItem>
-                        <ToolbarItem PrefixIcon="sf-icon-TextRight tb-icons" TooltipText="Align Left" CssClass="@HorAlignLeftCss"></ToolbarItem>
-                        <ToolbarItem PrefixIcon="sf-icon-TextTop tb-icons" TooltipText="Align Bottom" CssClass="@VerAlignBottomCss"></ToolbarItem>
-                        <ToolbarItem PrefixIcon="sf-icon-TextHorizontalCenter tb-icons" TooltipText="Align Middle" CssClass="@VerAlignMiddleCss"></ToolbarItem>
-                        <ToolbarItem PrefixIcon="sf-icon-TextBottom tb-icons" TooltipText="Align Top" CssClass="@VerAlignTopCss"></ToolbarItem>
-                    </ToolbarItems>
-                </SfToolbar>
+            <div class="db-prop-separator">
             </div>
-            <div class="row db-prop-row">
-                <div class="col-xs-2 db-col-right db-prop-text-style" style="padding-top: 6px">
-                    <span class="db-prop-text-style">Opacity</span>
+        </div>
+        <div id='nodeStyleProperties' class="db-node-style-prop">
+            <div class="row db-background-style">
+                <div class="row db-prop-header-text">
+                    Background and Border Styles
                 </div>
-                <div class="col-xs-8 db-col-left" style="padding-right:10px">
-                    <SfSlider ID="textOpacitySlider" Type="SliderType.MinRange" Value="@TextOpacity" Min="0" Max="100" Step="10">
-                        <SliderEvents TValue="double" OnChange="@(e => { OnTextOpacityChange(e.Value); })"></SliderEvents>
-                    </SfSlider>
+                <div class="row db-prop-row" style="width:100%">
+                    <div class="col-xs-6 db-col-left">
+                        <SfDropDownButton  @ref="dropdownBtnNode" IconCss="sf-icon-ColorPickers tb-icons"  CssClass="e-caret-hide" Width="36px">
+                            <PopupContent>
+                            <SfColorPicker Inline="true" ID="nodeFillColor"  OnClose="ClickHandlerNode" Value="@NodeFillColor" ValueChange="@OnFillColorChange" ></SfColorPicker>
+                            </PopupContent>
+                        </SfDropDownButton>
+                    </div>
+            <div class="col-xs-6 db-col-right">
+                   <span style="margin-left: -55px; line-height: 28px; font-size: smaller;">Fill Color</span>
+            </div>
                 </div>
-                <div class="col-xs-2 db-col-right">
-                    <input id='textOpacityText' type="text" value='100%' class="db-readonly-input" readOnly="readonly" />
+                <div id='@gradientStyleId' class="@gradientStyleClass" style="@gradientVisibility">
+                    <div class="col-xs-4 db-col-left">
+                        <SfCheckBox ID="gradient" Label="Gradient" @onchange="@EnableGradient" @bind-Checked="@IsGradient"></SfCheckBox>
+                    </div>
+                    <div class="col-xs-4 db-col-center">
+                        <SfDropDownList ID="gradientDirectionDropdown" TValue="string" TItem="GradientDirectionsFields" PopupWidth="200px" Index="@NodeGradientDircIndex" DataSource="@GradientDirections" Value="@NodeGradientDirection">
+                            <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+                            <DropDownListEvents TValue="string" TItem="GradientDirectionsFields" ValueChange="@OnGradientDirectionChange"></DropDownListEvents>
+                        </SfDropDownList>
+                    </div>
+                    <div class="col-xs-4 db-col-right">
+                        <div >
+                            <SfDropDownButton  @ref="dropdownBtnGradient" IconCss="sf-icon-ColorPickers tb-icons"  CssClass="e-caret-hide" Width="36px">
+                            <PopupContent>
+                            <SfColorPicker Inline="true" ID="nodeGradientColor"  OnClose="ClickHandlerGradient" Value="@NodeGradientColor" ValueChange="@OnNodeGradientColorChange" ></SfColorPicker>
+                            </PopupContent>
+                        </SfDropDownButton>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row db-border-style">
+                <div class="row db-prop-header-text db-border-style-header">
+                    Border/Line Styles
+                </div>
+                <div class="row db-prop-row" style="width:100%">
+                    <div class="col-xs-4 db-col-right">
+                        <span class="db-prop-text-style">Stroke Color</span>
+                    </div>
+                    <div class="col-xs-4 db-col-center">
+                        <span class="db-prop-text-style">Stroke Style</span>
+                    </div>
+                    <div class="col-xs-4 db-col-left">
+                        <span class="db-prop-text-style">Stroke Width</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 db-col-left">
+                        <div >
+                            <div >
+                                <SfColorPicker ID="nodeStrokeColor" Mode="ColorPickerMode.Palette" Value="@NodeStrokeColor" ValueChange="@OnStrokeColorChange"></SfColorPicker>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 db-col-center">
+                        <SfDropDownList TValue="string" TItem="BorderStylesFields" PopupWidth="160px" Index="@NodeStrokeStyle" DataSource="@BorderStyles">
+                            <DropDownListTemplates TItem="BorderStylesFields">
+                                <ItemTemplate>
+                                    <div class='db-ddl-template-style'>
+                                        <span class=@((context as BorderStylesFields).ClassName)></span>
+                                    </div>
+                                </ItemTemplate>
+                                <ValueTemplate>
+                                    <div class='db-ddl-template-style'>
+                                        <span class=@((context as BorderStylesFields).ClassName)></span>
+                                    </div>
+                                </ValueTemplate>
+                            </DropDownListTemplates>
+                            <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+                            <DropDownListEvents TValue="string" TItem="BorderStylesFields" ValueChange="@OnStrokeDashArrayChange"></DropDownListEvents>
+                        </SfDropDownList>
+                    </div>
+                    <div class="col-xs-4 db-col-right">
+                        <SfNumericTextBox ID="nodeStrokeWidth" Min="0" Step="0.5" ValidateDecimalOnType="true" Decimals=2 Value="@NodeStrokeWidth">
+                            <NumericTextBoxEvents TValue="double" ValueChange="@OnStrokeWidthChange"></NumericTextBoxEvents>
+                        </SfNumericTextBox>
+                    </div>
+                </div>
+                <div class="row db-prop-row">
+                    <div class="col-xs-2 db-col-right db-prop-text-style" style="padding-top: 6px">
+                        <span class="db-prop-text-style">Opacity</span>
+                    </div>
+                    <div class="col-xs-8 db-col-left" style="padding-right:10px">
+                        <SfSlider @ref="SfSlide" ID="nodeOpacitySlider" Type="SliderType.MinRange" @bind-Value="@NodeOpacity" Min="0" Max="100" Step="10">
+                            <SliderEvents TValue="double" OnChange="@(e => { OnNodeOpacityChange(e.Value); })" ></SliderEvents>
+                        </SfSlider>
+                    </div>
+                    <div class="col-xs-2 db-col-right">
+                        <input id="nodeOpacitySliderText" type="text" value="@NodeOpacity" readOnly="readonly" class="db-readonly-input" />
+                    </div>
                 </div>
             </div>
         </div>
-        <SfDialog ID="insert_link_dialog" @ref="@TextHyperLink" @bind-Visible="@InsertLinkVisible" Width="400px" ShowCloseIcon="true" IsModal="true">
-            <DialogTemplates>
-                <Header>
-                    Insert Link
-                </Header>
-                <Content>
-                    <div id="hyperlinkDialogContent">
-                        <div class="row">
-                            <div class="row">Enter URL</div><div class="row db-dialog-child-prop-row">
-                                <input type="text" id="hyperlink">
-                            </div>
-                        </div><div class="row db-dialog-prop-row">
-                            <div class="row">Link Text (Optional)</div>
-                            <div class="row db-dialog-child-prop-row"><input type="text" id="hyperlinkText"></div>
-                        </div>
-                    </div>
-                </Content>
-            </DialogTemplates>
-            <DialogButtons>
-                <DialogButton OnClick="@ApplyAnnotationLink"  Content="Apply" IsPrimary="true" CssClass="e-flat e-db-primary">
-                </DialogButton>
-                <DialogButton OnClick="@CancelAnnotationLink"Content="Cancel" IsPrimary="true" CssClass="e-flat">
-                </DialogButton>
-            </DialogButtons>
-        </SfDialog>
     </div>
+    <div id='connectorPropertyContainer' class="db-connector-prop-container" style="display:@ConnectorPropertyVisibility">
+        <div class="row db-prop-header-text">
+            Connector Properties
+        </div>
+        <div class="row db-prop-row">
+            <div class="col-xs-6 db-col-left db-prop-text-style">
+                <span class="db-prop-text-style">Connector Type</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 db-col-left">
+                <SfDropDownList ID="lineTypeDropdown" TValue="string" TItem="LineTypeFields" PopupHeight="230px" DataSource="@LineType" @bind-Value="@ConnectorType">
+                    <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+                    <DropDownListEvents TValue="string" TItem="LineTypeFields" ValueChange="@OnConnectorTypeChange"></DropDownListEvents>
+                </SfDropDownList>
+            </div>
+        </div>
+        <div class="row db-prop-row">
+            <div class="col-xs-6 db-col-left">
+                <div >
+                    <div >
+                        <SfColorPicker ID="lineColor" Mode="ColorPickerMode.Palette" @bind-Value="@ConnectorStrokeColor" ValueChange="@OnStrokeColorChange"></SfColorPicker>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row db-prop-row">
+            <div class="col-xs-8 db-col-left db-prop-text-style">
+                <span class="db-prop-text-style">Stroke Style</span>
+            </div>
+            <div class="col-xs-4 db-col-right db-prop-text-style">
+                <span class="db-prop-text-style">Thickness</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-8 db-col-left">
+                 <SfDropDownList TValue="string" TItem="BorderStylesFields" PopupWidth="160px" Index="@ConnectorStrokeStyle" DataSource="@BorderStyles">
+                            <DropDownListTemplates TItem="BorderStylesFields">
+                                <ItemTemplate>
+                                    <div class='db-ddl-template-style'>
+                                        <span class=@((context as BorderStylesFields).ClassName)></span>
+                                    </div>
+                                </ItemTemplate>
+                                <ValueTemplate>
+                                    <div class='db-ddl-template-style'>
+                                        <span class=@((context as BorderStylesFields).ClassName)></span>
+                                    </div>
+                                </ValueTemplate>
+                            </DropDownListTemplates>
+                            <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+                            <DropDownListEvents TValue="string" TItem="BorderStylesFields" ValueChange="@OnStrokeDashArrayChange"></DropDownListEvents>
+                        </SfDropDownList>
+            </div>
+            <div class="col-xs-4 db-col-right">
+                <SfNumericTextBox ID="lineWidth" Min="0.5" Step="0.5" ValidateDecimalOnType="true" Decimals=2 Value="@ConnectorStrokeWidth">
+                    <NumericTextBoxEvents TValue="double" ValueChange="@OnStrokeWidthChange"></NumericTextBoxEvents>
+                </SfNumericTextBox>
+            </div>
+        </div>
+        <div class="row db-prop-row">
+            <div class="col-xs-8 db-col-left db-prop-text-style">
+                <span class="db-prop-text-style">Start Arrow</span>
+            </div>
+            <div class="col-xs-4 db-col-right db-prop-text-style">
+                <span class="db-prop-text-style">Size</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-8 db-col-left">
+                <SfDropDownList ID="sourceType" TValue="string" TItem="DecoratorListFields" PopupWidth="160px"  DataSource="@DecoratorList" @bind-Value="@ConnectorSrcShape">
+                    <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+                    <DropDownListEvents TValue="string" TItem="DecoratorListFields" ValueChange="@OnConnectorSourceShapeChange"></DropDownListEvents>
+                </SfDropDownList>
+            </div>
+            <div class="col-xs-4 db-col-right">
+                <SfNumericTextBox ID="sourceSize" Min="1" Step="1" ValidateDecimalOnType="true" Decimals=0 Value="@ConnectorSrcShapeSize">
+                    <NumericTextBoxEvents TValue="double" ValueChange="@OnConnectorSourceShapeSizeChange"></NumericTextBoxEvents>
+                </SfNumericTextBox>
+            </div>
+        </div>
+        <div class="row db-prop-row">
+            <div class="col-xs-8 db-col-left db-prop-text-style">
+                <span class="db-prop-text-style">End Arrow</span>
+            </div>
+            <div class="col-xs-4 db-col-right db-prop-text-style">
+                <span class="db-prop-text-style">Size</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-8 db-col-left">
+                <SfDropDownList ID="targetType" TValue="string" TItem="DecoratorListFields" PopupWidth="160px"  DataSource="@DecoratorList" @bind-Value="@ConnectortarShape">
+                    <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+                    <DropDownListEvents TValue="string" TItem="DecoratorListFields" ValueChange="@OnConnectorTargetShapeChange"></DropDownListEvents>
+                </SfDropDownList>
+            </div>
+            <div class="col-xs-4 db-col-right">
+                <SfNumericTextBox ID="targetSize" Min="1" Step="1" ValidateDecimalOnType="true" Decimals=0 Value="@ConnectortarShapeSize">
+                    <NumericTextBoxEvents TValue="double" ValueChange="@OnConnectorTargetShapeSizeChange"></NumericTextBoxEvents>
+                </SfNumericTextBox>
+            </div>
+        </div>
+        <div class="row db-prop-row">
+            <div class="col-xs-8 db-col-left" style="margin-top:5px">
+                <SfCheckBox ID="lineJump" Label="Bridging" @bind-Checked="@OnConnectorBridge" @onchange="@OnConnectorBridgingChange"></SfCheckBox>
+            </div>
+            <div class="col-xs-4 db-col-right" id="@lineJumpSizeDiv" style="display:@lineJumpSizeDivDisplay">
+                <SfNumericTextBox ID="lineJumpSize" Min="1" Step="1" ValidateDecimalOnType="true" Decimals=0 Value="@ConnectorBridgeSize">
+                    <NumericTextBoxEvents TValue="double" ValueChange="@OnConnectorBridgeSizeChange"></NumericTextBoxEvents>
+                </SfNumericTextBox>
+            </div>
+        </div>
+        <div class="row db-prop-row">
+            <div class="col-xs-2 db-col-right db-prop-text-style" style="padding-top: 6px">
+                <span class="db-prop-text-style">Opacity</span>
+            </div>
+            <div class="col-xs-8 db-col-left" style="padding-right:10px">
+                <SfSlider @ref="SfSlide1" ID="connectorOpacitySlider" Type="SliderType.MinRange" @bind-Value="@ConnectorOpacity" Min="0" Max="100" Step="10">
+                    <SliderEvents TValue="double" OnChange="@(e => { OnConnectorOpacityChange(e.Value); })"></SliderEvents>
+                </SfSlider>
+            </div>
+            <div class="col-xs-2 db-col-right">
+                <input type="text" id="connectorOpacitySliderText" value="@ConnectorOpacity" readonly="readonly" class="db-readonly-input" />
+            </div>
+        </div>
+    </div>
+    <div id='textPropertyContainer' class="db-text-prop-container" style="display:@TextPropertyVisibility">
+        <div class="db-prop-separator">
+        </div>
+        <div class="row db-prop-header-text">
+            Text
+        </div>
+        <div class="row db-prop-row">
+            <div class="col-xs-8 db-col-left">
+                <SfDropDownList ID="fontFamily" TValue="string" TItem="FontFamilyListFields" DataSource="@FontFamilyList" @bind-Value="@TextFontFamily">
+                    <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+                    <DropDownListEvents TValue="string" TItem="FontFamilyListFields" ValueChange="@OnFontFamilyChange"></DropDownListEvents>
+                </SfDropDownList>
+            </div>
+            <div class="col-xs-4 db-col-right">
+                <SfNumericTextBox ID="fontSizeTextProperties" Min="1" Step="1" ValidateDecimalOnType="true" Decimals=0 Value="@TextFontSize">
+                    <NumericTextBoxEvents TValue="double" ValueChange="@OnTextFontSizeChanged"></NumericTextBoxEvents>
+                </SfNumericTextBox>
+            </div>
+        </div>
+        <div class="row db-prop-row">
+            <div class="col-xs-6 db-col-left" id="textPositionDiv">
+                <SfDropDownList ID="ddlTextPosition" TValue="string" TItem="TextPositionFields" DataSource="@TextPosition" @bind-Value="@TextPositionValue">
+                    <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+                    <DropDownListEvents TValue="string" TItem="TextPositionFields" ValueChange="@OnTextPositionChange"></DropDownListEvents>
+                </SfDropDownList>
+            </div>
+            <div class="col-xs-6 db-col-right" id="textColorDiv">
+                <div >
+                    <div >
+                        <SfColorPicker ID="textColor" Value="@TextColor" Mode="ColorPickerMode.Palette" ValueChange="@OnTextColorChange"></SfColorPicker>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row db-prop-row">
+            <div class="col-xs-6 db-col-left">
+                <SfToolbar ID="toolbarTextStyle" OverflowMode="@OverflowMode.Scrollable">
+                    <ToolbarEvents Clicked="@OnTextStyleClick"></ToolbarEvents>
+                    <ToolbarItems>
+                        <ToolbarItem PrefixIcon="e-icons sf-icon-Bold tb-icons" TooltipText="Bold" CssClass="@BoldCss"></ToolbarItem>
+                        <ToolbarItem PrefixIcon="e-icons sf-icon-Italic tb-icons" TooltipText="Italic" CssClass="@ItalicCss"></ToolbarItem>
+                        <ToolbarItem PrefixIcon="e-icons sf-icon-Underline tb-icons" TooltipText="Underline" CssClass="@UnderlineCss"></ToolbarItem>
+                    </ToolbarItems>
+                </SfToolbar>
+            </div>
+            <div class="col-xs-6 db-col-right">
+                <SfToolbar ID="toolbarTextSubAlignment" OverflowMode="@OverflowMode.Scrollable">
+                    <ToolbarEvents Clicked="@OnTextSubAlignmentClick"></ToolbarEvents>
+                    <ToolbarItems>
+                        <ToolbarItem PrefixIcon="e-icons sf-icon-ParaAlignLeft tb-icons" TooltipText="Align Text Left" CssClass="@AlignTextLeftCss"></ToolbarItem>
+                        <ToolbarItem PrefixIcon="e-icons sf-icon-ParaAlignCenter tb-icons" TooltipText="Align Text Center" CssClass="@AlignTextCenterCss"></ToolbarItem>
+                        <ToolbarItem PrefixIcon="e-icons sf-icon-ParaAlignRight tb-icons" TooltipText="Align Text Right" CssClass="@AlignTextRightCss"></ToolbarItem>
+                    </ToolbarItems>
+                </SfToolbar>
+            </div>
+        </div>
+        <div class="row db-prop-row" id='toolbarTextAlignmentDiv'>
+            <SfToolbar ID="toolbarTextAlignment" OverflowMode="@OverflowMode.Scrollable">
+                <ToolbarEvents Clicked="@OnTextAlignmentClick"></ToolbarEvents>
+                <ToolbarItems>
+                    <ToolbarItem PrefixIcon="e-icons sf-icon-TextLeft tb-icons" TooltipText="Align Right" CssClass="@HorAlignRightCss"></ToolbarItem>
+                    <ToolbarItem PrefixIcon="e-icons sf-icon-TextVerticalCenter tb-icons" TooltipText="Align Center" CssClass="@HorAlignCenterCss"></ToolbarItem>
+                    <ToolbarItem PrefixIcon="e-icons sf-icon-TextRight tb-icons" TooltipText="Align Left" CssClass="@HorAlignLeftCss"></ToolbarItem>
+                    <ToolbarItem PrefixIcon="e-icons sf-icon-TextTop tb-icons" TooltipText="Align Bottom" CssClass="@VerAlignBottomCss"></ToolbarItem>
+                    <ToolbarItem PrefixIcon="e-icons sf-icon-TextHorizontalCenter tb-icons" TooltipText="Align Middle" CssClass="@VerAlignMiddleCss"></ToolbarItem>
+                    <ToolbarItem PrefixIcon="e-icons sf-icon-TextBottom tb-icons" TooltipText="Align Top" CssClass="@VerAlignTopCss"></ToolbarItem>
+                </ToolbarItems>
+            </SfToolbar>
+        </div>
+        <div class="row db-prop-row">
+            <div class="col-xs-2 db-col-right db-prop-text-style" style="padding-top: 6px">
+                <span class="db-prop-text-style">Opacity</span>
+            </div>
+            <div class="col-xs-8 db-col-left" style="padding-right:10px">
+                <SfSlider ID="textOpacitySlider" Type="SliderType.MinRange" Value="@TextOpacity" Min="0" Max="100" Step="10">
+                    <SliderEvents TValue="double" OnChange="@(e => { OnTextOpacityChange(e.Value); })"></SliderEvents>
+                </SfSlider>
+            </div>
+            <div class="col-xs-2 db-col-right">
+                <input id='textOpacityText' type="text" value="@TextOpacity" class="db-readonly-input" readOnly="readonly" />
+            </div>
+        </div>
+    </div>
+    <SfDialog ID="insert_link_dialog" @ref="@TextHyperLink" @bind-Visible="@InsertLinkVisible" Width="400px" ShowCloseIcon="true" IsModal="true" AllowPrerender="true">
+        <DialogTemplates>
+            <Header>
+                Insert Link
+            </Header>
+            <Content>
+                <div id="hyperlinkDialogContent">
+                    <div class="row">
+                        <div class="row">Enter URL</div><div class="row db-dialog-child-prop-row">
+                            <input type="text" id="hyperlink" value ="@ValueLink">
+                        </div>
+                    </div><div class="row db-dialog-prop-row">
+                        <div class="row">Link Text (Optional)</div>
+                        <div class="row db-dialog-child-prop-row"><input type="text" id="hyperlinkText" value ="@ValueText"></div>
+                    </div>
+                </div>
+            </Content>
+        </DialogTemplates>
+        <DialogButtons>
+            <DialogButton OnClick="@ApplyAnnotationLink" Content="Apply" IsPrimary="true" CssClass="e-flat e-db-primary">
+            </DialogButton>
+            <DialogButton OnClick="@CancelAnnotationLink" Content="Cancel" IsPrimary="true" CssClass="e-flat">
+            </DialogButton>
+        </DialogButtons>
+    </SfDialog>
+</div>
 
 @code {
     internal DiagramMain Parent;
+    SfSlider<double> SfSlide;
+    SfSlider<double> SfSlide1;
+    public string DiagramPropertyVisibility { get; set; } = "block";
+    public string NodePropertyVisibility { get; set; } = "none";
+    public string ConnectorPropertyVisibility { get; set; } = "none";
+    public string TextPropertyVisibility { get; set; } = "none";
+    public string lineJumpSizeDivDisplay { get; set; } = "none";
+    public string  gradientStyleClass { get; set; } = "row db-prop-row db-gradient-style-hide";
+    public string gradientVisibility { get; set; }
+    public string gradientStyleId { get; set; } = "gradientStyle";
+    public string lineJumpSizeDiv { get; set; } = "lineJumpSizeDiv";
+    public string nodePanelClass { get; set; } = "db-node-prop-container";
+    public string ValueLink { get; set; } 
+    public string ValueText { get; set; }
+    public string PageDimensionVisibility { get; set; } = "none";
+    public string PageOrientationVisibility { get; set; }
+    public string PagePortrait { get; set; }
+    public string PageLandscape { get; set; }
+    private SfDropDownButton dropdownBtnPage;
+    private SfDropDownButton dropdownBtnNode;
+    private SfDropDownButton dropdownBtnGradient;
 
     [Inject]
     protected IJSRuntime jsRuntime { get; set; }
@@ -540,11 +552,11 @@
     {
         new PaperListFields(){ Text= "Letter (8.5 in x 11 in)", Value= "Letter", },
         new PaperListFields(){ Text= "Legal (8.5 in x 14 in)", Value= "Legal" },
-        new PaperListFields(){ Text= "Tabloid (279 mm x 432 mm)", Value="Tabloid" },
-        new PaperListFields(){ Text= "A3 (297 mm x 420 mm)", Value="A3" },
-        new PaperListFields(){ Text= "A4 (210 mm x 297 mm)", Value="A4" },
-        new PaperListFields(){ Text= "A5 (148 mm x 210 mm)", Value="A5" },
-        new PaperListFields(){ Text= "A6 (105 mm x 148 mm)", Value="A6" },
+        new PaperListFields(){ Text= "Tabloid (11 in x 17 in)", Value="Tabloid" },
+        new PaperListFields(){ Text= "A3 (11.7 in x 16.53 in)", Value="A3" },
+        new PaperListFields(){ Text= "A4 (8.27 in x 11.7 in)", Value="A4" },
+        new PaperListFields(){ Text= "A5 (5.82 in x 8.27 in)", Value="A5" },
+        new PaperListFields(){ Text= "A6 (4.1 in x 5.8 in)", Value="A6" },
         new PaperListFields(){ Text= "Custom", Value="Custom"}
     };
     #endregion
@@ -572,7 +584,7 @@
     }
     public List<BorderStylesFields> BorderStyles = new List<BorderStylesFields>()
     {
-        new BorderStylesFields() { Text= "None", Value="None", ClassName="ddl-svg-style ddl_linestyle_none" },
+        new BorderStylesFields() { Text= "None", Value="", ClassName="ddl-svg-style ddl_linestyle_none" },
         new BorderStylesFields() { Text= "1,2", Value="1,2", ClassName="ddl-svg-style ddl_linestyle_one_two" },
         new BorderStylesFields() { Text= "3,3", Value="3,3", ClassName="ddl-svg-style ddl_linestyle_three_three" },
         new BorderStylesFields() { Text= "5,3", Value="5,3", ClassName="ddl-svg-style ddl_linestyle_five_three" },
@@ -607,10 +619,6 @@
         new DecoratorListFields(){ Text= "OpenArrow", Value= "OpenArrow", },
         new DecoratorListFields(){ Text= "Circle", Value= "Circle" },
         new DecoratorListFields(){ Text= "Square", Value="Square" },
-        new DecoratorListFields(){ Text= "Fletch", Value= "Fletch", },
-        new DecoratorListFields(){ Text= "OpenFetch", Value= "OpenFetch" },
-        new DecoratorListFields(){ Text= "IndentedArrow", Value="IndentedArrow" },
-        new DecoratorListFields(){ Text= "OutdentedArrow", Value= "OutdentedArrow", },
         new DecoratorListFields(){ Text= "DoubleArrow", Value= "DoubleArrow" }
     };
     #endregion
@@ -695,12 +703,13 @@
     public bool IsGradient { get; set; }
     public string NodeGradientColor { get; set; }
     public string NodeGradientDirection { get; set; } = "";
+    public int NodeGradientDircIndex { get; set; } = 0;
     public string NodeStrokeColor { get; set; }
     public string NodeStrokeDashArray { get; set; } = "1,2";
     public double NodeStrokeWidth { get; set; }
     public double NodeOpacity { get; set; }
-    public int NodeGradientDircIndex { get; set; } = 0;
-    public int NodeStrokeValue { get; set; } = 0;
+    public int NodeStrokeStyle { get; set; } = 0;
+
 
     // Text properties
     public string TextFontFamily { get; set; } = "";
@@ -714,6 +723,7 @@
     public string ConnectorType { get; set; } = "";
     public string ConnectorStrokeColor { get; set; }
     public string ConnectorStrokeDashArray { get; set; } = "1,2";
+    public int ConnectorStrokeStyle { get; set; } = 0;
     public double ConnectorStrokeWidth { get; set; }
     public string ConnectorSrcShape { get; set; } = "";
     public double ConnectorSrcShapeSize { get; set; }
@@ -722,7 +732,6 @@
     public bool OnConnectorBridge { get; set; }
     public double ConnectorBridgeSize { get; set; }
     public double ConnectorOpacity { get; set; }
-    public int ConnectorStrokeValue { get; set; } = 0;
 
     // Diagram Properties
     public string PaperListValue { get; set; } = "Letter";
@@ -735,19 +744,30 @@
 
     #endregion
 
+    protected override void OnInitialized()
+    {
+        PageLandscape= PageLandscapeValue.ToString();
+        PagePortrait= PagePortraitValue.ToString();
+    }
+
+    public void NodeRotateAngleValue(double Value)
+    {
+        NodeRotateAngle = Value;
+        StateHasChanged();       
+    }
     public void SingleNodeSelection()
     {
-        TextPosition = NodeTextPosition;
 
-        DiagramNode node = Parent.DiagramContent.Diagram.SelectedItems.Nodes[0];
+        TextPosition = NodeTextPosition;
+        Node node = Parent.DiagramContent.Diagram.SelectionSettings.Nodes[0];
         if (node != null)
         {
+            SfDiagramComponent Diagram = Parent.DiagramContent.Diagram;
             NodeOffsetX = node.OffsetX;
             NodeOffsetY = node.OffsetY;
-            NodeWidth = node.Width;
-            NodeHeight = node.Height;
+            NodeWidth = Convert.ToDouble(node.Width);
+            NodeHeight = Convert.ToDouble(node.Height);
             NodeAspectRatio = ((node.Constraints & NodeConstraints.AspectRatio) != 0) ? true : false;
-            NodeRotateAngle = node.RotateAngle;
 
             NodeStrokeWidth = node.Style.StrokeWidth;
             NodeOpacity = node.Style.Opacity * 100;
@@ -774,52 +794,58 @@
             {
                 NodeStrokeColor = node.Style.StrokeColor;
             }
-            UpdateNodeStrokeValue(NodeStrokeDashArray.ToString());
-            if (node.Shape.Type == Shapes.Text && node.Shape.TextContent != "")
-            {
-                jsRuntime.InvokeAsync<object>("objectTypeChange", "annotation", true);
-                BindTextContentStyleProperties(node.Style);
-            }
+            UpdateNodeStrokeStyle(NodeStrokeDashArray.ToString());
+
             if (node.Annotations.Count > 0 && node.Annotations[0].Content != "")
             {
-                jsRuntime.InvokeAsync<object>("objectTypeChange", "annotation");
+
+                TextPropertyPanelVisibility();
                 BindNodeAnnotationProperties(node.Annotations[0]);
             }
-            if (node.Style.Gradient.Type == GradientType.Linear)
+            if (node.Style.Gradient != null && node.Style.Gradient is LinearGradientBrush)
             {
                 IsGradient = true;
-                jsRuntime.InvokeAsync<object>("enablePropertyCheckBox", "gradientStyle", true);
-                NodeGradientDirection = GetGradientDirection(node.Style.Gradient);
-                if (!node.Style.Gradient.Stops[1].Color.Contains("#"))
+                gradientPropertyVisibility("gradientStyle", true);
+
+                NodeGradientDirection = GetGradientDirection(node.Style.Gradient as LinearGradientBrush);
+                if (!node.Style.Gradient.GradientStops[1].Color.Contains("#"))
                 {
-                    int ColorValue = Color.FromName(node.Style.Gradient.Stops[1].Color).ToArgb();
+                    int ColorValue = Color.FromName(node.Style.Gradient.GradientStops[1].Color).ToArgb();
                     string ColorHex = string.Format("{0:x6}", ColorValue);
                     NodeGradientColor = "#" + ColorHex.Substring(2);
                 }
                 else
                 {
-                    NodeGradientColor = node.Style.Gradient.Stops[1].Color;
+                    NodeGradientColor = node.Style.Gradient.GradientStops[1].Color;
                 }
             }
             else
             {
                 IsGradient = false;
-                jsRuntime.InvokeAsync<object>("enablePropertyCheckBox", "gradientStyle", false);
+                gradientPropertyVisibility("gradientStyle", false);
+
                 int ColorValue = Color.FromName("white").ToArgb();
                 string ColorHex = string.Format("{0:x6}", ColorValue);
                 NodeGradientColor = "#" + ColorHex.Substring(2);
             }
         }
-        StateHasChanged();
     }
-
+    public void slider()
+    {
+        SfSlide.Reposition();
+    }
+    public void sliderConnector()
+    {
+        SfSlide1.Reposition();
+    }
     public void SingleConnectorSelection()
     {
         TextPosition = ConnectorTextPosition;
 
-        DiagramConnector Connector = Parent.DiagramContent.Diagram.SelectedItems.Connectors[0];
+        Connector Connector = Parent.DiagramContent.Diagram.SelectionSettings.Connectors[0];
         if (Connector != null)
         {
+            SfDiagramComponent Diagram = Parent.DiagramContent.Diagram;
             ConnectorType = Connector.Type.ToString();
             if (!Connector.Style.StrokeColor.Contains("#"))
             {
@@ -831,7 +857,7 @@
             {
                 ConnectorStrokeColor = Connector.Style.StrokeColor;
             }
-            ConnectorStrokeDashArray = (Connector.Style.StrokeDashArray == "") ? "None" : Connector.Style.StrokeDashArray;
+            ConnectorStrokeDashArray = Connector.Style.StrokeDashArray;
             ConnectorStrokeWidth = Connector.Style.StrokeWidth;
 
             ConnectortarShape = Connector.TargetDecorator.Shape.ToString();
@@ -839,20 +865,109 @@
             ConnectorSrcShape = Connector.SourceDecorator.Shape.ToString();
             ConnectorSrcShapeSize = (Connector.SourceDecorator.Width > Connector.SourceDecorator.Height) ? Connector.SourceDecorator.Width : Connector.SourceDecorator.Height;
             OnConnectorBridge = ((Connector.Constraints & ConnectorConstraints.Bridging) != 0) ? true : false;
-            jsRuntime.InvokeAsync<object>("enablePropertyCheckBox", "lineJumpSizeDiv", OnConnectorBridge);
+            enableProperty("lineJumpSizeDiv", OnConnectorBridge);
             ConnectorBridgeSize = Connector.BridgeSpace;
             ConnectorOpacity = Connector.Style.Opacity * 100;
 
             if (Connector.Annotations.Count > 0 && Connector.Annotations[0].Content != "")
-            {
-                jsRuntime.InvokeAsync<object>("objectTypeChange", "annotation");
+            {    
+                TextPropertyPanelVisibility();
                 BindConnectorAnnotationProperties(Connector.Annotations[0]);
             }
+        }
+    }
+
+    public void PanelVisibility(){
+
+        SfDiagramComponent Diagram = Parent.DiagramContent.Diagram;
+        NodePropertyVisibility = "none";
+        ConnectorPropertyVisibility = "none";
+        DiagramPropertyVisibility = "none";
+        TextPropertyVisibility = "none";
+        if(Parent.DiagramContent.Diagram.SelectionSettings.Nodes.Count>0) {
+            NodePropertyVisibility = "block";
+            NodeRotateAngle = Diagram.SelectionSettings.Nodes[0].RotationAngle;
+            SingleNodeSelection();
+        }
+        else if(Parent.DiagramContent.Diagram.SelectionSettings.Connectors.Count>0){
+            ConnectorPropertyVisibility="block";
+            SingleConnectorSelection();
+        }
+        else{
+            DiagramPropertyVisibility = "block";
+            BindDiagramProperties();
         }
         StateHasChanged();
     }
 
-    public void BindNodeAnnotationProperties(DiagramNodeAnnotation Annotation)
+    public void PropertyPanelVisibility()
+    {
+        DiagramPropertyVisibility = "none";
+        NodePropertyVisibility = "none";
+        ConnectorPropertyVisibility = "none";
+        TextPropertyVisibility = "none";
+        StateHasChanged();
+    }
+    public void TextPropertyPanelVisibility()
+    {
+        TextPropertyVisibility = "block";
+        StateHasChanged();
+    }
+    public void gradientPropertyVisibility(string id, bool value)
+    {
+        if (value) 
+        {
+            if (id == "gradientStyle") 
+            {
+                gradientStyleClass = "row db-prop-row db-gradient-style-show";
+            }
+            else
+            {
+                NodePropertyVisibility = "block";
+            }
+        }
+        else
+        {
+            if (id == "gradientStyle") 
+            {
+                gradientStyleClass = "row db-prop-row db-gradient-style-hide";
+            } 
+            else 
+            {
+                NodePropertyVisibility = "none";
+            }
+        }
+    }
+
+    public void UpdatePropertyPanel()
+    {
+        SfDiagramComponent Diagram = Parent.DiagramContent.Diagram;
+        int ObjectsLength = Diagram.SelectionSettings.Nodes.Count + Diagram.SelectionSettings.Connectors.Count;
+        if (ObjectsLength == 1)
+        {
+            if (Diagram.SelectionSettings.Nodes.Count == 1)
+                Parent.DiagramPropertyPanel.SingleNodeSelection();
+            else
+                Parent.DiagramPropertyPanel.SingleConnectorSelection();
+        }
+        StateHasChanged();
+    }
+
+    public void addClassInElement(string id, string className)
+    {
+        if(id == "nodePropertyContainer")
+
+            nodePanelClass= string.Concat(nodePanelClass, className);
+        StateHasChanged();
+    }
+    public void removeClassInElement(string id, string className)
+    {
+        if(nodePanelClass == "db-node-prop-container multiple" || nodePanelClass == "db-node-prop-container multiple connector")
+        {
+            nodePanelClass = nodePanelClass.Remove(22);
+        }
+    }
+    public void BindNodeAnnotationProperties(ShapeAnnotation Annotation)
     {
         TextPositionValue = GetNodeTextPositionValue(Annotation.Offset);
         BindAnnotationStyleProperties(Annotation.Style);
@@ -869,7 +984,7 @@
         VerAlignMiddleCss = (VerticalAlig == VerticalAlignment.Center) ? VerAlignMiddleCss + " tb-item-selected" : VerAlignMiddleCss.Replace(" tb-item-selected", "");
         VerAlignTopCss = (VerticalAlig == VerticalAlignment.Top) ? VerAlignTopCss + " tb-item-selected" : VerAlignTopCss.Replace(" tb-item-selected", "");
     }
-    public void BindAnnotationStyleProperties(AnnotationStyle Style)
+    public void BindAnnotationStyleProperties(TextStyle Style)
     {
         TextFontFamily = Style.FontFamily;
         TextFontSize = Style.FontSize;
@@ -893,7 +1008,7 @@
         AlignTextCenterCss = (Style.TextAlign == TextAlign.Center) ? AlignTextCenterCss + " tb-item-selected" : AlignTextCenterCss.Replace(" tb-item-selected", "");
         AlignTextRightCss = (Style.TextAlign == TextAlign.Right) ? AlignTextRightCss + " tb-item-selected" : AlignTextRightCss.Replace(" tb-item-selected", "");
     }
-    public void BindTextContentStyleProperties(NodeShapeStyle Style)
+    public void BindTextContentStyleProperties(TextStyle Style)
     {
         TextFontFamily = Style.FontFamily;
         TextFontSize = Style.FontSize;
@@ -917,7 +1032,7 @@
         AlignTextCenterCss = (Style.TextAlign == TextAlign.Center) ? AlignTextCenterCss + " tb-item-selected" : AlignTextCenterCss.Replace(" tb-item-selected", "");
         AlignTextRightCss = (Style.TextAlign == TextAlign.Right) ? AlignTextRightCss + " tb-item-selected" : AlignTextRightCss.Replace(" tb-item-selected", "");
     }
-    public void BindConnectorAnnotationProperties(DiagramConnectorAnnotation Annotation)
+    public void BindConnectorAnnotationProperties(PathAnnotation Annotation)
     {
         TextPositionValue = GetConnectorTextPositionValue(Annotation.Offset);
         BindAnnotationStyleProperties(Annotation.Style);
@@ -926,21 +1041,21 @@
 
     public void BindDiagramProperties()
     {
-        DiagramPageSettings PageSettings = Parent.DiagramContent.Diagram.PageSettings;
+        SfDiagramComponent Diagram = Parent.DiagramContent.Diagram;
+        PageSettings PageSettings = Parent.DiagramContent.Diagram.PageSettings;
         PagePortraitValue = (PageSettings.Orientation == PageOrientation.Portrait) ? true : false;
         PageLandscapeValue = (PageSettings.Orientation == PageOrientation.Landscape) ? true : false;
-        if (!PageSettings.Background.Color.Contains("#"))
+        if (!PageSettings.Background.Background.Contains("#"))
         {
-            int ColorValue = Color.FromName(PageSettings.Background.Color).ToArgb();
+            int ColorValue = Color.FromName(PageSettings.Background.Background).ToArgb();
             string ColorHex = string.Format("{0:x6}", ColorValue);
             PageBgColorValue = "#" + ColorHex.Substring(2);
         }
         else
         {
-            PageBgColorValue = PageSettings.Background.Color;
+            PageBgColorValue = PageSettings.Background.Background;
         }
         ShowPageBreaksValue = PageSettings.ShowPageBreaks;
-        StateHasChanged();
     }
 
     public void OnNodeOffsetXChange(Syncfusion.Blazor.Inputs.ChangeEventArgs<double> args)
@@ -969,7 +1084,7 @@
 
     public void OnChangeAspectRatio(Microsoft.AspNetCore.Components.ChangeEventArgs args)
     {
-        ObservableCollection<DiagramNode> Nodes = OnSelectedNode();
+        ObservableCollection<Node> Nodes = OnSelectedNode();
         for (int i = 0; i < Nodes.Count; i++)
         {
             if ((bool)args.Value == true)
@@ -986,10 +1101,12 @@
     public void OnFillColorChange(ColorPickerEventArgs args)
     {
         OnUpdateNodeProperties("Fill", (args.CurrentValue).Hex);
+        dropdownBtnNode.Toggle();
     }
 
     public void OnStrokeColorChange(ColorPickerEventArgs args)
     {
+
         OnUpdateNodeProperties("StrokeColor", (args.CurrentValue).Hex);
         OnUpdateConnectorProperties("StrokeColor", (args.CurrentValue).Hex);
     }
@@ -1004,6 +1121,7 @@
     {
         OnUpdateNodeProperties("Opacity", (Value / 100).ToString());
         OnUpdateConnectorProperties("Opacity", (Value / 100).ToString());
+        NodeOpacity = Value;
     }
 
     public void OnNodeRotateAngleChange(Syncfusion.Blazor.Inputs.ChangeEventArgs<double> args)
@@ -1021,25 +1139,28 @@
     public void OnGradientDirectionChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, GradientDirectionsFields> args)
     {
         NodeGradientDirection = args.Value;
-        OnUpdateNodeProperties("GradientDirection", args.Value);
+        if(args.Value != null && Parent.DiagramContent.Diagram.Nodes.Count > 0)
+            OnUpdateNodeProperties("GradientDirection", args.Value);
     }
 
     public void OnNodeGradientColorChange(ColorPickerEventArgs args)
     {
         string Color = (args.CurrentValue).Hex;
         NodeGradientColor = Color;
-        OnUpdateNodeProperties("GradientColor", Color);
+        if(Color != null)
+            OnUpdateNodeProperties("GradientColor", Color);
+        dropdownBtnGradient.Toggle();
     }
 
 
-    public ObservableCollection<DiagramNode> OnSelectedNode()
+    public ObservableCollection<Node> OnSelectedNode()
     {
-        ObservableCollection<DiagramNode> NodesCollection = new ObservableCollection<DiagramNode>();
-        SfDiagram Diagram = Parent.DiagramContent.Diagram;
-        DiagramSelectedItems SelectedItems = Diagram.SelectedItems;
+        ObservableCollection<Node> NodesCollection = new ObservableCollection<Node>();
+        SfDiagramComponent Diagram = Parent.DiagramContent.Diagram;
+        DiagramSelectionSettings SelectedItems = Diagram.SelectionSettings;
         for (int i = 0; i < SelectedItems.Nodes.Count; i++)
         {
-            NodesCollection.Add(Diagram.GetNode(SelectedItems.Nodes[i].Id));
+           NodesCollection.Add(Diagram.GetObject(SelectedItems.Nodes[i].ID) as Node);
         }
         return NodesCollection;
     }
@@ -1047,7 +1168,8 @@
     public void EnableGradient(Microsoft.AspNetCore.Components.ChangeEventArgs args)
     {
         bool Value = (bool)args.Value;
-        jsRuntime.InvokeAsync<object>("enablePropertyCheckBox", "gradientStyle", Value);
+        gradientPropertyVisibility("gradientStyle",Value);
+
         OnUpdateNodeProperties("Gradient", ((!Value) ? "false" : "true"));
     }
 
@@ -1055,10 +1177,14 @@
     {
         if (!PreventPropertyChange)
         {
-            ObservableCollection<DiagramNode> Nodes = OnSelectedNode();
+            SfDiagramComponent Diagram = Parent.DiagramContent.Diagram;
+            Diagram.StartGroupAction();
+            Diagram.BeginUpdate();
+            ObservableCollection<Node> Nodes = OnSelectedNode();
+
             if (Nodes.Count > 0)
             {
-                DiagramNode Node = Nodes[0];
+                Node Node = Nodes[0];
                 switch (prop)
                 {
                     case "OffsetX":
@@ -1074,7 +1200,7 @@
                         Node.Height = Double.Parse(Value);
                         break;
                     case "RotateAngle":
-                        Node.RotateAngle = Double.Parse(Value);
+                        Node.RotationAngle = Double.Parse(Value);
                         break;
                 }
                 for (int i = 0; i < Nodes.Count; i++)
@@ -1084,17 +1210,16 @@
                     {
                         case "Fill":
                             Node.Style.Fill = Value;
-                            NodeFillColor = Value;
-                            StateHasChanged();
+                            NodeFillColor = Value;                            
                             break;
                         case "StrokeColor":
                             NodeStrokeColor = Value;
                             Node.Style.StrokeColor = Value;
-                            StateHasChanged();
+
                             break;
                         case "StrokeDashArray":
                             Node.Style.StrokeDashArray = Value;
-                            UpdateNodeStrokeValue(Value);
+                            UpdateNodeStrokeStyle(Value);
                             break;
                         case "StrokeWidth":
                             NodeStrokeWidth = Double.Parse(Value);
@@ -1106,7 +1231,8 @@
                         case "Gradient":
                             if (Value == "false")
                             {
-                                Node.Style.Gradient.Type = GradientType.None;
+                                Node.Style.Gradient = null;
+
                             }
                             else
                             {
@@ -1115,174 +1241,161 @@
                             break;
                         case "GradientDirection":
                         case "GradientColor":
-                            GetGradient(NodeGradientDirection, NodeGradientColor);
+                            if(NodeGradientDirection != null && NodeGradientColor != null)
+                                GetGradient(NodeGradientDirection, NodeGradientColor);
                             break;
-                    }
-                    if (Node.Shape.Type == Shapes.Text)
-                    {
-                        switch (prop)
-                        {
-                            case "FontFamily":
-                                Node.Style.FontFamily = Value;
-                                break;
-                            case "FontSize":
-                                Node.Style.FontSize = Int32.Parse(Value);
-                                break;
-                            case "FontColor":
-                                Node.Style.Color = Value;
-                                break;
-                            case "Opacity":
-                                Node.Style.Opacity = Double.Parse(Value);
-                                break;
-                            case "Bold":
-                                Node.Style.Bold = !Node.Style.Bold;
-                                break;
-                            case "Italic":
-                                Node.Style.Italic = !Node.Style.Italic;
-                                break;
-                            case "Underline":
-                                Node.Style.TextDecoration = (Node.Style.TextDecoration == TextDecoration.Underline) ? TextDecoration.None : TextDecoration.Underline;
-                                break;
-                            case "Align Text Left":
-                                Node.Style.TextAlign = TextAlign.Left;
-                                break;
-                            case "Align Text Center":
-                                Node.Style.TextAlign = TextAlign.Center;
-                                break;
-                            case "Align Text Right":
-                                Node.Style.TextAlign = TextAlign.Right;
-                                break;
-                        }
                     }
                 }
             }
+            Diagram.EndUpdate();
+            Diagram.EndGroupAction();
         }
     }
-private void UpdateNodeStrokeValue(string strokeVal)
+    private void UpdateNodeStrokeStyle(string strokeVal)
     {
         switch (strokeVal)
         {
             case "1,2":
                 NodeStrokeDashArray = "1,2";
-                NodeStrokeValue = 1;
+                NodeStrokeStyle = 1;
                 break;
             case "3,3":
                 NodeStrokeDashArray = "3,3";
-               NodeStrokeValue = 2;
+                NodeStrokeStyle = 2;
                 break;
             case "5,3":
                 NodeStrokeDashArray = "5,3";
-                NodeStrokeValue = 3;
+                NodeStrokeStyle = 3;
                 break;
             case "4,4,1":
                 NodeStrokeDashArray = "4,4,1";
-                NodeStrokeValue = 4;
+                NodeStrokeStyle = 4;
                 break;
             default:
                 NodeStrokeDashArray = "";
-                NodeStrokeValue = 0;
+                NodeStrokeStyle = 0;
                 break;
         }
     }
-    private void UpdateConnectorStrokeValue(string strokeVal)
+    private void UpdateConnectorStrokeStyle(string strokeVal)
     {
         switch (strokeVal)
         {
             case "1,2":
                 ConnectorStrokeDashArray = "1,2";
-                ConnectorStrokeValue = 1;
+                ConnectorStrokeStyle = 1;
                 break;
             case "3,3":
                 ConnectorStrokeDashArray = "3,3";
-                ConnectorStrokeValue = 2;
+                ConnectorStrokeStyle = 2;
                 break;
             case "5,3":
                 ConnectorStrokeDashArray = "5,3";
-                ConnectorStrokeValue = 3;
+                ConnectorStrokeStyle = 3;
                 break;
             case "4,4,1":
                 ConnectorStrokeDashArray = "4,4,1";
-                ConnectorStrokeValue = 4;
+                ConnectorStrokeStyle = 4;
                 break;
             default:
                 ConnectorStrokeDashArray = "";
-                ConnectorStrokeValue = 0;
+                ConnectorStrokeStyle = 0;
                 break;
         }
     }
     public void GetGradient(string GradientDirection, string ColorValue)
     {
-        DiagramGradient gradientValue = GetGradientDirectionValue(GradientDirection);
-        ObservableCollection<DiagramNode> Nodes = OnSelectedNode();
+        LinearGradientBrush gradientValue = GetGradientDirectionValue(GradientDirection);
+        ObservableCollection<Node> Nodes = OnSelectedNode();
         for (int i = 0; i < Nodes.Count; i++)
         {
-            Nodes[i].Style.Gradient = new DiagramGradient()
+            Nodes[i].Style.Gradient = new LinearGradientBrush()
             {
-                Type = GradientType.Linear,
                 X1 = gradientValue.X1,
                 X2 = gradientValue.X2,
                 Y1 = gradientValue.Y1,
                 Y2 = gradientValue.Y2,
-                Stops = new ObservableCollection<DiagramsGradientStop>()
+                GradientStops  = new DiagramObjectCollection<GradientStop>()
                 {
-                    new DiagramsGradientStop(){Color = "#ffffffff", Offset=0},
-                    new DiagramsGradientStop(){Color = ColorValue, Offset=1}
+                    new GradientStop(){Color = NodeFillColor, Offset=0},
+                    new GradientStop(){Color = ColorValue, Offset=1}
                 }
             };
         }
     }
 
-    public DiagramGradient GetGradientDirectionValue(string Direction)
+    public LinearGradientBrush GetGradientDirectionValue(string Direction)
     {
-        DiagramGradient GradientValue = new DiagramGradient();
+        LinearGradientBrush GradientValue = new LinearGradientBrush();
         int x1 = 0; int x2 = 0; int y1 = 0; int y2 = 0;
         if (Direction == "LeftToRight")
- {
+        {
             x1 = 100;
-NodeGradientDircIndex = 3;
+            NodeGradientDircIndex = 3;
         }
         else if (Direction == "BottomToTop")
- {
+        {
             y2 = 100;
-NodeGradientDircIndex = 0;
+            NodeGradientDircIndex = 0;
         }
         else if (Direction == "RightToLeft")
- {
+        {
             x2 = 100;
-NodeGradientDircIndex = 2;
+            NodeGradientDircIndex = 2;
         }
-        else 
-{
+        else
+        {
             y1 = 100;
-NodeGradientDircIndex = 1;
+            NodeGradientDircIndex = 1;
         }
-        GradientValue = new DiagramGradient() { X1 = x1, Y1 = y1, X2 = x2, Y2 = y2 };
+        GradientValue = new LinearGradientBrush() { X1 = x1, Y1 = y1, X2 = x2, Y2 = y2 };
         return GradientValue;
     }
 
-    public string GetGradientDirection(DiagramGradient GradientValue)
+    public string GetGradientDirection(LinearGradientBrush GradientValue)
     {
         string direction = "";
         if (GradientValue.Y1 == 0 && GradientValue.Y2 == 0)
         {
-            direction = (GradientValue.X1 == 100 && GradientValue.X2 == 0) ? "LeftToRight": "RightToLeft";
+            direction = (GradientValue.X1 == 100 && GradientValue.X2 == 0) ? "LeftToRight" : "RightToLeft";
             NodeGradientDircIndex = (GradientValue.X1 == 100 && GradientValue.X2 == 0) ? 3 : 2;
         }
         else
         {
-            direction = (GradientValue.Y1 == 100 && GradientValue.Y2 == 0) ? "TopToBottom": "BottomToTop";
+            direction = (GradientValue.Y1 == 100 && GradientValue.Y2 == 0) ? "TopToBottom" : "BottomToTop";
             NodeGradientDircIndex = (GradientValue.Y1 == 100 && GradientValue.Y2 == 0) ? 1 : 0;
         }
         return direction;
     }
-
+    public async Task setHyperLinkValuesToDocument(string id, string value)
+    {
+        SfDiagramComponent Diagram = Parent.DiagramContent.Diagram;
+        Diagram.BeginUpdate();
+        if(id == "hyperlink")
+            ValueLink = value;
+        else if(id == "hyperlinkText")
+            ValueText = value;
+        Diagram.EndUpdate();
+    }
+    public string getHyperLinkValueFromDocument(string id, string attribute)
+    {
+        SfDiagramComponent Diagram = Parent.DiagramContent.Diagram;
+        Diagram.BeginUpdate();
+        if(id == "hyperlink")
+            return ValueLink;
+        else if(id == "hyperlinkText")
+            return ValueText;
+        else
+            return "";
+        Diagram.EndUpdate();
+    }
     private async Task ToolbarInsertClick(Syncfusion.Blazor.Navigations.ClickEventArgs args)
     {
         string commandType = args.Item.TooltipText;
-        ObservableCollection<DiagramNode> Nodes = OnSelectedNode();
+        ObservableCollection<Node> Nodes = OnSelectedNode();
         for (int i = 0; i < Nodes.Count; i++)
         {
-            DiagramNode Node = Nodes[i];
+            Node Node = Nodes[i];
             if (Node != null)
             {
                 switch (commandType)
@@ -1290,14 +1403,15 @@ NodeGradientDircIndex = 1;
                     case "Insert Link":
                         await jsRuntime.InvokeAsync<object>("setHyperLinkValuesToDocument", "hyperlink", "");
                         await jsRuntime.InvokeAsync<object>("setHyperLinkValuesToDocument", "hyperlinkText", "");
+                        Node.Annotations = new DiagramObjectCollection<ShapeAnnotation>() { new ShapeAnnotation() { Hyperlink = new HyperlinkSettings() { Url = "" , Content = ""} } };
                         await TextHyperLink.Show();
                         if (Node.Annotations.Count > 0)
                         {
-                            DiagramNodeAnnotation Annotation = Node.Annotations[0];
-                            if (Annotation.Hyperlink.Link != null || Annotation.Content != null)
+                            ShapeAnnotation Annotation = Node.Annotations[0];
+                            if (Annotation.Hyperlink.Url != null || Annotation.Hyperlink.Content != null)
                             {
-                                string Content = (Annotation.Hyperlink.Content != "") ? Annotation.Hyperlink.Content : Annotation.Content;
-                                await jsRuntime.InvokeAsync<object>("setHyperLinkValuesToDocument", "hyperlink", Annotation.Hyperlink.Link);
+                                string Content = (Annotation.Hyperlink.Content != "") ? Annotation.Hyperlink.Content : Annotation.Hyperlink.Url;
+                                await jsRuntime.InvokeAsync<object>("setHyperLinkValuesToDocument", "hyperlink", Annotation.Hyperlink.Url);
                                 await jsRuntime.InvokeAsync<object>("setHyperLinkValuesToDocument", "hyperlinkText", Content);
                             }
                         }
@@ -1307,24 +1421,21 @@ NodeGradientDircIndex = 1;
                         break;
                 }
             }
-        }
+        }   
     }
 
     public async Task ApplyAnnotationLink()
     {
-        SfDiagram Diagram = Parent.DiagramContent.Diagram;
-        ObservableCollection<DiagramNode> Nodes = OnSelectedNode();
+        SfDiagramComponent Diagram = Parent.DiagramContent.Diagram;
+        ObservableCollection<Node> Nodes = OnSelectedNode();
         for (int i = 0; i < Nodes.Count; i++)
         {
             if (Nodes[i].Annotations.Count > 0)
             {
-                DiagramNodeAnnotation Annotation = Nodes[i].Annotations[0];
+                ShapeAnnotation Annotation = Nodes[i].Annotations[0];
                 string HyperLink = await jsRuntime.InvokeAsync<string>("getHyperLinkValueFromDocument", "hyperlink", "value");
                 string HyperLinkText = await jsRuntime.InvokeAsync<string>("getHyperLinkValueFromDocument", "hyperlinkText", "value");
-                Diagram.BeginUpdate();
-                Annotation.Hyperlink.Link = HyperLink;
-                Annotation.Hyperlink.Content = HyperLinkText;
-                Diagram.EndUpdate();
+                Nodes[i].Annotations[0] = new ShapeAnnotation() { Hyperlink = new Syncfusion.Blazor.Diagram.HyperlinkSettings() { Url = HyperLink, Content = HyperLinkText } };
             }
         }
         await TextHyperLink.Hide();
@@ -1354,37 +1465,33 @@ NodeGradientDircIndex = 1;
 
     public void OnTextColorChange(ColorPickerEventArgs args)
     {
-        TextColor = (args.CurrentValue).Hex;
         OnUpdateTextProperties("FontColor", (args.CurrentValue).Hex);
+        UpdatePropertyPanel();
     }
 
     public void OnTextOpacityChange(double Value)
     {
         OnUpdateTextProperties("Opacity", (Value / 100).ToString());
+        TextOpacity = Value;
     }
 
     public void OnUpdateTextProperties(string prop, string Value)
     {
-        ObservableCollection<DiagramNode> Nodes = OnSelectedNode();
-        if (Nodes.Count > 0 && Nodes[0].Shape.Type == Shapes.Text)
-        {
-            OnUpdateNodeProperties(prop, Value);
-        }
-        else
-        {
-            OnUpdateNodeTextProperties(prop, Value);
-            OnUpdateConnectorTextProperties(prop, Value);
-        }
+        ObservableCollection<Node> Nodes = OnSelectedNode();
+        OnUpdateNodeTextProperties(prop, Value);
+        OnUpdateConnectorTextProperties(prop, Value);
     }
 
     public void OnUpdateTextContentProperties(string prop, string Value)
     {
         if (!PreventPropertyChange)
         {
-            ObservableCollection<DiagramNode> Nodes = OnSelectedNode();
+            ObservableCollection<Node> Nodes = OnSelectedNode();
+            SfDiagramComponent Diagram = Parent.DiagramContent.Diagram;
+            Diagram.BeginUpdate();
             for (int i = 0; i < Nodes.Count; i++)
             {
-                DiagramNodeAnnotation Annotation = Nodes[i].Annotations[0];
+                ShapeAnnotation Annotation = Nodes[i].Annotations[0];
                 switch (prop)
                 {
                     case "FontFamily":
@@ -1404,6 +1511,8 @@ NodeGradientDircIndex = 1;
                         break;
                 }
             }
+            Diagram.EndUpdate();
+
         }
     }
 
@@ -1411,27 +1520,32 @@ NodeGradientDircIndex = 1;
     {
         if (!PreventPropertyChange)
         {
-            ObservableCollection<DiagramNode> Nodes = OnSelectedNode();
+            ObservableCollection<Node> Nodes = OnSelectedNode();
             for (int i = 0; i < Nodes.Count; i++)
             {
-                DiagramNodeAnnotation Annotation = Nodes[i].Annotations[0];
-                switch (prop)
+                if (Nodes[i].Annotations.Count > 0)
                 {
-                    case "FontFamily":
-                        Annotation.Style.FontFamily = Value;
-                        break;
-                    case "FontSize":
-                        Annotation.Style.FontSize = Int32.Parse(Value);
-                        break;
-                    case "TextPosition":
-                        Annotation.Offset = GetNodeAnnotationOffset(Value);
-                        break;
-                    case "FontColor":
-                        Annotation.Style.Color = Value;
-                        break;
-                    case "Opacity":
-                        Annotation.Style.Opacity = Double.Parse(Value);
-                        break;
+                    Parent.DiagramContent.Diagram.BeginUpdate();
+                    ShapeAnnotation Annotation = Nodes[i].Annotations[0];
+                    switch (prop)
+                    {
+                        case "FontFamily":
+                            Annotation.Style.FontFamily = Value;
+                            break;
+                        case "FontSize":
+                            Annotation.Style.FontSize = Int32.Parse(Value);
+                            break;
+                        case "TextPosition":
+                            Annotation.Offset = GetNodeAnnotationOffset(Value);
+                            break;
+                        case "FontColor":
+                            Annotation.Style.Color = Value;
+                            break;
+                        case "Opacity":
+                            Annotation.Style.Opacity = Double.Parse(Value);
+                            break;
+                    }
+                    Parent.DiagramContent.Diagram.EndUpdate();
                 }
             }
         }
@@ -1441,12 +1555,12 @@ NodeGradientDircIndex = 1;
     {
         if (!PreventPropertyChange)
         {
-            ObservableCollection<DiagramConnector> Connectors = OnSelectedConnector();
+            ObservableCollection<Connector> Connectors = OnSelectedConnector();
             for (int i = 0; i < Connectors.Count; i++)
             {
                 if (Connectors[i].Annotations.Count > 0)
                 {
-                    DiagramConnectorAnnotation Annotation = Connectors[i].Annotations[0];
+                    PathAnnotation Annotation = Connectors[i].Annotations[0];
                     switch (prop)
                     {
                         case "FontFamily":
@@ -1491,27 +1605,23 @@ NodeGradientDircIndex = 1;
     }
     private void OnNodeTextStyle(string commandType)
     {
-        ObservableCollection<DiagramNode> Nodes = OnSelectedNode();
+        ObservableCollection<Node> Nodes = OnSelectedNode();
         for (int i = 0; i < Nodes.Count; i++)
         {
-            DiagramNode Node = Nodes[i];
-            if (Node != null && (Node.Annotations.Count > 0 || Node.Shape.Type == Shapes.Text))
+            Node Node = Nodes[i];
+            if (Node != null && (Node.Annotations.Count > 0))
             {
-                if(Node.Shape.Type == Shapes.Text){
-                    OnUpdateNodeProperties(commandType, "true");
-                } else {
-                    OnAnnotationTextStyle(commandType, Node.Annotations[0].Style);
-                }
+                OnAnnotationTextStyle(commandType, Node.Annotations[0].Style);
             }
         }
     }
 
     private void OnConnectorTextStyle(string commandType)
     {
-        ObservableCollection<DiagramConnector> Connectors = OnSelectedConnector();
+        ObservableCollection<Connector> Connectors = OnSelectedConnector();
         for (int i = 0; i < Connectors.Count; i++)
         {
-            DiagramConnector Connector = Connectors[i];
+            Connector Connector = Connectors[i];
             if (Connector != null && Connector.Annotations.Count > 0)
             {
                 OnAnnotationTextStyle(commandType, Connector.Annotations[0].Style);
@@ -1519,7 +1629,8 @@ NodeGradientDircIndex = 1;
         }
     }
 
-    private void OnAnnotationTextStyle(string commandType, AnnotationStyle Style) {
+    private void OnAnnotationTextStyle(string commandType, TextStyle Style) {
+        Parent.DiagramContent.Diagram.BeginUpdate();
         switch (commandType)
         {
             case "Bold":
@@ -1541,6 +1652,7 @@ NodeGradientDircIndex = 1;
                 Style.TextAlign = TextAlign.Right;
                 break;
         }
+        Parent.DiagramContent.Diagram.EndUpdate();
     }
 
     private void OnTextSubAlignmentClick(Syncfusion.Blazor.Navigations.ClickEventArgs args)
@@ -1567,14 +1679,14 @@ NodeGradientDircIndex = 1;
     private void OnNodeTextSubAlignment(Syncfusion.Blazor.Navigations.ClickEventArgs args)
     {
         string commandType = args.Item.TooltipText;
-        ObservableCollection<DiagramNode> Nodes = OnSelectedNode();
+        ObservableCollection<Node> Nodes = OnSelectedNode();
         for (int i = 0; i < Nodes.Count; i++)
         {
-            DiagramNode Node = Nodes[i];
+            Node Node = Nodes[i];
             if ((Node != null && Node.Annotations.Count > 0))
             {
                 OnAnnotationTextStyle(commandType, Node.Annotations[0].Style);
-                DiagramNodeAnnotation NodeAnnotation = Node.Annotations[0];
+                ShapeAnnotation NodeAnnotation = Node.Annotations[0];
                 switch (commandType)
                 {
                     case "Align Text Left":
@@ -1593,13 +1705,13 @@ NodeGradientDircIndex = 1;
     private void OnConnectorTextSubAlignment(Syncfusion.Blazor.Navigations.ClickEventArgs args)
     {
         string commandType = args.Item.TooltipText;
-        ObservableCollection<DiagramConnector> Connectors = OnSelectedConnector();
+        ObservableCollection<Connector> Connectors = OnSelectedConnector();
         for (int i = 0; i < Connectors.Count; i++)
         {
-            DiagramConnector Connector = Connectors[i];
+            Connector Connector = Connectors[i];
             if ((Connector != null && Connector.Annotations.Count > 0))
             {
-                DiagramConnectorAnnotation ConnectorAnnotation = Connector.Annotations[0];
+                PathAnnotation ConnectorAnnotation = Connector.Annotations[0];
                 switch (commandType)
                 {
                     case "Align Text Left":
@@ -1657,13 +1769,13 @@ NodeGradientDircIndex = 1;
     private void OnNodeTextAlignment(Syncfusion.Blazor.Navigations.ClickEventArgs args)
     {
         string commandType = args.Item.TooltipText;
-        ObservableCollection<DiagramNode> Nodes = OnSelectedNode();
+        ObservableCollection<Node> Nodes = OnSelectedNode();
         for (int i = 0; i < Nodes.Count; i++)
         {
-            DiagramNode Node = Nodes[i];
+            Node Node = Nodes[i];
             if ((Node != null && Node.Annotations.Count > 0))
             {
-                DiagramNodeAnnotation NodeAnnotation = Node.Annotations[0];
+                ShapeAnnotation NodeAnnotation = Node.Annotations[0];
                 switch (commandType)
                 {
                     case "Align Right":
@@ -1691,30 +1803,30 @@ NodeGradientDircIndex = 1;
     private void OnConnectorTextAlignment(Syncfusion.Blazor.Navigations.ClickEventArgs args)
     {
         string commandType = args.Item.TooltipText;
-        ObservableCollection<DiagramConnector> Connectors = OnSelectedConnector();
+        ObservableCollection<Connector> Connectors = OnSelectedConnector();
         for (int i = 0; i < Connectors.Count; i++)
         {
-            DiagramConnector Connector = Connectors[i];
-            DiagramConnectorAnnotation ConnectorAnnotation = Connector.Annotations[0];
+            Connector Connector = Connectors[i];
+            PathAnnotation ConnectorAnnotation = Connector.Annotations[0];
             switch (commandType)
             {
                 case "Align Right":
                     ConnectorAnnotation.HorizontalAlignment = HorizontalAlignment.Right;
                     break;
                 case "Align Center":
-                    ConnectorAnnotation.HorizontalAlignment = HorizontalAlignment.Center;
+                    ConnectorAnnotation.Style.TextAlign = TextAlign.Center;
                     break;
                 case "Align Left":
-                    ConnectorAnnotation.HorizontalAlignment = HorizontalAlignment.Left;
+                    ConnectorAnnotation.Style.TextAlign = TextAlign.Center;
                     break;
                 case "Align Top":
-                    ConnectorAnnotation.VerticalAlignment = VerticalAlignment.Top;
+                    ConnectorAnnotation.Style.TextAlign = TextAlign.Center;
                     break;
                 case "Align Middle":
-                    ConnectorAnnotation.VerticalAlignment = VerticalAlignment.Center;
+                    ConnectorAnnotation.Style.TextAlign = TextAlign.Center;
                     break;
                 case "Align Bottom":
-                    ConnectorAnnotation.VerticalAlignment = VerticalAlignment.Bottom;
+                    ConnectorAnnotation.Style.TextAlign = TextAlign.Center;
                     break;
             }
         }
@@ -1726,43 +1838,43 @@ NodeGradientDircIndex = 1;
         public string rgba { get; set; }
     }
 
-    public NodeAnnotationOffset GetNodeAnnotationOffset(string Value)
+    public Syncfusion.Blazor.Diagram.DiagramPoint GetNodeAnnotationOffset(string Value)
     {
-        NodeAnnotationOffset Offset;
+        Syncfusion.Blazor.Diagram.DiagramPoint Offset;
         switch (Value)
         {
             case "TopLeft":
-                Offset = new NodeAnnotationOffset() { X = 0, Y = 0 };
+                Offset = new Syncfusion.Blazor.Diagram.DiagramPoint() { X = 0, Y = 0 };
                 break;
             case "TopCenter":
-                Offset = new NodeAnnotationOffset() { X = 0.5, Y = 0 };
+                Offset = new Syncfusion.Blazor.Diagram.DiagramPoint() { X = 0.5, Y = 0 };
                 break;
             case "TopRight":
-                Offset = new NodeAnnotationOffset() { X = 1, Y = 0 };
+                Offset = new Syncfusion.Blazor.Diagram.DiagramPoint() { X = 1, Y = 0 };
                 break;
             case "MiddleLeft":
-                Offset = new NodeAnnotationOffset() { X = 0, Y = 0.5 };
+                Offset = new Syncfusion.Blazor.Diagram.DiagramPoint() { X = 0, Y = 0.5 };
                 break;
             case "MiddleRight":
-                Offset = new NodeAnnotationOffset() { X = 1, Y = 0.5 };
+                Offset = new Syncfusion.Blazor.Diagram.DiagramPoint() { X = 1, Y = 0.5 };
                 break;
             case "BottomLeft":
-                Offset = new NodeAnnotationOffset() { X = 0, Y = 1 };
+                Offset = new Syncfusion.Blazor.Diagram.DiagramPoint() { X = 0, Y = 1 };
                 break;
             case "BottomCenter":
-                Offset = new NodeAnnotationOffset() { X = 0.5, Y = 1 };
+                Offset = new Syncfusion.Blazor.Diagram.DiagramPoint() { X = 0.5, Y = 1 };
                 break;
             case "BottomRight":
-                Offset = new NodeAnnotationOffset() { X = 1, Y = 1 };
+                Offset = new Syncfusion.Blazor.Diagram.DiagramPoint() { X = 1, Y = 1 };
                 break;
             default:
-                Offset = new NodeAnnotationOffset() { X = 0.5, Y = 0.5 };
+                Offset = new Syncfusion.Blazor.Diagram.DiagramPoint() { X = 0.5, Y = 0.5 };
                 break;
         }
         return Offset;
     }
 
-    public string GetNodeTextPositionValue(NodeAnnotationOffset Offset)
+    public string GetNodeTextPositionValue(Syncfusion.Blazor.Diagram.DiagramPoint Offset)
     {
         string Position = "Center";
         switch (Offset.Y) {
@@ -1864,11 +1976,15 @@ NodeGradientDircIndex = 1;
     public void OnConnectorOpacityChange(double Value)
     {
         OnUpdateConnectorProperties("Opacity", (Value / 100).ToString());
+        ConnectorOpacity = Value;
     }
 
     public void OnConnectorSourceShapeChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, DecoratorListFields> args)
     {
-        OnUpdateConnectorProperties("SourceDecoratorShape", args.Value);
+        if (args.IsInteracted)
+        {
+            OnUpdateConnectorProperties("SourceDecoratorShape", args.Value);
+        }
     }
 
     public void OnConnectorSourceShapeSizeChange(Syncfusion.Blazor.Inputs.ChangeEventArgs<double> args)
@@ -1879,7 +1995,10 @@ NodeGradientDircIndex = 1;
 
     public void OnConnectorTargetShapeChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, DecoratorListFields> args)
     {
-        OnUpdateConnectorProperties("TargetDecoratorShape", args.Value);
+        if (args.IsInteracted)
+        {
+            OnUpdateConnectorProperties("TargetDecoratorShape", args.Value);
+        }
     }
 
     public void OnConnectorTargetShapeSizeChange(Syncfusion.Blazor.Inputs.ChangeEventArgs<double> args)
@@ -1890,10 +2009,35 @@ NodeGradientDircIndex = 1;
 
     public void OnConnectorBridgingChange(Microsoft.AspNetCore.Components.ChangeEventArgs args)
     {
-        OnUpdateConnectorProperties("Bridging", args.Value.ToString());
-        jsRuntime.InvokeAsync<object>("enablePropertyCheckBox", "lineJumpSizeDiv", args.Value);
-    }
 
+        SfDiagramComponent Diagram = Parent.DiagramContent.Diagram;
+        OnUpdateConnectorProperties("Bridging", args.Value.ToString());
+        enableProperty("lineJumpSizeDiv", true);
+    }
+    public void enableProperty(string id, bool value)
+    {
+        if (value) 
+        {
+            if (id == "gradientStyle") 
+            {
+                gradientStyleClass = "row db-prop-row db-gradient-style-show";
+            } 
+            else 
+            {
+                lineJumpSizeDivDisplay = "block";
+            }
+        }
+        else 
+        {
+            if (id == "gradientStyle") 
+            {
+                gradientStyleClass = "row db-prop-row db-gradient-style-hide";
+            } else 
+            {
+                lineJumpSizeDivDisplay = "none";
+            }
+        }
+    }
     public void OnConnectorBridgeSizeChange(Syncfusion.Blazor.Inputs.ChangeEventArgs<double> args)
     {
         ConnectorBridgeSize = args.Value;
@@ -1904,23 +2048,23 @@ NodeGradientDircIndex = 1;
     {
         if (!PreventPropertyChange)
         {
-            ObservableCollection<DiagramConnector> Connectors = OnSelectedConnector();
+            SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+            ObservableCollection<Connector> Connectors = OnSelectedConnector();
             for (int i = 0; i < Connectors.Count; i++)
             {
-                DiagramConnector Connector = Connectors[i];
+                Connector Connector = Connectors[i];
                 switch (prop)
                 {
                     case "Type":
-                        Connector.Type = (Value == "Straight") ? Segments.Straight : ((Value == "Orthogonal") ? Segments.Orthogonal : Segments.Bezier);
+                        Connector.Type = (Value == "Straight") ? ConnectorSegmentType.Straight : ((Value == "Orthogonal") ? ConnectorSegmentType.Orthogonal : ConnectorSegmentType.Bezier);
                         break;
                     case "StrokeColor":
                         ConnectorStrokeColor = Value;
                         Connector.Style.StrokeColor = Value;
-                        StateHasChanged();
                         break;
                     case "StrokeDashArray":
                         Connector.Style.StrokeDashArray = Value;
-                        UpdateConnectorStrokeValue(Value);
+                        UpdateConnectorStrokeStyle(Value);
                         break;
                     case "StrokeWidth":
                         ConnectorStrokeWidth = Connector.Style.StrokeWidth = Connector.SourceDecorator.Style.StrokeWidth = Connector.TargetDecorator.Style.StrokeWidth = Double.Parse(Value);
@@ -1929,34 +2073,34 @@ NodeGradientDircIndex = 1;
                         switch (Value)
                         {
                             case "None":
-                                Connector.SourceDecorator.Shape = DecoratorShapes.None;
+                                Connector.SourceDecorator.Shape = DecoratorShape.None;
                                 break;
                             case "Arrow":
-                                Connector.SourceDecorator.Shape = DecoratorShapes.Arrow;
+                                Connector.SourceDecorator.Shape = DecoratorShape.Arrow;
                                 break;
                             case "Diamond":
-                                Connector.SourceDecorator.Shape = DecoratorShapes.Diamond;
+                                Connector.SourceDecorator.Shape = DecoratorShape.Diamond;
                                 break;
                             case "OpenArrow":
-                                Connector.SourceDecorator.Shape = DecoratorShapes.OpenArrow;
+                                Connector.SourceDecorator.Shape = DecoratorShape.OpenArrow;
                                 break;
                             case "Circle":
-                                Connector.SourceDecorator.Shape = DecoratorShapes.Circle;
+                                Connector.SourceDecorator.Shape = DecoratorShape.Circle;
                                 break;
                             case "Square":
-                                Connector.SourceDecorator.Shape = DecoratorShapes.Square;
+                                Connector.SourceDecorator.Shape = DecoratorShape.Square;
                                 break;
                             case "Fletch":
-                                Connector.SourceDecorator.Shape = DecoratorShapes.Fletch;
+                                Connector.SourceDecorator.Shape = DecoratorShape.Fletch;
                                 break;
                             case "OpenFetch":
-                                Connector.SourceDecorator.Shape = DecoratorShapes.OpenFetch;
+                                Connector.SourceDecorator.Shape = DecoratorShape.OpenFletch;
                                 break;
                             case "IndentedArrow":
-                                Connector.SourceDecorator.Shape = DecoratorShapes.IndentedArrow;
+                                Connector.SourceDecorator.Shape = DecoratorShape.InArrow;
                                 break;
                             case "OutdentedArrow":
-                                Connector.SourceDecorator.Shape = DecoratorShapes.OutdentedArrow;
+                                Connector.SourceDecorator.Shape = DecoratorShape.OutArrow;
                                 break;
                         }
                         break;
@@ -1966,35 +2110,36 @@ NodeGradientDircIndex = 1;
                     case "TargetDecoratorShape":
                         switch (Value)
                         {
-                            case "None":
-                                Connector.TargetDecorator.Shape = DecoratorShapes.None;
-                                break;
+
                             case "Arrow":
-                                Connector.TargetDecorator.Shape = DecoratorShapes.Arrow;
+                                Connector.TargetDecorator.Shape = DecoratorShape.Arrow;
+                                break;
+                            case "None":
+                                Connector.TargetDecorator.Shape = DecoratorShape.None;
                                 break;
                             case "Diamond":
-                                Connector.TargetDecorator.Shape = DecoratorShapes.Diamond;
+                                Connector.TargetDecorator.Shape = DecoratorShape.Diamond;
                                 break;
                             case "OpenArrow":
-                                Connector.TargetDecorator.Shape = DecoratorShapes.OpenArrow;
+                                Connector.TargetDecorator.Shape = DecoratorShape.OpenArrow;
                                 break;
                             case "Circle":
-                                Connector.TargetDecorator.Shape = DecoratorShapes.Circle;
+                                Connector.TargetDecorator.Shape = DecoratorShape.Circle;
                                 break;
                             case "Square":
-                                Connector.TargetDecorator.Shape = DecoratorShapes.Square;
+                                Connector.TargetDecorator.Shape = DecoratorShape.Square;
                                 break;
                             case "Fletch":
-                                Connector.TargetDecorator.Shape = DecoratorShapes.Fletch;
+                                Connector.TargetDecorator.Shape = DecoratorShape.Fletch;
                                 break;
                             case "OpenFetch":
-                                Connector.TargetDecorator.Shape = DecoratorShapes.OpenFetch;
+                                Connector.TargetDecorator.Shape = DecoratorShape.OpenFletch;
                                 break;
                             case "IndentedArrow":
-                                Connector.TargetDecorator.Shape = DecoratorShapes.IndentedArrow;
+                                Connector.TargetDecorator.Shape = DecoratorShape.InArrow;
                                 break;
                             case "OutdentedArrow":
-                                Connector.TargetDecorator.Shape = DecoratorShapes.OutdentedArrow;
+                                Connector.TargetDecorator.Shape = DecoratorShape.OutArrow;
                                 break;
                         }
                         break;
@@ -2022,18 +2167,17 @@ NodeGradientDircIndex = 1;
         }
     }
 
-    public ObservableCollection<DiagramConnector> OnSelectedConnector()
+    public ObservableCollection<Connector> OnSelectedConnector()
     {
-        ObservableCollection<DiagramConnector> ConnectorCollection = new ObservableCollection<DiagramConnector>();
-        SfDiagram Diagram = Parent.DiagramContent.Diagram;
-        DiagramSelectedItems SelectedItems = Diagram.SelectedItems;
+        ObservableCollection<Connector> ConnectorCollection = new ObservableCollection<Connector>();
+        SfDiagramComponent Diagram = Parent.DiagramContent.Diagram;
+        DiagramSelectionSettings SelectedItems = Diagram.SelectionSettings;
         for (int i = 0; i < SelectedItems.Connectors.Count; i++)
         {
-            ConnectorCollection.Add(Diagram.GetConnector(SelectedItems.Connectors[i].Id));
+            ConnectorCollection.Add(SelectedItems.Connectors[i] as Connector);
         }
         return ConnectorCollection;
     }
-
     // Page Settings
     public void OnPaperListValueChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, PaperListFields> args)
     {
@@ -2052,8 +2196,9 @@ NodeGradientDircIndex = 1;
 
     public void OnPageBgColorChange(ColorPickerEventArgs args)
     {
-        PageBgColorValue =(args.CurrentValue).Hex;
-        OnUpdateDiagramProperties("PageBgColor", (args.CurrentValue).Hex);
+        OnUpdateDiagramProperties("PageBgColor", args.CurrentValue.Hex);
+        PageBgColorValue = args.CurrentValue.Hex;
+        dropdownBtnPage.Toggle();
     }
 
     public void OnShowPageBreaksChange(Microsoft.AspNetCore.Components.ChangeEventArgs args)
@@ -2070,10 +2215,22 @@ NodeGradientDircIndex = 1;
     {
         OnUpdateDiagramProperties("PageHeight", args.Value.ToString());
     }
-
-    public void OnUpdateDiagramProperties(string prop, string Value)
+    public void CustomPageSettingsChange(bool Value)
     {
-        SfDiagram Diagram = Parent.DiagramContent.Diagram;
+        if(Value)
+        {
+            PageDimensionVisibility = "block";
+            PageOrientationVisibility = "none";
+        }
+        else
+        {
+            PageDimensionVisibility = "none";
+            PageOrientationVisibility = "block";
+        }
+    }
+    public async Task OnUpdateDiagramProperties(string prop, string Value)
+    {
+        SfDiagramComponent Diagram = Parent.DiagramContent.Diagram;
         Diagram.BeginUpdate();
         if (!PreventPropertyChange)
         {
@@ -2090,11 +2247,11 @@ NodeGradientDircIndex = 1;
                     double PageHeight;
                     if (Value == "Custom")
                     {
-                        jsRuntime.InvokeAsync<object>("CustomPageSettingsChange", true);
+                        CustomPageSettingsChange(true);
                     }
                     else
                     {
-                        jsRuntime.InvokeAsync<object>("CustomPageSettingsChange", false);
+                        CustomPageSettingsChange(false);
                         PaperSize paperSize = GetPaperSize(Value);
                         PageWidth = paperSize.PageWidth;
                         PageHeight = paperSize.PageHeight;
@@ -2127,7 +2284,7 @@ NodeGradientDircIndex = 1;
                     Parent.DiagramContent.DiagramOrientation = (Value == "true") ? PageOrientation.Landscape : PageOrientation.Portrait;
                     break;
                 case "PagePortrait":
-                    Parent.DiagramContent.DiagramOrientation = (Value == "on") ? PageOrientation.Portrait : PageOrientation.Landscape;
+                    Parent.DiagramContent.DiagramOrientation = (Value == "false") ? PageOrientation.Portrait : PageOrientation.Landscape;
                     break;
                 case "PageBgColor":
                     Parent.DiagramContent.DiagramBgColor = Value;
@@ -2137,8 +2294,7 @@ NodeGradientDircIndex = 1;
                     break;
             }
         }
-        Diagram.EndUpdate();
-        Parent.DiagramContent.StateChanged();
+        await Diagram.EndUpdate();
     }
 
     public PaperSize GetPaperSize(string paperName) {
@@ -2184,4 +2340,16 @@ NodeGradientDircIndex = 1;
         public double PageHeight { get; set; }
     }
 
+    private void ClickHandlerPage(BeforeOpenCloseEventArgs e)
+    {
+        dropdownBtnPage.Toggle();
+    }
+    private void ClickHandlerNode(BeforeOpenCloseEventArgs e)
+    {
+        dropdownBtnNode.Toggle();
+    }
+    private void ClickHandlerGradient(BeforeOpenCloseEventArgs e)
+    {
+        dropdownBtnGradient.Toggle();
+    }
 }

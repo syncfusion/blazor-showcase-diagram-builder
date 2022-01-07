@@ -1,10 +1,9 @@
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
 @inject SampleService Service
 @inject IJSRuntime JsRuntime;
 @inject SyncfusionBlazorService SyncfusionBlazorService;
 @using Syncfusion.Blazor;
 @inject Microsoft.AspNetCore.Components.NavigationManager UriHelper;
-@*<div id="spinner" class="spinner" style="visibility:visible"></div>*@
 <SpinnerComponent @ref="SpinnerObj"></SpinnerComponent>
 <DiagramMain @ref="DiagramMain"></DiagramMain>
 
@@ -18,9 +17,7 @@
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        //Spinner.PropertyChanged = this.OnPropertyChanged;
         Service.Notify += OnNotify;
-        //UriHelper.NavigateTo("Buttons/DefaultFunctionalities?theme=material");
     }
 
     public async Task OnNotify(NotifyProperties prop)

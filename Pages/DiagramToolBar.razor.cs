@@ -1,11 +1,13 @@
-﻿using Syncfusion.Blazor.Diagrams;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using Syncfusion.Blazor.Diagram;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 
 namespace DiagramBuilder
 {
@@ -14,75 +16,27 @@ namespace DiagramBuilder
         [Inject]
         protected IJSRuntime jsRuntime { get; set; }
         #region events
-      
+
         private async Task DrawShapeChange(Syncfusion.Blazor.SplitButtons.MenuEventArgs args)
         {
-            var diagram = Parent.DiagramContent.Diagram;
-            if (args.Item.Text == "Rectangle")
-            {
-                Parent.DiagramContent.DiagramDrawingObject = new DiagramNode() { Shape = new DiagramShape() { Type = Shapes.Basic, BasicShape = BasicShapes.Rectangle }, Style = new NodeShapeStyle() { StrokeWidth = 2 } };
-            }
-            else if (args.Item.Text == "Ellipse")
-            {
-                Parent.DiagramContent.DiagramDrawingObject = new DiagramNode() { Shape = new DiagramShape() { Type = Shapes.Basic, BasicShape = BasicShapes.Ellipse }, Style = new NodeShapeStyle() { StrokeWidth = 2 } };
-            }
-            else if (args.Item.Text == "Polygon")
-            {
-                Parent.DiagramContent.DiagramDrawingObject = new DiagramNode() { Shape = new DiagramShape() { Type = Shapes.Basic, BasicShape = BasicShapes.Polygon }, Style = new NodeShapeStyle() { StrokeWidth = 2 } };
-            }
-            Parent.DiagramContent.DiagramTool = DiagramTools.ContinuousDraw;
-            await removeSelectedToolbarItem("shape").ConfigureAwait(true);
-            Parent.DiagramContent.StateChanged();
-            //document.getElementById("btnDrawShape").classList.add("tb-item-selected");
+            Parent.DiagramContent.DrawingObject(args);
+            Parent.DiagramContent.UpdateContinousDrawTool();
+            await removeSelectedToolbarItem("shape");
         }
         private async Task DrawConnectorChange(Syncfusion.Blazor.SplitButtons.MenuEventArgs args)
         {
-            var diagram = Parent.DiagramContent.Diagram;
-            if (args.Item.Text == "Straight Line")
-            {
-                Parent.DiagramContent.DiagramDrawingObject = new DiagramConnector() { Type = Segments.Straight, Constraints = ConnectorConstraints.Default, Style = new ConnectorShapeStyle() { StrokeWidth = 2 } };
-            }
-            else if (args.Item.Text == "Orthogonal Line")
-            {
-                Parent.DiagramContent.DiagramDrawingObject = new DiagramConnector() { Type = Segments.Orthogonal, Constraints = ConnectorConstraints.Default, Style = new ConnectorShapeStyle() { StrokeWidth = 2 } };
-            }
-            else if (args.Item.Text == "Bezier")
-            {
-                Parent.DiagramContent.DiagramDrawingObject = new DiagramConnector() { Type = Segments.Bezier, Constraints = ConnectorConstraints.Default, Style = new ConnectorShapeStyle() { StrokeWidth = 2 } };
-            }
-            Parent.DiagramContent.DiagramTool = DiagramTools.ContinuousDraw;
-            await diagram.ClearSelection().ConfigureAwait(true);
-            await removeSelectedToolbarItem("connector").ConfigureAwait(true);
-            Parent.DiagramContent.StateChanged();
-            //document.getElementById("btnDrawConnector').classList.add('tb-item-selected');
-        }
-        private async Task OrderCommandsChange(Syncfusion.Blazor.SplitButtons.MenuEventArgs args)
-        {
-            var diagram = Parent.DiagramContent.Diagram;
-            if (args.Item.Text == "Send To Back")
-            {
-                await diagram.SendToBack().ConfigureAwait(true);
-            }
-            else if (args.Item.Text == "Bring To Front")
-            {
-                await diagram.BringToFront().ConfigureAwait(true);
-            }
-            else if (args.Item.Text == "Bring Forward")
-            {
-                //selectedItem.isModified = true;
-                await diagram.MoveForward().ConfigureAwait(true);
-            }
-            else if (args.Item.Text == "Send Backward")
-            {
-                //selectedItem.isModified = true;
-                await diagram.SendBackward().ConfigureAwait(true);
-            }
+            SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+            Parent.DiagramContent.DrawingObject(args);
+            Parent.DiagramContent.UpdateContinousDrawTool();
+            diagram.ClearSelection();
+            await removeSelectedToolbarItem("connector");
         }
         private async Task DrawZoomChange(Syncfusion.Blazor.SplitButtons.MenuEventArgs args)
         {
             if (ZoomItemDropdownContent != args.Item.Text)
             {
                 var diagram = Parent.DiagramContent.Diagram;
+                diagram.BeginUpdate();
                 if (args.Item.Text == "Custom")
                 {
 
@@ -90,99 +44,63 @@ namespace DiagramBuilder
                 else if (args.Item.Text == "Fit To Screen")
                 {
                     ZoomItemDropdownContent = "Fit ...";
-                    IFitOptions fitoption = new IFitOptions()
-                    {
-                        Mode = FitModes.Page,
-                        Region = DiagramRegions.Content,
-                        Margin = new DiagramMargin() { Left = 0, Top = 0, Right = 0, Bottom = 0 }
-                    };
-                    //Parent.DiagramContent.DigramFitOption = fitoption;
-                    await Parent.DiagramContent.Diagram.FitToPage(fitoption).ConfigureAwait(true);
                 }
                 else
                 {
                     var currentZoom = Parent.DiagramContent.CurrentZoom;
-                    ZoomOptions zoom = new ZoomOptions();
-                    switch (args.Item.Text)
-                    {
-                        case "400%":
-                            zoom.ZoomFactor = (4 / currentZoom) - 1;
-                            break;
-                        case "300%":
-                            zoom.ZoomFactor = (3 / currentZoom) - 1;
-                            break;
-                        case "200%":
-                            zoom.ZoomFactor = (2 / currentZoom) - 1;
-                            break;
-                        case "150%":
-                            zoom.ZoomFactor = (1.5 / currentZoom) - 1;
-                            break;
-                        case "100%":
-                            zoom.ZoomFactor = (1 / currentZoom) - 1;
-                            break;
-                        case "75%":
-                            zoom.ZoomFactor = (0.75 / currentZoom) - 1;
-                            break;
-                        case "50%":
-                            zoom.ZoomFactor = (0.5 / currentZoom) - 1;
-                            break;
-                        case "25%":
-                            zoom.ZoomFactor = (0.25 / currentZoom) - 1;
-                            break;
-                    }
                     ZoomItemDropdownContent = args.Item.Text;
 #pragma warning disable CA1305 // Specify IFormatProvider
                     Parent.DiagramContent.CurrentZoom = double.Parse(args.Item.Text.Remove(args.Item.Text.Length - 1, 1)) / 100;
 #pragma warning restore CA1305 // Specify IFormatProvider
-                    await diagram.ZoomTo(zoom).ConfigureAwait(true);
                 }
+                diagram.EndUpdate();
             }
-            Parent.DiagramContent.StateChanged();
         }
         private async Task ToolbarEditorClick(Syncfusion.Blazor.Navigations.ClickEventArgs args)
         {
             var diagram = Parent.DiagramContent.Diagram;
-            var commandType =  args.Item.TooltipText.ToLower(new CultureInfo("en-US"));
+            var commandType = args.Item.TooltipText.ToLower(new CultureInfo("en-US"));
             switch (commandType)
             {
                 case "undo":
-                    await diagram.Undo().ConfigureAwait(true);
+                    diagram.Undo();
+                    await EnableToolbarItems(new object() { }, "historychange");
                     break;
                 case "redo":
-                    await diagram.Redo().ConfigureAwait(true);
+                    diagram.Redo();
+                    await EnableToolbarItems(new object() { }, "historychange");
                     break;
                 case "zoom in(ctrl + +)":
-                    await Parent.DiagramContent.DiagramZoomIn().ConfigureAwait(true);
+                    Parent.DiagramContent.DiagramZoomIn();
                     ZoomItemDropdownContent = FormattableString.Invariant($"{Math.Round(Parent.DiagramContent.CurrentZoom * 100)}") + "%";
                     break;
                 case "zoom out(ctrl + -)":
-                    await Parent.DiagramContent.DiagramZoomOut().ConfigureAwait(true);
-                    ZoomItemDropdownContent = FormattableString.Invariant($"{Math.Round(Parent.DiagramContent.CurrentZoom * 100)}") + "%"; 
+                    Parent.DiagramContent.DiagramZoomOut();
+                    ZoomItemDropdownContent = FormattableString.Invariant($"{Math.Round(Parent.DiagramContent.CurrentZoom * 100)}") + "%";
                     break;
                 case "pan tool":
-                    Parent.DiagramContent.DiagramTool = DiagramTools.ZoomPan;
-                    await diagram.ClearSelection().ConfigureAwait(true);
-                    await jsRuntime.InvokeAsync<object>("UtilityMethods_objectTypeChange", "diagram").ConfigureAwait(true);
+                    Parent.DiagramContent.UpdateTool();
+                    diagram.ClearSelection();
+                    Parent.DiagramPropertyPanel.PanelVisibility();
                     break;
                 case "pointer":
-                    Parent.DiagramContent.DiagramDrawingObject = new object() { };
-                    Parent.DiagramContent.DiagramTool = DiagramTools.SingleSelect | DiagramTools.MultipleSelect;
-                    break;
-                case "text tool":
-                    Parent.DiagramContent.DiagramDrawingObject = new DiagramNode() { Shape = new DiagramShape() { Type = Shapes.Text } };
-                    Parent.DiagramContent.DiagramTool = DiagramTools.ContinuousDraw;
+                    Parent.DiagramContent.DiagramDrawingObject = null;
+                    Parent.DiagramContent.UpdatePointerTool();
                     break;
                 case "delete":
-                    await DeleteData().ConfigureAwait(true);
+                    diagram.BeginUpdate();
+                    DeleteData();
+                    toolbarClassName = "db-toolbar-container db-undo";
+                    diagram.EndUpdate();
                     break;
                 case "lock":
                     await LockObject().ConfigureAwait(true);
                     break;
                 case "group":
-                    await Group().ConfigureAwait(true);
+                    Group();
                     break;
                 case "ungroup":
-                    await Ungroup().ConfigureAwait(true);
+                    Ungroup();
                     break;
                 case "align left":
                 case "align right":
@@ -190,98 +108,126 @@ namespace DiagramBuilder
                 case "align bottom":
                 case "align middle":
                 case "align center":
-                    //selectedItem.isModified = true;
 #pragma warning disable CA1307 // Specify StringComparison
                     string alignType = commandType.Replace("align ", "");
 #pragma warning restore CA1307 // Specify StringComparison
                     alignType = char.ToUpper(alignType[0], new CultureInfo("en-US")) + alignType.Substring(1);
-                    await diagram.Align((AlignmentOptions)Enum.Parse(typeof(AlignmentOptions), alignType)).ConfigureAwait(true);
+                    diagram.SetAlign((AlignmentOptions)Enum.Parse(typeof(AlignmentOptions), alignType));
                     break;
                 case "distribute objects vertically":
-                    await Distribute("RightToLeft").ConfigureAwait(true);
+                    diagram.SetDistribute(DistributeOptions.RightToLeft);
                     break;
                 case "distribute objects horizontally":
-                    await Distribute("BottomToTop").ConfigureAwait(true);
-                    break;
-                case "show layers":
-                    await ShowLayers().ConfigureAwait(true);
-                    break;
-                case "themes":
-                    await ShowLayers().ConfigureAwait(true);
+                    diagram.SetDistribute(DistributeOptions.BottomToTop);
                     break;
             }
-            Parent.DiagramContent.StateChanged();
             if (commandType == "pan tool" || commandType == "pointer" || commandType == "text tool")
             {
 #pragma warning disable CA1307 // Specify StringComparison
                 if (args.Item.CssClass.IndexOf("tb-item-selected") == -1)
 #pragma warning restore CA1307 // Specify StringComparison
-                {                    
+                {
                     if (commandType == "pan tool")
                         PanItemCssClass += " tb-item-selected";
                     if (commandType == "pointer")
                         PointerItemCssClass += " tb-item-selected";
-                    if (commandType == "text tool")
-                        TextItemCssClass += " tb-item-selected";
                     await removeSelectedToolbarItem("").ConfigureAwait(true);
                 }
             }
         }
-        public async Task ShowLayers()
+
+        private void Group()
         {
-            LayerItemDialog.Parent = this;
-            await LayerItemDialog.Show().ConfigureAwait(true);
-        }
-        private async Task Distribute(string value)
-        {
-            await Parent.DiagramContent.Diagram.Distribute((DistributeOptions)Enum.Parse(typeof(DistributeOptions), value)).ConfigureAwait(true);
-        }
-        private async Task Group()
-        {
-            await Parent.DiagramContent.Diagram.Group().ConfigureAwait(true);
+            Parent.DiagramContent.Diagram.Group();
         }
 
-        private async Task Ungroup()
+        private void Ungroup()
         {
-            //selectedItem.isModified = true;
-            await Parent.DiagramContent.Diagram.UnGroup().ConfigureAwait(true);
+            Parent.DiagramContent.Diagram.UnGroup();
         }
-        private async Task DeleteData()
+        public void DeleteData()
         {
-            await Parent.DiagramContent.Diagram.Remove().ConfigureAwait(true);
+            bool GroupAction = false;
+            SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+            if ((diagram.SelectionSettings.Nodes.Count > 1 || diagram.SelectionSettings.Connectors.Count > 1 || ((diagram.SelectionSettings.Nodes.Count + diagram.SelectionSettings.Connectors.Count) > 1)))
+            {
+                GroupAction = true;
+            }
+            if (GroupAction)
+            {
+                diagram.StartGroupAction();
+            }
+            if (diagram.SelectionSettings.Nodes.Count != 0)
+            {
+                for (var i = diagram.SelectionSettings.Nodes.Count - 1; i >= 0; i--)
+                {
+                    var item = diagram.SelectionSettings.Nodes[i];
+
+                    diagram.Nodes.Remove(item);
+                }
+            }
+            if (diagram.SelectionSettings.Connectors.Count != 0)
+            {
+                for (var i = diagram.SelectionSettings.Connectors.Count - 1; i >= 0; i--)
+                {
+                    var item1 = diagram.SelectionSettings.Connectors[i];
+
+                    diagram.Connectors.Remove(item1);
+                }
+            }
+            if (GroupAction)
+                diagram.EndGroupAction();
         }
         private async Task LockObject()
         {
-            //selectedItem.isModified = true;
-            SfDiagram diagram = Parent.DiagramContent.Diagram;
-            for (var i = 0; i < diagram.SelectedItems.Nodes.Count; i++)
+            SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+            for (var i = 0; i < diagram.SelectionSettings.Nodes.Count; i++)
             {
-                var node = diagram.SelectedItems.Nodes[i];
-                if (node.Constraints.HasFlag(NodeConstraints.Drag))
+                var node = diagram.SelectionSettings.Nodes[i];
+                if (node.Constraints.HasFlag(NodeConstraints.Default))
                 {
-                    node.Constraints = NodeConstraints.PointerEvents | NodeConstraints.Select;
+                    node.Constraints = node.Constraints & ~(NodeConstraints.Resize | NodeConstraints.Drag | NodeConstraints.Rotate);
+                    node.Constraints = node.Constraints | NodeConstraints.ReadOnly;
+                    if(node.Ports.Count > 0)
+                    {
+                        for (var k = 0; k < node.Ports.Count; k++)
+                        {
+                            var port = node.Ports[k];
+                            port.Constraints = port.Constraints & ~(PortConstraints.Draw);
+                        }
+                    }
                 }
                 else
                 {
-                    node.Constraints = NodeConstraints.Default;
+                    node.Constraints = node.Constraints | NodeConstraints.Default & ~(NodeConstraints.ReadOnly);
+                    if (node.Ports.Count > 0)
+                    {
+                        for (var k = 0; k < node.Ports.Count; k++)
+                        {
+                            var port = node.Ports[k];
+                            port.Constraints = port.Constraints | PortConstraints.Draw;
+                        }
+                    }
                 }
             }
-            for (var j = 0; j < diagram.SelectedItems.Connectors.Count; j++)
+            for (var j = 0; j < diagram.SelectionSettings.Connectors.Count; j++)
             {
-                var connector = diagram.SelectedItems.Connectors[j];
-                if (connector.Constraints.HasFlag(ConnectorConstraints.Drag))
+                var connector = diagram.SelectionSettings.Connectors[j];
+                if (connector.Constraints.HasFlag(ConnectorConstraints.Default))
                 {
-                    connector.Constraints = ConnectorConstraints.PointerEvents | ConnectorConstraints.Select;
+                    connector.Constraints = (connector.Constraints & ~(ConnectorConstraints.DragSourceEnd
+                | ConnectorConstraints.DragTargetEnd | ConnectorConstraints.DragSegmentThumb)) | ConnectorConstraints.ReadOnly;
                 }
                 else
                 {
-                    connector.Constraints = ConnectorConstraints.Default;
+                    connector.Constraints |= ConnectorConstraints.Default & ~(ConnectorConstraints.ReadOnly);
                 }
             }
         }
         private async Task removeSelectedToolbarItem(string tool)
         {
 #pragma warning disable CA1307 // Specify StringComparison
+
             if (DrawConnectorItemCssClass.IndexOf("tb-item-selected") != -1)
             {
                 DrawConnectorItemCssClass = DrawConnectorItemCssClass.Replace(" tb-item-selected", "");
@@ -298,52 +244,187 @@ namespace DiagramBuilder
             {
                 PointerItemCssClass = PointerItemCssClass.Replace(" tb-item-selected", "");
             }
-            if (TextItemCssClass.IndexOf("tb-item-selected") != -1)
-            {
-
-                TextItemCssClass = TextItemCssClass.Replace(" tb-item-selected", "");
-            }
-            await jsRuntime.InvokeAsync<object>("removeSelectedToolbarItem", tool).ConfigureAwait(true);
+            removeSelectedToolbarItems(tool);
             StateHasChanged();
 #pragma warning restore CA1307 // Specify StringComparison
 
         }
         #endregion
 
+        public void removeSelectedToolbarItems(string tool)
+        {
+            string shape = "tb-item-selected";
+            if (DrawShapeItemCssClass.Contains(shape))
+            {
+                int first = DrawShapeItemCssClass.IndexOf(shape);
+                DrawShapeItemCssClass = DrawShapeItemCssClass.Remove(first);
+            }
+            if (DrawConnectorItemCssClass.Contains(shape))
+            {
+                int second = DrawConnectorItemCssClass.IndexOf(shape);
+                DrawConnectorItemCssClass = DrawConnectorItemCssClass.Remove(second);
+            }
+            if (tool == "shape")
+            {
+                DrawShapeItemCssClass += " tb-item-selected";
+            }
+            else if (tool == "connector")
+            {
+                DrawConnectorItemCssClass += " tb-item-selected";
+            }
+        }
+
+        public void DiagramZoomValueChange()
+        {
+            ZoomItemDropdownContent = FormattableString.Invariant($"{Math.Round(Parent.DiagramContent.CurrentZoom * 100)}") + "%";
+            StateHasChanged();
+        }
+
         #region public methods
 
         public async Task EnableToolbarItems<T>(T obj, string eventname)
         {
-            JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
-            {
-                DefaultValueHandling = DefaultValueHandling.Ignore,
-                StringEscapeHandling = StringEscapeHandling.EscapeNonAscii
-            };
 
-            ObservableCollection<object> collection = new ObservableCollection<object>();
+            SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+            ObservableCollection<NodeBase> collection = new ObservableCollection<NodeBase>();
             if (eventname == "selectionchange")
             {
-                foreach (DiagramNode node in (obj as DiagramEventObjectCollection).Nodes)
+                foreach (NodeBase node in obj as ObservableCollection<IDiagramObject>)
                 {
+                    Node val = node as Node;
                     collection.Add(node);
                 }
-                foreach (DiagramConnector connector in (obj as DiagramEventObjectCollection).Connectors)
-                {
-                    collection.Add(connector);
-                }
-
-                object jsonobj = JsonConvert.SerializeObject(collection, jsonSerializerSettings);
-                await jsRuntime.InvokeAsync<object>("UtilityMethods_enableToolbarItems", jsonobj).ConfigureAwait(true);
+                UtilityMethods_enableToolbarItems(collection);
             }
-            if(eventname == "historychange")
+
+            if (eventname == "historychange")
             {
-                object jsonobj = JsonConvert.SerializeObject(obj, jsonSerializerSettings);
-                System.Collections.Generic.Dictionary<string, bool> data = await jsRuntime.InvokeAsync<System.Collections.Generic.Dictionary<string, bool>>("DiagramClientSideEvents_historyChange", jsonobj).ConfigureAwait(true);
-                this.Parent.DiagramContent.IsUndo = data["undo"];
-                this.Parent.DiagramContent.IsRedo = data["redo"];
+                RemoveUndo();
+                RemoveRedo();
+                if (diagram.HistoryManager.CanUndo)
+                {
+                    this.Parent.DiagramContent.IsUndo = diagram.HistoryManager.CanUndo;
+                    this.Parent.DiagramContent.IsRedo = diagram.HistoryManager.CanRedo;
+                    toolbarClassName += " db-undo";
+                }
+                if (diagram.HistoryManager.CanRedo)
+                {
+                    this.Parent.DiagramContent.IsRedo = diagram.HistoryManager.CanRedo;
+                    this.Parent.DiagramContent.IsUndo = diagram.HistoryManager.CanUndo;
+                    toolbarClassName += " db-redo";
+                }
+                StateHasChanged();
             }
         }
+        public void RemoveUndo()
+        {
+            string undo = "undo";
+            if (toolbarClassName.Contains(undo))
+            {
+                int first = toolbarClassName.IndexOf(undo);
+                toolbarClassName = toolbarClassName.Remove(first - 4, 8);
+            }
+        }
+        public void RemoveRedo()
+        {
+            string redo = "redo";
+            if (toolbarClassName.Contains(redo))
+            {
+                int first = toolbarClassName.IndexOf(redo);
+                toolbarClassName = toolbarClassName.Remove(first - 4, 8);
+            }
+        }
+        public void UtilityMethods_enableToolbarItems(ObservableCollection<NodeBase> SelectedObjects)
+        {
+            SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+            removeClassElement();
+            if (this.Parent.DiagramContent.IsUndo)
+            {
+                toolbarClassName += " db-undo";
+            }
+            if (this.Parent.DiagramContent.IsRedo)
+            {
+                toolbarClassName += " db-redo";
+            }
+            if (SelectedObjects.Count == 1)
+            {
+                toolbarClassName = toolbarClassName + " db-select";
 
+                if (SelectedObjects[0] is NodeGroup)
+                {
+                    if ((SelectedObjects[0] as NodeGroup).Children.Length > 2)
+                    {
+                        toolbarClassName = toolbarClassName + " db-select db-double db-multiple db-node db-group";
+                        fill = fill + "-multiple-nodes";
+                        stroke = stroke + "-multiple-objects";
+                    }
+                    else
+                    {
+                        toolbarClassName = toolbarClassName + " db-select db-double db-node db-group";
+                        fill = fill + "-multiple-nodes";
+                        stroke = stroke + "-multiple-objects";
+                    }
+                }
+                else
+                {
+                    if (SelectedObjects[0] is Connector)
+                    {
+                        stroke = stroke + "-multiple-objects";
+                        toolbarClassName = toolbarClassName + " db-select";
+                    }
+                    else
+                    {
+                        toolbarClassName = toolbarClassName + " db-select db-node";
+                    }
+                }
+            }
+            else if (SelectedObjects.Count == 2)
+            {
+                if ((SelectedObjects[0] is Node) && (SelectedObjects[1] is Node))
+                {
+                    fill = fill + "-multiple-nodes";
+                }
+                else
+                {
+                    fill = "tb-item-start tb-item-fill";
+                    stroke = stroke + "-multiple-objects";
+                }
+                toolbarClassName = toolbarClassName + " db-select db-double";
+            }
+            else if (SelectedObjects.Count > 2)
+            {
+                for (int i = 0; i <= SelectedObjects.Count - 1; i++)
+                {
+                    if ((SelectedObjects[i] is Node))
+                    {
+                        fill = fill + "-multiple-nodes";
+                    }
+                    if (SelectedObjects[i] is Connector)
+                    {
+                        fill = "tb-item-start tb-item-fill";
+                        stroke = stroke + "-multiple-objects";
+                    }
+                }
+
+                toolbarClassName = toolbarClassName + " db-select db-double db-multiple";
+
+            }
+            StateHasChanged();
+        }
+        public void removeClassElement()
+        {
+            string space = " ";
+            if (toolbarClassName.Contains(space))
+            {
+                int first = toolbarClassName.IndexOf(space);
+                if (first != 0)
+                {
+                    toolbarClassName = toolbarClassName.Remove(20);
+                }
+            }
+            fill = "tb-item-start tb-item-fill";
+            stroke = "tb-item-end tb-item-stroke";
+        }
         private async Task HideToolBar()
         {
 #pragma warning disable CA1307 // Specify StringComparison
@@ -362,12 +443,6 @@ namespace DiagramBuilder
         {
             await jsRuntime.InvokeAsync<object>("UtilityMethods_hideElements", eventname).ConfigureAwait(true);
         }
-
-        public void StateChange()
-        {
-            StateHasChanged();
-        }
-
         #endregion
     }
 }

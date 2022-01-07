@@ -1012,13 +1012,13 @@ html, body {
     pointer-events: none;
 }
 
-.e-contextmenu-container ul .e-menu-item {
+.e-contextmenu-wrapper ul .e-menu-item {
     font-size: 12px;
     line-height: 30px;
     height: 30px;
 }
 
-.e-contextmenu-container ul .e-menu-item .ej-icon-Right {
+.e-contextmenu-wrapper ul .e-menu-item .ej-icon-Right {
     width: 14px;
     height: 14px;
     line-height: 30px;
@@ -1026,8 +1026,8 @@ html, body {
     font-weight: 600;
 }
 
-.e-contextmenu-container ul .e-menu-item.e-selected,
-.e-contextmenu-container ul .e-menu-item.e-focused {
+.e-contextmenu-wrapper ul .e-menu-item.e-selected,
+.e-contextmenu-wrapper ul .e-menu-item.e-focused {
     background-color: #DCECF9;
 }
 

@@ -4,13 +4,12 @@
 <div id="diagrambuilder-container" style="visibility:visible;" class=@DiagramBuilderClassName>
     <DiagramMenuBar @ref="@MenuBar"></DiagramMenuBar>
     <DiagramToolBar @ref="@Toolbar"></DiagramToolBar>
-    <div class='row content'>
+    <div class='row content' style="padding-top:0px">
         <DiagramLeftSideBar @ref="@LeftSideBar"></DiagramLeftSideBar>
         <div class='main-content' role='main'>
             <DiagramMainContent @ref="@DiagramContent"></DiagramMainContent>
             <div class=@PropertyPanelClassName style="overflow:auto;">
                 <DiagramPropertyContainer @ref="@DiagramPropertyPanel"></DiagramPropertyContainer>
-                <MindMapPropertyContainer @ref="@MindMapPropertyPanel"></MindMapPropertyContainer>
             </div>
         </div>
     </div>
@@ -20,25 +19,24 @@
 @code {
     internal MainLayout Parent;
     public string DiagramBuilderClassName = "diagrambuilder-container";
+    public DiagramMainContent DiagramContent;
     public string PropertyPanelClassName = "db-property-editor-container";
+    public DiagramPropertyContainer DiagramPropertyPanel;
     public DiagramMenuBar MenuBar;
     public DiagramToolBar Toolbar;
-    public DiagramMainContent DiagramContent;
-    public DiagramPropertyContainer DiagramPropertyPanel;
     public DiagramLeftSideBar LeftSideBar;
     public DiagramOpenDialog OpenDialog;
-    public MindMapPropertyContainer MindMapPropertyPanel;
 
     [Inject]
     protected IJSRuntime jsRuntime { get; set; }
-
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
         if (firstRender)
         {
-            if (this.MenuBar != null)
+
+             if (this.MenuBar != null)
                 this.MenuBar.Parent = this;
             if (this.Toolbar != null)
                 this.Toolbar.Parent = this;
@@ -50,8 +48,6 @@
                 this.LeftSideBar.Parent = this;
             if (this.OpenDialog != null)
                 this.OpenDialog.Parent = this;
-            if (this.MindMapPropertyPanel != null)
-                this.MindMapPropertyPanel.Parent = this;
         }
     }
 
