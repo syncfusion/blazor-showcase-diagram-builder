@@ -66,10 +66,10 @@
 @code {
     internal DiagramMain Parent;
     public SpinnerComponent DiagramSpinnerObj { get; set; }
-    
+
     public ObservableCollection<Node> NodesCollection = new ObservableCollection<Node>();
     public ObservableCollection<Connector> ConnectorCollection = new ObservableCollection<Connector>();
-    
+
     public SfDiagramComponent Diagram;
     public DiagramObjectCollection<Node> nodes { get; set; } = new DiagramObjectCollection<Node>();
     public DiagramObjectCollection<Connector> connectors  {get;set;}= new DiagramObjectCollection<Connector>();
@@ -100,7 +100,7 @@
 
     public bool DynamicGrid = false;
 
-    public class NodeAddInfo 
+    public class NodeAddInfo
     {
         public double Level;
         public string Orientation;
@@ -120,7 +120,7 @@
         };
         PageList.Add(pageOption);
         ActivePage = pageOption;
-    }  
+    }
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
@@ -136,7 +136,7 @@
         });
     }
     protected override async Task OnAfterRenderAsync(bool firstRender)
-    {       
+    {
         await base.OnAfterRenderAsync(firstRender);
         if (this.DiagramSpinnerObj.HideClass == "sb-trans")
         {
@@ -193,7 +193,7 @@
             },
         };
     }
-        
+
     public async Task CreditProcessDiagram()
     {
         nodes.Clear();
@@ -203,7 +203,7 @@
         await Diagram.AddDiagramElements(flowNodes);
         await Diagram.AddDiagramElements(flowConnectors);
     }
-   
+
 
     private void PositionChanged(PositionChangedEventArgs args)
     {
@@ -222,7 +222,7 @@
     {
         if(args.Element is Node)
         {
-        Parent.DiagramPropertyPanel.slider();
+            Parent.DiagramPropertyPanel.slider();
         }
         else if(args.Element is Connector)
         {
@@ -302,14 +302,14 @@
         }
         if (showNodePanel)
         {
-           
+
             Parent.DiagramPropertyPanel.gradientPropertyVisibility("nodePropertyContainer",true);
-           
+
             Parent.DiagramPropertyPanel.addClassInElement("nodePropertyContainer"," multiple");
-            
+
             if (showConnectorPanel)
             {
-                
+
                 Parent.DiagramPropertyPanel.addClassInElement("nodePropertyContainer"," connector");
             }
             if (Diagram.SelectionSettings.Nodes.Count == 1)
@@ -318,12 +318,12 @@
         if (showConnectorPanel && !showNodePanel)
         {
             Parent.DiagramPropertyPanel.PanelVisibility();
-            
+
             Parent.DiagramPropertyPanel.SingleConnectorSelection();
         }
         if (showTextPanel || showConTextPanel)
-        { 
-            Parent.DiagramPropertyPanel.TextPropertyPanelVisibility(); 
+        {
+            Parent.DiagramPropertyPanel.TextPropertyPanelVisibility();
         }
     }
     public void UpdateTool()
@@ -334,54 +334,54 @@
     public void DrawingObject(Syncfusion.Blazor.SplitButtons.MenuEventArgs args)
     {
         if (args.Item.Text == "Rectangle")
-            {
-                DiagramDrawingObject = new Node() { Shape = new BasicShape() { Type = Shapes.Basic, Shape = BasicShapeType.Rectangle }, Style = new ShapeStyle() {  StrokeWidth = 2 } };
-            }
-            else if (args.Item.Text == "Ellipse")
-            {
-                DiagramDrawingObject = new Node() { Shape = new BasicShape() { Type = Shapes.Basic, Shape = BasicShapeType.Ellipse }, Style = new ShapeStyle() {  StrokeWidth = 2 } };
-            }
-            else if (args.Item.Text == "Polygon")
-            {
-                DiagramDrawingObject = new Node() { Shape = new BasicShape() { Type = Shapes.Basic, Shape = BasicShapeType.Polygon }, Style = new ShapeStyle() {  StrokeWidth = 2 } };
-            }
-            else if (args.Item.Text == "Straight Line")
-            {
-                Parent.DiagramContent.DiagramDrawingObject = new Connector() { Type = ConnectorSegmentType.Straight, Constraints = ConnectorConstraints.Default, Style = new ShapeStyle() {  StrokeWidth = 2 } };
-            }
-            else if (args.Item.Text == "Orthogonal Line")
-            {
-                Parent.DiagramContent.DiagramDrawingObject = new Connector() { Type = ConnectorSegmentType.Orthogonal, Constraints = ConnectorConstraints.Default, Style = new ShapeStyle() {  StrokeWidth = 2 } };
-            }
-            else if (args.Item.Text == "Bezier")
-            {
-                Parent.DiagramContent.DiagramDrawingObject = new Connector() { Type = ConnectorSegmentType.Bezier, Constraints = ConnectorConstraints.Default, Style = new ShapeStyle() {  StrokeWidth = 2 } };
-            }
+        {
+            DiagramDrawingObject = new Node() { Shape = new BasicShape() { Type = Shapes.Basic, Shape = BasicShapeType.Rectangle }, Style = new ShapeStyle() {  StrokeWidth = 2 } };
+        }
+        else if (args.Item.Text == "Ellipse")
+        {
+            DiagramDrawingObject = new Node() { Shape = new BasicShape() { Type = Shapes.Basic, Shape = BasicShapeType.Ellipse }, Style = new ShapeStyle() {  StrokeWidth = 2 } };
+        }
+        else if (args.Item.Text == "Polygon")
+        {
+            DiagramDrawingObject = new Node() { Shape = new BasicShape() { Type = Shapes.Basic, Shape = BasicShapeType.Polygon }, Style = new ShapeStyle() {  StrokeWidth = 2 } };
+        }
+        else if (args.Item.Text == "Straight Line")
+        {
+            Parent.DiagramContent.DiagramDrawingObject = new Connector() { Type = ConnectorSegmentType.Straight, Constraints = ConnectorConstraints.Default, Style = new ShapeStyle() {  StrokeWidth = 2 } };
+        }
+        else if (args.Item.Text == "Orthogonal Line")
+        {
+            Parent.DiagramContent.DiagramDrawingObject = new Connector() { Type = ConnectorSegmentType.Orthogonal, Constraints = ConnectorConstraints.Default, Style = new ShapeStyle() {  StrokeWidth = 2 } };
+        }
+        else if (args.Item.Text == "Bezier")
+        {
+            Parent.DiagramContent.DiagramDrawingObject = new Connector() { Type = ConnectorSegmentType.Bezier, Constraints = ConnectorConstraints.Default, Style = new ShapeStyle() {  StrokeWidth = 2 } };
+        }
     }
     public void UpdateContinousDrawTool()
     {
         DiagramTool = InteractionController.ContinuousDraw;
         StateHasChanged();
     }
-     public void UpdatePointerTool()
-    {  
+    public void UpdatePointerTool()
+    {
         DiagramTool = InteractionController.SingleSelect | InteractionController.MultipleSelect;
         StateHasChanged();
     }
     public void DiagramZoomIn()
-    {        
+    {
         CurrentZoom = (CurrentZoom + 0.2);
         StateHasChanged();
     }
     public void DiagramZoomOut()
-    {        
+    {
         CurrentZoom = (CurrentZoom - 0.2);
         StateHasChanged();
     }
 
     public void LoadNewDiagram(string Json)
     {
-         Diagram.LoadDiagram(Json);
+        Diagram.LoadDiagram(Json);
     }
 
     public class PageOptionElement
@@ -395,7 +395,7 @@
     {
         this.DiagramSpinnerObj.Show();
         ActivePage.Diagram = Diagram.SaveDiagram();
-        ActivePage.PageSwitch = false;      
+        ActivePage.PageSwitch = false;
         await Diagram.LoadDiagram(page.Diagram.ToString());
         this.DiagramSpinnerObj.Hide();
         page.PageSwitch = true;
@@ -403,6 +403,7 @@
         {
             Diagram.ClearHistory();
         }
+        await jsRuntime.InvokeAsync<object>("pageSizeUpdate").ConfigureAwait(true);
         ActivePage = page;
     }
 

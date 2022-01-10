@@ -144,6 +144,7 @@ namespace DiagramBuilder
         private void Ungroup()
         {
             Parent.DiagramContent.Diagram.UnGroup();
+            Parent.DiagramContent.Diagram.ClearSelection();
         }
         public void DeleteData()
         {

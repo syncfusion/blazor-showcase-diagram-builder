@@ -76,34 +76,46 @@
 
 @code {
 
-internal DiagramMain Parent;
-private ElementReference input;
-DiagramSaveDialog SaveDialogBox;
-SfDropDownButton FileButton;
-SfDropDownButton WindowButton;
-SfDropDownButton ArrangeButton;
-SfDropDownButton ViewButton;
-SfDropDownButton EditButton;
-Syncfusion.Blazor.Inputs.SfUploader UploadFiles;
-string ExtensionType = ".json";
-SfContextMenu<ContextMenuItemModel> ContextMenu;
-private List<string> DisableCollection;
-public string diagramName { get; set; } = "Untitled Diagram";
-public string value { get; set; }
-public string menuclass { get; set; } = "db-diagram-name-container";
+    internal DiagramMain Parent;
+    private ElementReference input;
+    DiagramSaveDialog SaveDialogBox;
+    SfDropDownButton FileButton;
+    SfDropDownButton WindowButton;
+    SfDropDownButton ArrangeButton;
+    SfDropDownButton ViewButton;
+    SfDropDownButton EditButton;
+    Syncfusion.Blazor.Inputs.SfUploader UploadFiles;
+    string ExtensionType = ".json";
+    SfContextMenu<ContextMenuItemModel> ContextMenu;
+    private List<string> DisableCollection;
+    public string diagramName { get; set; } = "Untitled Diagram";
+    public string value { get; set; }
+    public string menuclass { get; set; } = "db-diagram-name-container";
 
-private async Task renameDiagram()
-{
-    menuclass += " db-edit-name";
-    value = diagramName;
-    await input.FocusAsync();
-    await jsRuntime.InvokeVoidAsync("renameDiagram1", input);
-}
-private void diagramNameKeyDown(KeyboardEventArgs  args)
-{
-    if (args.Key == "Enter")
+    private async Task renameDiagram()
     {
-        diagramName = "";
+        menuclass += " db-edit-name";
+        value = diagramName;
+        await input.FocusAsync();
+        await jsRuntime.InvokeVoidAsync("renameDiagram1", input);
+    }
+    private void diagramNameKeyDown(KeyboardEventArgs  args)
+    {
+        if (args.Key == "Enter")
+        {
+            diagramName = "";
+            string edit = " db-edit-name";
+            if (menuclass.Contains(edit))
+            {
+                int first = menuclass.IndexOf(edit);
+                menuclass = menuclass.Remove(first);
+            }
+        }
+    }
+
+    private void diagramNameChange( Microsoft.AspNetCore.Components.Web.FocusEventArgs args)
+    {
+        diagramName = value;
         string edit = " db-edit-name";
         if (menuclass.Contains(edit))
         {
@@ -111,100 +123,88 @@ private void diagramNameKeyDown(KeyboardEventArgs  args)
             menuclass = menuclass.Remove(first);
         }
     }
-}
-
-private void diagramNameChange( Microsoft.AspNetCore.Components.Web.FocusEventArgs args)
-{
-    diagramName = value;
-    string edit = " db-edit-name";
-    if (menuclass.Contains(edit))
-    {
-        int first = menuclass.IndexOf(edit);
-        menuclass = menuclass.Remove(first);
-    }
-}
-private void DropDownButtonOpen() {
-    this.ItemSelection();
-    for (int i = 0; i < FileMenuItems.Count; i++)
-    {
-        if (DisableCollection.IndexOf(FileMenuItems[i].Text) > -1)
+    private void DropDownButtonOpen() {
+        this.ItemSelection();
+        for (int i = 0; i < FileMenuItems.Count; i++)
         {
-            FileMenuItems[i].Disabled = true;
-        }
-        else
-        {
+            if (DisableCollection.IndexOf(FileMenuItems[i].Text) > -1)
+            {
+                FileMenuItems[i].Disabled = true;
+            }
+            else
+            {
 
-            FileMenuItems[i].Disabled = false;
-        }
-    }
-}
-
-public void OnMenuCreated()
-{
-    ContextMenu.Open();
-}
-private void DropDownfileOpenButtonOpen()
-{
-    this.ItemSelection();
-    for(int i =0; i<EditMenuItems.Count; i++)
-    {
-        if(DisableCollection.IndexOf(EditMenuItems[i].Text) > -1)
-        {
-            EditMenuItems[i].Disabled = true;
-        }
-        else {
-
-            EditMenuItems[i].Disabled = false;
+                FileMenuItems[i].Disabled = false;
+            }
         }
     }
 
-}
-private void DropDownViewButtonOpen()
-{
-    this.ItemSelection();
-    for (int i = 0; i < ViewMenuItems.Count; i++)
+    public void OnMenuCreated()
     {
-        if (DisableCollection.IndexOf(ViewMenuItems[i].Text) > -1)
+        ContextMenu.Open();
+    }
+    private void DropDownfileOpenButtonOpen()
+    {
+        this.ItemSelection();
+        for(int i =0; i<EditMenuItems.Count; i++)
         {
-            ViewMenuItems[i].Disabled = true;
+            if(DisableCollection.IndexOf(EditMenuItems[i].Text) > -1)
+            {
+                EditMenuItems[i].Disabled = true;
+            }
+            else {
+
+                EditMenuItems[i].Disabled = false;
+            }
         }
-        else
+
+    }
+    private void DropDownViewButtonOpen()
+    {
+        this.ItemSelection();
+        for (int i = 0; i < ViewMenuItems.Count; i++)
         {
-            ViewMenuItems[i].Disabled = false;
+            if (DisableCollection.IndexOf(ViewMenuItems[i].Text) > -1)
+            {
+                ViewMenuItems[i].Disabled = true;
+            }
+            else
+            {
+                ViewMenuItems[i].Disabled = false;
+            }
         }
     }
-}
-private void DropDownArrangeButtonOpen()
-{
-    this.ItemSelection();
-    for (int i = 0; i < ArrangeMenuItems.Count; i++)
+    private void DropDownArrangeButtonOpen()
     {
-        if (DisableCollection.IndexOf(ArrangeMenuItems[i].Text) > -1)
+        this.ItemSelection();
+        for (int i = 0; i < ArrangeMenuItems.Count; i++)
         {
-            ArrangeMenuItems[i].Disabled = true;
-        }
-        else
-        {
-            ArrangeMenuItems[i].Disabled = false;
+            if (DisableCollection.IndexOf(ArrangeMenuItems[i].Text) > -1)
+            {
+                ArrangeMenuItems[i].Disabled = true;
+            }
+            else
+            {
+                ArrangeMenuItems[i].Disabled = false;
+            }
         }
     }
-}
-private void DropDownWindowButtonOpen()
-{
-    this.ItemSelection();
-}
+    private void DropDownWindowButtonOpen()
+    {
+        this.ItemSelection();
+    }
 
-public class ContextMenuItemModel
-{
-    public List<ContextMenuItemModel> Items { get; set; }
-    public string Text { get; set; }
-    public string Id { get; set; }
-    public string IconCss { get; set; }
-    public Boolean Separator { get; set; }
-    public Boolean Disabled { get; set; }
-}
+    public class ContextMenuItemModel
+    {
+        public List<ContextMenuItemModel> Items { get; set; }
+        public string Text { get; set; }
+        public string Id { get; set; }
+        public string IconCss { get; set; }
+        public Boolean Separator { get; set; }
+        public Boolean Disabled { get; set; }
+    }
 
-private List<  ContextMenuItemModel> EditMenuItems = new List<  ContextMenuItemModel>
+    private List<  ContextMenuItemModel> EditMenuItems = new List<  ContextMenuItemModel>
 {
     new   ContextMenuItemModel {Id ="EditMenuItemsUndo", Text= "Undo", IconCss="sf-icon-Undo" },
     new   ContextMenuItemModel { Id ="EditMenuItemsUndo",Text= "Redo", IconCss="sf-icon-Redo" },
@@ -219,7 +219,7 @@ private List<  ContextMenuItemModel> EditMenuItems = new List<  ContextMenuItemM
     new   ContextMenuItemModel { Id ="EditMenuItemsSelectAll",Text= "Select All" },
 };
 
-private List<  ContextMenuItemModel> FileMenuItems = new List<  ContextMenuItemModel>
+    private List<  ContextMenuItemModel> FileMenuItems = new List<  ContextMenuItemModel>
 {
     new   ContextMenuItemModel {Id ="FileMenuItemsNew", Text = "New" },
     new   ContextMenuItemModel {Id ="FileMenuItemsOpen", Text = "Open" },
@@ -279,7 +279,7 @@ private List<  ContextMenuItemModel> FileMenuItems = new List<  ContextMenuItemM
             new   ContextMenuItemModel { Text="Show Stencil",IconCss="sf-icon-Selection" },
             new   ContextMenuItemModel { Text="Show Properties",IconCss="sf-icon-Selection" },
         };
-  private bool IsParent(string Text)
+    private bool IsParent(string Text)
     {
         if (Text == "File" || Text == "Edit" || Text == "View" || Text == "Arrange" || Text == "Window" || Text == "Help")
             return true;
@@ -294,7 +294,7 @@ private List<  ContextMenuItemModel> FileMenuItems = new List<  ContextMenuItemM
         await base.OnAfterRenderAsync(firstRender);
         if (firstRender)
         {
-              if (SaveDialogBox != null)
+            if (SaveDialogBox != null)
                 SaveDialogBox.Parent = this;
         }
 
@@ -372,7 +372,7 @@ private List<  ContextMenuItemModel> FileMenuItems = new List<  ContextMenuItemM
                 {
                     diagram.StartGroupAction();
                 }
-                    if (diagram.SelectionSettings.Nodes.Count != 0)
+                if (diagram.SelectionSettings.Nodes.Count != 0)
                 {
                     for (var i = diagram.SelectionSettings.Nodes.Count-1; i >=0; i--)
                     {
@@ -426,7 +426,8 @@ private List<  ContextMenuItemModel> FileMenuItems = new List<  ContextMenuItemM
                 Arrange = true;
                 if (diagram.SelectionSettings.Nodes.Count + diagram.SelectionSettings.Connectors.Count > 0)
                 {
-                   diagram.UnGroup();
+                    diagram.UnGroup();
+                    diagram.ClearSelection();
                 }
                 break;
             case "showtoolbar":
@@ -500,7 +501,7 @@ private List<  ContextMenuItemModel> FileMenuItems = new List<  ContextMenuItemM
                 Parent.DiagramContent.SnapConstraint = Parent.DiagramContent.SnapConstraint ^ SnapConstraints.SnapToLines;
                 ViewMenuItems[5].IconCss = ViewMenuItems[5].IconCss == null ? "sf-icon-Selection" : null;
                 break;
-            
+
             case "zoomin":
                 view = true;
                 Parent.DiagramContent.DiagramZoomIn();
@@ -546,10 +547,10 @@ private List<  ContextMenuItemModel> FileMenuItems = new List<  ContextMenuItemM
         {
             collection.Add(connector);
         }
-        
-        
+
+
         Node node1 = collection.Count > 0 ? collection[0] as Node : null;
-         Node node2 = collection.Count > 0 ? collection[0] as NodeGroup : null;
+        Node node2 = collection.Count > 0 ? collection[0] as NodeGroup : null;
         Connector connector1 = collection.Count > 0 ? collection[0] as Connector : null;
 
         bool isLock = ((node1 != null && node1.Constraints.HasFlag(NodeConstraints.Drag)) || (connector1 != null && connector1.Constraints.HasFlag(ConnectorConstraints.Drag))) ? false : true;
@@ -567,7 +568,7 @@ private List<  ContextMenuItemModel> FileMenuItems = new List<  ContextMenuItemM
         };
         Dictionary<string, bool> ArrangeSelect = new Dictionary<string, bool>()
 {
-   
+
             {"Align Objects",(collection.Count == 1 || collection.Count == 0)?true:false},
             {"Distribute Objects",(collection.Count == 1 || collection.Count == 0)?true:false},
             {"Match Size",(collection.Count == 1 || collection.Count == 0)?true:false},
@@ -614,17 +615,17 @@ private List<  ContextMenuItemModel> FileMenuItems = new List<  ContextMenuItemM
     {
         SfDiagramComponent Diagram = Parent.DiagramContent.Diagram;
         if (args.FileData.Type == "json")
-        { 
+        {
             Parent.DiagramContent.DiagramSpinnerObj.Show();// = true;
             await Task.Delay(100);
             string json = await FileUtil.LoadFile(jsRuntime, args.FileData);
             json = json.Replace(System.Environment.NewLine, string.Empty);
-            await Parent.DiagramContent.Diagram.LoadDiagram(json.ToString()); 
+            await Parent.DiagramContent.Diagram.LoadDiagram(json.ToString());
             Parent.DiagramContent.DiagramSpinnerObj.Hide();
         }
         else
         {
-           
+
             Node Node = Diagram.SelectionSettings.Nodes[0];
             Diagram.BeginUpdate();
             Node.Shape = new ImageShape() { Type = Shapes.Image, Source = args.FileData.RawFile.ToString() };
@@ -651,7 +652,7 @@ private List<  ContextMenuItemModel> FileMenuItems = new List<  ContextMenuItemM
                         return true;
                 }
             }
-           
+
             if (!enablePasteButten && itemText == "Paste")
             {
                 return true;

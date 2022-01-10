@@ -96,9 +96,10 @@ function renameDiagram1(args) {
     element.focus();
     element.select();
 }
-
 UtilityMethods_native = function (object) {
-    var selectedItems = JSON.parse(object);
-    
+    var selectedItems = JSON.parse(object);    
     console.log(selectedItems);
 };
+function pageSizeUpdate() {
+    window.dispatchEvent(new Event('resize'));
+}
