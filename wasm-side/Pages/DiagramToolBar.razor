@@ -1,0 +1,208 @@
+﻿@using Syncfusion.Blazor.Navigations
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.SplitButtons
+@using Syncfusion.Blazor.DropDowns
+@using Syncfusion.Blazor.Inputs
+
+@namespace WebApplicationDiagramBuilder
+
+<style>
+    #toolbarEditor .e-hscroll-bar{
+        overflow-x: initial !important;
+    }
+    #toolbarEditor .e-toolbar .e-toolbar-items:not(.e-tbar-pos) .e-toolbar-item:first-child {
+        margin-left: 45px;
+    }
+
+    .activecss {
+        background: #ffffff;
+    }
+    .e-dropdown-popup ul .e-item:hover, .e-dropdown-popup ul .e-item:active {
+        background-color: #ffffff;
+    }
+    .e-dropdown-popup ul .e-item:active {
+        background-color: #ffffff;
+    }
+        #btnDrawConnector, #btnDrawShape {
+            padding: 6px 12px 4px;
+        }
+    .e-dropdown-popup {
+        background-color: #fff;
+        color: rgba(0,0,0,0.87);
+    }
+</style>
+<div class='db-toolbar-editor'>
+    <div class='@toolbarClassName'>
+        <div ID="toolbarEditor" class="e-control e-toolbar e-lib e-keyboard">
+            <SfToolbar @ref="@Toolbar" OverflowMode="@OverflowMode.Scrollable">
+                <ToolbarEvents Clicked="@ToolbarEditorClick"></ToolbarEvents>
+                <ToolbarItems>
+                    <ToolbarItem @ref="@UndoItem" PrefixIcon="e-icons sf-icon-Undo tb-icons" TooltipText="Undo" CssClass="tb-item-start tb-item-undo"></ToolbarItem>
+                    <ToolbarItem @ref="@RedoItem" PrefixIcon="e-icons sf-icon-Redo tb-icons" TooltipText="Redo" CssClass="tb-item-end tb-item-redo"></ToolbarItem>
+                    <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
+                    <ToolbarItem @ref="@ZoomInItem" PrefixIcon="e-icons sf-icon-ZoomOut tb-icons" TooltipText="Zoom Out(Ctrl + -)" CssClass="tb-item-start"></ToolbarItem>
+                    <ToolbarItem @ref="@ZoomItem" PrefixIcon="e-icons tb-item-end tb-zoom-dropdown-btn">
+                        <Template>
+                            <SfDropDownButton ID="btnZoomIncrement" @ref="@ZoomItemDropdown" Content="@ZoomItemDropdownContent">
+                                <DropDownButtonEvents ItemSelected="@DrawZoomChange"></DropDownButtonEvents>
+                                <DropDownMenuItems>
+                                    <DropDownMenuItem Text="400%"></DropDownMenuItem>
+                                    <DropDownMenuItem Text="300%"></DropDownMenuItem>
+                                    <DropDownMenuItem Text="200%"></DropDownMenuItem>
+                                    <DropDownMenuItem Text="150%"></DropDownMenuItem>
+                                    <DropDownMenuItem Text="100%"></DropDownMenuItem>
+                                    <DropDownMenuItem Text="75%"></DropDownMenuItem>
+                                    <DropDownMenuItem Text="50%"></DropDownMenuItem>
+                                    <DropDownMenuItem Text="25%"></DropDownMenuItem>
+                                    <DropDownMenuItem Separator="true"></DropDownMenuItem>
+                                    <DropDownMenuItem Text="Fit To Screen"></DropDownMenuItem>
+                                </DropDownMenuItems>
+                            </SfDropDownButton>
+                        </Template>
+                    </ToolbarItem>
+                    <ToolbarItem @ref="@ZoomOutItem" PrefixIcon="e-icons sf-icon-ZoomIn tb-icons" TooltipText="Zoom In(Ctrl + +)" CssClass="tb-item-end"></ToolbarItem>
+                    <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
+                    <ToolbarItem @ref="@PanItem" PrefixIcon="e-icons sf-icon-Pan tb-icons" TooltipText="Pan Tool" CssClass="@PanItemCssClass"></ToolbarItem>
+                    <ToolbarItem @ref="@PointerItem" PrefixIcon="e-icons sf-icon-Selector tb-icons" TooltipText="Pointer" CssClass="@PointerItemCssClass"></ToolbarItem>
+                    <ToolbarItem @ref="@DrawShapeItem" TooltipText="Draw Shapes" CssClass="@DrawShapeItemCssClass">
+                        <Template>
+                            <SfDropDownButton ID="btnDrawShape" CssClass="@ShapeItem" IconCss="sf-icon-DrawingMode">
+                                <DropDownButtonEvents ItemSelected="@DrawShapeChange"></DropDownButtonEvents>
+                                <DropDownMenuItems>
+                                    <DropDownMenuItem IconCss="sf-icon-Square" Text="Rectangle"></DropDownMenuItem>
+                                    <DropDownMenuItem IconCss="sf-icon-Ellipse" Text="Ellipse"></DropDownMenuItem>
+                                    <DropDownMenuItem IconCss="sf-icon-Triangle" Text="Polygon"></DropDownMenuItem>
+                                </DropDownMenuItems>
+                            </SfDropDownButton>
+                        </Template>
+                    </ToolbarItem>
+                    <ToolbarItem @ref="@DrawConnectorItem" TooltipText="Draw Connectors" CssClass="@DrawConnectorItemCssClass">
+                        <Template>
+                            <SfDropDownButton ID="btnDrawConnector" CssClass="@ConnectorItem" IconCss="sf-icon-ConnectorMode">
+                                <DropDownButtonEvents ItemSelected="@DrawConnectorChange"></DropDownButtonEvents>
+                                <DropDownMenuItems>
+                                    <DropDownMenuItem IconCss="sf-icon-StraightLine" Text="Straight Line"></DropDownMenuItem>
+                                    <DropDownMenuItem IconCss="sf-icon-ConnectorMode" Text="Orthogonal Line"></DropDownMenuItem>
+                                    <DropDownMenuItem IconCss="sf-icon-BeizerLine" Text="Bezier"></DropDownMenuItem>
+                                </DropDownMenuItems>
+                            </SfDropDownButton>
+                        </Template>
+                    </ToolbarItem>
+                    <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
+                    <ToolbarItem  @ref="@Fill" TooltipText="FillColor" CssClass="@fill">
+                         <Template>
+                            <SfDropDownButton  @ref="dropdownBtn" IconCss="sf-icon-ColorPickers tb-icons"  CssClass="e-caret-hide" Width="28px">
+                            <PopupContent>
+                            <SfColorPicker Inline="true"   OnClose="ClickHandler" ValueChange="@OnFillColorChange" ></SfColorPicker>
+                            </PopupContent>
+                            </SfDropDownButton>
+                         </Template> 
+                    </ToolbarItem>
+                    <ToolbarItem @ref="@Stroke"  TooltipText="StrokeColor" CssClass="@stroke" >
+                     <Template>
+                            <SfDropDownButton  @ref="dropdownBtn1" IconCss="sf-icon-Pickers tb-icons" CssClass="e-caret-hide" Width="28px">
+                            <PopupContent>
+                            <SfColorPicker Inline="true"  OnClose="ClickHandler1"  ValueChange="@OnStrokeColorChange" ></SfColorPicker>
+                            </PopupContent>
+                            </SfDropDownButton>
+                     </Template> 
+                    </ToolbarItem>
+                    <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
+                    <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
+                    <ToolbarItem @ref="@GroupItem" PrefixIcon="e-icons sf-icon-Group tb-icons" TooltipText="Group" CssClass="tb-item-start tb-item-align-category"></ToolbarItem>
+                    <ToolbarItem @ref="@UngroupItem" PrefixIcon="e-icons sf-icon-Ungroup tb-icons" TooltipText="Ungroup" CssClass="tb-item-end tb-item-ungroup"></ToolbarItem>
+                    <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
+                    <ToolbarItem @ref="@LockItem" PrefixIcon="e-icons sf-icon-Lock tb-icons" TooltipText="Lock" CssClass="tb-item-start tb-item-lock-category"></ToolbarItem>
+                    <ToolbarItem @ref="@DeleteItem" PrefixIcon="e-icons sf-icon-Delete tb-icons" TooltipText="Delete" CssClass="tb-item-end tb-item-lock-category"></ToolbarItem>
+                    <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
+                    <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
+                    <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
+                    <ToolbarItem @ref="@AlignLeftItem" PrefixIcon="e-icons sf-icon-AlignLeft tb-icons" TooltipText="Align Left" CssClass="tb-item-start tb-item-align-category"></ToolbarItem>
+                    <ToolbarItem @ref="@AlignCenterItem" PrefixIcon="e-icons sf-icon-AlignHorizontally tb-icons" TooltipText="Align Center" CssClass="tb-item-middle tb-item-align-category"></ToolbarItem>
+                    <ToolbarItem @ref="@AlignRightItem" PrefixIcon="e-icons sf-icon-AlignRight tb-icons" TooltipText="Align Right" CssClass="tb-item-middle tb-item-align-category"></ToolbarItem>
+                    <ToolbarItem @ref="@AlignTopItem" PrefixIcon="e-icons sf-icon-AilgnTop tb-icons" TooltipText="Align Top" CssClass="tb-item-middle tb-item-align-category"></ToolbarItem>
+                    <ToolbarItem @ref="@AlignMiddleItem" PrefixIcon="e-icons sf-icon-AlignVertically tb-icons" TooltipText="Align Middle" CssClass="tb-item-middle tb-item-align-category"></ToolbarItem>
+                    <ToolbarItem @ref="@AlignBottomItem" PrefixIcon="e-icons sf-icon-AlignBottom tb-icons" TooltipText="Align Bottom" CssClass="tb-item-middle tb-item-align-category"></ToolbarItem>
+                    <ToolbarItem @ref="@AlignVerticalItem" PrefixIcon="e-icons sf-icon-DistributeHorizontal tb-icons" TooltipText="Distribute Objects Vertically" CssClass="tb-item-middle tb-item-space-category"></ToolbarItem>
+                    <ToolbarItem @ref="@AlignHorizontalItem" PrefixIcon="e-icons sf-icon-DistributeVertical tb-icons" TooltipText="Distribute Objects Horizontally" CssClass="tb-item-end tb-item-space-category"></ToolbarItem>
+                </ToolbarItems>
+            </SfToolbar>
+        </div>
+    </div>
+    <div class="db-toolbar-hide-btn">
+        <SfButton ID="btnHideToolbar" IconCss="@MenuHideIconCss" OnClick="@HideToolBar"></SfButton>
+    </div>
+</div>
+
+@code {
+
+
+
+internal DiagramMain Parent;
+SfToolbar Toolbar;    
+string toolbarClassName { get; set; } = "db-toolbar-container";
+private SfDropDownButton dropdownBtn;
+private SfDropDownButton dropdownBtn1;
+string MenuHideIconCss = "sf-icon-Collapse tb-icons";
+ToolbarItem UndoItem;
+ToolbarItem RedoItem;
+ToolbarItem ZoomInItem;
+ToolbarItem ZoomItem;
+SfDropDownButton ZoomItemDropdown;
+public string ZoomItemDropdownContent = "100%";
+ToolbarItem ZoomOutItem;
+ToolbarItem PanItem;
+string PanItemCssClass = "tb-item-start";
+string fill { get; set; } = "tb-item-start tb-item-fill";
+string stroke { get; set; } = "tb-item-end tb-item-stroke";
+ToolbarItem PointerItem;
+string ShapeItem = "e-control e-dropdown-btn e-lib e-btn e-icon-btn";
+string ConnectorItem = "e-control e-dropdown-btn e-lib e-btn e-icon-btn";
+string PointerItemCssClass = "tb-item-middle tb-item-selected";
+ToolbarItem DrawShapeItem;
+string DrawShapeItemCssClass = "tb-item-middle tb-drawtools-dropdown-btn tb-custom-diagram-disable";
+ToolbarItem DrawConnectorItem;
+string DrawConnectorItemCssClass = "tb-item-middle tb-drawtools-dropdown-btn tb-custom-diagram-disable";
+ToolbarItem Fill;
+ToolbarItem Stroke;
+public string NodeFillColor { get; set; }
+ToolbarItem GroupItem;
+ToolbarItem UngroupItem;
+ToolbarItem LockItem;
+ToolbarItem DeleteItem;
+ToolbarItem AlignLeftItem;
+ToolbarItem AlignCenterItem;
+ToolbarItem AlignRightItem;
+ToolbarItem AlignTopItem;
+ToolbarItem AlignMiddleItem;
+ToolbarItem AlignBottomItem;
+ToolbarItem AlignVerticalItem;
+ToolbarItem AlignHorizontalItem;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+    }
+    private void ClickHandler(BeforeOpenCloseEventArgs e)
+    {
+        dropdownBtn.Toggle();
+    }
+    private void ClickHandler1(BeforeOpenCloseEventArgs e)
+    {
+        dropdownBtn1.Toggle();
+    }
+    public void OnFillColorChange(ColorPickerEventArgs args)
+        {
+            Parent.DiagramPropertyPanel.OnUpdateNodeProperties("Fill", (args.CurrentValue).Hex);
+            Parent.DiagramPropertyPanel.UpdatePropertyPanel();
+            dropdownBtn.Toggle();
+        }
+    public void OnStrokeColorChange(ColorPickerEventArgs args)
+    {
+        
+        Parent.DiagramPropertyPanel.OnUpdateNodeProperties("StrokeColor", (args.CurrentValue).Hex);
+        Parent.DiagramPropertyPanel.OnUpdateConnectorProperties("StrokeColor", (args.CurrentValue).Hex);
+        Parent.DiagramPropertyPanel.UpdatePropertyPanel();
+        dropdownBtn1.Toggle();
+    }
+}

@@ -5,7 +5,7 @@
 @using Syncfusion.Blazor.SplitButtons;
 
 @inject IJSRuntime jsRuntime
-@namespace DiagramBuilder
+@namespace WebApplicationDiagramBuilder
 
 <div class="db-header-container">
     <div class= '@menuclass'>
@@ -273,12 +273,12 @@
                 new   ContextMenuItemModel { Id ="ArrangeMenuItemsGroup",Text="Group" },
                 new   ContextMenuItemModel { Id ="ArrangeMenuItemsUngroup",Text="Ungroup" }
             };
-        private List<  ContextMenuItemModel> WindowMenuItems = new List<  ContextMenuItemModel>
-        {
-            new   ContextMenuItemModel { Text="Show Toolbar",IconCss="sf-icon-Selection" },
-            new   ContextMenuItemModel { Text="Show Stencil",IconCss="sf-icon-Selection" },
-            new   ContextMenuItemModel { Text="Show Properties",IconCss="sf-icon-Selection" },
-        };
+    private List<  ContextMenuItemModel> WindowMenuItems = new List<  ContextMenuItemModel>
+            {
+                new   ContextMenuItemModel { Text="Show Toolbar",IconCss="sf-icon-Selection" },
+                new   ContextMenuItemModel { Text="Show Stencil",IconCss="sf-icon-Selection" },
+                new   ContextMenuItemModel { Text="Show Properties",IconCss="sf-icon-Selection" },
+            };
     private bool IsParent(string Text)
     {
         if (Text == "File" || Text == "Edit" || Text == "View" || Text == "Arrange" || Text == "Window" || Text == "Help")
@@ -324,27 +324,11 @@
                 break;
             case "undo":
                 Edit = true;
-                if(diagram.SelectionSettings.Nodes.Count >1 || diagram.SelectionSettings.Connectors.Count > 1)
-                {
-                    diagram.StartGroupAction();
-                }
                 diagram.Undo();
-                if(diagram.SelectionSettings.Nodes.Count >1 || diagram.SelectionSettings.Connectors.Count > 1)
-                {
-                    diagram.EndGroupAction();
-                }
                 break;
             case "redo":
                 Edit = true;
-                if(diagram.SelectionSettings.Nodes.Count >1 || diagram.SelectionSettings.Connectors.Count > 1)
-                {
-                    diagram.StartGroupAction();
-                }
                 diagram.Redo();
-                if(diagram.SelectionSettings.Nodes.Count >1 || diagram.SelectionSettings.Connectors.Count > 1)
-                {
-                    diagram.EndGroupAction();
-                }
                 break;
             case "cut":
                 Edit = true;
@@ -632,6 +616,7 @@
             Diagram.EndUpdate();
         }
     }
+
     public bool EnableMenuItems(string itemText, ObservableCollection<object> collection)
     {
 
