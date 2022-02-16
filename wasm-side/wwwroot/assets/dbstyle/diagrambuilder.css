@@ -1,0 +1,817 @@
+﻿/* https://fonts.google.com/specimen/Roboto?selection.family=Lato|Roboto */
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+#DiagramTooltip {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Top Header Customization */
+.db-menu-container,
+.db-diagram-name-container {
+    height: 32px;
+}
+
+.db-diagram-name-container {
+    padding: 6px 20px;
+}
+
+    .db-diagram-name-container #diagramName {
+        display: block;
+        margin-top: 2px;
+    }
+
+    .db-diagram-name-container #diagramEditable {
+        display: none;
+    }
+
+    .db-diagram-name-container.db-edit-name #diagramName {
+        display: none;
+    }
+
+    .db-diagram-name-container.db-edit-name #diagramEditable {
+        display: block;
+    }
+
+#diagramName:hover {
+    cursor: pointer;
+}
+
+.db-menu-container {
+    padding: 2px 10px;
+}
+
+.db-toolbar-editor {
+    height: 48px;
+    background-color: #e3e3e3;
+    padding: 10px 20px;
+}
+
+.db-toolbar-container {
+    width: calc(100% - 54px);
+    float: left;
+}
+
+.db-toolbar-hide-btn {
+    float: right;
+}
+
+    .db-toolbar-hide-btn .e-btn {
+        box-shadow: 0 0 0 0;
+        background-color: transparent;
+    }
+
+/* Main Content Customization */
+
+.row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.sidebar {
+    position: absolute;
+    width: 255px;
+    height: calc(100% - 112px);
+}
+
+.main-content {
+    margin: 0;
+    left: 255px;
+    height: calc(100% - 112px);
+    position: absolute;
+    width: calc(100% - 255px);
+}
+
+.db-palette-parent {
+    height: calc(100% - 28px);
+}
+
+.db-palette-more-shapes {
+    background-color: #F1F1F1;
+    width: 100%;
+    height: 28px;
+    padding: 0px 8px;
+    border-top: 1px solid #CBCBCB;
+    text-align: right;
+}
+
+.db-palette-more-shapes-text {
+    color: #000000;
+    font-size: 12px;
+    line-height: 28px;
+    cursor: pointer;
+}
+
+.db-property-editor-container {
+    width: 270px;
+    background: #f2f2f2;
+    height: 100%;
+    float: left;
+    padding: 10px;
+    overflow: auto;
+    border-left: 1px solid #CBCBCB;
+    border-top: 1px solid #CBCBCB;
+}
+
+/* SymbolPalette - Customization Start */
+.e-accordion .e-acrdn-item.e-select.e-selected.e-active > .e-acrdn-header {
+    border-bottom: 1px solid #CBCBCB;
+}
+
+.e-accordion .e-acrdn-item .e-acrdn-header .e-acrdn-header-content {
+    font-size: 12px;
+}
+/* SymbolPalette - Customization End */
+
+/* Window Show/Hide Customization - start */
+
+.diagrambuilder-container.hide-menubar .db-header-container {
+    display: none;
+}
+
+.diagrambuilder-container.hide-menubar .sidebar,
+.diagrambuilder-container.hide-menubar .main-content {
+    top: 48px;
+    height: calc(100% - 48px);
+}
+
+.diagrambuilder-container.hide-toolbar .db-toolbar-editor {
+    display: none;
+}
+
+.diagrambuilder-container.hide-toolbar .sidebar,
+.diagrambuilder-container.hide-toolbar .main-content {
+    height: calc(100% - 64px);
+}
+
+.diagrambuilder-container.hide-palette .main-content {
+    left: 0px;
+    width: 100%;
+}
+
+.diagrambuilder-container.hide-palette .sidebar {
+    display: none;
+}
+
+.diagrambuilder-container.hide-properties .main-content {
+    width: 100%;
+}
+
+.db-diagram-container {
+    width: calc(100% - 270px);
+    height: 100%;
+    float: left;
+}
+
+.diagrambuilder-container.hide-properties .db-property-editor-container {
+    display: none;
+}
+
+.diagrambuilder-container.hide-properties .db-diagram-container {
+    width: 100%;
+}
+
+.db-current-diagram-container {
+    height: calc(100% - 28px);
+}
+
+.diagrambuilder-container.hide-pager .db-current-diagram-container {
+    height: 100%;
+}
+
+.diagrambuilder-container.hide-pager .db-more-diagram-options-container {
+    display: none;
+}
+
+.diagrambuilder-container.custom-diagram .sidebar {
+    z-index: 100000000;
+    width: 30px;
+    display: block;
+}
+
+.diagrambuilder-container.custom-diagram .db-palette-parent {
+    display: none;
+}
+
+.diagrambuilder-container.custom-diagram .db-palette-more-shapes-text {
+    display: none;
+}
+
+/* Window Show/Hide Customization - end */
+
+/* Page Options Customizaion - Start */
+
+.db-more-diagram-options-container .e-btn {
+    text-transform: none;
+    font-weight: 400;
+    font-size: 12px;
+    background-color: #f0f0f0;
+}
+
+    .db-more-diagram-options-container .e-btn.db-active-page {
+        background-color: #ffffff;
+    }
+
+/* Page Options Customizaion - End */
+
+/* Menu Bar Customization - Start */
+.e-dropdown-popup .e-contextmenu {
+    width: 225px;
+}
+
+.e-contextmenu-container ul .e-menu-item.e-blankicon,
+.e-dropdown-popup ul .e-item.e-blank-icon {
+    padding-left: 32px;
+}
+/* Menu Bar Customization - End */
+
+/* Toolbar Customization - Start */
+
+.e-toolbar .e-toolbar-items {
+    height: 28px;
+    width: 100%;
+    background: #e3e3e3;
+}
+
+#toolbarEditor .e-toolbar-items .e-toolbar-item.e-separator {
+    margin: 0px;
+    width: calc((100% - 988px)/8);
+    background-color: #e3e3e3;
+}
+
+.e-toolbar .e-dropdown-btn .e-btn-icon:not(.e-caret) {
+    color: #757575;
+    font-size: 14px;
+    line-height: 0px;
+}
+
+.db-ddl-template-style .ddl-svg-style {
+    background-repeat: no-repeat;
+    width: 140px;
+    height: 24px;
+    display: block;
+    margin-top: 10px;
+}
+
+.e-input-value .db-ddl-template-style .ddl-svg-style {
+    width: 34px;
+}
+
+.db-ddl-template-style {
+    padding: 6px 10px;
+    height: 36px;
+}
+
+.e-input-value .db-ddl-template-style {
+    padding: 2px 10px;
+    height: 30px;
+}
+
+.ddl_linestyle_none {
+    background-image: url('common_images/linestyle/0,0.svg');
+}
+
+.ddl_linestyle_one_two {
+    background-image: url('common_images/linestyle/1,2.svg');
+}
+
+.ddl_linestyle_three_three {
+    background-image: url('common_images/linestyle/3,3.svg');
+}
+
+.ddl_linestyle_five_three {
+    background-image: url('common_images/linestyle/5,3.svg');
+}
+
+.ddl_linestyle_four_four_one {
+    background-image: url('common_images/linestyle/4,4,1.svg');
+}
+
+.e-toolbar .e-toolbar-items:first-child > .e-toolbar-item:last-child {
+    margin-right: 0px;
+}
+
+/* Toolbar Disable - Start */
+
+#toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-fill,
+#toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-stroke,
+#toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-align-category,
+#toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-space-category,
+#toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-lock-category,
+#toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-group, #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-ungroup,
+#toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-order,
+#toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-undo, #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-redo {
+    pointer-events: none;
+}
+
+    #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-fill .e-dropdown-btn.e-btn,
+    #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-stroke .e-dropdown-btn.e-btn,
+    #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-align-category .e-tbar-btn,
+    #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-space-category .e-tbar-btn,
+    #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-lock-category .e-tbar-btn,
+    #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-group .e-tbar-btn, #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-ungroup .e-tbar-btn,
+    #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-order .e-dropdown-btn,
+    #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-undo .e-tbar-btn, #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-redo .e-tbar-btn {
+        background: #f5f5f5;
+    }
+
+        #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-fill .e-btn .e-btn-icon,
+        #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-stroke .e-btn .e-btn-icon,
+        #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-align-category .e-icons.e-btn-icon,
+        #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-space-category .e-icons.e-btn-icon,
+        #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-lock-category .e-icons.e-btn-icon,
+        #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-group .e-icons.e-btn-icon, #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-ungroup .e-icons.e-btn-icon,
+        #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-order .e-dropdown-btn .e-btn-icon,
+        #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-undo .e-icons.e-btn-icon, #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-redo .e-icons.e-btn-icon {
+            color: #bababa;
+        }
+
+.diagrambuilder-container.custom-diagram #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-custom-diagram-disable {
+    pointer-events: none;
+}
+
+    .diagrambuilder-container.custom-diagram #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-custom-diagram-disable .e-tbar-btn,
+    .diagrambuilder-container.custom-diagram #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-custom-diagram-disable .e-dropdown-btn {
+        background: #f5f5f5;
+        border-color: #DADADA;
+    }
+
+        .diagrambuilder-container.custom-diagram #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-custom-diagram-disable .e-icons.e-btn-icon,
+        .diagrambuilder-container.custom-diagram #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-custom-diagram-disable .e-dropdown-btn .e-btn-icon {
+            color: #bababa;
+        }
+
+.diagrambuilder-container.custom-diagram #toolbarEditor .db-theme-svg {
+    background-image: url('Theme - Disable.svg');
+}
+
+/* Toolbar Disable - End */
+
+/* Toolbar Selected State - Start */
+
+.e-toolbar .e-toolbar-items .e-toolbar-item.tb-item-selected .e-tbar-btn.e-btn,
+.e-toolbar .e-toolbar-items .e-toolbar-item .e-dropdown-btn.tb-item-selected {
+    background: #7d7d7d;
+}
+
+    .e-toolbar .e-toolbar-items .e-toolbar-item.tb-item-selected .e-tbar-btn .e-icons.e-btn-icon,
+    .e-toolbar .e-toolbar-items .e-toolbar-item .e-dropdown-btn.tb-item-selected .e-btn-icon {
+        color: #ffffff;
+    }
+
+
+/* Toolbar Selected State - End */
+
+/* Toolbar Enable - Start */
+
+.db-toolbar-container.db-select #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-stroke,
+.db-toolbar-container.db-select #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-stroke-multiple-objects,
+.db-toolbar-container.db-select #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-lock-category,
+.db-toolbar-container.db-select #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-order,
+.db-toolbar-container.db-double #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-align-category,
+.db-toolbar-container.db-multiple #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-space-category,
+.db-toolbar-container.db-select.db-node #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-fill,
+.db-toolbar-container.db-select.db-node #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-fill-multiple-nodes,
+.db-toolbar-container.db-select.db-group #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-ungroup,
+.db-toolbar-container.db-undo #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-undo,
+.db-toolbar-container.db-redo #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-redo {
+    pointer-events: all;
+}
+
+    .db-toolbar-container.db-select #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-stroke .e-dropdown-btn.e-btn,
+    .db-toolbar-container.db-select #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-lock-category .e-tbar-btn,
+    .db-toolbar-container.db-select #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-order .e-dropdown-btn,
+    .db-toolbar-container.db-double #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-align-category .e-tbar-btn,
+    .db-toolbar-container.db-multiple #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-space-category .e-tbar-btn,
+    .db-toolbar-container.db-select.db-node #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-fill .e-dropdown-btn.e-btn,
+    .db-toolbar-container.db-select.db-group #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-ungroup .e-tbar-btn,
+    .db-toolbar-container.db-undo #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-undo .e-tbar-btn,
+    .db-toolbar-container.db-redo #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-redo .e-tbar-btn {
+        background: #ffffff;
+    }
+
+        .db-toolbar-container.db-select #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-stroke .e-btn .e-btn-icon,
+        .db-toolbar-container.db-select #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-lock-category .e-icons.e-btn-icon,
+        .db-toolbar-container.db-select #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-order .e-dropdown-btn .e-btn-icon:not(.e-caret),
+        .db-toolbar-container.db-double #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-align-category .e-icons.e-btn-icon,
+        .db-toolbar-container.db-multiple #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-space-category .e-icons.e-btn-icon,
+        .db-toolbar-container.db-select.db-node #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-fill .e-btn .e-btn-icon,
+        .db-toolbar-container.db-select.db-group #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-ungroup .e-icons.e-btn-icon,
+        .db-toolbar-container.db-undo #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-undo .e-icons.e-btn-icon,
+        .db-toolbar-container.db-redo #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-redo .e-icons.e-btn-icon {
+            color: #757575;
+        }
+
+/* Toolbar Enable - End */
+
+/* Toolbar Hover */
+
+.db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item .e-tbar-btn.e-btn:hover,
+.db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item .e-dropdown-btn:hover,
+.db-property-editor-container .e-toolbar .e-toolbar-items .e-toolbar-item .e-tbar-btn.e-btn:hover {
+    background: #EEEEEE;
+}
+
+    .db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item .e-tbar-btn.e-btn:hover span,
+    .db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item .e-dropdown-btn:hover span,
+    .db-property-editor-container .e-toolbar .e-toolbar-items .e-toolbar-item .e-tbar-btn.e-btn:hover span {
+        color: #757575;
+    }
+
+.db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-selected .e-tbar-btn.e-btn:hover,
+.db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item .e-dropdown-btn.tb-item-selected:hover,
+.db-property-editor-container .e-toolbar .e-toolbar-items .e-toolbar-item.tb-item-selected .e-tbar-btn.e-btn:hover {
+    background: #7d7d7d;
+}
+
+    .db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-selected .e-tbar-btn.e-btn:hover span,
+    .db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item .e-dropdown-btn.tb-item-selected:hover span,
+    .db-property-editor-container .e-toolbar .e-toolbar-items .e-toolbar-item.tb-item-selected .e-tbar-btn.e-btn:hover span {
+        color: #ffffff;
+    }
+
+.db-property-editor-container .e-toolbar .e-toolbar-items .e-toolbar-item.tb-item-selected .e-tbar-btn span:hover {
+    color: #ffffff;
+}
+
+/* Toolbar Customization - End */
+
+/* Property Panel Customization - Start */
+
+.db-prop-row {
+    margin-top: 6px;
+}
+
+.db-prop-col-style {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.db-col-left {
+    padding-left: 0px;
+    padding-right: 3px;
+}
+
+.db-col-center {
+    padding-left: 0px;
+    padding-right: 7px;
+}
+
+.db-col-right {
+    padding-left: 3px;
+    padding-right: 0px;
+}
+
+.db-prop-separator {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #e0e0e0;
+    margin-left: -10px;
+}
+
+.db-color-input, .db-text-input {
+    float: left;
+}
+
+.db-text {
+    float: left;
+    width: 25px;
+    text-align: center;
+    height: auto;
+    margin-top: 4px;
+    color: #8C8C8C;
+}
+
+.db-text-input {
+    width: calc(100% - 25px);
+}
+
+.db-color-container .e-btn,
+.db-text-container .e-btn {
+    padding: 0px;
+    box-shadow: 0 0 0 0;
+}
+
+    .db-color-container .e-btn .e-btn-icon,
+    .db-text-container .e-btn .e-btn-icon {
+        font-size: 14px;
+        margin-top: -4px;
+        margin-left: -4px;
+    }
+
+.db-gradient-style-hide .db-col-center,
+.db-gradient-style-hide .db-col-right {
+    display: none;
+}
+
+.db-prop-text-style {
+    font-size: 10px;
+    color: #333;
+    font-weight: normal;
+}
+/* Property Panel Customization - End */
+
+/* Numeric Text box Customization - Start */
+
+.e-numeric.e-input-group .e-input-group-icon {
+    display: none;
+}
+
+.e-numeric.e-input-group:hover .e-input-group-icon {
+    display: block;
+}
+
+/* Numeric Text box Customization - End */
+
+/* Slider Control Customization - Start */
+
+.e-control-wrapper.e-slider-container.e-horizontal,
+.e-control-wrapper.e-slider-container.e-horizontal .e-slider {
+    height: 28px;
+    top: 0px;
+}
+
+/* Slider Control Customization - End */
+
+/* Dialog Customization start */
+
+.e-dialog .e-dlg-header-content + .e-dlg-content input[type="text"]:not(.e-dropdownbase):not(.db-layer-edit):not(.e-input) {
+    width: 100%;
+}
+/* diagram template Customization */
+
+.db-diagram-template-div {
+    padding: 10px 0px 10px 10px;
+    float: left;
+}
+
+.db-diagram-template-image-div {
+    border: 1px solid #D5D5D5;
+    cursor: pointer;
+}
+
+.db-diagram-template-svg-blank-image {
+    background-size: contain;
+    height: 32px;
+    margin: 64px;
+}
+
+.db-diagram-template-svg-image {
+    height: 135px;
+    margin: 11.5px;
+}
+
+.db-diagram-template-text {
+    font-weight: 500;
+    padding-top: 5px;
+}
+
+    .db-diagram-template-text span {
+        display: block;
+        width: 160px;
+        text-align: center;
+    }
+
+.db-diagram-template-parent-text {
+    padding: 8px 0px;
+    padding-left: 16px;
+}
+
+.temp-left-pane {
+    border-right: 1px solid #D4D4D4;
+    height: 424px;
+    padding: 0px;
+}
+
+#openTemplateDialog .e-dlg-content {
+    padding: 0px;
+}
+
+.db-node-prop-container .db-node-behaviour-prop {
+    display: block;
+}
+
+.db-node-prop-container.multiple .db-node-behaviour-prop {
+    display: none;
+}
+
+.db-node-prop-container.multiple.connector .db-background-style {
+    display: none;
+}
+
+.db-border-style-header {
+    display: none;
+}
+
+.db-node-prop-container.multiple.connector .db-border-style-header {
+    display: block;
+}
+/* Show/Hide Property Panel Customization End */
+
+/* Animation At Initial Rendering start */
+
+.sb-loading {
+    width: 56px;
+    height: 56px;
+    position: absolute;
+    top: calc(50% - 28px);
+    left: calc(50% - 28px);
+    z-index: 10000;
+    border-radius: 50%;
+    padding: 3px;
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    display: inline-block;
+    background: white;
+}
+
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+
+    50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35;
+    }
+
+    100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124;
+    }
+}
+
+/* Animation At Initial Rendering End */
+
+/* General Customization - start */
+
+.db-readonly-input {
+    width: 100%;
+    height: 28px;
+    border: 1px solid #f2f2f2;
+    background: #f2f2f2;
+    text-indent: 3px;
+}
+
+.db-menu-container .e-icons.e-caret {
+    display: none;
+}
+
+.spinner {
+    position: fixed;
+    z-index: 900;
+    pointer-events: none;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 75px;
+    height: 75px;
+    margin: auto;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' fill='royalblue' viewBox='0 0 50 50'%3E%3Cpath d='M28.43 6.378C18.27 4.586 8.58 11.37 6.788 21.533c-1.791 10.161 4.994 19.851 15.155 21.643l.707-4.006C14.7 37.768 9.392 30.189 10.794 22.24c1.401-7.95 8.981-13.258 16.93-11.856l.707-4.006z'%3E%3CanimateTransform attributeType='xml' attributeName='transform' type='rotate' from='0 25 25' to='360 25 25' dur='0.6s' repeatCount='indefinite'/%3E%3C/path%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.sb-body-overlay {
+    z-index: 10000023;
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 1);
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/*sb-hide */
+.sb-hide {
+    display: none;
+}
+
+.circular {
+    animation: rotate 2s linear infinite;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.path {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+    stroke-linecap: round;
+    stroke: #046AE5;
+}
+
+#blazor-error-ui {
+    display: none;
+}
+
+#EditMenuItemsRedo::after {
+    content: "Ctrl+Y";
+    float: right;
+    padding-right: 8px;
+}
+
+#EditMenuItemsUndo::after {
+    content: "Ctrl+Z";
+    float: right;
+    padding-right: 8px;
+}
+
+#EditMenuItemsCut::after {
+    content: "Ctrl+X";
+    float: right;
+    padding-right: 8px;
+}
+
+#EditMenuItemsCopy::after {
+    content: "Ctrl+C";
+    float: right;
+    padding-right: 8px;
+}
+
+#EditMenuItemsPaste::after {
+    content: "Ctrl+V";
+    float: right;
+    padding-right: 8px;
+}
+
+#EditMenuItemsDelete::after {
+    content: "Delete";
+    float: right;
+    padding-right: 8px;
+}
+
+#EditMenuItemsDuplicate::after {
+    content: "Ctrl+D";
+    float: right;
+    padding-right: 8px;
+}
+
+#EditMenuItemsSelectAll::after {
+    content: "Ctrl+A";
+    float: right;
+    padding-right: 8px;
+}
+
+#FileMenuItemsSave::after {
+    content: "Ctrl+S";
+    float: right;
+    padding-right: 8px;
+}
+
+#FileMenuItemsNew::after {
+    content: "Ctrl+N";
+    float: right;
+    padding-right: 8px;
+}
+
+#FileMenuItemsOpen::after {
+    content: "Ctrl+O";
+    float: right;
+    padding-right: 8px;
+}
+
+#ViewMenuItemsZoomIn::after {
+    content: "Ctrl++";
+    float: right;
+    padding-right: 8px;
+}
+
+#ViewMenuItemsZoomOut::after {
+    content: "Ctrl+-";
+    float: right;
+    padding-right: 8px;
+}
+
+#ArrangeMenuItemsSendToBack::after {
+    content: "Ctrl+Shift+B";
+    float: right;
+    padding-right: 8px;
+}
+
+#ArrangeMenuItemsBringToFront::after {
+    content: "Ctrl+Shift+F";
+    float: right;
+    padding-right: 8px;
+}
+
+#ArrangeMenuItemsGroup::after {
+    content: "Ctrl+G";
+    float: right;
+    padding-right: 8px;
+}
+
+#ArrangeMenuItemsUngroup::after {
+    content: "Ctrl+U";
+    float: right;
+    padding-right: 8px;
+}
+
+.e-checkbox-wrapper .e-frame + .e-label, .e-css.e-checkbox-wrapper .e-frame + .e-label {
+    margin-left: 3px !important;
+}
