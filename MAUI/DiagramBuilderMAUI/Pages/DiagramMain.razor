@@ -1,0 +1,61 @@
+﻿@using Syncfusion.Blazor.Diagram
+@using DiagramBuilderMAUI.Shared
+@namespace DiagramBuilderMAUI
+
+<div id="diagrambuilder-container" style="visibility:visible;" class=@DiagramBuilderClassName>
+    <DiagramMenuBar @ref="@MenuBar"></DiagramMenuBar>
+    <DiagramToolBar @ref="@Toolbar"></DiagramToolBar>
+    <div class='row content' style="padding-top:0px">
+        <DiagramLeftSideBar @ref="@LeftSideBar"></DiagramLeftSideBar>
+        <div class='main-content' role='main'>
+            <DiagramMainContent @ref="@DiagramContent"></DiagramMainContent>
+            <div class=@PropertyPanelClassName style="overflow:auto;">
+                <DiagramPropertyContainer @ref="@DiagramPropertyPanel"></DiagramPropertyContainer>
+            </div>
+        </div>
+    </div>
+    <DiagramOpenDialog @ref="@OpenDialog"></DiagramOpenDialog>
+
+</div>
+
+@code {
+    public Index Parent;
+    public string DiagramBuilderClassName = "diagrambuilder-container";
+    public DiagramMainContent DiagramContent;
+    public string PropertyPanelClassName = "db-property-editor-container";
+    public DiagramPropertyContainer DiagramPropertyPanel;
+    public DiagramMenuBar MenuBar;
+    public DiagramToolBar Toolbar;
+    public DiagramLeftSideBar LeftSideBar;
+    public DiagramOpenDialog OpenDialog;
+
+    [Inject]
+    protected IJSRuntime jsRuntime { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        if (firstRender)
+        {
+
+             if (this.MenuBar != null)
+                this.MenuBar.Parent = this;
+            if (this.Toolbar != null)
+                this.Toolbar.Parent = this;
+            if (this.DiagramContent != null)
+                this.DiagramContent.Parent = this;
+            if (this.DiagramPropertyPanel != null)
+                this.DiagramPropertyPanel.Parent = this;
+            if (this.LeftSideBar != null)
+                this.LeftSideBar.Parent = this;
+            if (this.OpenDialog != null)
+                this.OpenDialog.Parent = this;
+        }
+    }
+
+    public void StateChanged()
+    {
+        StateHasChanged();
+    }
+
+}
