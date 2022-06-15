@@ -1,4 +1,4 @@
-﻿using Microsoft.Maui.Essentials;
+﻿using Microsoft.Maui.Devices;
 using System;
 using System.Threading.Tasks;
 

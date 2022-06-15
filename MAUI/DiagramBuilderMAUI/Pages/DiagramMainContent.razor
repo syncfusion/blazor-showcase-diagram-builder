@@ -9,7 +9,7 @@
     <div class="db-diagram-container">
         <div id="diagramContainerDiv" class=@DiagramContainerClassName style="position:relative;">
         <SpinnerComponent @ref="DiagramSpinnerObj"></SpinnerComponent>
-            <SfDiagramComponent @ref="@Diagram" NodeCreating="@NodeDefaults" Width="100%" Height="640px" SizeChanged="@SizeChanged" PositionChanged ="@PositionChanged" RotationChanged="@RotateChanged" SelectionChanged ="@SelectionChanged" DragDrop="@Drop" @bind-Nodes="@nodes" @bind-Connectors="@connectors" HistoryChanged="@HistoryChange"  InteractionController="@DiagramTool" DrawingObject="@DiagramDrawingObject" ScrollChanged="ScrollChanged">
+            <SfDiagramComponent @ref="@Diagram" NodeCreating="@NodeDefaults" Width="100%" Height="100%" SizeChanged="@SizeChanged" PositionChanged ="@PositionChanged" RotationChanged="@RotateChanged" SelectionChanged ="@SelectionChanged" DragDrop="@Drop" @bind-Nodes="@nodes" @bind-Connectors="@connectors" HistoryChanged="@HistoryChange"  InteractionController="@DiagramTool" DrawingObject="@DiagramDrawingObject" ScrollChanged="ScrollChanged">
                 <PageSettings @bind-ShowPageBreaks="@DiagramShowPageBreaks" @bind-Orientation="@DiagramOrientation" @bind-Width="@DiagramPageWidth" @bind-Height="@DiagramPageHeight" @bind-MultiplePage=@IsMultiplePage>
                     <BackgroundStyle @bind-Background="@DiagramBgColor"></BackgroundStyle>
                     <PageMargin @bind-Left="@marginLeft" @bind-Top="@marginRight"></PageMargin>
@@ -79,7 +79,7 @@
     public string DiagramContainerClassName = "db-current-diagram-container";
     public IDiagramObject DiagramDrawingObject;
     public InteractionController DiagramTool = InteractionController.Default;
-    public ScrollLimitMode scrollLimit { get; set; } = ScrollLimitMode.Diagram;
+    public ScrollLimitMode scrollLimit { get; set; } = ScrollLimitMode.Infinity;
     public double CurrentZoom { get; set; } = 1;
     public double minZoom { get; set; } = 0.25;
     public double maxZoom { get; set; } = 30;
@@ -403,6 +403,7 @@
         {
             Diagram.ClearHistory();
         }
+        await jsRuntime.InvokeAsync<object>("pageSizeUpdate").ConfigureAwait(true);
         ActivePage = page;
     }
 
