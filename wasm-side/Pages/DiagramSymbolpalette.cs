@@ -12,39 +12,39 @@ namespace WebApplicationDiagramBuilder
         private void InitializePalettes()
         {
             FlowShapeList = new DiagramObjectCollection<NodeBase>();
-            CreatePaletteNode(FlowShapeType.Terminator, "Terminator");
-            CreatePaletteNode(FlowShapeType.Process, "Process");
-            CreatePaletteNode(FlowShapeType.Decision, "Decision");
-            CreatePaletteNode(FlowShapeType.Document, "Document");
-            CreatePaletteNode(FlowShapeType.PreDefinedProcess, "PredefinedProcess");
-            CreatePaletteNode(FlowShapeType.PaperTap, "PunchedTape");
-            CreatePaletteNode(FlowShapeType.DirectData, "DirectData");
-            CreatePaletteNode(FlowShapeType.SequentialData, "SequentialData");
-            CreatePaletteNode(FlowShapeType.Sort, "Sort");
-            CreatePaletteNode(FlowShapeType.MultiDocument, "Multidocument");
-            CreatePaletteNode(FlowShapeType.Collate, "Collate");
-            CreatePaletteNode(FlowShapeType.SummingJunction, "SummingJunction");
-            CreatePaletteNode(FlowShapeType.Or, "Or");
-            CreatePaletteNode(FlowShapeType.InternalStorage, "InternalStorage");
-            CreatePaletteNode(FlowShapeType.Extract, "Extract");
+            CreatePaletteNode(NodeFlowShapes.Terminator, "Terminator");
+            CreatePaletteNode(NodeFlowShapes.Process, "Process");
+            CreatePaletteNode(NodeFlowShapes.Decision, "Decision");
+            CreatePaletteNode(NodeFlowShapes.Document, "Document");
+            CreatePaletteNode(NodeFlowShapes.PreDefinedProcess, "PredefinedProcess");
+            CreatePaletteNode(NodeFlowShapes.PaperTap, "PunchedTape");
+            CreatePaletteNode(NodeFlowShapes.DirectData, "DirectData");
+            CreatePaletteNode(NodeFlowShapes.SequentialData, "SequentialData");
+            CreatePaletteNode(NodeFlowShapes.Sort, "Sort");
+            CreatePaletteNode(NodeFlowShapes.MultiDocument, "Multidocument");
+            CreatePaletteNode(NodeFlowShapes.Collate, "Collate");
+            CreatePaletteNode(NodeFlowShapes.SummingJunction, "SummingJunction");
+            CreatePaletteNode(NodeFlowShapes.Or, "Or");
+            CreatePaletteNode(NodeFlowShapes.InternalStorage, "InternalStorage");
+            CreatePaletteNode(NodeFlowShapes.Extract, "Extract");
             FlowShapePalette = new Palette() { Symbols = FlowShapeList, Title = "Flow Shapes", ID = "Flow Shapes", IconCss = "e-ddb-icons e-flow" };
 
             BasicShapeList = new DiagramObjectCollection<NodeBase>();
-            CreateBasicPaletteNode(BasicShapeType.Rectangle, "Rectangle");
-            CreateBasicPaletteNode(BasicShapeType.Ellipse, "Ellipse");
-            CreateBasicPaletteNode(BasicShapeType.Hexagon, "Hexagon");
-            CreateBasicPaletteNode(BasicShapeType.Parallelogram, "Parallelogram");
-            CreateBasicPaletteNode(BasicShapeType.Triangle, "Triangle");
-            CreateBasicPaletteNode(BasicShapeType.Plus, "Plus");
-            CreateBasicPaletteNode(BasicShapeType.Star, "Star");
-            CreateBasicPaletteNode(BasicShapeType.Pentagon, "Pentagon");
-            CreateBasicPaletteNode(BasicShapeType.Heptagon, "Heptagon");
-            CreateBasicPaletteNode(BasicShapeType.Octagon, "Octagon");
-            CreateBasicPaletteNode(BasicShapeType.Trapezoid, "Trapezoid");
-            CreateBasicPaletteNode(BasicShapeType.Decagon, "Decagon");
-            CreateBasicPaletteNode(BasicShapeType.RightTriangle, "RightTriangle");
-            CreateBasicPaletteNode(BasicShapeType.Cylinder, "Cylinder");
-            CreateBasicPaletteNode(BasicShapeType.Diamond, "Diamond");
+            CreateBasicPaletteNode(NodeBasicShapes.Rectangle, "Rectangle");
+            CreateBasicPaletteNode(NodeBasicShapes.Ellipse, "Ellipse");
+            CreateBasicPaletteNode(NodeBasicShapes.Hexagon, "Hexagon");
+            CreateBasicPaletteNode(NodeBasicShapes.Parallelogram, "Parallelogram");
+            CreateBasicPaletteNode(NodeBasicShapes.Triangle, "Triangle");
+            CreateBasicPaletteNode(NodeBasicShapes.Plus, "Plus");
+            CreateBasicPaletteNode(NodeBasicShapes.Star, "Star");
+            CreateBasicPaletteNode(NodeBasicShapes.Pentagon, "Pentagon");
+            CreateBasicPaletteNode(NodeBasicShapes.Heptagon, "Heptagon");
+            CreateBasicPaletteNode(NodeBasicShapes.Octagon, "Octagon");
+            CreateBasicPaletteNode(NodeBasicShapes.Trapezoid, "Trapezoid");
+            CreateBasicPaletteNode(NodeBasicShapes.Decagon, "Decagon");
+            CreateBasicPaletteNode(NodeBasicShapes.RightTriangle, "RightTriangle");
+            CreateBasicPaletteNode(NodeBasicShapes.Cylinder, "Cylinder");
+            CreateBasicPaletteNode(NodeBasicShapes.Diamond, "Diamond");
             BasicShapePalette = new Palette() { Symbols = BasicShapeList, Title = "Basic Shapes", ID = "Basic Shapes", IconCss = "e-ddb-icons e-flow" };
 
             ConnectorList = new DiagramObjectCollection<NodeBase>();
@@ -59,34 +59,34 @@ namespace WebApplicationDiagramBuilder
         private void InitializeHTMLPalettes()
         {
             HTMLShapeList = new DiagramObjectCollection<NodeBase>();
-            CreateHTMLShape(Shapes.HTML, "node1checknode");
-            CreateHTMLShape(Shapes.HTML, "node2checknode");
+            CreateHTMLShape(NodeShapes.HTML, "node1checknode");
+            CreateHTMLShape(NodeShapes.HTML, "node2checknode");
             HtmlShapePalette = new Palette() { Symbols = HTMLShapeList, Title = "HTML Shapes", ID = "Html Shapes", IsExpanded = false, IconCss = "e-ddb-icons e-flow" };
         }
         private void InitializeNativePalettes()
         {
             NativeShapeList = new DiagramObjectCollection<NodeBase>();
-            CreateNativeShape(Shapes.SVG, "Nativenode1");
-            CreateNativeShape(Shapes.SVG, "Nativenode2");
+            CreateNativeShape(NodeShapes.SVG, "Nativenode1");
+            CreateNativeShape(NodeShapes.SVG, "Nativenode2");
             NativeShapePalette = new Palette() { Symbols = NativeShapeList, Title = "Native Shapes", ID = "Native Shapes", IsExpanded = false, IconCss = "e-ddb-icons e-flow" };
         }
 
-        private void CreateHTMLShape(Shapes HTML, string id)
+        private void CreateHTMLShape(NodeShapes HTML, string id)
         {
             Node diagramNode = new Node()
             {
                 ID = id,
-                Shape = new Shape() { Type = Shapes.HTML },
+                Shape = new Shape() { Type = NodeShapes.HTML },
             };
             HTMLShapeList.Add(diagramNode);
         }
 
-        private void CreateNativeShape(Shapes Native, string id)
+        private void CreateNativeShape(NodeShapes Native, string id)
         {
             Node diagramNode = new Node()
             {
                 ID = id,
-                Shape = new Shape() { Type = Shapes.SVG },
+                Shape = new Shape() { Type = NodeShapes.SVG },
             };
             NativeShapeList.Add(diagramNode);
         }
@@ -105,22 +105,22 @@ namespace WebApplicationDiagramBuilder
 
             ConnectorList.Add(diagramConnector);
         }
-        private void CreatePaletteNode(FlowShapeType flowShape, string id)
+        private void CreatePaletteNode(NodeFlowShapes flowShape, string id)
         {
             Node diagramNode = new Node()
             {
                 ID = id,
-                Shape = new FlowShape() { Type = Shapes.Flow, Shape = flowShape },
+                Shape = new FlowShape() { Type = NodeShapes.Flow, Shape = flowShape },
                 Style = new ShapeStyle() { StrokeWidth = 2 }
             };
             FlowShapeList.Add(diagramNode);
         }
-        private void CreateBasicPaletteNode(BasicShapeType basicShape, string id)
+        private void CreateBasicPaletteNode(NodeBasicShapes basicShape, string id)
         {
             Node diagramNode = new Node()
             {
                 ID = id,
-                Shape = new BasicShape() { Type = Shapes.Basic, Shape = basicShape },
+                Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = basicShape },
                 Style = new ShapeStyle() { StrokeWidth = 2 }
             };
             BasicShapeList.Add(diagramNode);
@@ -135,7 +135,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "uKVMSwitch1",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M2.1,32.8157654 C1.49248678,32.8157654 1,32.3232787 1,31.7157654 L1,16.1 C1,15.4924868 1.49248678,15 2.1,15 L47.9,15 C48.5075132,15 49,15.4924868 49,16.1 L49,31.7157654 C49,32.3232787 48.5075132,32.8157654 47.9,32.8157654 L2.1,32.8157654 Z"
                 },
                 Width = 48,
@@ -150,7 +150,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "uKVMSwitch2",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M47,30.8157654 L3,30.8157654 L3,17 L47,17 L47,30.8157654 Z M9.1875,26.0625 C9.1875,25.269 8.5435,24.625 7.75,24.625 C6.95554167,24.625 6.3125,25.269 6.3125,26.0625 C6.3125,26.856 6.95554167,27.5 7.75,27.5 C8.5435,27.5 9.1875,26.856 9.1875,26.0625 Z M19.25,26.0625 C19.25,25.269 18.606,24.625 17.8125,24.625 C17.0180417,24.625 16.375,25.269 16.375,26.0625 C16.375,26.856 17.0180417,27.5 17.8125,27.5 C18.606,27.5 19.25,26.856 19.25,26.0625 Z M13.5,26.0625 C13.5,25.269 12.856,24.625 12.0625,24.625 C11.2680417,24.625 10.625,25.269 10.625,26.0625 C10.625,26.856 11.2680417,27.5 12.0625,27.5 C12.856,27.5 13.5,26.856 13.5,26.0625 Z M23.5625,26.0625 C23.5625,25.269 22.9185,24.625 22.125,24.625 C21.3305417,24.625 20.6875,25.269 20.6875,26.0625 C20.6875,26.856 21.3305417,27.5 22.125,27.5 C22.9185,27.5 23.5625,26.856 23.5625,26.0625 Z M29.3125,26.0625 C29.3125,25.269 28.6685,24.625 27.875,24.625 C27.0805417,24.625 26.4375,25.269 26.4375,26.0625 C26.4375,26.856 27.0805417,27.5 27.875,27.5 C28.6685,27.5 29.3125,26.856 29.3125,26.0625 Z M33.625,26.0625 C33.625,25.269 32.981,24.625 32.1875,24.625 C31.3930417,24.625 30.75,25.269 30.75,26.0625 C30.75,26.856 31.3930417,27.5 32.1875,27.5 C32.981,27.5 33.625,26.856 33.625,26.0625 Z M39.375,26.0625 C39.375,25.269 38.731,24.625 37.9375,24.625 C37.1430417,24.625 36.5,25.269 36.5,26.0625 C36.5,26.856 37.1430417,27.5 37.9375,27.5 C38.731,27.5 39.375,26.856 39.375,26.0625 Z M43.6875,26.0625 C43.6875,25.269 43.0435,24.625 42.25,24.625 C41.4555417,24.625 40.8125,25.269 40.8125,26.0625 C40.8125,26.856 41.4555417,27.5 42.25,27.5 C43.0435,27.5 43.6875,26.856 43.6875,26.0625 Z"
                 },
                 Width = 44,
@@ -165,7 +165,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "uKVMSwitch3",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M9.1875,26.0625 C9.1875,26.856 8.5435,27.5 7.75,27.5 C6.95554167,27.5 6.3125,26.856 6.3125,26.0625 C6.3125,25.269 6.95554167,24.625 7.75,24.625 C8.5435,24.625 9.1875,25.269 9.1875,26.0625 Z M19.25,26.0625 C19.25,26.856 18.606,27.5 17.8125,27.5 C17.0180417,27.5 16.375,26.856 16.375,26.0625 C16.375,25.269 17.0180417,24.625 17.8125,24.625 C18.606,24.625 19.25,25.269 19.25,26.0625 Z M29.3125,26.0625 C29.3125,26.856 28.6685,27.5 27.875,27.5 C27.0805417,27.5 26.4375,26.856 26.4375,26.0625 C26.4375,25.269 27.0805417,24.625 27.875,24.625 C28.6685,24.625 29.3125,25.269 29.3125,26.0625 Z M39.375,26.0625 C39.375,26.856 38.731,27.5 37.9375,27.5 C37.1430417,27.5 36.5,26.856 36.5,26.0625 C36.5,25.269 37.1430417,24.625 37.9375,24.625 C38.731,24.625 39.375,25.269 39.375,26.0625 Z"
                 },
                 Width = 33.0625,
@@ -180,7 +180,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "uKVMSwitch4",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M6.3125,20.3125 L13.5,20.3125 L13.5,23.1875 L6.3125,23.1875 L6.3125,20.3125 Z M16.375,20.3125 L23.5625,20.3125 L23.5625,23.1875 L16.375,23.1875 L16.375,20.3125 Z M26.4375,20.3125 L33.625,20.3125 L33.625,23.1875 L26.4375,23.1875 L26.4375,20.3125 Z M36.5,20.3125 L43.6875,20.3125 L43.6875,23.1875 L36.5,23.1875 L36.5,20.3125 Z"
                 },
                 Width = 37.375,
@@ -206,7 +206,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "uSpacer1",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M2.1,33.3259514 C1.49248678,33.3259514 1,32.8334646 1,32.2259514 L1,16.1 C1,15.4924868 1.49248678,15 2.1,15 L47.9,15 C48.5075132,15 49,15.4924868 49,16.1 L49,32.2259514 C49,32.8334646 48.5075132,33.3259514 47.9,33.3259514 L2.1,33.3259514 Z"
                 },
                 Width = 48,
@@ -221,7 +221,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "uSpacer2",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M3 31.3259514 47 31.3259514 47 17 3 17"
                 },
                 Width = 44,
@@ -236,7 +236,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "uSpacer3",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M6.4516129,27.8709677 L6.4516129,20.4516129 L7.93548387,20.4516129 L7.93548387,27.8709677 L6.4516129,27.8709677 Z M24.2580645,27.8709677 L24.2580645,20.4516129 L25.7419355,20.4516129 L25.7419355,27.8709677 L24.2580645,27.8709677 Z M12.3870968,27.8709677 L12.3870968,20.4516129 L13.8709677,20.4516129 L13.8709677,27.8709677 L12.3870968,27.8709677 Z M30.1935484,27.8709677 L30.1935484,20.4516129 L31.6774194,20.4516129 L31.6774194,27.8709677 L30.1935484,27.8709677 Z M18.3225806,27.8709677 L18.3225806,20.4516129 L19.8064516,20.4516129 L19.8064516,27.8709677 L18.3225806,27.8709677 Z M36.1290323,27.8709677 L36.1290323,20.4516129 L37.6129032,20.4516129 L37.6129032,27.8709677 L36.1290323,27.8709677 Z M9.41935484,27.8709677 L9.41935484,20.4516129 L10.9032258,20.4516129 L10.9032258,27.8709677 L9.41935484,27.8709677 Z M27.2258065,27.8709677 L27.2258065,20.4516129 L28.7096774,20.4516129 L28.7096774,27.8709677 L27.2258065,27.8709677 Z M15.3548387,27.8709677 L15.3548387,20.4516129 L16.8387097,20.4516129 L16.8387097,27.8709677 L15.3548387,27.8709677 Z M33.1612903,27.8709677 L33.1612903,20.4516129 L34.6451613,20.4516129 L34.6451613,27.8709677 L33.1612903,27.8709677 Z M42.0645161,27.8709677 L42.0645161,20.4516129 L43.5483871,20.4516129 L43.5483871,27.8709677 L42.0645161,27.8709677 Z M21.2903226,27.8709677 L21.2903226,20.4516129 L22.7741935,20.4516129 L22.7741935,27.8709677 L21.2903226,27.8709677 Z M39.0967742,27.8709677 L39.0967742,20.4516129 L40.5806452,20.4516129 L40.5806452,27.8709677 L39.0967742,27.8709677 Z"
                 },
                 Width = 37.096771240234375,
@@ -261,7 +261,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "uTray1",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M1,32.7098224 L1,15.1 C1,14.4924868 1.49248678,14 2.1,14 L47.9,14 C48.5075132,14 49,14.4924868 49,15.1 L49,32.7098224 C49,33.3173356 48.5075132,33.8098224 47.9,33.8098224 L2.1,33.8098224 C1.49248678,33.8098224 1,33.3173356 1,32.7098224 Z"
                 },
                 Width = 48,
@@ -276,7 +276,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "uTray2",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M3,31.8098224 L3,16 L47,16 L47,31.8098224 L3,31.8098224 Z M25.7419355,29.8387097 C29.0200127,29.8387097 31.6774194,27.181303 31.6774194,23.9032258 C31.6774194,20.6251486 29.0200127,17.9677419 25.7419355,17.9677419 C22.4638583,17.9677419 19.8064516,20.6251486 19.8064516,23.9032258 C19.8064516,27.181303 22.4638583,29.8387097 25.7419355,29.8387097 Z"
                 },
                 Width = 44,
@@ -291,8 +291,8 @@ namespace WebApplicationDiagramBuilder
                 ID = "uTray3",
                 Shape = new BasicShape()
                 {
-                    Type = Shapes.Basic,
-                    Shape = BasicShapeType.Rectangle
+                    Type = NodeShapes.Basic,
+                    Shape = NodeBasicShapes.Rectangle
                 },
                 Width = 2.9677419662475586,
                 Height = 5.935483932495117,
@@ -316,7 +316,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "uLCDCopy1",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M2.1,30.6875 C1.49248678,30.6875 1,30.1950132 1,29.5875 L1,12.5342346 C1,11.9267213 1.49248678,11.4342346 2.1,11.4342346 L47.9,11.4342346 C48.5075132,11.4342346 49,11.9267213 49,12.5342346 L49,29.5875 C49,30.1950132 48.5075132,30.6875 47.9,30.6875 L2.1,30.6875 Z"
                 },
                 Width = 48,
@@ -331,7 +331,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "uLCDCopy2",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M3 28.6875 47 28.6875 47 13.4342346 3 13.4342346"
                 },
                 Width = 44,
@@ -346,7 +346,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "uLCDCopy3",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M6.3125,16.75 L9.1875,16.75 L9.1875,19.625 L6.3125,19.625 L6.3125,16.75 Z M6.3125,22.5 L9.1875,22.5 L9.1875,25.375 L6.3125,25.375 L6.3125,22.5 Z M12.0625,16.75 L14.9375,16.75 L14.9375,19.625 L12.0625,19.625 L12.0625,16.75 Z M12.0625,22.5 L14.9375,22.5 L14.9375,25.375 L12.0625,25.375 L12.0625,22.5 Z M17.8125,16.75 L20.6875,16.75 L20.6875,19.625 L17.8125,19.625 L17.8125,16.75 Z M17.8125,22.5 L20.6875,22.5 L20.6875,25.375 L17.8125,25.375 L17.8125,22.5 Z M23.5625,16.75 L26.4375,16.75 L26.4375,19.625 L23.5625,19.625 L23.5625,16.75 Z M23.5625,22.5 L26.4375,22.5 L26.4375,25.375 L23.5625,25.375 L23.5625,22.5 Z M29.3125,16.75 L32.1875,16.75 L32.1875,19.625 L29.3125,19.625 L29.3125,16.75 Z M29.3125,22.5 L32.1875,22.5 L32.1875,25.375 L29.3125,25.375 L29.3125,22.5 Z M35.0625,16.75 L37.9375,16.75 L37.9375,19.625 L35.0625,19.625 L35.0625,16.75 Z M35.0625,22.5 L37.9375,22.5 L37.9375,25.375 L35.0625,25.375 L35.0625,22.5 Z M40.8125,16.75 L43.6875,16.75 L43.6875,19.625 L40.8125,19.625 L40.8125,16.75 Z M40.8125,22.5 L43.6875,22.5 L43.6875,25.375 L40.8125,25.375 L40.8125,22.5 Z"
                 },
                 Width = 37.375,
@@ -371,7 +371,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "uLCD1",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M2.1,45.3298502 C1.49248678,45.3298502 1,44.8373634 1,44.2298502 L1,7.6298502 C1,7.02233697 1.49248678,6.5298502 2.1,6.5298502 L47.9,6.5298502 C48.5075132,6.5298502 49,7.02233697 49,7.6298502 L49,44.2298502 C49,44.8373634 48.5075132,45.3298502 47.9,45.3298502 L2.1,45.3298502 Z"
                 },
                 Width = 48,
@@ -386,7 +386,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "uLCD2",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M3 43.3298502 47 43.3298502 47 8.5298502 3 8.5298502"
                 },
                 Width = 44,
@@ -401,7 +401,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "uLCD3",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M40.3333333,39.7298502 C40.3333333,38.8834502 41.0187333,38.1965169 41.8666667,38.1965169 C42.7146,38.1965169 43.4,38.8834502 43.4,39.7298502 C43.4,40.5762502 42.7146,41.2631835 41.8666667,41.2631835 C41.0187333,41.2631835 40.3333333,40.5762502 40.3333333,39.7298502 Z M35.7333333,39.7298502 C35.7333333,38.8834502 36.4187333,38.1965169 37.2666667,38.1965169 C38.1146,38.1965169 38.8,38.8834502 38.8,39.7298502 C38.8,40.5762502 38.1146,41.2631835 37.2666667,41.2631835 C36.4187333,41.2631835 35.7333333,40.5762502 35.7333333,39.7298502 Z M7.6,36.6631835 C7.04771525,36.6631835 6.6,36.2154683 6.6,35.6631835 L6.6,13.1298502 C6.6,12.5775654 7.04771525,12.1298502 7.6,12.1298502 L42.4,12.1298502 C42.9522847,12.1298502 43.4,12.5775654 43.4,13.1298502 L43.4,35.6631835 C43.4,36.2154683 42.9522847,36.6631835 42.4,36.6631835 L7.6,36.6631835 Z"
                 },
                 Width = 36.80000305175781,
@@ -426,7 +426,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "Fax1",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M21.3046875,9.21428571 L21.3046875,2.2953125 C21.3046875,1.96394165 21.5733167,1.6953125 21.9046875,1.6953125 L41.2649554,1.6953125 C41.5963262,1.6953125 41.8649554,1.96394165 41.8649554,2.2953125 L41.8649554,9.21428571 L46.6142857,9.21428571 C47.2217989,9.21428571 47.7142857,9.70677249 47.7142857,10.3142857 L47.7142857,47.9 C47.7142857,48.5075132 47.2217989,49 46.6142857,49 L4.1,49 C3.49248678,49 3,48.5075132 3,47.9 L3,10.3142857 C3,9.70677249 3.49248678,9.21428571 4.1,9.21428571 L21.3046875,9.21428571 Z"
                 },
                 Width = 44.71428680419922,
@@ -441,7 +441,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "Fax2",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M41.864603,16.2857143 C41.8648373,16.2788235 41.8649554,16.2719032 41.8649554,16.2649554 L41.8649554,10.5864662 L46.4285714,10.5864662 L46.4285714,47.6278195 L4.28571429,47.6278195 L4.28571429,10.5864662 L21.3046875,10.5864662 L21.3046875,16.2649554 C21.3046875,16.2719032 21.3048056,16.2788235 21.3050399,16.2857143 L20.4285714,16.2857143 C20.1524291,16.2857143 19.9285714,16.5095719 19.9285714,16.7857143 C19.9285714,17.0618567 20.1524291,17.2857143 20.4285714,17.2857143 L42.9685719,17.2857143 C43.2447142,17.2857143 43.4685719,17.0618567 43.4685719,16.7857143 C43.4685719,16.5095719 43.2447142,16.2857143 42.9685719,16.2857143 L41.864603,16.2857143 Z M10.0714286,40.9285714 C10.0714286,41.4808562 10.5191438,41.9285714 11.0714286,41.9285714 L16.6428571,41.9285714 C17.1951419,41.9285714 17.6428571,41.4808562 17.6428571,40.9285714 L17.6428571,17.2857143 C17.6428571,16.7334295 17.1951419,16.2857143 16.6428571,16.2857143 L11.0714286,16.2857143 C10.5191438,16.2857143 10.0714286,16.7334295 10.0714286,17.2857143 L10.0714286,40.9285714 Z M42.1534729,24.1534729 L42.1534729,20.2249015 C42.1534729,19.6726167 41.7057577,19.2249015 41.1534729,19.2249015 L22.7750985,19.2249015 C22.2228138,19.2249015 21.7750985,19.6726167 21.7750985,20.2249015 L21.7750985,24.1534729 C21.7750985,24.7057577 22.2228138,25.1534729 22.7750985,25.1534729 L41.1534729,25.1534729 C41.7057577,25.1534729 42.1534729,24.7057577 42.1534729,24.1534729 Z M23.7142857,30.4285714 L25.3571429,30.4285714 C25.6332852,30.4285714 25.8571429,30.2047138 25.8571429,29.9285714 C25.8571429,29.6524291 25.6332852,29.4285714 25.3571429,29.4285714 L23.7142857,29.4285714 C23.4381433,29.4285714 23.2142857,29.6524291 23.2142857,29.9285714 C23.2142857,30.2047138 23.4381433,30.4285714 23.7142857,30.4285714 Z M28.6428571,30.4285714 L30.2857143,30.4285714 C30.5618567,30.4285714 30.7857143,30.2047138 30.7857143,29.9285714 C30.7857143,29.6524291 30.5618567,29.4285714 30.2857143,29.4285714 L28.6428571,29.4285714 C28.3667148,29.4285714 28.1428571,29.6524291 28.1428571,29.9285714 C28.1428571,30.2047138 28.3667148,30.4285714 28.6428571,30.4285714 Z M33.5714286,30.4285714 L35.2142857,30.4285714 C35.4904281,30.4285714 35.7142857,30.2047138 35.7142857,29.9285714 C35.7142857,29.6524291 35.4904281,29.4285714 35.2142857,29.4285714 L33.5714286,29.4285714 C33.2952862,29.4285714 33.0714286,29.6524291 33.0714286,29.9285714 C33.0714286,30.2047138 33.2952862,30.4285714 33.5714286,30.4285714 Z M38.5,30.4285714 L40.1428571,30.4285714 C40.4189995,30.4285714 40.6428571,30.2047138 40.6428571,29.9285714 C40.6428571,29.6524291 40.4189995,29.4285714 40.1428571,29.4285714 L38.5,29.4285714 C38.2238576,29.4285714 38,29.6524291 38,29.9285714 C38,30.2047138 38.2238576,30.4285714 38.5,30.4285714 Z M23.7142857,33.7142857 L25.3571429,33.7142857 C25.6332852,33.7142857 25.8571429,33.4904281 25.8571429,33.2142857 C25.8571429,32.9381433 25.6332852,32.7142857 25.3571429,32.7142857 L23.7142857,32.7142857 C23.4381433,32.7142857 23.2142857,32.9381433 23.2142857,33.2142857 C23.2142857,33.4904281 23.4381433,33.7142857 23.7142857,33.7142857 Z M28.6428571,33.7142857 L30.2857143,33.7142857 C30.5618567,33.7142857 30.7857143,33.4904281 30.7857143,33.2142857 C30.7857143,32.9381433 30.5618567,32.7142857 30.2857143,32.7142857 L28.6428571,32.7142857 C28.3667148,32.7142857 28.1428571,32.9381433 28.1428571,33.2142857 C28.1428571,33.4904281 28.3667148,33.7142857 28.6428571,33.7142857 Z M33.5714286,33.7142857 L35.2142857,33.7142857 C35.4904281,33.7142857 35.7142857,33.4904281 35.7142857,33.2142857 C35.7142857,32.9381433 35.4904281,32.7142857 35.2142857,32.7142857 L33.5714286,32.7142857 C33.2952862,32.7142857 33.0714286,32.9381433 33.0714286,33.2142857 C33.0714286,33.4904281 33.2952862,33.7142857 33.5714286,33.7142857 Z M38.5,33.7142857 L40.1428571,33.7142857 C40.4189995,33.7142857 40.6428571,33.4904281 40.6428571,33.2142857 C40.6428571,32.9381433 40.4189995,32.7142857 40.1428571,32.7142857 L38.5,32.7142857 C38.2238576,32.7142857 38,32.9381433 38,33.2142857 C38,33.4904281 38.2238576,33.7142857 38.5,33.7142857 Z M23.7142857,37 L25.3571429,37 C25.6332852,37 25.8571429,36.7761424 25.8571429,36.5 C25.8571429,36.2238576 25.6332852,36 25.3571429,36 L23.7142857,36 C23.4381433,36 23.2142857,36.2238576 23.2142857,36.5 C23.2142857,36.7761424 23.4381433,37 23.7142857,37 Z M28.6428571,37 L30.2857143,37 C30.5618567,37 30.7857143,36.7761424 30.7857143,36.5 C30.7857143,36.2238576 30.5618567,36 30.2857143,36 L28.6428571,36 C28.3667148,36 28.1428571,36.2238576 28.1428571,36.5 C28.1428571,36.7761424 28.3667148,37 28.6428571,37 Z M33.5714286,37 L35.2142857,37 C35.4904281,37 35.7142857,36.7761424 35.7142857,36.5 C35.7142857,36.2238576 35.4904281,36 35.2142857,36 L33.5714286,36 C33.2952862,36 33.0714286,36.2238576 33.0714286,36.5 C33.0714286,36.7761424 33.2952862,37 33.5714286,37 Z M38.5,37 L40.1428571,37 C40.4189995,37 40.6428571,36.7761424 40.6428571,36.5 C40.6428571,36.2238576 40.4189995,36 40.1428571,36 L38.5,36 C38.2238576,36 38,36.2238576 38,36.5 C38,36.7761424 38.2238576,37 38.5,37 Z M23.7142857,40.2857143 L25.3571429,40.2857143 C25.6332852,40.2857143 25.8571429,40.0618567 25.8571429,39.7857143 C25.8571429,39.5095719 25.6332852,39.2857143 25.3571429,39.2857143 L23.7142857,39.2857143 C23.4381433,39.2857143 23.2142857,39.5095719 23.2142857,39.7857143 C23.2142857,40.0618567 23.4381433,40.2857143 23.7142857,40.2857143 Z M28.6428571,40.2857143 L30.2857143,40.2857143 C30.5618567,40.2857143 30.7857143,40.0618567 30.7857143,39.7857143 C30.7857143,39.5095719 30.5618567,39.2857143 30.2857143,39.2857143 L28.6428571,39.2857143 C28.3667148,39.2857143 28.1428571,39.5095719 28.1428571,39.7857143 C28.1428571,40.0618567 28.3667148,40.2857143 28.6428571,40.2857143 Z M33.5714286,40.2857143 L35.2142857,40.2857143 C35.4904281,40.2857143 35.7142857,40.0618567 35.7142857,39.7857143 C35.7142857,39.5095719 35.4904281,39.2857143 35.2142857,39.2857143 L33.5714286,39.2857143 C33.2952862,39.2857143 33.0714286,39.5095719 33.0714286,39.7857143 C33.0714286,40.0618567 33.2952862,40.2857143 33.5714286,40.2857143 Z M38.5,40.2857143 L40.1428571,40.2857143 C40.4189995,40.2857143 40.6428571,40.0618567 40.6428571,39.7857143 C40.6428571,39.5095719 40.4189995,39.2857143 40.1428571,39.2857143 L38.5,39.2857143 C38.2238576,39.2857143 38,39.5095719 38,39.7857143 C38,40.0618567 38.2238576,40.2857143 38.5,40.2857143 Z M41.1534729,24.1534729 L22.7750985,24.1534729 L22.7750985,20.2249015 L41.1534729,20.2249015 L41.1534729,24.1534729 Z M16.6428571,40.9285714 L11.0714286,40.9285714 L11.0714286,17.2857143 L16.6428571,17.2857143 L16.6428571,40.9285714 Z"
                 },
                 Width = 42.14285659790039,
@@ -456,7 +456,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "Fax3",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M38.1696429 18.5602679 38.1696429 0 25 2.22044605e-16 25 18.5602679"
                 },
                 Width = 13.16964340209961,
@@ -488,7 +488,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "WashBasin_Mirror2siLuxk",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M0,32H160a0,0,0,0,1,0,0v79a10,10,0,0,1-10,10H10A10,10,0,0,1,0,111V32A0,0,0,0,1,0,32Z"
                 },
                 Style = new ShapeStyle()
@@ -508,8 +508,8 @@ namespace WebApplicationDiagramBuilder
                 ID = "WashBasin_Mirror3Q9PxVP",
                 Shape = new BasicShape()
                 {
-                    Type = Shapes.Basic,
-                    Shape = BasicShapeType.Rectangle
+                    Type = NodeShapes.Basic,
+                    Shape = NodeBasicShapes.Rectangle
                 },
                 Style = new ShapeStyle()
                 {
@@ -527,8 +527,8 @@ namespace WebApplicationDiagramBuilder
                 ID = "WashBasin_Mirror4a4GtBc",
                 Shape = new BasicShape()
                 {
-                    Type = Shapes.Basic,
-                    Shape = BasicShapeType.Rectangle
+                    Type = NodeShapes.Basic,
+                    Shape = NodeBasicShapes.Rectangle
                 },
                 Style = new ShapeStyle()
                 {
@@ -546,8 +546,8 @@ namespace WebApplicationDiagramBuilder
                 ID = "WashBasin_Mirror5Ec581y",
                 Shape = new BasicShape()
                 {
-                    Type = Shapes.Basic,
-                    Shape = BasicShapeType.Ellipse,
+                    Type = NodeShapes.Basic,
+                    Shape = NodeBasicShapes.Ellipse,
                     CornerRadius = 44.5
                 },
                 Style = new ShapeStyle()
@@ -566,8 +566,8 @@ namespace WebApplicationDiagramBuilder
                 ID = "WashBasin_Mirror6xYjsZx",
                 Shape = new BasicShape()
                 {
-                    Type = Shapes.Basic,
-                    Shape = BasicShapeType.Ellipse,
+                    Type = NodeShapes.Basic,
+                    Shape = NodeBasicShapes.Ellipse,
                     CornerRadius = 40.5
                 },
                 Style = new ShapeStyle()
@@ -586,8 +586,8 @@ namespace WebApplicationDiagramBuilder
                 ID = "WashBasin_Mirror7H0IdfR",
                 Shape = new BasicShape()
                 {
-                    Type = Shapes.Basic,
-                    Shape = BasicShapeType.Ellipse
+                    Type = NodeShapes.Basic,
+                    Shape = NodeBasicShapes.Ellipse
                 },
                 Style = new ShapeStyle()
                 {
@@ -605,8 +605,8 @@ namespace WebApplicationDiagramBuilder
                 ID = "WashBasin_Mirror8JGH6zw",
                 Shape = new BasicShape()
                 {
-                    Type = Shapes.Basic,
-                    Shape = BasicShapeType.Rectangle,
+                    Type = NodeShapes.Basic,
+                    Shape = NodeBasicShapes.Rectangle,
                     CornerRadius = 1
                 },
                 Style = new ShapeStyle()
@@ -625,7 +625,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "WashBasin_Mirror9K7WbYf",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M81.09,53.8h0a2.18,2.18,0,0,1,2.17,2.29l-.63,11.68a1.55,1.55,0,0,1-1.54,1.46h0a1.55,1.55,0,0,1-1.54-1.46l-.63-11.68A2.17,2.17,0,0,1,81.09,53.8Z"
                 },
                 Style = new ShapeStyle()
@@ -645,7 +645,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "WashBasin_Mirror10UE5NjR",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M87.65,56.31h0a2.18,2.18,0,0,1,2.29-2.17l11.68.63a1.54,1.54,0,0,1,1.45,1.54h0a1.54,1.54,0,0,1-1.45,1.54l-11.68.63A2.17,2.17,0,0,1,87.65,56.31Z"
                 },
                 Style = new ShapeStyle()
@@ -665,7 +665,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "WashBasin_Mirror116kqZx9",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M74.91,56.31h0a2.18,2.18,0,0,0-2.29-2.17l-11.68.63a1.54,1.54,0,0,0-1.45,1.54h0a1.54,1.54,0,0,0,1.45,1.54l11.68.63A2.17,2.17,0,0,0,74.91,56.31Z"
                 },
                 Style = new ShapeStyle()
@@ -685,7 +685,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "WashBasin_Mirror125Y2eYg",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M133.54,47.64h18.55a0,0,0,0,1,0,0V49.7a1,1,0,0,1-1,1H134.54a1,1,0,0,1-1-1V47.64A0,0,0,0,1,133.54,47.64Z"
                 },
                 Style = new ShapeStyle()
@@ -705,7 +705,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "WashBasin_Mirror13dEOJiO",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M10.2,47.64H28.75a0,0,0,0,1,0,0V49.7a1,1,0,0,1-1,1H11.2a1,1,0,0,1-1-1V47.64A0,0,0,0,1,10.2,47.64Z"
                 },
                 Style = new ShapeStyle()
@@ -725,7 +725,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "WashBasin_Mirror14YGyxGd",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M143.82,91.65a1,1,0,0,1-1-1V82.12a1,1,0,0,1,1-1h5.45a1,1,0,0,1,1,1Z"
                 },
                 Style = new ShapeStyle()
@@ -765,7 +765,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "Washbasin22mwWtpz",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M42,118.5V44.6A5.6,5.6,0,0,1,47.6,39h75.53a5.58,5.58,0,0,1,5.6,5.73c-.42,19-7.58,78.46-81,79.37A5.61,5.61,0,0,1,42,118.5Z"
                 },
                 Style = new ShapeStyle()
@@ -785,7 +785,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "Washbasin23RiEEC4",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M48,109.94V49.57A4.58,4.58,0,0,1,52.57,45h61.7a4.57,4.57,0,0,1,4.57,4.68c-.34,15.48-6.19,64.13-66.26,64.83A4.55,4.55,0,0,1,48,109.94Z"
                 },
                 Style = new ShapeStyle()
@@ -805,7 +805,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "Washbasin24R1ibaH",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M48,103V50a5,5,0,0,1,5-5h52S105,89.12,48,103Z"
                 },
                 Style = new ShapeStyle()
@@ -825,8 +825,8 @@ namespace WebApplicationDiagramBuilder
                 ID = "Washbasin258VaJeD",
                 Shape = new BasicShape()
                 {
-                    Type = Shapes.Basic,
-                    Shape = BasicShapeType.Ellipse
+                    Type = NodeShapes.Basic,
+                    Shape = NodeBasicShapes.Ellipse
                 },
                 Style = new ShapeStyle()
                 {
@@ -844,7 +844,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "Washbasin26XjKRF6",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M84.34,41.29h0a2.31,2.31,0,0,1,2.3,2.43L86,56.07a1.63,1.63,0,0,1-1.63,1.54h0a1.62,1.62,0,0,1-1.62-1.54l-.67-12.35A2.3,2.3,0,0,1,84.34,41.29Z"
                 },
                 Style = new ShapeStyle()
@@ -876,7 +876,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "Washbasin12HCS1Cb",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M84.13,112.33h0A50.88,50.88,0,0,1,33.32,64.12,12.87,12.87,0,0,1,34,59.2V51a3.29,3.29,0,0,1,3.29-3.29h92.9a4,4,0,0,1,4,4V59.2a13.06,13.06,0,0,1,.71,4.92A50.89,50.89,0,0,1,84.13,112.33Z"
                 },
                 Style = new ShapeStyle()
@@ -896,7 +896,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "Washbasin13fWI7lW",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M84.13,106.33h0C62.9,106.33,45.4,93,43,75.87a13.27,13.27,0,0,1,.91-7l.8-1.91c1.14-2.72,4.23-4.55,7.69-4.55h63.51c3.46,0,6.55,1.83,7.69,4.55l.79,1.91a13.18,13.18,0,0,1,.92,7C122.86,93,105.36,106.33,84.13,106.33Z"
                 },
                 Style = new ShapeStyle()
@@ -916,7 +916,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "Washbasin14bwxPiq",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M55,96.21s28.25-41,58,0C113,96.21,85.16,118.24,55,96.21Z"
                 },
                 Style = new ShapeStyle()
@@ -936,8 +936,8 @@ namespace WebApplicationDiagramBuilder
                 ID = "Washbasin156XUxTC",
                 Shape = new BasicShape()
                 {
-                    Type = Shapes.Basic,
-                    Shape = BasicShapeType.Ellipse
+                    Type = NodeShapes.Basic,
+                    Shape = NodeBasicShapes.Ellipse
                 },
                 Style = new ShapeStyle()
                 {
@@ -955,7 +955,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "Washbasin16SjrokS",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M83.38,50.32h0a3.7,3.7,0,0,1,3.7,3.9L86,74.12a2.62,2.62,0,0,1-2.62,2.48h0a2.63,2.63,0,0,1-2.62-2.48l-1.07-19.9A3.69,3.69,0,0,1,83.38,50.32Z"
                 },
                 Style = new ShapeStyle()
@@ -987,8 +987,8 @@ namespace WebApplicationDiagramBuilder
                 ID = "Washbasin2xLatbz",
                 Shape = new BasicShape()
                 {
-                    Type = Shapes.Basic,
-                    Shape = BasicShapeType.Rectangle,
+                    Type = NodeShapes.Basic,
+                    Shape = NodeBasicShapes.Rectangle,
                     CornerRadius = 43.5
                 },
                 Style = new ShapeStyle()
@@ -1007,7 +1007,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "Washbasin30qnQfG",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M84,50H81A34,34,0,0,0,47,84h0a34,34,0,0,0,34,34h3a34,34,0,0,0,34-34h0A34,34,0,0,0,84,50ZM82,86a6,6,0,1,1,6-6A6,6,0,0,1,82,86Z"
                 },
                 Style = new ShapeStyle()
@@ -1027,7 +1027,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "Washbasin4cmVZFl",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M57.21,107.79a33.77,33.77,0,0,1,0-47.75h0C70.45,46.85,93.83,45.83,107,59Z"
                 },
                 Style = new ShapeStyle()
@@ -1047,7 +1047,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "Washbasin5WpMfbs",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M82.3,38.32h0A3.69,3.69,0,0,1,86,42.22l-1.07,19.9A2.63,2.63,0,0,1,82.3,64.6h0a2.62,2.62,0,0,1-2.62-2.48L78.6,42.22A3.71,3.71,0,0,1,82.3,38.32Z"
                 },
                 Style = new ShapeStyle()
@@ -1078,8 +1078,8 @@ namespace WebApplicationDiagramBuilder
                 ID = "VerticalWall2DppOoX",
                 Shape = new BasicShape()
                 {
-                    Type = Shapes.Basic,
-                    Shape = BasicShapeType.Rectangle
+                    Type = NodeShapes.Basic,
+                    Shape = NodeBasicShapes.Rectangle
                 },
                 Style = new ShapeStyle()
                 {
@@ -1105,8 +1105,8 @@ namespace WebApplicationDiagramBuilder
                 ID = "Wardrobe2DkdyWy",
                 Shape = new BasicShape()
                 {
-                    Type = Shapes.Basic,
-                    Shape = BasicShapeType.Rectangle
+                    Type = NodeShapes.Basic,
+                    Shape = NodeBasicShapes.Rectangle
                 },
                 Style = new ShapeStyle()
                 {
@@ -1124,7 +1124,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "Wardrobe3I9qfIw",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M160 101.29 83.92 111.29 82.92 107.54 160 97.54 160 101.29"
                 },
                 Style = new ShapeStyle()
@@ -1143,7 +1143,7 @@ namespace WebApplicationDiagramBuilder
                 ID = "Wardrobe41tIQyC",
                 Shape = new PathShape()
                 {
-                    Type = Shapes.Path,
+                    Type = NodeShapes.Path,
                     Data = "M4,54H156a4,4,0,0,1,4,4V98a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V58A4,4,0,0,1,4,54Z"
                 },
                 Style = new ShapeStyle()
@@ -1163,8 +1163,8 @@ namespace WebApplicationDiagramBuilder
                 ID = "Wardrobe5Kkgznd",
                 Shape = new BasicShape()
                 {
-                    Type = Shapes.Basic,
-                    Shape = BasicShapeType.Rectangle,
+                    Type = NodeShapes.Basic,
+                    Shape = NodeBasicShapes.Rectangle,
                     CornerRadius = 0.5
                 },
                 Style = new ShapeStyle()
@@ -1183,8 +1183,8 @@ namespace WebApplicationDiagramBuilder
                 ID = "Wardrobe6o9EXmW",
                 Shape = new BasicShape()
                 {
-                    Type = Shapes.Basic,
-                    Shape = BasicShapeType.Rectangle,
+                    Type = NodeShapes.Basic,
+                    Shape = NodeBasicShapes.Rectangle,
                     CornerRadius = 0.5
                 },
                 Style = new ShapeStyle()

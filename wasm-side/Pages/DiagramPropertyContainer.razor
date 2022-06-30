@@ -857,7 +857,6 @@
             {
                 ConnectorStrokeColor = Connector.Style.StrokeColor;
             }
-            ConnectorStrokeDashArray = Connector.Style.StrokeDashArray;
             ConnectorStrokeWidth = Connector.Style.StrokeWidth;
 
             ConnectortarShape = Connector.TargetDecorator.Shape.ToString();
@@ -868,6 +867,8 @@
             enableProperty("lineJumpSizeDiv", OnConnectorBridge);
             ConnectorBridgeSize = Connector.BridgeSpace;
             ConnectorOpacity = Connector.Style.Opacity * 100;
+            ConnectorStrokeDashArray = Connector.Style.StrokeDashArray;
+            UpdateConnectorStrokeStyle(ConnectorStrokeDashArray.ToString());
 
             if (Connector.Annotations.Count > 0 && Connector.Annotations[0].Content != "")
             {    

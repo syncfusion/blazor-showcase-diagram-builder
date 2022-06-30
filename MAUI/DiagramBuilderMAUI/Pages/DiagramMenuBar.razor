@@ -426,7 +426,7 @@ private List<  ContextMenuItemModel> FileMenuItems = new List<  ContextMenuItemM
                 Arrange = true;
                 if (diagram.SelectionSettings.Nodes.Count + diagram.SelectionSettings.Connectors.Count > 0)
                 {
-                   diagram.UnGroup();
+                   diagram.Ungroup();
                 }
                 break;
             case "showtoolbar":
@@ -486,7 +486,7 @@ private List<  ContextMenuItemModel> FileMenuItems = new List<  ContextMenuItemM
                 break;
             case "bothwidthandheight":
                 Arrange = true;
-                diagram.SetSameSize(SizingMode.Size);
+                diagram.SetSameSize(SizingMode.Both);
                 break;
             case "showgrid":
                 view = true;
@@ -627,7 +627,7 @@ private List<  ContextMenuItemModel> FileMenuItems = new List<  ContextMenuItemM
            
             Node Node = Diagram.SelectionSettings.Nodes[0];
             Diagram.BeginUpdate();
-            Node.Shape = new ImageShape() { Type = Shapes.Image, Source = args.FileData.RawFile.ToString() };
+            Node.Shape = new ImageShape() { Type = NodeShapes.Image, Source = args.FileData.RawFile.ToString() };
             Diagram.EndUpdate();
         }
     }

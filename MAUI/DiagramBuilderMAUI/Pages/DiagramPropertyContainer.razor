@@ -857,7 +857,6 @@
             {
                 ConnectorStrokeColor = Connector.Style.StrokeColor;
             }
-            ConnectorStrokeDashArray = Connector.Style.StrokeDashArray;
             ConnectorStrokeWidth = Connector.Style.StrokeWidth;
 
             ConnectortarShape = Connector.TargetDecorator.Shape.ToString();
@@ -868,6 +867,8 @@
             enableProperty("lineJumpSizeDiv", OnConnectorBridge);
             ConnectorBridgeSize = Connector.BridgeSpace;
             ConnectorOpacity = Connector.Style.Opacity * 100;
+            ConnectorStrokeDashArray = Connector.Style.StrokeDashArray;
+            UpdateConnectorStrokeStyle(ConnectorStrokeDashArray.ToString());
 
             if (Connector.Annotations.Count > 0 && Connector.Annotations[0].Content != "")
             {    
@@ -1206,45 +1207,48 @@
                 for (int i = 0; i < Nodes.Count; i++)
                 {
                     Node = Nodes[i];
-                    switch (prop)
+					if (Node != null)
                     {
-                        case "Fill":
-                            Node.Style.Fill = Value;
-                            NodeFillColor = Value;                            
-                            break;
-                        case "StrokeColor":
-                            NodeStrokeColor = Value;
-                            Node.Style.StrokeColor = Value;
+						switch (prop)
+						{
+							case "Fill":
+								Node.Style.Fill = Value;
+								NodeFillColor = Value;                            
+								break;
+							case "StrokeColor":
+								NodeStrokeColor = Value;
+								Node.Style.StrokeColor = Value;
 
-                            break;
-                        case "StrokeDashArray":
-                            Node.Style.StrokeDashArray = Value;
-                            UpdateNodeStrokeStyle(Value);
-                            break;
-                        case "StrokeWidth":
-                            NodeStrokeWidth = Double.Parse(Value);
-                            Node.Style.StrokeWidth = Double.Parse(Value);
-                            break;
-                        case "Opacity":
-                            Node.Style.Opacity = Double.Parse(Value);
-                            break;
-                        case "Gradient":
-                            if (Value == "false")
-                            {
-                                Node.Style.Gradient = null;
+								break;
+							case "StrokeDashArray":
+								Node.Style.StrokeDashArray = Value;
+								UpdateNodeStrokeStyle(Value);
+								break;
+							case "StrokeWidth":
+								NodeStrokeWidth = Double.Parse(Value);
+								Node.Style.StrokeWidth = Double.Parse(Value);
+								break;
+							case "Opacity":
+								Node.Style.Opacity = Double.Parse(Value);
+								break;
+							case "Gradient":
+								if (Value == "false")
+								{
+									Node.Style.Gradient = null;
 
-                            }
-                            else
-                            {
-                                GetGradient(NodeGradientDirection, NodeGradientColor);
-                            }
-                            break;
-                        case "GradientDirection":
-                        case "GradientColor":
-                            if(NodeGradientDirection != null && NodeGradientColor != null)
-                                GetGradient(NodeGradientDirection, NodeGradientColor);
-                            break;
-                    }
+								}
+								else
+								{
+									GetGradient(NodeGradientDirection, NodeGradientColor);
+								}
+								break;
+							case "GradientDirection":
+							case "GradientColor":
+								if(NodeGradientDirection != null && NodeGradientColor != null)
+									GetGradient(NodeGradientDirection, NodeGradientColor);
+								break;
+						}
+					}
                 }
             }
             Diagram.EndUpdate();
