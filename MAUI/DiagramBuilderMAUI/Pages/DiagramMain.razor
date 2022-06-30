@@ -15,19 +15,18 @@
         </div>
     </div>
     <DiagramOpenDialog @ref="@OpenDialog"></DiagramOpenDialog>
-
 </div>
 
 @code {
-    public Index Parent;
-    public string DiagramBuilderClassName = "diagrambuilder-container";
-    public DiagramMainContent DiagramContent;
-    public string PropertyPanelClassName = "db-property-editor-container";
-    public DiagramPropertyContainer DiagramPropertyPanel;
-    public DiagramMenuBar MenuBar;
-    public DiagramToolBar Toolbar;
-    public DiagramLeftSideBar LeftSideBar;
-    public DiagramOpenDialog OpenDialog;
+internal Index Parent;
+public string DiagramBuilderClassName = "diagrambuilder-container";
+public DiagramMainContent DiagramContent;
+public string PropertyPanelClassName = "db-property-editor-container";
+public DiagramPropertyContainer DiagramPropertyPanel;
+public DiagramMenuBar MenuBar;
+public DiagramToolBar Toolbar;
+public DiagramLeftSideBar LeftSideBar;
+public DiagramOpenDialog OpenDialog;
 
     [Inject]
     protected IJSRuntime jsRuntime { get; set; }
@@ -38,7 +37,7 @@
         if (firstRender)
         {
 
-             if (this.MenuBar != null)
+            if (this.MenuBar != null)
                 this.MenuBar.Parent = this;
             if (this.Toolbar != null)
                 this.Toolbar.Parent = this;
@@ -59,3 +58,4 @@
     }
 
 }
+

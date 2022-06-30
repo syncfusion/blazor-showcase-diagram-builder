@@ -10,17 +10,19 @@ public static class MauiProgram
 	public static MauiApp CreateMauiApp()
 	{
 		var builder = MauiApp.CreateBuilder();
-		builder
-			.RegisterBlazorMauiWebView()
+		builder			
 			.UseMauiApp<App>()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 			});
 
-		builder.Services.AddBlazorWebView();
+		builder.Services.AddMauiBlazorWebView();
 		builder.Services.AddSyncfusionBlazor(options => { options.IgnoreScriptIsolation = false; });
-		builder.Services.AddScoped<SampleService>();
+#if DEBUG
+        builder.Services.AddBlazorWebViewDeveloperTools();
+#endif
+        builder.Services.AddSingleton<SampleService>();
 		return builder.Build();
 	}
 }
