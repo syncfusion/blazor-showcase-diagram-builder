@@ -207,7 +207,7 @@ namespace WebApplicationDiagramBuilder
                 }
                 else
                 {
-                    node.Constraints = node.Constraints | NodeConstraints.Default & ~(NodeConstraints.ReadOnly);
+                    node.Constraints = NodeConstraints.Default;
                     if (node.Ports.Count > 0)
                     {
                         for (var k = 0; k < node.Ports.Count; k++)
@@ -228,7 +228,7 @@ namespace WebApplicationDiagramBuilder
                 }
                 else
                 {
-                    connector.Constraints |= ConnectorConstraints.Default & ~(ConnectorConstraints.ReadOnly);
+                    connector.Constraints = ConnectorConstraints.Default;
                 }
             }
         }
