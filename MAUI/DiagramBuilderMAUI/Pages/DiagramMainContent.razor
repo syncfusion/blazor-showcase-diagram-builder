@@ -48,19 +48,6 @@
                     </DiagramTemplates>
             </SfDiagramComponent>
         </div>
-        <div class="db-more-diagram-options-container">
-            <div id="pageOptionList">
-                @for (int i = 0; i < PageList.Count; i++)
-                {
-                    PageOptionElement page = PageList[i];
-                    string activeClass = "";
-                    @if (ActivePage == PageList[i])
-                        activeClass = "db-active-page";
-                    <SfButton Content="@PageList[i].Name" CssClass="@activeClass" OnClick="@(e => ShowPageData(page))"></SfButton>
-                }
-                <SfButton ID="addNewPage" IconCss="sf-icon-Plus" OnClick="AddNewPage"></SfButton>
-            </div>
-        </div>
     </div>
 
 @code {
