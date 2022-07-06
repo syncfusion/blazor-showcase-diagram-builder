@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace WebApplicationDiagramBuilder
+namespace DiagramBuilder
 {
 #pragma warning disable CA1052 // Static holder types should be Static or NotInheritable
     public class FileUtil

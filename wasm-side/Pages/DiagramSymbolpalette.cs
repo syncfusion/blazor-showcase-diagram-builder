@@ -5,7 +5,7 @@ using Syncfusion.Blazor.Navigations;
 using Syncfusion.Blazor.Diagram;
 using Syncfusion.Blazor.Diagram.SymbolPalette;
 
-namespace WebApplicationDiagramBuilder
+namespace DiagramBuilder
 {
     public partial class DiagramSymbolpalette
     {

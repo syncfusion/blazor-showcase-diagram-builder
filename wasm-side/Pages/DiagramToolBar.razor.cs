@@ -9,7 +9,7 @@ using Syncfusion.Blazor.Diagram;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 
-namespace WebApplicationDiagramBuilder
+namespace DiagramBuilder
 {
     public partial class DiagramToolBar
     {
