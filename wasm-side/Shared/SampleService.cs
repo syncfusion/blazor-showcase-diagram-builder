@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace WebApplicationDiagramBuilder.Shared
+namespace DiagramBuilder.Shared
 {
     public class SampleService
     {

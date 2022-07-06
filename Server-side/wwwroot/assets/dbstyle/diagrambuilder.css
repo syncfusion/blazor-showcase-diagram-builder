@@ -175,7 +175,7 @@ html, body {
 }
 
 .db-current-diagram-container {
-    height: calc(100% - 28px);
+    height: calc(100% - 0px);
 }
 
 .diagrambuilder-container.hide-pager .db-current-diagram-container {

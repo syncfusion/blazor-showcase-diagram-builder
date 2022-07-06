@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
-namespace WebApplicationDiagramBuilder.Shared
+namespace DiagramBuilder.Shared
 {
     public class SampleBaseComponent : ComponentBase
     {

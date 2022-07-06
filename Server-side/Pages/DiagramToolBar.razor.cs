@@ -143,7 +143,7 @@ namespace DiagramBuilder
 
         private void Ungroup()
         {
-            Parent.DiagramContent.Diagram.UnGroup();
+            Parent.DiagramContent.Diagram.Ungroup();
             Parent.DiagramContent.Diagram.ClearSelection();
         }
         public void DeleteData()
@@ -200,7 +200,7 @@ namespace DiagramBuilder
                 }
                 else
                 {
-                    node.Constraints = node.Constraints | NodeConstraints.Default & ~(NodeConstraints.ReadOnly);
+                    node.Constraints = NodeConstraints.Default ;
                     if (node.Ports.Count > 0)
                     {
                         for (var k = 0; k < node.Ports.Count; k++)
@@ -221,7 +221,7 @@ namespace DiagramBuilder
                 }
                 else
                 {
-                    connector.Constraints |= ConnectorConstraints.Default & ~(ConnectorConstraints.ReadOnly);
+                    connector.Constraints = ConnectorConstraints.Default;
                 }
             }
         }

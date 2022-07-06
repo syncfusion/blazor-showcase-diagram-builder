@@ -8,7 +8,7 @@ using Syncfusion.Blazor.Diagram;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 
-namespace WebApplicationDiagramBuilder
+namespace DiagramBuilder
 {
     public partial class DiagramMainContent
     {
@@ -57,7 +57,7 @@ namespace WebApplicationDiagramBuilder
 
             flowConnectors.Add(diagramConnector);
         }
-        private void CreateNode(string id, double x, double y, FlowShapeType shape, string label)
+        private void CreateNode(string id, double x, double y, NodeFlowShapes shape, string label)
         {
             DiagramObjectCollection<PointPort> defaultsPorts = new DiagramObjectCollection<PointPort>();
             defaultsPorts.Add(CreatePort(0, 0.5));
@@ -74,7 +74,7 @@ namespace WebApplicationDiagramBuilder
                 Height = 60,
                 Style = new ShapeStyle { Fill = "#357BD2", StrokeColor = "White" },
 
-                Shape = new FlowShape() { Type = Shapes.Flow, Shape = shape },
+                Shape = new FlowShape() { Type = NodeShapes.Flow, Shape = shape },
                 Annotations = new DiagramObjectCollection<ShapeAnnotation>
                 {
                     new ShapeAnnotation
@@ -103,17 +103,17 @@ namespace WebApplicationDiagramBuilder
         }
         private void InitDiagramModel()
         {
-            CreateNode("node1", 300, 80, FlowShapeType.Terminator, "Place order");
-            CreateNode("node2", 300, 160, FlowShapeType.Process, "Start transaction");
-            CreateNode("node3", 300, 240, FlowShapeType.Process, "Verification");
-            CreateNode("node4", 300, 330, FlowShapeType.Decision, "Credit card valid?");
-            CreateNode("node5", 300, 430, FlowShapeType.Decision, "Funds available?");
-            CreateNode("node6", 530, 330, FlowShapeType.Process, "Enter payment method");
-            CreateNode("node7", 300, 530, FlowShapeType.Process, "Complete transaction");
-            CreateNode("node8", 110, 530, FlowShapeType.Data, "Send e-mail");
-            CreateNode("node9", 475, 530, FlowShapeType.DirectData, "Customer \n database");
-            CreateNode("node10", 300, 630, FlowShapeType.Terminator, "Log transaction");
-            CreateNode("node11", 480, 630, FlowShapeType.Process, "Reconcile the entries");
+            CreateNode("node1", 300, 80, NodeFlowShapes.Terminator, "Place order");
+            CreateNode("node2", 300, 160, NodeFlowShapes.Process, "Start transaction");
+            CreateNode("node3", 300, 240, NodeFlowShapes.Process, "Verification");
+            CreateNode("node4", 300, 330, NodeFlowShapes.Decision, "Credit card valid?");
+            CreateNode("node5", 300, 430, NodeFlowShapes.Decision, "Funds available?");
+            CreateNode("node6", 530, 330, NodeFlowShapes.Process, "Enter payment method");
+            CreateNode("node7", 300, 530, NodeFlowShapes.Process, "Complete transaction");
+            CreateNode("node8", 110, 530, NodeFlowShapes.Data, "Send e-mail");
+            CreateNode("node9", 475, 530, NodeFlowShapes.DirectData, "Customer \n database");
+            CreateNode("node10", 300, 630, NodeFlowShapes.Terminator, "Log transaction");
+            CreateNode("node11", 480, 630, NodeFlowShapes.Process, "Reconcile the entries");
             DiagramObjectCollection<ConnectorSegment> segment1 = new DiagramObjectCollection<ConnectorSegment>()
             {
                 new OrthogonalSegment

@@ -426,7 +426,7 @@
                 Arrange = true;
                 if (diagram.SelectionSettings.Nodes.Count + diagram.SelectionSettings.Connectors.Count > 0)
                 {
-                    diagram.UnGroup();
+                    diagram.Ungroup();
                     diagram.ClearSelection();
                 }
                 break;
@@ -487,7 +487,7 @@
                 break;
             case "bothwidthandheight":
                 Arrange = true;
-                diagram.SetSameSize(SizingMode.Size);
+                diagram.SetSameSize(SizingMode.Both);
                 break;
             case "showgrid":
                 view = true;
@@ -628,7 +628,7 @@
 
             Node Node = Diagram.SelectionSettings.Nodes[0];
             Diagram.BeginUpdate();
-            Node.Shape = new ImageShape() { Type = Shapes.Image, Source = args.FileData.RawFile.ToString() };
+            Node.Shape = new ImageShape() { Type = NodeShapes.Image, Source = args.FileData.RawFile.ToString() };
             Diagram.EndUpdate();
         }
     }

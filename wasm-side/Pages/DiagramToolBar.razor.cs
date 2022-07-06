@@ -9,7 +9,7 @@ using Syncfusion.Blazor.Diagram;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 
-namespace WebApplicationDiagramBuilder
+namespace DiagramBuilder
 {
     public partial class DiagramToolBar
     {
@@ -150,7 +150,7 @@ namespace WebApplicationDiagramBuilder
 
         private void Ungroup()
         {
-            Parent.DiagramContent.Diagram.UnGroup();
+            Parent.DiagramContent.Diagram.Ungroup();
             Parent.DiagramContent.Diagram.ClearSelection();
         }
         public void DeleteData()
@@ -207,7 +207,7 @@ namespace WebApplicationDiagramBuilder
                 }
                 else
                 {
-                    node.Constraints = node.Constraints | NodeConstraints.Default & ~(NodeConstraints.ReadOnly);
+                    node.Constraints = NodeConstraints.Default;
                     if (node.Ports.Count > 0)
                     {
                         for (var k = 0; k < node.Ports.Count; k++)
@@ -228,7 +228,7 @@ namespace WebApplicationDiagramBuilder
                 }
                 else
                 {
-                    connector.Constraints |= ConnectorConstraints.Default & ~(ConnectorConstraints.ReadOnly);
+                    connector.Constraints = ConnectorConstraints.Default;
                 }
             }
         }
