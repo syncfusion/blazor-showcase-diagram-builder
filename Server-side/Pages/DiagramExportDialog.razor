@@ -1,0 +1,99 @@
+﻿@using Syncfusion.Blazor.Popups
+@using Syncfusion.Blazor.DropDowns
+@using Syncfusion.Blazor.Diagram
+
+@inject IJSRuntime jsRuntime
+@namespace DiagramBuilder
+
+<SfDialog @ref="@ExportDialog" @bind-Visible="@ExportDialogVisible" AllowDragging="true" Width="400px" ShowCloseIcon="true">
+    <DialogEvents OnOpen="OnDialogOpening"></DialogEvents>
+    <DialogTemplates>
+        <Header>Export Diagram</Header>
+        <Content>
+            <div id="exportDialogContent">
+                <div class="row">
+                    <div class="row"> File Name </div> <div class="row db-dialog-child-prop-row">
+                        <input type="text" id="exportfileName" value="@DiagramfileName" @onchange="@fileNameChangeHandler">
+                    </div>
+                </div>
+                <div class="row db-dialog-prop-row">
+                    <div class="col-xs-6 db-col-left">
+                        <div class="row"> Format </div>
+                        <div class="row db-dialog-child-prop-row">
+                            <SfDropDownList ID="exportFormat" TValue="Formats" TItem="string" Placeholder="JPG" @bind-Value="@CurrentFormatValue" DataSource="@FormatValues">
+
+                            </SfDropDownList>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 db-col-right">
+                        <div class="row"> Region </div> <div class="row db-dialog-child-prop-row">
+                            <SfDropDownList ID="exportRegion" TValue="Regions" TItem="string" Placeholder="Content" @bind-Value="@CurrentRegionValue" DataSource="@RegionValues">
+
+                            </SfDropDownList>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Content>
+    </DialogTemplates>
+    <DialogAnimationSettings Effect="@DialogEffect.None"></DialogAnimationSettings>
+    <DialogButtons>
+        <DialogButton OnClick="@ExportHandler" Content="Export" CssClass="e-flat e-db-primary" IsPrimary="true">
+        </DialogButton>
+        <DialogButton OnClick="@CloseDialogHandler" Content="Cancel" CssClass="e-flat">
+        </DialogButton>
+    </DialogButtons>
+</SfDialog>
+@code {
+    internal DiagramMenuBar Parent;
+    public string DiagramfileName = "Untitled Diagram";
+    public SfDialog ExportDialog;
+    public bool ExportDialogVisible = false;
+
+    private void fileNameChangeHandler(ChangeEventArgs args)
+    {
+        DiagramfileName = args.Value.ToString();
+    }
+    private async Task OnDialogOpening(Syncfusion.Blazor.Popups.BeforeOpenEventArgs args)
+    {
+        DiagramfileName = await jsRuntime.InvokeAsync<string>("getDiagramFileName", "export");
+    }
+    private async Task ExportHandler()
+    {
+        DiagramExportSettings options = new DiagramExportSettings()
+        { 
+            FitToPage = !Parent.Parent.DiagramContent.IsMultiplePage,
+            ClipBounds = new DiagramRect(){X = 0, Y = 0, Height = 0, Width = 0},
+            Region = (DiagramPrintExportRegion)Enum.Parse(typeof(DiagramPrintExportRegion), CurrentRegionValue.ToString(), true),
+            Margin = new DiagramThickness() { Bottom = 0, Left = 0, Right = 0, Top = 0 },
+            PageHeight=(double)Parent.Parent.DiagramContent.DiagramPageHeight,
+            PageWidth=(double)Parent.Parent.DiagramContent.DiagramPageWidth,
+        };
+        await ExportDialog.HideAsync();
+        await Parent.ExportDiagram(options, CurrentFormatValue.ToString(), DiagramfileName);
+    }
+
+    private async Task CloseDialogHandler()
+    {
+        await ExportDialog.Hide();
+    }
+    public IEnumerable<string> FormatValues = Enum.GetNames(typeof(Formats));
+    public Formats CurrentFormatValue { get; set; } = Formats.JPEG;
+    public enum Formats
+    {
+        JPEG,
+        PNG,
+        SVG,
+        PDF
+    }
+
+    public IEnumerable<string> RegionValues = Enum.GetNames(typeof(Regions));
+
+    public Regions CurrentRegionValue { get; set; } = Regions.PageSettings;
+
+    public enum Regions
+    {
+        PageSettings,
+        Content,
+    }
+}

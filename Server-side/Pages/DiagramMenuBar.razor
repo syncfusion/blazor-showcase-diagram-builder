@@ -1,6 +1,7 @@
 @using Syncfusion.Blazor.Inputs;
 @using Syncfusion.Blazor.Navigations;
 @using Syncfusion.Blazor.Diagram
+@using Syncfusion.PdfExport;
 @using System.Collections.ObjectModel;
 @using Syncfusion.Blazor.SplitButtons;
 
@@ -9,7 +10,7 @@
 
 <div class="db-header-container">
     <div class= '@menuclass'>
-        <h1 id='diagramName' style="width: 250px; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: black" class="db-diagram-name"
+        <h1 id='diagramName' style="width: 250px; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" class="db-diagram-name"
               @onclick="@renameDiagram">@diagramName</h1>
         <input id='diagramEditable' @ref="input" type="text" class="db-diagram-name" @onkeydown="@diagramNameKeyDown" @onfocusout="@diagramNameChange"  @bind-value="@value"/>
         <span id='diagramreport' class="db-diagram-name db-save-text"></span>
@@ -45,7 +46,7 @@
                 </SfContextMenu>
             </PopupContent>
         </SfDropDownButton>
-        <SfDropDownButton @ref="ArrangeButton" Id ="btnArrangeMenu" Content="Arrange" CssClass="e-dropDown-button">
+        <SfDropDownButton @ref="ArrangeButton" Id ="btnArrangeMenu" Content="Arrange" CssClass="e-dropDown-button e-arrange-menu">
             <ChildContent>
                 <DropDownButtonEvents OnOpen="@DropDownArrangeButtonOpen"></DropDownButtonEvents>
             </ChildContent>
@@ -71,12 +72,16 @@
             <UploaderAsyncSettings SaveUrl="https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save" RemoveUrl="https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove"></UploaderAsyncSettings>
         </SfUploader>
         <DiagramSaveDialog @ref="@SaveDialogBox"></DiagramSaveDialog>
+        <DiagramExportDialog @ref="@ExportDialogBox"></DiagramExportDialog>
+        <DiagramPrintDialog @ref="@PrintDialogBox"></DiagramPrintDialog>
     </div>
 </div>
 
 @code {
 
     internal DiagramMain Parent;
+    DiagramPrintDialog PrintDialogBox;
+    DiagramExportDialog ExportDialogBox;
     private ElementReference input;
     DiagramSaveDialog SaveDialogBox;
     SfDropDownButton FileButton;
@@ -226,11 +231,17 @@
     new   ContextMenuItemModel { Separator = true },
     new   ContextMenuItemModel { Id ="FileMenuItemsSave",Text = "Save", IconCss="sf-icon-Save" },
     new   ContextMenuItemModel { Id ="FileMenuItemsSaveAs",Text = "Save As" },
+    new   ContextMenuItemModel {Id ="FileMenuItemsExport", Text = "Export", IconCss="sf-icon-Export" },
+    new   ContextMenuItemModel { Separator = true},
+    new   ContextMenuItemModel { Id ="FileMenuItemsPrint",Text = "Print",  IconCss="sf-icon-Print" }
+
 };
     private List<  ContextMenuItemModel> ViewMenuItems = new List<  ContextMenuItemModel>
     {
         new   ContextMenuItemModel { Id ="ViewMenuItemsZoomIn",Text="Zoom In", IconCss="sf-icon-ZoomIn" },
         new   ContextMenuItemModel { Id ="ViewMenuItemsZoomOut",Text="Zoom Out", IconCss="sf-icon-ZoomOut" },
+        new   ContextMenuItemModel { Separator= true },
+        new   ContextMenuItemModel { Text ="Fit To Screen" },
         new   ContextMenuItemModel { Separator= true },
         new   ContextMenuItemModel { Text="Show Grid" ,IconCss="sf-icon-Selection"},
         new   ContextMenuItemModel { Separator= true },
@@ -238,6 +249,11 @@
     };
     private List<  ContextMenuItemModel> ArrangeMenuItems = new List<  ContextMenuItemModel>
     {
+        new   ContextMenuItemModel { Id ="ArrangeMenuItemsSendToBack",Text="Send To Back", IconCss="sf-icon-Sendback" },
+                new   ContextMenuItemModel { Id ="ArrangeMenuItemsBringToFront",Text= "Bring To Front", IconCss="sf-icon-BringFront" },
+                new   ContextMenuItemModel { Text="Send Backward", IconCss="sf-icon-SendBackward" },
+                new   ContextMenuItemModel { Text="Bring Forward", IconCss="sf-icon-BringForward" },
+                new   ContextMenuItemModel { Separator= true },
                 new   ContextMenuItemModel
                 {
                     Text = "Align Objects",
@@ -273,7 +289,7 @@
                 new   ContextMenuItemModel { Id ="ArrangeMenuItemsGroup",Text="Group" },
                 new   ContextMenuItemModel { Id ="ArrangeMenuItemsUngroup",Text="Ungroup" }
             };
-        private List<  ContextMenuItemModel> WindowMenuItems = new List<  ContextMenuItemModel>
+    private List<  ContextMenuItemModel> WindowMenuItems = new List<  ContextMenuItemModel>
         {
             new   ContextMenuItemModel { Text="Show Toolbar",IconCss="sf-icon-Selection" },
             new   ContextMenuItemModel { Text="Show Stencil",IconCss="sf-icon-Selection" },
@@ -296,6 +312,10 @@
         {
             if (SaveDialogBox != null)
                 SaveDialogBox.Parent = this;
+            if (ExportDialogBox != null)
+                ExportDialogBox.Parent = this;
+            if (PrintDialogBox != null)
+                PrintDialogBox.Parent = this;
         }
 
     }
@@ -415,6 +435,42 @@
                 SaveDialogBox.DiagramfileName = await jsRuntime.InvokeAsync<string>("getDiagramFileName", "");
                 await SaveDialogBox.SaveDialog.Show();
                 break;
+            case "print":
+                File = true;
+                await PrintDialogBox.PrintDialog.ShowAsync();
+                break;
+            case "export":
+                File = true;
+                await ExportDialogBox.ExportDialog.ShowAsync();
+                break;
+            case "sendtoback":
+                Arrange = true;
+                if (diagram.SelectionSettings.Nodes.Count > 0 || diagram.SelectionSettings.Connectors.Count > 0)
+                {
+                    diagram.SendToBack();
+                }
+                break;
+            case "sendbackward":
+                Arrange = true;
+                if (diagram.SelectionSettings.Nodes.Count > 0 || diagram.SelectionSettings.Connectors.Count > 0)
+                {
+                    diagram.SendBackward();
+                }
+                break;
+            case "bringtofront":
+                Arrange = true;
+                if (diagram.SelectionSettings.Nodes.Count > 0 || diagram.SelectionSettings.Connectors.Count > 0)
+                {
+                    diagram.BringToFront();
+                }
+                break;
+            case "bringforward":
+                Arrange = true;
+                if (diagram.SelectionSettings.Nodes.Count > 0 || diagram.SelectionSettings.Connectors.Count > 0)
+                {
+                    diagram.BringForward();
+                }
+                break;
             case "group":
                 Arrange = true;
                 if (diagram.SelectionSettings.Nodes.Count + diagram.SelectionSettings.Connectors.Count > 1)
@@ -494,14 +550,22 @@
                 diagram.BeginUpdate();
                 Parent.DiagramContent.SnapConstraint = Parent.DiagramContent.SnapConstraint ^ SnapConstraints.ShowLines;
                 diagram.EndUpdate();
-                ViewMenuItems[3].IconCss = ViewMenuItems[3].IconCss == null ? "sf-icon-Selection" : null;
+                ViewMenuItems[5].IconCss = ViewMenuItems[5].IconCss == null ? "sf-icon-Selection" : null;
                 break;
             case "snaptogrid":
                 view = true;
                 Parent.DiagramContent.SnapConstraint = Parent.DiagramContent.SnapConstraint ^ SnapConstraints.SnapToLines;
-                ViewMenuItems[5].IconCss = ViewMenuItems[5].IconCss == null ? "sf-icon-Selection" : null;
+                ViewMenuItems[7].IconCss = ViewMenuItems[7].IconCss == null ? "sf-icon-Selection" : null;
                 break;
-
+            case "fittoscreen":
+                view = true;
+                FitOptions fitoption = new FitOptions()
+                {
+                    Mode = FitMode.Both,
+                    Region = DiagramRegion.PageSettings,
+                };
+                Parent.DiagramContent.Diagram.FitToPage(fitoption);
+                break;
             case "zoomin":
                 view = true;
                 Parent.DiagramContent.DiagramZoomIn();
@@ -568,7 +632,10 @@
         };
         Dictionary<string, bool> ArrangeSelect = new Dictionary<string, bool>()
 {
-
+            {"Send To Back",(collection.Count > 1 || collection.Count == 0)?true:false},
+            {"Bring To Front",(collection.Count > 1 || collection.Count == 0)?true:false},
+            {"Send Backward",(collection.Count > 1 || collection.Count == 0)?true:false},
+            {"Bring Forward",(collection.Count > 1 || collection.Count == 0)?true:false},
             {"Align Objects",(collection.Count == 1 || collection.Count == 0)?true:false},
             {"Distribute Objects",(collection.Count == 1 || collection.Count == 0)?true:false},
             {"Match Size",(collection.Count == 1 || collection.Count == 0)?true:false},
@@ -632,6 +699,74 @@
             Diagram.EndUpdate();
         }
     }
+
+    public async Task ExportDiagram(Syncfusion.Blazor.Diagram.DiagramExportSettings exportOptions, string exportType, string fileName)
+    {
+        var diagram = Parent.DiagramContent.Diagram;
+        DiagramExportFormat exportFormat = DiagramExportFormat.JPEG;
+        var images = await diagram.ExportAsync(exportFormat, exportOptions);
+        var Orientation = (Parent.DiagramContent.DiagramOrientation == PageOrientation.Landscape) ? PdfPageOrientation.Landscape : PdfPageOrientation.Portrait;
+        if (exportType.ToString() == "PDF")
+        {
+            await ExportToPdf(fileName, Orientation, true, images);
+        }
+        else
+        {
+            exportFormat = (DiagramExportFormat)(Enum.Parse(typeof(DiagramExportFormat), exportType.ToString(), true));
+            await diagram.ExportAsync(fileName, exportFormat, exportOptions);
+        }
+    }
+
+    private async Task<string> ExportToPdf(string fileName, PdfPageOrientation orientation, bool allowDownload, string[] images)
+    {
+        PdfDocument document = new PdfDocument();
+        document.PageSettings.Orientation = orientation;
+        document.PageSettings.Margins = new PdfMargins() { Left = 0, Right = 0, Top = 0, Bottom = 0 };
+        string base64String;
+        var dict = images;
+        for (int i = 0; i < dict.Count(); i++)
+        {
+            base64String = dict[i];
+            using (MemoryStream initialStream = new MemoryStream(Convert.FromBase64String(base64String.Split("base64,")[1])))
+            {
+                Stream stream = initialStream as Stream;
+                PdfPage page = document.Pages.Add();
+                PdfGraphics graphics = page.Graphics;
+#pragma warning disable CA2000
+                PdfBitmap image = new PdfBitmap(stream);
+#pragma warning restore CA2000
+                graphics.DrawImage(image, 0, 0);
+
+            }
+        }
+        using (MemoryStream memoryStream = new MemoryStream())
+        {
+            document.Save(memoryStream);
+            memoryStream.Position = 0;
+            base64String = Convert.ToBase64String(memoryStream.ToArray());
+            if (allowDownload)
+            {
+                await JSRuntimeExtensions.InvokeAsync<string>(jsRuntime, "downloadPdf", new object[] { base64String, fileName });
+                base64String = string.Empty;
+            }
+            else
+            {
+                base64String = "data:application/pdf;base64," + base64String;
+            }
+
+            document.Dispose();
+        }
+
+        return base64String;
+    }
+
+    public async Task PrintDiagram(Syncfusion.Blazor.Diagram.DiagramPrintSettings printOptions)
+    {
+        var diagram = Parent.DiagramContent.Diagram;
+
+        await diagram.PrintAsync(printOptions);
+    }
+
     public bool EnableMenuItems(string itemText, ObservableCollection<object> collection)
     {
 

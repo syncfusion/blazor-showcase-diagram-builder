@@ -10,9 +10,6 @@
     #toolbarEditor .e-hscroll-bar{
         overflow-x: initial !important;
     }
-    #toolbarEditor .e-toolbar .e-toolbar-items:not(.e-tbar-pos) .e-toolbar-item:first-child {
-        margin-left: 45px;
-    }
 
     .activecss {
         background: #ffffff;
@@ -43,7 +40,7 @@
                     <ToolbarItem @ref="@ZoomInItem" PrefixIcon="e-icons sf-icon-ZoomOut tb-icons" TooltipText="Zoom Out(Ctrl + -)" CssClass="tb-item-start"></ToolbarItem>
                     <ToolbarItem @ref="@ZoomItem" PrefixIcon="e-icons tb-item-end tb-zoom-dropdown-btn">
                         <Template>
-                            <SfDropDownButton ID="btnZoomIncrement" @ref="@ZoomItemDropdown" Content="@ZoomItemDropdownContent">
+                            <SfDropDownButton ID="btnZoomIncrement" @ref="@ZoomItemDropdown" Content="@ZoomItemDropdownContent" CssClass="e-dropdown-custom">
                                 <DropDownButtonEvents ItemSelected="@DrawZoomChange"></DropDownButtonEvents>
                                 <DropDownMenuItems>
                                     <DropDownMenuItem Text="400%"></DropDownMenuItem>
@@ -88,17 +85,18 @@
                             </SfDropDownButton>
                         </Template>
                     </ToolbarItem>
+                    <ToolbarItem @ref="@TextItem" PrefixIcon="sf-icon-TextInput tb-icons" TooltipText="Text Tool" CssClass="@TextItemCssClass"></ToolbarItem>
                     <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
                     <ToolbarItem  @ref="@Fill" TooltipText="FillColor" CssClass="@fill">
                          <Template>
                             <SfDropDownButton  @ref="dropdownBtn" IconCss="sf-icon-ColorPickers tb-icons"  CssClass="e-caret-hide" Width="28px">
                             <PopupContent>
-                            <SfColorPicker Inline="true"   OnClose="ClickHandler" ValueChange="@OnFillColorChange" ></SfColorPicker>
+                            <SfColorPicker Inline="true" OnClose="ClickHandler" ValueChange="@OnFillColorChange" ></SfColorPicker>
                             </PopupContent>
                             </SfDropDownButton>
                          </Template> 
                     </ToolbarItem>
-                    <ToolbarItem @ref="@Stroke"  TooltipText="StrokeColor" CssClass="@stroke" >
+                    <ToolbarItem @ref="@Stroke" TooltipText="StrokeColor" CssClass="@stroke" >
                      <Template>
                             <SfDropDownButton  @ref="dropdownBtn1" IconCss="sf-icon-Pickers tb-icons" CssClass="e-caret-hide" Width="28px">
                             <PopupContent>
@@ -116,6 +114,20 @@
                     <ToolbarItem @ref="@DeleteItem" PrefixIcon="e-icons sf-icon-Delete tb-icons" TooltipText="Delete" CssClass="tb-item-end tb-item-lock-category"></ToolbarItem>
                     <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
                     <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
+                    <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
+                    <ToolbarItem @ref="@OrderItem" TooltipText="Order" CssClass="tb-item-end tb-item-order tb-dropdown-btn-icon">
+                        <Template>
+                            <SfDropDownButton ID="orderCommandList" IconCss="sf-icon-Order" CssClass="e-dropdown-custom">
+                                <DropDownButtonEvents ItemSelected="@OrderCommandsChange"></DropDownButtonEvents>
+                                <DropDownMenuItems>
+                                    <DropDownMenuItem IconCss="sf-icon-Sendback" Text="Send To Back"></DropDownMenuItem>
+                                    <DropDownMenuItem IconCss="sf-icon-BringFront" Text="Bring To Front"></DropDownMenuItem>
+                                    <DropDownMenuItem IconCss="sf-icon-SendBackward" Text="Send Backward"></DropDownMenuItem>
+                                    <DropDownMenuItem IconCss="sf-icon-BringForward" Text="Bring Forward"></DropDownMenuItem>
+                                </DropDownMenuItems>
+                            </SfDropDownButton>
+                        </Template>
+                    </ToolbarItem>
                     <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
                     <ToolbarItem @ref="@AlignLeftItem" PrefixIcon="e-icons sf-icon-AlignLeft tb-icons" TooltipText="Align Left" CssClass="tb-item-start tb-item-align-category"></ToolbarItem>
                     <ToolbarItem @ref="@AlignCenterItem" PrefixIcon="e-icons sf-icon-AlignHorizontally tb-icons" TooltipText="Align Center" CssClass="tb-item-middle tb-item-align-category"></ToolbarItem>
@@ -136,10 +148,8 @@
 
 @code {
 
-
-
 internal DiagramMain Parent;
-SfToolbar Toolbar;    
+SfToolbar Toolbar;
 string toolbarClassName { get; set; } = "db-toolbar-container";
 private SfDropDownButton dropdownBtn;
 private SfDropDownButton dropdownBtn1;
@@ -156,13 +166,15 @@ string PanItemCssClass = "tb-item-start";
 string fill { get; set; } = "tb-item-start tb-item-fill";
 string stroke { get; set; } = "tb-item-end tb-item-stroke";
 ToolbarItem PointerItem;
-string ShapeItem = "e-control e-dropdown-btn e-lib e-btn e-icon-btn";
-string ConnectorItem = "e-control e-dropdown-btn e-lib e-btn e-icon-btn";
+string ShapeItem = "e-dropdown-custom";
+string ConnectorItem = "e-dropdown-custom";
 string PointerItemCssClass = "tb-item-middle tb-item-selected";
 ToolbarItem DrawShapeItem;
 string DrawShapeItemCssClass = "tb-item-middle tb-drawtools-dropdown-btn tb-custom-diagram-disable";
 ToolbarItem DrawConnectorItem;
 string DrawConnectorItemCssClass = "tb-item-middle tb-drawtools-dropdown-btn tb-custom-diagram-disable";
+ToolbarItem TextItem;
+string TextItemCssClass = "tb-item-end tb-custom-diagram-disable";
 ToolbarItem Fill;
 ToolbarItem Stroke;
 public string NodeFillColor { get; set; }
@@ -170,6 +182,7 @@ ToolbarItem GroupItem;
 ToolbarItem UngroupItem;
 ToolbarItem LockItem;
 ToolbarItem DeleteItem;
+ToolbarItem OrderItem;
 ToolbarItem AlignLeftItem;
 ToolbarItem AlignCenterItem;
 ToolbarItem AlignRightItem;

@@ -1824,27 +1824,30 @@
         for (int i = 0; i < Connectors.Count; i++)
         {
             Connector Connector = Connectors[i];
-            PathAnnotation ConnectorAnnotation = Connector.Annotations[0];
-            switch (commandType)
+            if ((Connector != null && Connector.Annotations.Count > 0))
             {
-                case "Align Right":
-                    ConnectorAnnotation.HorizontalAlignment = HorizontalAlignment.Right;
-                    break;
-                case "Align Center":
-                    ConnectorAnnotation.Style.TextAlign = TextAlign.Center;
-                    break;
-                case "Align Left":
-                    ConnectorAnnotation.Style.TextAlign = TextAlign.Center;
-                    break;
-                case "Align Top":
-                    ConnectorAnnotation.Style.TextAlign = TextAlign.Center;
-                    break;
-                case "Align Middle":
-                    ConnectorAnnotation.Style.TextAlign = TextAlign.Center;
-                    break;
-                case "Align Bottom":
-                    ConnectorAnnotation.Style.TextAlign = TextAlign.Center;
-                    break;
+                PathAnnotation ConnectorAnnotation = Connector.Annotations[0];
+                switch (commandType)
+                {
+                    case "Align Right":
+                        ConnectorAnnotation.HorizontalAlignment = HorizontalAlignment.Right;
+                        break;
+                    case "Align Center":
+                        ConnectorAnnotation.Style.TextAlign = TextAlign.Center;
+                        break;
+                    case "Align Left":
+                        ConnectorAnnotation.Style.TextAlign = TextAlign.Center;
+                        break;
+                    case "Align Top":
+                        ConnectorAnnotation.Style.TextAlign = TextAlign.Center;
+                        break;
+                    case "Align Middle":
+                        ConnectorAnnotation.Style.TextAlign = TextAlign.Center;
+                        break;
+                    case "Align Bottom":
+                        ConnectorAnnotation.Style.TextAlign = TextAlign.Center;
+                        break;
+                }
             }
         }
     }
