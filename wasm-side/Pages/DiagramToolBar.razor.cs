@@ -21,7 +21,6 @@ namespace DiagramBuilder
         {
             Parent.DiagramContent.DrawingObject(args);
             Parent.DiagramContent.UpdateContinousDrawTool();
-            ShapeItem = "e-control e-dropdown-btn e-lib e-btn e-icon-btn tb-item-selected";
             await removeSelectedToolbarItem("shape");
         }
         private async Task DrawConnectorChange(Syncfusion.Blazor.SplitButtons.MenuEventArgs args)
@@ -29,9 +28,29 @@ namespace DiagramBuilder
             SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
             Parent.DiagramContent.DrawingObject(args);
             Parent.DiagramContent.UpdateContinousDrawTool();
-            ConnectorItem = "e-control e-dropdown-btn e-lib e-btn e-icon-btn tb-item-selected";
             diagram.ClearSelection();
             await removeSelectedToolbarItem("connector");
+        }
+
+        private void OrderCommandsChange(Syncfusion.Blazor.SplitButtons.MenuEventArgs args)
+        {
+            var diagram = Parent.DiagramContent.Diagram;
+            if (args.Item.Text == "Send To Back")
+            {
+                diagram.SendToBack();
+            }
+            else if (args.Item.Text == "Bring To Front")
+            {
+                diagram.BringToFront();
+            }
+            else if (args.Item.Text == "Bring Forward")
+            {
+                diagram.BringForward();
+            }
+            else if (args.Item.Text == "Send Backward")
+            {
+                diagram.SendBackward();
+            }
         }
         private async Task DrawZoomChange(Syncfusion.Blazor.SplitButtons.MenuEventArgs args)
         {
@@ -46,6 +65,13 @@ namespace DiagramBuilder
                 else if (args.Item.Text == "Fit To Screen")
                 {
                     ZoomItemDropdownContent = "Fit ...";
+                    FitOptions fitoption = new FitOptions()
+                    {
+                        Mode = FitMode.Both,
+                        Region = DiagramRegion.PageSettings,
+
+                    };
+                    Parent.DiagramContent.Diagram.FitToPage(fitoption);
                 }
                 else
                 {
@@ -73,16 +99,16 @@ namespace DiagramBuilder
                     await EnableToolbarItems(new object() { }, "historychange");
                     break;
                 case "zoom in(ctrl + +)":
-                    Parent.DiagramContent.DiagramZoomIn();
                     if (Parent.DiagramContent.CurrentZoom <= 30)
                     {
+                        Parent.DiagramContent.DiagramZoomIn();
                         ZoomItemDropdownContent = FormattableString.Invariant($"{Math.Round(Parent.DiagramContent.CurrentZoom * 100)}") + "%";
                     }
                     break;
                 case "zoom out(ctrl + -)":
-                    Parent.DiagramContent.DiagramZoomOut();
                     if (Parent.DiagramContent.CurrentZoom >= 0.25)
                     {
+                        Parent.DiagramContent.DiagramZoomOut();
                         ZoomItemDropdownContent = FormattableString.Invariant($"{Math.Round(Parent.DiagramContent.CurrentZoom * 100)}") + "%";
                     }
                     break;
@@ -95,11 +121,13 @@ namespace DiagramBuilder
                     Parent.DiagramContent.DiagramDrawingObject = null;
                     Parent.DiagramContent.UpdatePointerTool();
                     break;
+                case "text tool":
+                    Parent.DiagramContent.DiagramDrawingObject = new Node() { Shape = new TextShape() { Type = NodeShapes.Text } };
+                    Parent.DiagramContent.DiagramTool = DiagramInteractions.ContinuousDraw;
+                    break;
                 case "delete":
-                    diagram.BeginUpdate();
                     DeleteData();
                     toolbarClassName = "db-toolbar-container db-undo";
-                    diagram.EndUpdate();
                     break;
                 case "lock":
                     await LockObject().ConfigureAwait(true);
@@ -139,10 +167,15 @@ namespace DiagramBuilder
                         PanItemCssClass += " tb-item-selected";
                     if (commandType == "pointer")
                         PointerItemCssClass += " tb-item-selected";
+                    if (commandType == "text tool")
+                        TextItemCssClass += " tb-item-selected";
                     await removeSelectedToolbarItem(commandType).ConfigureAwait(true);
                 }
             }
+            Parent.DiagramPropertyPanel.PanelVisibility();
+            Parent.DiagramContent.StateChanged();
         }
+
         private void Group()
         {
             Parent.DiagramContent.Diagram.Group();
@@ -236,38 +269,63 @@ namespace DiagramBuilder
         {
 #pragma warning disable CA1307 // Specify StringComparison
 
-            if ((ConnectorItem.Contains("tb-item-selected")) && tool != "connector")
+            if (DrawConnectorItemCssClass.IndexOf("tb-item-selected") != -1)
             {
-                ConnectorItem = "e-control e-dropdown-btn e-lib e-btn e-icon-btn";
+                DrawConnectorItemCssClass = DrawConnectorItemCssClass.Replace(" tb-item-selected", "");
             }
-            if ((PanItemCssClass.Contains("tb-item-selected")) && tool != "pan tool")
+            if (DrawShapeItemCssClass.IndexOf("tb-item-selected") != -1)
+            {
+                DrawShapeItemCssClass = DrawShapeItemCssClass.Replace(" tb-item-selected", "");
+            }
+            if (tool != "pan tool" && PanItemCssClass.IndexOf("tb-item-selected") != -1)
             {
                 PanItemCssClass = PanItemCssClass.Replace(" tb-item-selected", "");
             }
-            if ((PointerItemCssClass.Contains("tb-item-selected")) && tool != "pointer")
+            if (tool != "pointer" && PointerItemCssClass.IndexOf("tb-item-selected") != -1)
             {
                 PointerItemCssClass = PointerItemCssClass.Replace(" tb-item-selected", "");
             }
-            if ((ShapeItem.Contains("tb-item-selected")) && tool != "shape")
+            if (tool != "text tool" && TextItemCssClass.IndexOf("tb-item-selected") != -1)
             {
-                ShapeItem = "e-control e-dropdown-btn e-lib e-btn e-icon-btn";
+                TextItemCssClass = TextItemCssClass.Replace(" tb-item-selected", "");
             }
+            await removeSelectedToolbarItems(tool);
             StateHasChanged();
 #pragma warning restore CA1307 // Specify StringComparison
 
         }
         #endregion
 
-        #region public methods
+        public async Task removeSelectedToolbarItems(string tool)
+        {
+            string shape = "tb-item-selected";
+            if (ConnectorItem.Contains(shape))
+            {
+                int first = ConnectorItem.IndexOf(shape);
+                ConnectorItem = ConnectorItem.Remove(first);
+            }
+            if (ShapeItem.Contains(shape))
+            {
+                int second = ShapeItem.IndexOf(shape);
+                ShapeItem = ShapeItem.Remove(second);
+            }
+            if (tool == "shape")
+            {
+                ShapeItem += " tb-item-selected";
+            }
+            else if (tool == "connector")
+            {
+                ConnectorItem += " tb-item-selected";
+            }
+        }
 
         public void DiagramZoomValueChange()
         {
-            if (Parent.DiagramContent.CurrentZoom >= 0.25 && Parent.DiagramContent.CurrentZoom <= 30)
-            {
-                ZoomItemDropdownContent = FormattableString.Invariant($"{Math.Round(Parent.DiagramContent.CurrentZoom * 100)}") + "%";
-            }
+            ZoomItemDropdownContent = FormattableString.Invariant($"{Math.Round(Parent.DiagramContent.CurrentZoom * 100)}") + "%";
             StateHasChanged();
         }
+
+        #region public methods
 
         public async Task EnableToolbarItems<T>(T obj, string eventname)
         {

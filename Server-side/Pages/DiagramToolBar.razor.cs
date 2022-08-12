@@ -99,12 +99,18 @@ namespace DiagramBuilder
                     await EnableToolbarItems(new object() { }, "historychange");
                     break;
                 case "zoom in(ctrl + +)":
-                    Parent.DiagramContent.DiagramZoomIn();
-                    ZoomItemDropdownContent = FormattableString.Invariant($"{Math.Round(Parent.DiagramContent.CurrentZoom * 100)}") + "%";
+                    if (Parent.DiagramContent.CurrentZoom <= 30)
+                    {
+                        Parent.DiagramContent.DiagramZoomIn();
+                        ZoomItemDropdownContent = FormattableString.Invariant($"{Math.Round(Parent.DiagramContent.CurrentZoom * 100)}") + "%";
+                    }
                     break;
                 case "zoom out(ctrl + -)":
-                    Parent.DiagramContent.DiagramZoomOut();
-                    ZoomItemDropdownContent = FormattableString.Invariant($"{Math.Round(Parent.DiagramContent.CurrentZoom * 100)}") + "%";
+                    if (Parent.DiagramContent.CurrentZoom >= 0.25)
+                    {
+                        Parent.DiagramContent.DiagramZoomOut();
+                        ZoomItemDropdownContent = FormattableString.Invariant($"{Math.Round(Parent.DiagramContent.CurrentZoom * 100)}") + "%";
+                    }
                     break;
                 case "pan tool":
                     Parent.DiagramContent.UpdateTool();

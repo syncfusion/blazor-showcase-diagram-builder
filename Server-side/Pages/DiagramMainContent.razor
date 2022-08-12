@@ -258,7 +258,7 @@
     }
     private void ScrollChanged(ScrollChangedEventArgs args)
     {
-        if(Parent.Toolbar.ZoomItemDropdownContent != FormattableString.Invariant($"{Math.Round(Parent.DiagramContent.CurrentZoom * 100)}") + "%")
+        if((Parent.DiagramContent.CurrentZoom >= 0.25 && Parent.DiagramContent.CurrentZoom <= 30) && Parent.Toolbar.ZoomItemDropdownContent != FormattableString.Invariant($"{Math.Round(Parent.DiagramContent.CurrentZoom * 100)}") + "%")
         {
             Parent.Toolbar.DiagramZoomValueChange();
         }
