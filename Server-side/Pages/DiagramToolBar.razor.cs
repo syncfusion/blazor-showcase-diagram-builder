@@ -31,6 +31,27 @@ namespace DiagramBuilder
             diagram.ClearSelection();
             await removeSelectedToolbarItem("connector");
         }
+
+        private void OrderCommandsChange(Syncfusion.Blazor.SplitButtons.MenuEventArgs args)
+        {
+            var diagram = Parent.DiagramContent.Diagram;
+            if (args.Item.Text == "Send To Back")
+            {
+                diagram.SendToBack();
+            }
+            else if (args.Item.Text == "Bring To Front")
+            {
+                diagram.BringToFront();
+            }
+            else if (args.Item.Text == "Bring Forward")
+            {
+                diagram.BringForward();
+            }
+            else if (args.Item.Text == "Send Backward")
+            {
+                diagram.SendBackward();
+            }
+        }
         private async Task DrawZoomChange(Syncfusion.Blazor.SplitButtons.MenuEventArgs args)
         {
             if (ZoomItemDropdownContent != args.Item.Text)
@@ -44,6 +65,13 @@ namespace DiagramBuilder
                 else if (args.Item.Text == "Fit To Screen")
                 {
                     ZoomItemDropdownContent = "Fit ...";
+                    FitOptions fitoption = new FitOptions()
+                    {
+                        Mode = FitMode.Both,
+                        Region = DiagramRegion.PageSettings,
+
+                    };
+                    Parent.DiagramContent.Diagram.FitToPage(fitoption);
                 }
                 else
                 {
@@ -81,17 +109,18 @@ namespace DiagramBuilder
                 case "pan tool":
                     Parent.DiagramContent.UpdateTool();
                     diagram.ClearSelection();
-                    Parent.DiagramPropertyPanel.PanelVisibility();
                     break;
                 case "pointer":
                     Parent.DiagramContent.DiagramDrawingObject = null;
                     Parent.DiagramContent.UpdatePointerTool();
                     break;
+                case "text tool":
+                    Parent.DiagramContent.DiagramDrawingObject = new Node() { Shape = new TextShape() { Type = NodeShapes.Text } };
+                    Parent.DiagramContent.DiagramTool = DiagramInteractions.ContinuousDraw;
+                    break;
                 case "delete":
-                    diagram.BeginUpdate();
                     DeleteData();
                     toolbarClassName = "db-toolbar-container db-undo";
-                    diagram.EndUpdate();
                     break;
                 case "lock":
                     await LockObject().ConfigureAwait(true);
@@ -131,9 +160,13 @@ namespace DiagramBuilder
                         PanItemCssClass += " tb-item-selected";
                     if (commandType == "pointer")
                         PointerItemCssClass += " tb-item-selected";
-                    await removeSelectedToolbarItem("").ConfigureAwait(true);
+                    if (commandType == "text tool")
+                        TextItemCssClass += " tb-item-selected";
+                    await removeSelectedToolbarItem(commandType).ConfigureAwait(true);
                 }
             }
+            Parent.DiagramPropertyPanel.PanelVisibility();
+            Parent.DiagramContent.StateChanged();
         }
 
         private void Group()
@@ -237,41 +270,45 @@ namespace DiagramBuilder
             {
                 DrawShapeItemCssClass = DrawShapeItemCssClass.Replace(" tb-item-selected", "");
             }
-            if (PanItemCssClass.IndexOf("tb-item-selected") != -1)
+            if (tool != "pan tool" && PanItemCssClass.IndexOf("tb-item-selected") != -1)
             {
                 PanItemCssClass = PanItemCssClass.Replace(" tb-item-selected", "");
             }
-            if (PointerItemCssClass.IndexOf("tb-item-selected") != -1)
+            if (tool != "pointer" && PointerItemCssClass.IndexOf("tb-item-selected") != -1)
             {
                 PointerItemCssClass = PointerItemCssClass.Replace(" tb-item-selected", "");
             }
-            removeSelectedToolbarItems(tool);
+            if (tool != "text tool" && TextItemCssClass.IndexOf("tb-item-selected") != -1)
+            {
+                TextItemCssClass = TextItemCssClass.Replace(" tb-item-selected", "");
+            }
+            await removeSelectedToolbarItems(tool);
             StateHasChanged();
 #pragma warning restore CA1307 // Specify StringComparison
 
         }
         #endregion
 
-        public void removeSelectedToolbarItems(string tool)
+        public async Task removeSelectedToolbarItems(string tool)
         {
             string shape = "tb-item-selected";
-            if (DrawShapeItemCssClass.Contains(shape))
+            if (ConnectorItem.Contains(shape))
             {
-                int first = DrawShapeItemCssClass.IndexOf(shape);
-                DrawShapeItemCssClass = DrawShapeItemCssClass.Remove(first);
+                int first = ConnectorItem.IndexOf(shape);
+                ConnectorItem = ConnectorItem.Remove(first);
             }
-            if (DrawConnectorItemCssClass.Contains(shape))
+            if (ShapeItem.Contains(shape))
             {
-                int second = DrawConnectorItemCssClass.IndexOf(shape);
-                DrawConnectorItemCssClass = DrawConnectorItemCssClass.Remove(second);
+                int second = ShapeItem.IndexOf(shape);
+                ShapeItem = ShapeItem.Remove(second);
             }
             if (tool == "shape")
             {
-                DrawShapeItemCssClass += " tb-item-selected";
+                ShapeItem += " tb-item-selected";
             }
             else if (tool == "connector")
             {
-                DrawConnectorItemCssClass += " tb-item-selected";
+                ConnectorItem += " tb-item-selected";
             }
         }
 

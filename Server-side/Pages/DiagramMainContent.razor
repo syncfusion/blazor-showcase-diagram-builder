@@ -9,7 +9,7 @@
 <div class="db-diagram-container">
     <div id="diagramContainerDiv" class=@DiagramContainerClassName style="position:relative;">
     <SpinnerComponent @ref="DiagramSpinnerObj"></SpinnerComponent>
-        <SfDiagramComponent @ref="@Diagram" NodeCreating="@NodeDefaults" Width="100%" Height="100%" SizeChanged="@SizeChanged" PositionChanged ="@PositionChanged" RotationChanged="@RotateChanged" SelectionChanged ="@SelectionChanged" DragDrop="@Drop" @bind-Nodes="@nodes" @bind-Connectors="@connectors" HistoryChanged="@HistoryChange"  InteractionController="@DiagramTool" DrawingObject="@DiagramDrawingObject" ScrollChanged="ScrollChanged">
+        <SfDiagramComponent @ref="@Diagram" NodeCreating="@NodeDefaults" Width="100%" Height="100%" SizeChanged="@SizeChanged" PositionChanged ="@PositionChanged" RotationChanged="@RotateChanged" SelectionChanged ="@SelectionChanged" DragDrop="@Drop" @bind-Nodes="@nodes" @bind-Connectors="@connectors" HistoryChanged="@HistoryChange"  InteractionController="@DiagramTool" @bind-DrawingObject="@DiagramDrawingObject" ScrollChanged="ScrollChanged">
             <PageSettings @bind-ShowPageBreaks="@DiagramShowPageBreaks" @bind-Orientation="@DiagramOrientation" @bind-Width="@DiagramPageWidth" @bind-Height="@DiagramPageHeight" @bind-MultiplePage=@IsMultiplePage>
                 <BackgroundStyle @bind-Background="@DiagramBgColor"></BackgroundStyle>
                 <PageMargin @bind-Left="@marginLeft" @bind-Top="@marginRight"></PageMargin>
@@ -46,11 +46,12 @@
                         }
                     </NodeTemplate>
                 </DiagramTemplates>
+                <ContextMenuSettings Show="true"></ContextMenuSettings>
         </SfDiagramComponent>
     </div>
 </div>
 
-@code {
+    @code {
     internal DiagramMain Parent;
     public SpinnerComponent DiagramSpinnerObj { get; set; }
 
@@ -77,7 +78,7 @@
     double marginLeft = 5;
     double marginRight = 5;
     public string Hlinecolor { get; set; } = "#EEEEEE";
-    bool IsMultiplePage = true;
+    public bool IsMultiplePage = true;
     public bool IsUndo = false;
     public bool IsRedo = false;
     public string DiagramBgColor = "white";
@@ -345,6 +346,13 @@
             Parent.DiagramContent.DiagramDrawingObject = new Connector() { Type = ConnectorSegmentType.Bezier, Constraints = ConnectorConstraints.Default, Style = new ShapeStyle() {  StrokeWidth = 2 } };
         }
     }
+    public void TextToolDrawingObject(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+    {
+        if(args.Item.TooltipText == "Text Tool")
+        {
+            DiagramDrawingObject =  new Node() { Shape = new TextShape() { Type = NodeShapes.Text } }; 
+        }
+    }
     public void UpdateContinousDrawTool()
     {
         DiagramTool = DiagramInteractions.ContinuousDraw;
@@ -363,6 +371,11 @@
     public void DiagramZoomOut()
     {
         CurrentZoom = (CurrentZoom - 0.2);
+        StateHasChanged();
+    }
+
+    public void StateChanged()
+    {
         StateHasChanged();
     }
 
