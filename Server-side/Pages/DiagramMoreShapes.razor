@@ -76,6 +76,7 @@
             }
         }
         (args.ItemData as ListViewDataFields).Checked = args.IsChecked;
+        args.Cancel = true;
         SelectedItems.Add(args.ItemData as ListViewDataFields);
     }
 
