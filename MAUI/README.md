@@ -1,6 +1,6 @@
 # Essential Studio for Blazor - Diagram Builder
 
-You can create the diagram using Blazor Server App. In this example, we can create a simple diagram with shapes as well as layout samples. We can also interact with the diagram.
+The diagram allows you to create a project in the MAUI platform. In this example, we can create a simple diagram with shapes as well as layout samples. We can also interact with the diagram.
 
 ## Deployment
 
