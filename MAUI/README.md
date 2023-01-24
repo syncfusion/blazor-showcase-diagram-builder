@@ -1,12 +1,12 @@
 # Essential Studio for Blazor - Diagram Builder
 
-You can create the diagram using Blazor Server App. In this example, we can create a simple diagram with shapes as well as layout samples. We can also interact with the diagram.
+The diagram allows you to create a project in the MAUI platform. In this example, we can create a simple diagram with shapes as well as layout samples. We can also interact with the diagram.
 
 ## Deployment
 
 ### Requirements to run the demo
 
-The samples require the following requirements to run.
+The samples require the below requirements to run.
 
 * [Visual Studio 2022](https://visualstudio.microsoft.com/vs/)
 * [.NET 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
