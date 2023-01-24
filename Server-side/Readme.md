@@ -6,7 +6,7 @@ You can create the diagram using Blazor Server App. In this example, we can crea
 
 ### Requirements to run the demo
 
-The samples requires the below requirements to run.
+The samples require the following requirements to run.
 
 * [Visual Studio 2022](https://visualstudio.microsoft.com/vs/)
 * [.NET 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
@@ -14,7 +14,7 @@ The samples requires the below requirements to run.
 ### Run
 
 * Clone this repository.
-* Open the project in Visual studio 2022.
+* Open the project in Visual Studio 2022.
 * Run the demo.
 
 ## Demo

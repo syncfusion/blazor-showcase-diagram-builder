@@ -1,12 +1,12 @@
 # Essential Studio for Blazor - Diagram Builder
 
-The Blazor diagram builder application is used to create diagrams such as FlowChart and MindMap diagrams. In diagram builder application have all supports of diagram,, such as Print, Export, and Drawing Tool support, are available in the Diagram Builder application. You can interact with the diagram or create your own using shapes.
+The Blazor diagram builder application is used to create diagrams such as FlowChart and MindMap diagrams. In the diagram builder application, all support diagrams, such as Print, Export, and Drawing Tool support, are available in the Diagram Builder application. You can interact with the diagram or create your own using shapes.
 
 ## Deployment
 
 ### Requirements to run the demo
 
-The samples requires the below requirements to run.
+The samples require the following requirements to run.
 
 * [Visual Studio 2022](https://visualstudio.microsoft.com/vs/)
 * [.NET 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
@@ -14,7 +14,7 @@ The samples requires the below requirements to run.
 ### Run
 
 * Clone this repository.
-* Open the project in Visual studio 2022.
+* Open the project in Visual Studio 2022.
 * Run the demo.
 
 ## Demo
