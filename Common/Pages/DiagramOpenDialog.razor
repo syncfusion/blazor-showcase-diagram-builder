@@ -1,0 +1,379 @@
+﻿@using Syncfusion.Blazor.Popups
+@inject HttpClient Http
+
+@namespace DiagramBuilder
+
+<SfDialog ID="openTemplateDialog" Width="695px" IsModal="true" ShowCloseIcon="true" AllowDragging="true" @bind-Visible="@IsOpenDialogVisible">
+    <DialogTemplates>
+        <Header>
+            Create New Diagram
+        </Header>
+        <Content>
+            <div id="diagramTemplateDiv1">
+                <div class="row">
+                    <div class="col-xs-3 temp-left-pane">
+                        @{
+                            string ClassName = "row db-diagram-template-parent-text";
+                            if (this.Value == "Flow Diagram")
+                                ClassName = "row db-diagram-template-parent-text flowdiagram-template active";
+                            else
+                                ClassName = "row db-diagram-template-parent-text flowdiagram-template";
+                            <div class=@ClassName @onclick="@ShowFlowChartTemplates">
+                                <span>Flow Chart</span>
+                            </div>
+                            if (this.Value == "Mind Map")
+                                ClassName = "row db-diagram-template-parent-text mindmap-template active";
+                            else
+                                ClassName = "row db-diagram-template-parent-text mindmap-template";
+                            <div class=@ClassName @onclick="@ShowMindMapTemplates">
+                                <span>Mind Map</span>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-xs-9 diagramTemplates temp-right-pane" style="padding-left:0px;padding-right:0px">
+                        <div class="class db-parent-diagram-template">
+                            <div id="" class="db-diagram-template-div" style="">
+                                @{
+                                    if (this.Value == "Flow Diagram")
+                                    {
+                                        <div class="db-diagram-template-image-div" id="flowchart_child0" @onclick="@BlankFlowDiagram">
+                                            <div class="db-diagram-template-svg-blank-image" style="background-image: url(&quot;./assets/dbstyle/common_images/blank_diagram.svg&quot;);" alt="blank_diagram">
+                                            </div>
+                                        </div>
+                                    }
+                                    else if (this.Value == "Mind Map")
+                                    {
+                                        <div class="db-diagram-template-image-div" id="mindmap_child0" @onclick="@BlankMindMapDiagram">
+                                            <div class="db-diagram-template-svg-image" style="background-image: url(&quot;./assets/dbstyle/common_images/blank_diagram_mind.svg&quot;);">
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                <div class="db-diagram-template-text">
+                                    <span id="diagramTemplateText">Blank Diagram</span>
+                                </div>
+                            </div>
+                            <div id="" class="db-diagram-template-div" style="">
+                                @{
+                                    if (this.Value == "Flow Diagram")
+                                    {
+                                        <div class="db-diagram-template-image-div" id="flowchart_child1" @onclick="@CreditProcessDiagram">
+                                            <div class="db-diagram-template-svg-image" style="background-image: url(&quot;./assets/dbstyle/flowchart_Images/Credit_Card_Processing.svg&quot;);" alt="Credit_Card_Processing">
+                                            </div>
+                                        </div>
+                                        <div class="db-diagram-template-text">
+                                            <span id="diagramTemplateText">Credit Card Processing</span>
+                                        </div>
+                                    }
+                                    else if (this.Value == "Mind Map")
+                                    {
+                                        <div class="db-diagram-template-image-div" id="mindmap_child1" @onclick="@BusinessPlanningDiagram">
+                                            <div class="db-diagram-template-svg-image" style="background-image: url(&quot;./assets/dbstyle/mindmap_images/BusinessPlanning.SVG&quot;);">
+                                            </div>
+                                        </div>
+                                        <div class="db-diagram-template-text">
+                                            <span id="diagramTemplateText">Business Planning</span>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                            <div id="" class="db-diagram-template-div" style="">
+                                @{
+                                    if (this.Value == "Mind Map")
+                                    {
+                                        <div class="db-diagram-template-image-div" id="mindmap_child2" @onclick="@TQMDiagram">
+                                            <div class="db-diagram-template-svg-image" style="background-image: url(&quot;./assets/dbstyle/mindmap_images/TQM.SVG&quot;);">
+                                            </div>
+                                        </div>
+                                        <div class="db-diagram-template-text">
+                                            <span id="diagramTemplateText">Quality Management</span>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                            <div id="" class="db-diagram-template-div" style="">
+                                @{
+                                    if (this.Value == "Mind Map")
+                                    {
+                                        <div class="db-diagram-template-image-div" id="mindmap_child3" @onclick="@SoftwareLifeCycleDiagram">
+                                            <div class="db-diagram-template-svg-image" style="background-image: url(&quot;./assets/dbstyle/mindmap_images/SoftwareLifeCycle.SVG&quot;);">
+                                            </div>
+                                        </div>
+                                        <div class="db-diagram-template-text">
+                                            <span id="diagramTemplateText">Software Life Cycle</span>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Content>
+    </DialogTemplates>
+</SfDialog>
+
+@code {
+
+    internal DiagramMain Parent;
+
+    [Inject]
+    protected IJSRuntime jsRuntime { get; set; }
+
+    public bool IsOpenDialogVisible { get; set; } = true;
+    string Value;
+    public string TemplateType = string.Empty;
+
+    public string content = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        this.Value = "Flow Diagram";
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        if (firstRender)
+        {
+            this.IsOpenDialogVisible = true;
+            StateHasChanged();
+
+        }
+    }
+
+    public void StateChanged()
+    {
+        this.StateChanged();
+    }
+
+    public void ShowFlowChartTemplates()
+    {
+        this.Value = "Flow Diagram";
+        StateHasChanged();
+    }
+    public void ShowMindMapTemplates()
+    {
+        this.Value = "Mind Map";
+        StateHasChanged();
+    }
+    public void ShowOrgChartTemplates()
+    {
+        this.Value = "Org Chart";
+        StateHasChanged();
+    }
+
+    public void BlankFlowDiagram()
+    {
+        IsOpenDialogVisible = false;
+        StateHasChanged();
+    }
+
+    public void RemoveUnwantedMindmapMenubarItems()
+    {
+        if (Parent.MenuBar.WindowMenuItems[1].Text == "Show Stencil")
+        {
+            Parent.MenuBar.WindowMenuItems.RemoveAt(1);
+        }
+        if (Parent.MenuBar.EditMenuItems[8].Text == "Duplicate")
+        {
+            Parent.MenuBar.EditMenuItems.RemoveAt(8);
+        }
+        Parent.MenuBar.arrangeButtonCss = "e-dropDown-button e-arrange-menu e-btn-hide";
+        Parent.MenuBar.WindowMenuItems.Add(new DiagramMenuBar.ContextMenuItemModel() { Text = "Show Shortcuts", IconCss = "sf-icon-Selection" });
+        Parent.MenuBar.StateChanged();
+    }
+
+    public async Task BlankMindMapDiagram()
+    {
+        #if SERVER
+        Parent.MindMapPropertyPanel.IsMindMap = true;
+        LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/BlankDiagram.json");
+        CurrentDiagramVisibility("mindmap-diagram");
+        //await Task.Delay(2500);
+        TemplateType = "Template1";
+        await Parent.Toolbar.HideElements("hide-palette");
+        Parent.MindMapPropertyPanel.bindMindMapProperties();
+        RemoveUnwantedMindmapMenubarItems();
+        Parent.LeftSideBar.sidebarVisibility = "none";
+        Parent.LeftSideBar.StateChanged();
+        //Parent.MindMapPropertyPanel.MindmapPatternChange("pattern1");
+        #endif
+        #if WASM
+        Parent.MindMapPropertyPanel.IsMindMap = true;
+        content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/BlankDiagram.json");
+        this.Parent.DiagramContent.LoadNewDiagram(content);
+        IsOpenDialogVisible = false;
+        StateHasChanged();
+        CurrentDiagramVisibility("mindmap-diagram");
+        TemplateType = "Template1";
+        await Parent.Toolbar.HideElements("hide-palette");
+        Parent.MindMapPropertyPanel.bindMindMapProperties();
+        RemoveUnwantedMindmapMenubarItems();
+        Parent.LeftSideBar.sidebarVisibility = "none";
+        Parent.LeftSideBar.StateChanged();
+        #endif
+    }
+
+    public void BlankOrgChartDiagram()
+    {
+        this.Value = "Org Chart";
+        StateHasChanged();
+    }
+
+    public async Task CreditProcessDiagram()
+    {
+        await Parent.DiagramContent.CreditProcessDiagram();
+        IsOpenDialogVisible = false;
+    }
+
+    public async Task BusinessPlanningDiagram()
+    {
+    #if SERVER
+    Parent.MindMapPropertyPanel.IsMindMap = true;
+    LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/BusinessPlanning.json");
+    CurrentDiagramVisibility("mindmap-diagram");
+    //await Task.Delay(2500);
+    await Parent.MenuBar.BusinessPlanningDiagram();
+    TemplateType = "Template2";
+    Parent.MindMapPropertyPanel.bindMindMapProperties();
+    RemoveUnwantedMindmapMenubarItems();
+    Parent.LeftSideBar.sidebarVisibility = "none";
+    Parent.LeftSideBar.StateChanged();
+    #endif
+    #if WASM
+    Parent.MindMapPropertyPanel.IsMindMap = true;
+    content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/BusinessPlanning.json");
+    this.Parent.DiagramContent.LoadNewDiagram(content);
+    IsOpenDialogVisible = false;
+    StateHasChanged();
+    CurrentDiagramVisibility("mindmap-diagram");
+    await Parent.MenuBar.BusinessPlanningDiagram();
+    TemplateType = "Template2";
+    Parent.MindMapPropertyPanel.bindMindMapProperties();   
+    RemoveUnwantedMindmapMenubarItems();
+    Parent.LeftSideBar.sidebarVisibility = "none";
+    Parent.LeftSideBar.StateChanged();
+    #endif
+    }
+
+    public void OrgRenderingStyle1Diagram()
+    {
+        LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle1.json");
+    }
+
+    public void BankTellerFlowDiagram()
+    {
+        LoadTemplate(@"./wwwroot/assets/dbstyle/flowchart_Images/BankingTellerProcess.json");
+        jsRuntime.InvokeAsync<string>("diagramNameChange", "Banking Teller Process Flow", true);
+    }
+
+    public async Task TQMDiagram()
+    {
+    #if SERVER
+        Parent.MindMapPropertyPanel.IsMindMap = true;
+    LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/TQM.json");
+    CurrentDiagramVisibility("mindmap-diagram");
+    //await Task.Delay(2500);
+    Parent.MenuBar.TQMDiagram();
+    TemplateType = "Template3";
+    Parent.MindMapPropertyPanel.bindMindMapProperties();
+    RemoveUnwantedMindmapMenubarItems();
+    Parent.LeftSideBar.sidebarVisibility = "none";
+    Parent.LeftSideBar.StateChanged();
+    #endif
+    #if WASM
+    Parent.MindMapPropertyPanel.IsMindMap = true;
+    content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/TQM.json");
+    this.Parent.DiagramContent.LoadNewDiagram(content);
+    IsOpenDialogVisible = false;
+    StateHasChanged();
+    CurrentDiagramVisibility("mindmap-diagram");
+    await Parent.MenuBar.TQMDiagram();
+    TemplateType = "Template3";
+    Parent.MindMapPropertyPanel.bindMindMapProperties();
+    RemoveUnwantedMindmapMenubarItems();
+    Parent.LeftSideBar.sidebarVisibility = "none";
+    Parent.LeftSideBar.StateChanged();
+    #endif       
+    }
+
+    public void OrgRenderingStyle2Diagram()
+    {
+        LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle2.json");
+    }
+
+    public void DeveloperWorkFlowDiagram()
+    {
+        LoadTemplate(@"./wwwroot/assets/dbstyle/flowchart_Images/Developer_Workflow.json");
+        jsRuntime.InvokeAsync<string>("diagramNameChange", "Agile's Developer Workflow", true);
+    }
+
+    public async Task SoftwareLifeCycleDiagram()
+    {
+    #if SERVER
+    Parent.MindMapPropertyPanel.IsMindMap = true;
+    LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/SoftwareDevelopmentLifeCycle.json");
+    CurrentDiagramVisibility("mindmap-diagram");
+    //await Task.Delay(2500);
+    Parent.MenuBar.SoftwareLifeCycleDiagram();
+    TemplateType = "Template4";
+    Parent.MindMapPropertyPanel.bindMindMapProperties();
+    RemoveUnwantedMindmapMenubarItems();
+    Parent.LeftSideBar.sidebarVisibility = "none";
+    Parent.LeftSideBar.StateChanged();
+    #endif
+    #if WASM
+    Parent.MindMapPropertyPanel.IsMindMap = true;
+    content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/SoftwareDevelopmentLifeCycle.json");
+    this.Parent.DiagramContent.LoadNewDiagram(content);
+    IsOpenDialogVisible = false;
+    StateHasChanged();
+    CurrentDiagramVisibility("mindmap-diagram");
+    await Parent.MenuBar.SoftwareLifeCycleDiagram();
+    TemplateType = "Template4";
+    Parent.MindMapPropertyPanel.bindMindMapProperties();
+    RemoveUnwantedMindmapMenubarItems();
+    Parent.LeftSideBar.sidebarVisibility = "none";
+    Parent.LeftSideBar.StateChanged();
+    #endif       
+    }
+
+    public void OrgRenderingStyle3Diagram()
+    {
+        LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle3.json");
+    }
+
+    public void LoadTemplate(string fileLocation)
+    {
+        string json = System.IO.File.ReadAllText(fileLocation);
+        json = json.Replace(System.Environment.NewLine, string.Empty);
+        this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
+        IsOpenDialogVisible = false;
+        this.Parent.DiagramContent.show = false;
+        StateHasChanged();
+    }
+
+    public async Task CurrentDiagramVisibility(string DiagramName)
+    {
+        Parent.PropertyPanelClassName += " " + DiagramName;
+        Parent.DiagramBuilderClassName += " hide-palette custom-diagram";
+        Parent.DiagramContent.DiagramContainerClassName += " " + DiagramName;
+        await Parent.Toolbar.HideElements("hide-palette");
+        if (DiagramName == "mindmap-diagram")
+        {
+            Parent.ShowShortCutKey = "block";
+            Parent.MindMapPropertyPanel.MindMapProperty = true;
+            Parent.MindMapPropertyPanel.MindMapPropertyVisibility = "block";
+            Parent.DiagramPropertyPanel.DiagramPropertyVisibility = "none";
+            Parent.DiagramPropertyPanel.PropertyPanelVisibility();
+            Parent.Toolbar.MindMapToolbarItemsVisibility();
+        }
+        else
+        {
+            Parent.DiagramPropertyPanel.PropertyPanelVisibility();
+        }
+        Parent.DiagramContent.StateChanged();
+        Parent.StateChanged();
+    }
+}
