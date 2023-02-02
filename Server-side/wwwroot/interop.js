@@ -134,3 +134,10 @@ triggerDownload: function triggerDownload(type, fileName, url) {
     anchorElement.href = url;
     anchorElement.click();
 }
+function getViewportBounds() {
+
+    var bounds = document.getElementsByClassName('e-control e-diagram e-lib e-droppable e-tooltip')[0].getBoundingClientRect();
+
+    return { width: bounds.width, height: bounds.height };
+
+}

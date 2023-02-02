@@ -1,0 +1,1915 @@
+@using Newtonsoft.Json
+@using Syncfusion.Blazor.Buttons
+@using System.Collections.Generic
+@using Syncfusion.Blazor.DropDowns
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Popups;
+@using Syncfusion.Blazor.Navigations
+@using Syncfusion.Blazor.Diagram
+@using System.Collections.ObjectModel
+@using Newtonsoft.Json.Linq;
+@using Syncfusion.Blazor.SplitButtons
+@using System.Drawing
+@inject IJSRuntime js
+
+@namespace DiagramBuilder
+
+<div id='mindMapContainer' class="db-mindmap-prop-container" style="display:@MindMapPropertyVisibility">
+    <div class="row db-prop-header-text">
+        Properties
+    </div>
+    <div class="db-prop-separator"></div>
+    <div class="row db-prop-header-text">
+        Orientation Styles
+    </div>
+    <div class="row db-prop-row">
+        <div class="col-xs-6 org-pattern-parent">
+            <div class="mindmap-pattern-style mindmap-pattern1" @onclick="@MindmapPattern1Change" value=@PatternValue></div>
+        </div>
+        <div class="col-xs-6 org-pattern-parent">
+            <div class="mindmap-pattern-style mindmap-pattern2" @onclick="@MindmapPattern2Change" value=@PatternValue></div>
+        </div>
+    </div>
+    <div class="row db-prop-row" style="margin-top:5px">
+        <div class="col-xs-6 org-pattern-parent">
+            <div class="mindmap-pattern-style mindmap-pattern3" @onclick="@MindmapPattern3Change" value=@PatternValue></div>
+        </div>
+        <div class="col-xs-6 org-pattern-parent">
+            <div class="mindmap-pattern-style mindmap-pattern4" @onclick="@MindmapPattern4Change" value=@PatternValue></div>
+        </div>
+    </div>
+    <div class="db-prop-separator">
+    </div>
+    <div class="row db-prop-header-text">
+        MindMap Levels Styles
+    </div>
+    <div class="row db-prop-row">
+        <div class="col-xs-6 db-col-left" style="width: auto;">
+            <SfDropDownList TValue="string" TItem="DefaultDropDownField" PopupHeight="230px" @bind-DataSource="@MindMapLevels" @bind-Value="@MindMapLevelValue">
+                <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+                <DropDownListEvents TItem="DefaultDropDownField" TValue="string" ValueChange="@OnMindMapLevelChange"></DropDownListEvents>
+            </SfDropDownList>
+        </div>
+    </div>
+    <div class="row db-prop-row" style="width:100%">
+        <div class="col-xs-4 db-col-right">
+            <span class="db-prop-text-style">Shape</span>
+        </div>
+        <div class="col-xs-4 db-col-left" style="margin-left:70px">
+            <span class="db-prop-text-style">Fill Color</span>
+        </div>
+    </div>
+    <div id='mindMapShapes' class="row db-prop-row">
+        <div class="col-xs-6 db-col-left" style="width: 120px;">
+            <SfDropDownList TValue="string" TItem="MindMapShapes" PopupHeight="230px" @bind-DataSource="@MindMapShapesDataSource" @bind-Value="@MindMapShapeValue">
+                <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+                <DropDownListEvents TItem="MindMapShapes" TValue="string" ValueChange="@OnMindMapShapeChange"></DropDownListEvents>
+            </SfDropDownList>
+        </div>
+        <div class="col-xs-6" style="width:100px;float:right">
+            <SfColorPicker ID="mindmapFill" Mode="ColorPickerMode.Palette" ValueChange="@OnFillColorChange" @bind-Value="@FillColorValue"></SfColorPicker>
+        </div>
+    </div>
+    <div class="row db-border-style">
+        <div class="row db-prop-header-text db-border-style-header">
+            Border/Line Styles
+        </div>
+        <div class="row db-prop-row" style="width:100%">
+            <div class="col-xs-6 db-col-right">
+                <span class="db-prop-text-style">Border Type</span>
+            </div>
+            <div class="col-xs-2 db-col-center" style="margin-left: -20px; ">
+                <span class="db-prop-text-style">Color</span>
+            </div>
+            <div class="col-xs-2 db-col-left" style="margin-left: 14px">
+                <span class="db-prop-text-style">Thickness</span>
+            </div>
+        </div>
+    <div class="row">
+        <div class="col-xs-6 db-col-left" style="width:90px;margin-top:1px">
+            <SfDropDownList ID="strokeStyle" TValue="string" TItem="BorderStylesFields" PopupWidth="160px" Index="@StrokeStyleValue" DataSource="@BorderStyles">
+                <DropDownListTemplates TItem="BorderStylesFields">
+                    <ItemTemplate>
+                        <div class='db-ddl-template-style'>
+                            <span class=@((context as BorderStylesFields).ClassName)></span>
+                        </div>
+                    </ItemTemplate>
+                    <ValueTemplate>
+                        <div class='db-ddl-template-style'>
+                            <span class=@((context as BorderStylesFields).ClassName)></span>
+                        </div>
+                    </ValueTemplate>
+                </DropDownListTemplates>
+                <DropDownListEvents TValue="string" TItem="BorderStylesFields" ValueChange="@OnStrokeDashArrayChange"></DropDownListEvents>
+                <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+            </SfDropDownList>
+        </div>
+            <div class="col-xs-2 db-col-center" style="margin-top:4px">
+                <div style="width:50px;margin-left:8px">
+            <SfColorPicker ValueChange="OnStrokeColorChange" @bind-Value="@StrokeColorValue"></SfColorPicker>
+            </div>
+        </div>        
+        <div class="col-xs-4 db-col-center" style="width:70px;margin-left: 25px">
+            <SfNumericTextBox ID="mindmapStrokeWidth" Min="0" Step="0.5" @bind-Value="@MindMapStrokeWidth">
+                <NumericTextBoxEvents TValue="double" ValueChange="@OnStrokeWidthChange"></NumericTextBoxEvents>
+            </SfNumericTextBox>
+        </div>
+    </div>
+    </div>
+    <div class="row db-prop-row">
+        <div class="col-xs-2 db-col-right db-prop-text-style" style="margin-right: 15px;padding-top: 6px">
+            <span class="db-prop-text-style">Opacity</span>
+        </div>
+        <div class="col-xs-8 db-col-left" style="padding-right:10px">
+            <SfSlider ID="mindmapOpacitySlider" @ref="SfSlide" Type="SliderType.MinRange" @bind-Value="@MindMapOpacity" Min="0" Max="100" Step="10">
+                <SliderEvents TValue="double" OnChange="@(e => { OnMindMapOpacityChange(e.Value); })"></SliderEvents>
+            </SfSlider>
+        </div>
+        <div class="col-xs-2 db-col-right" style="margin-left: -15px;padding-left: 8px">
+            <input type="text" readOnly="readonly" value="@MindMapOpacity" id="mindmapOpacityText" class="db-readonly-input" />
+        </div>
+    </div>
+    <div class="db-prop-separator">
+    </div>
+    <div class="row db-prop-header-text">
+        Connector Type
+    </div>
+    <div class="row db-prop-row">
+        <div class="col-xs-3 db-prop-col-style" style="margin-right: 8px;width: 30%;">
+            <SfRadioButton Name="connectorType" TChecked="bool" TValue="bool" Label="Bezier" @bind-Checked="@BezierChecked" @onchange="@OnBezierChange" Value="true"></SfRadioButton>
+        </div>
+        <div class="col-xs-3 db-prop-col-style">
+            <SfRadioButton Name="connectorType" TChecked="bool" TValue="bool" Label="Straight" @bind-Checked="@BezierChecked" @onchange="@OnStraightChange" Value="false"></SfRadioButton>
+        </div>
+    </div>
+    <div class="db-prop-separator">
+    </div>
+    <div style="margin-top:10px;margin-bottom: 15px"></div>
+    <div class="row db-prop-header-text">
+        Text Style
+    </div>
+    <div class="row db-prop-row">
+        <div class="col-xs-8 db-col-left">
+            <SfDropDownList ID="MindmapFontFamilyList" TValue="string" TItem="FontFamilyListFields" DataSource="@FontFamilyList" @bind-Value="@TextFontFamily">
+                <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+                <DropDownListEvents TValue="string" TItem="FontFamilyListFields" ValueChange="@OnFontFamilyChange"></DropDownListEvents>
+            </SfDropDownList>
+        </div>
+        <div class="col-xs-4 db-col-right">
+            <SfNumericTextBox ID="MindmapFontSize" Min="1" Step="1" @bind-Value="@TextFontSize">
+                <NumericTextBoxEvents TValue="double" ValueChange="@OnTextFontSizeChanged"></NumericTextBoxEvents>
+            </SfNumericTextBox>
+        </div>
+    </div>
+    <div class="row db-prop-row" style="padding-top: 5px; display: flex; align-items: center;">
+        <div class="col-xs-6 db-col-left">
+            <SfToolbar ID="MindmapTextStyleToolbar" OverflowMode="@OverflowMode.Scrollable">
+                <ToolbarEvents Clicked="@OnTextStyleClick"></ToolbarEvents>
+                <ToolbarItems>
+                    <ToolbarItem PrefixIcon="e-icons sf-icon-Bold tb-icons" TooltipText="Bold" CssClass="@BoldCss"></ToolbarItem>
+                    <ToolbarItem PrefixIcon="e-icons sf-icon-Italic tb-icons" TooltipText="Italic" CssClass="@ItalicCss"></ToolbarItem>
+                    <ToolbarItem PrefixIcon="e-icons sf-icon-Underline tb-icons" TooltipText="Underline" CssClass="@UnderlineCss"></ToolbarItem>
+                </ToolbarItems>
+            </SfToolbar>
+        </div>
+        <div class="col-xs-6 db-col-right" id="textColorDiv" style="padding-left: 10px;">
+            <SfColorPicker ID="mindmapTextColor" @bind-Value="@TextColor" Mode="ColorPickerMode.Palette" ValueChange="@OnTextColorChange"></SfColorPicker>
+        </div>
+    </div>
+    <div class="row db-prop-row">
+        <div class="col-xs-2 db-col-right db-prop-text-style" style="margin-right: 15px;padding-top: 6px">
+            <span class="db-prop-text-style">Opacity</span>
+        </div>
+        <div class="col-xs-8 db-col-left" style="padding-right:10px">
+            <SfSlider ID="mindmapTextOpacitySlider" @ref="SfSlide1" Type="SliderType.MinRange" @bind-Value="@TextOpacity" Min="0" Max="100" Step="10">
+                <SliderEvents TValue="double" OnChange="@(e => { OnTextOpacityChange(e.Value); })"></SliderEvents>
+            </SfSlider>
+        </div>
+        <div class="col-xs-2 db-col-right" style="margin-left: -15px;padding-left: 8px">
+            <input type="text" id="textNodeOpacityText" value="@TextOpacity" class="db-readonly-input" readOnly="readonly" />
+        </div>
+    </div>
+    <div class="db-prop-separator">
+    </div>
+    <div class="row db-prop-row">
+        <div class="col-xs-8 db-col-right db-prop-text-style" style="padding-top: 14px;">
+            <span class="db-prop-text-style">Horizontal Spacing</span>
+        </div>
+        <div class="col-xs-4 db-col-left" style="padding-top: 10px">
+            <SfNumericTextBox TValue="int?" Width="100%" @bind-Value="@horizontalValue" Min="20" Step="2" Format="###.##">
+                <NumericTextBoxEvents TValue="int?" ValueChange="OnHorizontalSpaceChange"></NumericTextBoxEvents>
+            </SfNumericTextBox>
+        </div>
+    </div>
+    <div class="row db-prop-row">
+        <div class="col-xs-8 db-col-right db-prop-text-style" style="padding-top: 14px;">
+            <span class="db-prop-text-style">Vertical Spacing</span>
+        </div>
+        <div class="col-xs-4 db-col-left" style="padding-top: 10px;">
+            <SfNumericTextBox TValue="int?" Width="100%" @bind-Value="@verticalValue" Min="20" Step="2" Format="###.##">
+                <NumericTextBoxEvents TValue="int?" ValueChange="OnVerticalSpaceChange"></NumericTextBoxEvents>
+            </SfNumericTextBox>
+        </div>
+    </div>
+     @*<div class="row db-prop-row">
+            <div class="col-xs-8 db-col-left" style="margin-top:5px">
+            <SfCheckBox Label="Expandable" @bind-Checked="@OnExpandable" @onchange="@OnExpandableChange"></SfCheckBox>
+            </div>
+        </div>*@
+</div>
+<div id='multipleChild' class="db-mindmap-prop-container" style="display:@MultipleChildContainerVisibility">
+    <div class="row db-prop-header-text" value=@PatternValue>
+        Add Multiple Child
+    </div>
+    <div class="col-xs-12 db-col-right db-prop-text-style" style="padding-top: 10px">
+        Please enter one by one
+    </div>
+    <div class="row db-prop-row" style="padding-top: 10px">
+        <SfTextBox @ref="textBox" Height="350px" Enabled="@CheckDisabled" ValueChanged="@ValueChangedHandler" FloatLabelType="@FloatLabel" Multiline="true" CssClass="e-corner" style="border: 1px solid black; height:270px; background:white;"></SfTextBox>
+        <div id='ChildAdd' class="row db-prop-row">
+            <div class="col-xs-6 db-col-left" style="float:left">
+                <SfButton CssClass="e-outline" @onclick="Cancel">Cancel</SfButton>
+            </div>
+            <div class="col-xs-6 db-col-right" style="float:right">
+                <SfButton IsPrimary="true" CssClass="e-outline" @onclick="AddChild">Add</SfButton>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .e-input-group.e-corner {
+        border-radius: 4px;
+    }
+</style>
+
+
+@code {
+    internal DiagramMain Parent;
+
+    public string MindMapPropertyVisibility { get; set; } = "none";
+
+    public string MultipleChildContainerVisibility { get; set; } = "none";
+
+    public bool MindMapProperty = false;
+    private bool OnExpandable = false; 
+
+    private string StrokeDashArrayValue { get; set; } = "";
+
+    private int StrokeStyleValue { get; set; } = 0;
+
+    public bool IsMindMap = false;
+
+    private string PatternValue = "None";
+
+    private string TemplateType = "Template1";
+
+    private string[] fillColorCode = { "#C4F2E8", "#F7E0B3", "#E5FEE4", "#E9D4F1", "#D4EFED", "#DEE2FF" };
+
+    private string[] borderColorCode = { "#8BC1B7", "#E2C180", "#ACCBAA", "#D1AFDF", "#90C8C2", "#BBBFD6" };
+
+    private DiagramObjectCollection<NodeBase> PasteData = new DiagramObjectCollection<NodeBase>();
+
+    private bool IsCopyLayoutElement = false;
+
+    public Node PastedFirstItem = null;
+
+    private int lastFillIndex = 0;
+
+    SfSlider<double> SfSlide;
+
+    SfSlider<double> SfSlide1;
+
+    SfTextBox textBox;
+
+    public string[] Children;
+
+    int? horizontalValue = 100;
+
+    int? verticalValue = 50;
+
+    public bool BezierChecked { get; set; } = true;
+
+    public bool PatternChange = false;
+    public ConnectorSegmentType connectorType = ConnectorSegmentType.Bezier;
+
+    public string LevelType = "Level0";
+
+    public FloatLabelType FloatLabel { get; set; } = FloatLabelType.Auto;
+
+    private bool CheckDisabled { get; set; } = true;
+
+
+    // Mind Map Levels
+    #region
+
+    public string MindMapLevelValue { get; set; }
+
+    public class DefaultDropDownField
+    {
+        public string Value { get; set; }
+        public string Text { get; set; }
+    }
+    public List<DefaultDropDownField> MindMapLevels = new List<DefaultDropDownField>()
+    {
+        new DefaultDropDownField(){ Text= "Root", Value= "Level0" },
+        new DefaultDropDownField(){ Text= "Level1", Value= "Level1" },
+        new DefaultDropDownField(){ Text= "Level2", Value="Level2" },
+        new DefaultDropDownField(){ Text= "Level3", Value="Level3" },
+        new DefaultDropDownField(){ Text= "Level4", Value="Level4" },
+        new DefaultDropDownField(){ Text= "Level5", Value="Level5" },
+        new DefaultDropDownField(){ Text= "Selected Item", Value="Selected Item" }
+    };
+    #endregion
+
+    //Node Shapes
+    #region
+    public string MindMapShapeValue { get; set; }
+
+    public class MindMapShapes
+    {
+        public string Value { get; set; }
+        public string Text { get; set; }
+    }
+    public List<MindMapShapes> MindMapShapesDataSource = new List<MindMapShapes>()
+    {
+        new MindMapShapes(){ Text= "Rectangle", Value= "Rectangle" },
+        new MindMapShapes(){ Text= "Ellipse", Value= "Ellipse" },
+        new MindMapShapes(){ Text= "Star", Value="Star" },
+        new MindMapShapes(){ Text= "Cloud", Value="Cloud" },
+        new MindMapShapes(){ Text= "Free hand", Value="Free hand" },
+    };
+    #endregion
+
+    // Node Properties
+    #region
+    public string FillColorValue { get; set; }
+    public string StrokeColorValue { get; set; }
+    public double MindMapStrokeWidth { get; set; }
+    public double MindMapOpacity { get; set; }
+
+    public class BorderStylesFields
+    {
+        public string Value { get; set; }
+        public string Text { get; set; }
+        public string ClassName { get; set; }
+    }
+
+    public List<BorderStylesFields> BorderStyles = new List<BorderStylesFields>()
+    {
+        new BorderStylesFields() { Text= "None", Value="", ClassName="ddl-svg-style ddl_linestyle_none" },
+        new BorderStylesFields() { Text= "1,2", Value="1,2", ClassName="ddl-svg-style ddl_linestyle_one_two" },
+        new BorderStylesFields() { Text= "3,3", Value="3,3", ClassName="ddl-svg-style ddl_linestyle_three_three" },
+        new BorderStylesFields() { Text= "5,3", Value="5,3", ClassName="ddl-svg-style ddl_linestyle_five_three" },
+        new BorderStylesFields() { Text= "4,4,1", Value="4,4,1", ClassName="ddl-svg-style ddl_linestyle_four_four_one" }
+    };
+    #endregion
+
+
+    // Text Properties
+    #region
+
+    public string BoldCss = "tb-item-start";
+    public string ItalicCss = "tb-item-middle";
+    public string UnderlineCss = "tb-item-end";
+
+    public string TextFontFamily { get; set; }
+    public string TextColor { get; set; }
+    public double TextFontSize { get; set; }
+    public double TextOpacity { get; set; }
+
+    public class FontFamilyListFields
+    {
+        public string Value { get; set; }
+        public string Text { get; set; }
+    }
+
+    public List<FontFamilyListFields> FontFamilyList = new List<FontFamilyListFields>()
+    {
+        new FontFamilyListFields(){ Text= "Arial", Value= "Arial", },
+        new FontFamilyListFields(){ Text= "Aharoni", Value= "Aharoni" },
+        new FontFamilyListFields(){ Text= "Bell MT", Value="Bell MT" },
+        new FontFamilyListFields(){ Text= "Fantasy", Value= "Fantasy" },
+        new FontFamilyListFields(){ Text= "Times New Roman", Value= "Times New Roman" },
+        new FontFamilyListFields(){ Text= "Segoe UI", Value="Segoe UI" },
+        new FontFamilyListFields(){ Text= "Verdana", Value= "Verdana" }
+    };
+
+
+    #endregion
+
+    public bool PreventPropertyChange { get; set; } = false;
+    public string MindMapLevel;
+    //To bind mindmap properties at initial rendering and selection 
+    public async Task bindMindMapProperties(Node node=null)
+    {
+        SfDiagramComponent Diagram = Parent.DiagramContent.Diagram;        
+        IsMindMap = true;
+        if(node == null)
+        {
+            if (Diagram.SelectionSettings.Nodes.Count > 0)
+                node = Diagram.GetObject(Diagram.SelectionSettings.Nodes[0].ID) as Node;
+            else if (MindMapLevel != null)
+                node = GetNodeForPropertyChange();
+            else
+                node = Diagram.Nodes[0] as Node;
+        }
+        var obj = System.Text.Json.JsonSerializer.Serialize(node.AdditionalInfo);
+        DiagramMainContent.NodeAddInfo NodeInfo = JsonConvert.DeserializeObject<DiagramMainContent.NodeAddInfo>(obj);
+        if(LevelType != "Selected Item")
+        {
+            MindMapLevelValue = "Level" + NodeInfo.Level;
+            MindMapLevel = "Level" + NodeInfo.Level;
+        };      
+        FillColorValue = node.Style.Fill;
+        MindMapStrokeWidth = node.Style.StrokeWidth;
+        StrokeColorValue = node.Style.StrokeColor;
+        StrokeDashArrayValue = node.Style.StrokeDashArray;
+        UpdateStrokeStyleValue(StrokeDashArrayValue);
+        MindMapOpacity = node.Style.Opacity * 100;
+        MindMapShapeValue = bindShapeProperty(node);
+        // To bind the connector type
+        BezierChecked = (Parent.OpenDialog.TemplateType == "Template4") ? false : true;
+        //To update the annotation style and toolbar customization
+        if (node.Annotations.Count > 0)
+        {
+            TextStyle Style = node.Annotations[0].Style;
+            TextFontFamily = Style.FontFamily;
+            TextFontSize = Style.FontSize;
+            if (!Style.Color.Contains("#"))
+            {
+                int ColorValue = Color.FromName(Style.Color).ToArgb();
+                string ColorHex = string.Format("{0:x6}", ColorValue);
+                TextColor = "#" + ColorHex.Substring(2);
+            }
+            else
+            {
+                TextColor = Style.Color;
+            }
+            TextOpacity = Style.Opacity * 100;
+
+            BoldCss = (Style.Bold) ? BoldCss + " tb-item-selected" : BoldCss.Replace(" tb-item-selected", "");
+            ItalicCss = (Style.Italic) ? ItalicCss + " tb-item-selected" : ItalicCss.Replace(" tb-item-selected", "");
+            UnderlineCss = (Style.TextDecoration == TextDecoration.Underline) ? UnderlineCss + " tb-item-selected" : UnderlineCss.Replace(" tb-item-selected", "");
+        }
+        StateHasChanged();
+    }
+
+    //To update selected Node's shape
+    private string bindShapeProperty(Node node)
+    {
+        if(node.Shape.Type == NodeShapes.Basic)
+        {
+            if((node.Shape as BasicShape).Shape == NodeBasicShapes.Ellipse)
+                return "Ellipse";
+            else
+                return "Rectangle";
+        }
+        else if(node.Shape.Type == NodeShapes.Path)
+        {
+            if ((node.Shape as PathShape).Data == "M28 1.60745L32.6757 7.49196L33.1063 8.03386L33.7651 7.82174L43.5571 4.66902L41.3666 9.9757L40.8265 11.2839L42.24 11.356L52.0141 11.8539L45.233 15.0979L43.3473 16L45.233 16.9021L52.0141 20.1461L42.24 20.644L40.8265 20.716L41.3666 22.0243L43.5571 27.331L33.7651 24.1783L33.1063 23.9661L32.6757 24.508L28 30.3926L23.3243 24.508L22.8937 23.9661L22.2349 24.1783L12.4429 27.331L14.6334 22.0243L15.1734 20.7161L13.7599 20.644L3.98585 20.1461L10.767 16.9021L12.6527 16L10.767 15.0979L3.98585 11.8539L13.7599 11.356L15.1734 11.2839L14.6334 9.9757L12.4429 4.66902L22.2349 7.82174L22.8937 8.03386L23.3243 7.49196L28 1.60745Z")
+                return "Star";
+            else if ((node.Shape as PathShape).Data == "M55.7315 17.239C57.8719 21.76 54.6613 27.788 47.1698 26.0787C46.0997 32.309 33.2572 35.323 28.9764 29.2951C25.7658 35.323 10.7829 33.816 10.7829 26.0787C3.29143 30.802 -0.989391 20.253 2.22121 17.239C-0.989317 14.2249 2.22121 6.68993 10.7829 8.39934C13.9935 -0.845086 25.7658 -0.845086 28.9764 5.18301C32.187 0.661909 45.0294 0.661908 47.1698 8.39934C52.5209 5.18301 60.0123 12.7179 55.7315 17.239Z")
+                return "Cloud";
+            else
+                return "Free hand";
+        }
+        else
+            return "Rectangle";
+    }
+    // MindMap pattern changing
+    #region
+    public async Task MindmapPattern1Change()
+    {
+        await MindmapPatternChange("pattern1");
+        PatternValue = "pattern1";
+        PatternChange = true;
+        Parent.OpenDialog.TemplateType = "Template1";
+        bindMindMapProperties(GetNodeForPropertyChange());
+    }
+    public async Task MindmapPattern2Change()
+    {
+        await MindmapPatternChange("pattern2");
+        PatternValue = "pattern2";
+        PatternChange = true;
+        Parent.OpenDialog.TemplateType = "Template1";
+        bindMindMapProperties(GetNodeForPropertyChange());
+    }
+    public async Task MindmapPattern3Change()
+    {
+        Parent.DiagramContent.Diagram.BeginUpdate();
+        await MindmapPatternChange("pattern3");
+        await Parent.DiagramContent.Diagram.EndUpdate();
+        PatternValue = "pattern3";
+        PatternChange = true;
+        Parent.OpenDialog.TemplateType = "Template2";
+        bindMindMapProperties(GetNodeForPropertyChange());
+    }
+    public async Task MindmapPattern4Change()
+    {
+        await MindmapPatternChange("pattern4");
+        PatternValue = "pattern4";
+        PatternChange = true;
+        Parent.OpenDialog.TemplateType = "Template3";
+        bindMindMapProperties(GetNodeForPropertyChange());
+    }
+    //To update Node's shape and connector type based on the pattern selected
+    public async Task MindmapPatternChange(string type)
+    {
+        connectorType = (type == "pattern2") ? ConnectorSegmentType.Orthogonal : ConnectorSegmentType.Bezier;
+        Node node; Connector connector;        
+        SfDiagramComponent Diagram = Parent.DiagramContent.Diagram;
+        Diagram.StartGroupAction();
+        for (int i = 0; i < Diagram.Nodes.Count; i++)
+        {
+            node = Diagram.GetObject(Diagram.Nodes[i].ID) as Node;
+            if (type == "pattern1")
+            {
+                if (node.ID == "rootNode")
+                {
+                    node.Height = 50;
+                    node.Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Ellipse };
+                }
+                else
+                {
+                    node.Height = 30;
+                    node.Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle };
+                }
+            }
+            else if (type == "pattern2")
+            {
+                if (node.ID == "rootNode")
+                {
+                    node.Height = 50;
+                    node.Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle, CornerRadius = 5 };
+                }
+                else
+                {
+                    node.Height = 30;
+                    node.Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle };
+                }
+            }
+            else if (type == "pattern3")
+            {
+                if (node.ID == "rootNode")
+                {
+                    node.Height = 50;
+                    node.Shape = new PathShape() { Type = NodeShapes.Path, Data = "M55.7315 17.239C57.8719 21.76 54.6613 27.788 47.1698 26.0787C46.0997 32.309 33.2572 35.323 28.9764 29.2951C25.7658 35.323 10.7829 33.816 10.7829 26.0787C3.29143 30.802 -0.989391 20.253 2.22121 17.239C-0.989317 14.2249 2.22121 6.68993 10.7829 8.39934C13.9935 -0.845086 25.7658 -0.845086 28.9764 5.18301C32.187 0.661909 45.0294 0.661908 47.1698 8.39934C52.5209 5.18301 60.0123 12.7179 55.7315 17.239Z" };
+                }
+                else if (Convert.ToString(node.AdditionalInfo["Level"]) == "1")
+                {
+                    node.Height = 30;
+                    node.Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Ellipse };
+                }
+                else if (Convert.ToString(node.AdditionalInfo["Level"]) == "2")
+                {
+                    node.Height = 30;
+                    node.Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle };
+                }
+                else if (Convert.ToString(node.AdditionalInfo["Level"]) == "3")
+                {
+                    node.Height = 30;
+                    node.Shape = new PathShape() { Type = NodeShapes.Path, Data = "M24.9123 3.78029C25.0975 4.3866 24.9466 4.88753 24.8501 5.15598L24.8444 5.17188L24.8379 5.18757C24.543 5.89091 23.7879 6.37572 22.9737 6.71397C22.1386 7.06093 21.0847 7.3197 19.9302 7.51132C17.6145 7.89568 14.7099 8.03929 11.8845 7.99097C9.05877 7.94266 6.24887 7.70127 4.11982 7.29202C3.06318 7.08891 2.11594 6.83369 1.41022 6.51281C0.766274 6.22 0 5.72087 0 4.9469C0 4.01004 0.964525 3.41277 1.79867 3.05724C2.70576 2.67063 3.89493 2.37901 5.11258 2.15935C7.44304 1.73893 10.1147 1.54134 11.7304 1.52346C11.8769 1.52184 12.0122 1.59735 12.0902 1.72133V1.72133C12.2554 1.98406 12.0895 2.33011 11.7819 2.37125C6.76467 3.04222 7.47107 3.02672 5.26455 3.42478C4.10916 3.63321 3.07622 3.89464 2.39298 4.18584C1.76916 4.45172 1.91438 4.9469 1.92108 4.92166C1.95272 4.95811 2.05541 5.05272 2.36059 5.19149C2.83828 5.4087 3.58481 5.6232 4.56968 5.81251C6.52366 6.18811 9.1877 6.42238 11.9256 6.4692C14.6639 6.51602 17.4127 6.37423 19.539 6.02131C20.6055 5.8443 21.4697 5.62145 22.0872 5.36491C22.7085 5.10676 22.9449 4.87196 23.0162 4.71867C23.0759 4.54803 23.1185 4.35742 23.052 4.13951C22.9867 3.92586 22.7842 3.58431 22.1006 3.17831C20.6845 2.3372 17.4158 1.34558 10.1686 0.773902C10.0395 0.763721 9.92243 0.68718 9.86361 0.571853V0.571853C9.7338 0.317364 9.92861 0.0177825 10.2139 0.0325302C17.4619 0.407187 21.4191 0.873597 23.2463 1.95885C24.2179 2.53589 24.7233 3.16153 24.9123 3.78029Z" };
+                }
+                else
+                    node.Height = 4;
+            }
+            else
+            {
+                if (node.ID == "rootNode")
+                {
+                    node.Height = 50;
+                    node.Shape = new PathShape() { Type = NodeShapes.Path, Data = "M28 1.60745L32.6757 7.49196L33.1063 8.03386L33.7651 7.82174L43.5571 4.66902L41.3666 9.9757L40.8265 11.2839L42.24 11.356L52.0141 11.8539L45.233 15.0979L43.3473 16L45.233 16.9021L52.0141 20.1461L42.24 20.644L40.8265 20.716L41.3666 22.0243L43.5571 27.331L33.7651 24.1783L33.1063 23.9661L32.6757 24.508L28 30.3926L23.3243 24.508L22.8937 23.9661L22.2349 24.1783L12.4429 27.331L14.6334 22.0243L15.1734 20.7161L13.7599 20.644L3.98585 20.1461L10.767 16.9021L12.6527 16L10.767 15.0979L3.98585 11.8539L13.7599 11.356L15.1734 11.2839L14.6334 9.9757L12.4429 4.66902L22.2349 7.82174L22.8937 8.03386L23.3243 7.49196L28 1.60745Z" };
+                }
+                else if (Convert.ToString(node.AdditionalInfo["Level"]) == "1")
+                {
+                    node.Height = 30;
+                    node.Shape = new PathShape() { Type = NodeShapes.Path, Data = "M55.7315 17.239C57.8719 21.76 54.6613 27.788 47.1698 26.0787C46.0997 32.309 33.2572 35.323 28.9764 29.2951C25.7658 35.323 10.7829 33.816 10.7829 26.0787C3.29143 30.802 -0.989391 20.253 2.22121 17.239C-0.989317 14.2249 2.22121 6.68993 10.7829 8.39934C13.9935 -0.845086 25.7658 -0.845086 28.9764 5.18301C32.187 0.661909 45.0294 0.661908 47.1698 8.39934C52.5209 5.18301 60.0123 12.7179 55.7315 17.239Z" };
+                }
+                else if (Convert.ToString(node.AdditionalInfo["Level"]) == "2")
+                {
+                    node.Height = 30;
+                    node.Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle };
+                }
+                else if (Convert.ToString(node.AdditionalInfo["Level"]) == "3")
+                {
+                    node.Height = 30;
+                    node.Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Ellipse };
+                }
+                else
+                    node.Height = 3;
+            }
+        }
+        for (var i = 0; i < Diagram.Connectors.Count; i++)
+        {
+            connector = Diagram.GetObject(Diagram.Connectors[i].ID) as Connector;
+            switch (type)
+            {
+                case "pattern1":
+                    connector.Type = ConnectorSegmentType.Bezier;
+                    TemplateType = "Template1";
+                    break;
+                case "pattern2":
+                    connector.Type = ConnectorSegmentType.Orthogonal;
+                    TemplateType = "Template4";
+                    break;
+                case "pattern3":
+                    connector.Type = ConnectorSegmentType.Bezier;
+                    TemplateType = "Template2";
+                    break;
+                case "pattern4":
+                    connector.Type = ConnectorSegmentType.Bezier;
+                    TemplateType = "Template3";
+                    break;
+            }
+        }
+        Diagram.EndGroupAction();
+        await Diagram.DoLayout();
+    }
+    #endregion
+
+    // Connector type changing
+    #region
+    public async Task OnBezierChange(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+    {
+        await OnUpdateConnectorType("Bezier", args.Value.ToString());
+        PatternChange = false;
+        connectorType = ConnectorSegmentType.Bezier;
+    }
+
+    public async Task OnStraightChange(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+    {
+        await OnUpdateConnectorType("Straight", args.Value.ToString());
+        PatternChange = false;
+        connectorType = ConnectorSegmentType.Straight;
+    }
+    public async Task OnUpdateConnectorType(string prop, string value)
+    {
+        SfDiagramComponent Diagram = Parent.DiagramContent.Diagram;
+        Diagram.BeginUpdate();
+        Diagram.StartGroupAction();
+        if (!PreventPropertyChange)
+        {
+            switch (prop)
+            {
+                case "Bezier":
+                    for (int i = 0; i < Parent.DiagramContent.Diagram.Connectors.Count; i++)
+                    {
+                        Connector connector = Parent.DiagramContent.Diagram.Connectors[i];
+                        connector.Type = ConnectorSegmentType.Bezier;
+                    }
+                    break;
+                case "Straight":
+                    for (int j = 0; j < Parent.DiagramContent.Diagram.Connectors.Count; j++)
+                    {
+                        Connector connector = Parent.DiagramContent.Diagram.Connectors[j];
+                        connector.Type = ConnectorSegmentType.Straight;
+                    }
+                    break;
+            }
+        }
+        Diagram.EndGroupAction();
+        await Diagram.EndUpdate();
+    }
+    #endregion
+
+    // To Update Mindmap properties
+    #region
+    public void OnMindMapLevelChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, DefaultDropDownField> args)
+    {
+        MindMapLevel = args.Value;
+        LevelType = args.Value;
+        bool PreventBindingPropertyChange = false;
+        if (Parent.DiagramContent.Diagram.SelectionSettings.Nodes.Count > 0)
+        {
+            var node = Parent.DiagramContent.Diagram.SelectionSettings.Nodes[0];
+            if (node.AdditionalInfo != null && node.AdditionalInfo.Count > 0)
+            {
+                var obj = System.Text.Json.JsonSerializer.Serialize(node.AdditionalInfo);
+                DiagramMainContent.NodeAddInfo NodeInfo = JsonConvert.DeserializeObject<DiagramMainContent.NodeAddInfo>(obj);
+                if ("Level" + NodeInfo.Level.ToString() == MindMapLevel || NodeInfo.Level.ToString() == MindMapLevel)
+                {
+                    PreventBindingPropertyChange = true;    
+                }
+            }
+        }
+        if (!PreventBindingPropertyChange)
+            bindMindMapProperties(GetNodeForPropertyChange());
+    }
+    private Node GetNodeForPropertyChange(string levelType = null)
+    {
+        ObservableCollection<Node> Nodes = null;
+        if (levelType == null)
+        {
+            Nodes = LevelType == "Selected Item" ? Parent.DiagramContent.Diagram.SelectionSettings.Nodes : Parent.DiagramContent.Diagram.Nodes;
+        }
+        else
+            Nodes = Parent.DiagramContent.Diagram.Nodes;
+        if (Nodes.Count > 0)
+        {
+            Node node;
+            for (int i = 0; i < Nodes.Count; i++)
+            {
+                node = Parent.DiagramContent.Diagram.GetObject(Nodes[i].ID) as Node;
+                if (node.AdditionalInfo != null && node.AdditionalInfo.Count > 0)
+                {
+                    var obj = System.Text.Json.JsonSerializer.Serialize(node.AdditionalInfo);
+                    DiagramMainContent.NodeAddInfo NodeInfo = JsonConvert.DeserializeObject<DiagramMainContent.NodeAddInfo>(obj);
+                    if(levelType != null)
+                    {
+                        if("Level" + NodeInfo.Level.ToString() == levelType || NodeInfo.Level.ToString() == levelType)
+                        {
+                            return node;
+                        }
+                    }
+                    else if ("Level" + NodeInfo.Level.ToString() == MindMapLevel || NodeInfo.Level.ToString() == MindMapLevel || LevelType == "Selected Item")
+                    {
+                        return node;
+                    }
+                }
+            }
+        }
+        return Parent.DiagramContent.Diagram.Nodes[0];
+    }
+    public void OnMindMapShapeChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, MindMapShapes> args)
+    {
+        if (args.IsInteracted)
+        {
+            MindMapShapeValue = args.Value;
+            UpdateMindMapProperties("Shape", args.Value);
+            PatternChange = false;
+        }
+    }
+
+    public void OnFillColorChange(ColorPickerEventArgs args)
+    {
+        UpdateMindMapProperties("Fill", (args.CurrentValue).Hex);
+    }
+
+    public void OnStrokeColorChange(ColorPickerEventArgs args)
+    {
+        UpdateMindMapProperties("StrokeColor", (args.CurrentValue).Hex);
+    }
+
+    public void OnStrokeDashArrayChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, BorderStylesFields> args)
+    {
+        UpdateMindMapProperties("StrokeDashArray", args.Value == "None" ? "" : args.Value);
+    }
+
+    public void OnMindMapOpacityChange(double Value)
+    {
+        UpdateMindMapProperties("Opacity", (Value / 100).ToString());
+    }
+
+    public void OnStrokeWidthChange(Syncfusion.Blazor.Inputs.ChangeEventArgs<double> args)
+    {
+        UpdateMindMapProperties("StrokeWidth", args.Value.ToString());
+    }
+
+    public void OnFontFamilyChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, FontFamilyListFields> args)
+    {
+        UpdateMindMapProperties("FontFamily", args.Value);
+    }
+
+    public void OnTextFontSizeChanged(Syncfusion.Blazor.Inputs.ChangeEventArgs<double> args)
+    {
+        UpdateMindMapProperties("FontSize", args.Value.ToString());
+    }
+
+    public void OnTextPositionChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string> args)
+    {
+        UpdateMindMapProperties("TextPosition", args.Value);
+    }
+
+    public void OnTextColorChange(ColorPickerEventArgs args)
+    {
+        UpdateMindMapProperties("FontColor", (args.CurrentValue).Hex);
+    }
+
+    public void OnTextOpacityChange(double Value)
+    {
+        UpdateMindMapProperties("TextOpacity", (Value / 100).ToString());
+    }
+    private async Task OnHorizontalSpaceChange(Syncfusion.Blazor.Inputs.ChangeEventArgs<int?> args)
+    {
+        horizontalValue = (int)args.Value;
+        await Parent.DiagramContent.UpdateSpacing((int)horizontalValue, "Horizontal");
+    }
+    private async Task OnVerticalSpaceChange(Syncfusion.Blazor.Inputs.ChangeEventArgs<int?> args)
+    {
+        verticalValue = (int)args.Value;
+        await Parent.DiagramContent.UpdateSpacing((int)verticalValue, "Vertical");
+    }
+
+    //To Update Text style
+    private void OnTextStyleClick(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+    {
+        string commandType = args.Item.TooltipText;
+
+        switch (commandType)
+        {
+            case "Bold":
+                BoldCss = (!BoldCss.Contains(" tb-item-selected")) ? BoldCss + " tb-item-selected" : BoldCss.Replace(" tb-item-selected", "");
+                break;
+            case "Italic":
+                ItalicCss = (!ItalicCss.Contains(" tb-item-selected")) ? ItalicCss + " tb-item-selected" : ItalicCss.Replace(" tb-item-selected", "");
+                break;
+            case "Underline":
+                UnderlineCss = (!UnderlineCss.Contains(" tb-item-selected")) ? UnderlineCss + " tb-item-selected" : UnderlineCss.Replace(" tb-item-selected", "");
+                break;
+        }
+        UpdateMindMapProperties(commandType, "true");
+        StateHasChanged();
+    }
+
+    //To update stroke style
+    private void UpdateStrokeStyleValue(string strokeVal)
+    {
+        switch (strokeVal)
+        {
+            case "1,2":
+                StrokeDashArrayValue = "1,2";
+                StrokeStyleValue = 1;
+                break;
+            case "3,3":
+                StrokeDashArrayValue = "3,3";
+                StrokeStyleValue = 2;
+                break;
+            case "5,3":
+                StrokeDashArrayValue = "5,3";
+                StrokeStyleValue = 3;
+                break;
+            case "4,4,1":
+                StrokeDashArrayValue = "4,4,1";
+                StrokeStyleValue = 4;
+                break;
+            default:
+                StrokeDashArrayValue = "";
+                StrokeStyleValue = 0;
+                break;
+        }
+    }
+
+    //To Update mindmap properties
+    public void UpdateMindMapProperties(string prop, string Value)
+    {
+        if (!PreventPropertyChange)
+        {
+            ObservableCollection<Node> Nodes = LevelType == "Selected Item" ? Parent.DiagramContent.Diagram.SelectionSettings.Nodes: Parent.DiagramContent.Diagram.Nodes;
+            if (Nodes.Count > 0)
+            {
+                if (Value != null)
+                {
+                    Parent.DiagramContent.Diagram.StartGroupAction();
+                    Node node;
+                    for (int i = 0; i < Nodes.Count; i++)
+                    {
+                        node = Parent.DiagramContent.Diagram.GetObject(Nodes[i].ID) as Node;
+                        if (node.AdditionalInfo != null && node.AdditionalInfo.Count > 0)
+                        {
+                            var obj = System.Text.Json.JsonSerializer.Serialize(node.AdditionalInfo);
+                            DiagramMainContent.NodeAddInfo NodeInfo = JsonConvert.DeserializeObject<DiagramMainContent.NodeAddInfo>(obj);
+
+                            if ("Level" + NodeInfo.Level.ToString() == MindMapLevel || NodeInfo.Level.ToString() == MindMapLevel || LevelType == "Selected Item")
+                            {
+                                switch (prop)
+                                {
+                                    case "Fill":
+                                        node.Style.Fill = Value;
+                                        break;
+                                    case "StrokeColor":
+                                        node.Style.StrokeColor = Value;
+                                        List<string> Connectors = node.InEdges;
+                                        OnUpdateConnectorProperties(Connectors, Value, "StrokeColor");
+                                        break;
+                                    case "StrokeDashArray":
+                                        node.Style.StrokeDashArray = Value;
+                                        UpdateStrokeStyleValue(Value);
+                                        List<string> InEdges = node.InEdges;
+                                        OnUpdateConnectorProperties(InEdges, Value, "StrokeDashArray");
+                                        break;
+                                    case "StrokeWidth":
+                                        node.Style.StrokeWidth = Double.Parse(Value);
+                                        break;
+                                    case "Opacity":
+                                        node.Style.Opacity = Double.Parse(Value);
+                                        break;
+                                    case "Shape":
+                                        UpdateShape(Value, node);
+                                        break;
+                                }
+                                if (node.Annotations.Count > 0)
+                                {
+                                    ShapeAnnotation Annotation = node.Annotations[0];
+                                    switch (prop)
+                                    {
+                                        case "FontFamily":
+                                            Annotation.Style.FontFamily = Value;
+                                            break;
+                                        case "FontSize":
+                                            Annotation.Style.FontSize = Int32.Parse(Value);
+                                            break;
+                                        case "FontColor":
+                                            Annotation.Style.Color = Value;
+                                            break;
+                                        case "TextOpacity":
+                                            Annotation.Style.Opacity = Double.Parse(Value);
+                                            break;
+                                        case "Bold":
+                                            Annotation.Style.Bold = !Annotation.Style.Bold;
+                                            break;
+                                        case "Italic":
+                                            Annotation.Style.Italic = !Annotation.Style.Italic;
+                                            break;
+                                        case "Underline":
+                                            Annotation.Style.TextDecoration = (Annotation.Style.TextDecoration == TextDecoration.Underline) ? TextDecoration.None : TextDecoration.Underline;
+                                            break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (prop != "Opacity")
+                    {
+                        slider();
+                        sliderText();
+                    }
+                    Parent.DiagramContent.Diagram.EndGroupAction();
+                }
+            }
+        }
+    }
+
+    //To Update Node's shape
+    private void UpdateShape(string Value, Node Element)
+    {
+        if (Value == "Rectangle")
+        {
+            Element.Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle };
+            (Element.Shape as BasicShape).CornerRadius = Element.ID == "rootNode" ? 5 : 0;
+        }  
+        else if (Value == "Ellipse")
+            Element.Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Ellipse };
+        else if (Value == "Star")
+            Element.Shape = new PathShape() { Type = NodeShapes.Path, Data = "M28 1.60745L32.6757 7.49196L33.1063 8.03386L33.7651 7.82174L43.5571 4.66902L41.3666 9.9757L40.8265 11.2839L42.24 11.356L52.0141 11.8539L45.233 15.0979L43.3473 16L45.233 16.9021L52.0141 20.1461L42.24 20.644L40.8265 20.716L41.3666 22.0243L43.5571 27.331L33.7651 24.1783L33.1063 23.9661L32.6757 24.508L28 30.3926L23.3243 24.508L22.8937 23.9661L22.2349 24.1783L12.4429 27.331L14.6334 22.0243L15.1734 20.7161L13.7599 20.644L3.98585 20.1461L10.767 16.9021L12.6527 16L10.767 15.0979L3.98585 11.8539L13.7599 11.356L15.1734 11.2839L14.6334 9.9757L12.4429 4.66902L22.2349 7.82174L22.8937 8.03386L23.3243 7.49196L28 1.60745Z" };
+        else if (Value == "Cloud")
+            Element.Shape = new PathShape() { Type = NodeShapes.Path, Data = "M55.7315 17.239C57.8719 21.76 54.6613 27.788 47.1698 26.0787C46.0997 32.309 33.2572 35.323 28.9764 29.2951C25.7658 35.323 10.7829 33.816 10.7829 26.0787C3.29143 30.802 -0.989391 20.253 2.22121 17.239C-0.989317 14.2249 2.22121 6.68993 10.7829 8.39934C13.9935 -0.845086 25.7658 -0.845086 28.9764 5.18301C32.187 0.661909 45.0294 0.661908 47.1698 8.39934C52.5209 5.18301 60.0123 12.7179 55.7315 17.239Z" };
+        else
+            Element.Shape = new PathShape() { Type = NodeShapes.Path, Data = "M24.9123 3.78029C25.0975 4.3866 24.9466 4.88753 24.8501 5.15598L24.8444 5.17188L24.8379 5.18757C24.543 5.89091 23.7879 6.37572 22.9737 6.71397C22.1386 7.06093 21.0847 7.3197 19.9302 7.51132C17.6145 7.89568 14.7099 8.03929 11.8845 7.99097C9.05877 7.94266 6.24887 7.70127 4.11982 7.29202C3.06318 7.08891 2.11594 6.83369 1.41022 6.51281C0.766274 6.22 0 5.72087 0 4.9469C0 4.01004 0.964525 3.41277 1.79867 3.05724C2.70576 2.67063 3.89493 2.37901 5.11258 2.15935C7.44304 1.73893 10.1147 1.54134 11.7304 1.52346C11.8769 1.52184 12.0122 1.59735 12.0902 1.72133V1.72133C12.2554 1.98406 12.0895 2.33011 11.7819 2.37125C6.76467 3.04222 7.47107 3.02672 5.26455 3.42478C4.10916 3.63321 3.07622 3.89464 2.39298 4.18584C1.76916 4.45172 1.91438 4.9469 1.92108 4.92166C1.95272 4.95811 2.05541 5.05272 2.36059 5.19149C2.83828 5.4087 3.58481 5.6232 4.56968 5.81251C6.52366 6.18811 9.1877 6.42238 11.9256 6.4692C14.6639 6.51602 17.4127 6.37423 19.539 6.02131C20.6055 5.8443 21.4697 5.62145 22.0872 5.36491C22.7085 5.10676 22.9449 4.87196 23.0162 4.71867C23.0759 4.54803 23.1185 4.35742 23.052 4.13951C22.9867 3.92586 22.7842 3.58431 22.1006 3.17831C20.6845 2.3372 17.4158 1.34558 10.1686 0.773902C10.0395 0.763721 9.92243 0.68718 9.86361 0.571853V0.571853C9.7338 0.317364 9.92861 0.0177825 10.2139 0.0325302C17.4619 0.407187 21.4191 0.873597 23.2463 1.95885C24.2179 2.53589 24.7233 3.16153 24.9123 3.78029Z" };
+    }
+
+    //To update connector properties
+    public void OnUpdateConnectorProperties(List<string> Connectors, string Value, string Property)
+    {
+        IDiagramObject Connector;
+        Parent.DiagramContent.Diagram.StartGroupAction();
+        for (int i = 0; i < Connectors.Count; i++)
+        {
+            Connector = Parent.DiagramContent.Diagram.GetObject(Connectors[i]) as Connector;
+            if (Connector != null)
+            {
+                if (Property == "StrokeColor")
+                    (Connector as Connector).Style.StrokeColor = Value;
+                else if (Property == "StrokeDashArray")
+                {
+                    (Connector as Connector).Style.StrokeDashArray = Value;
+                    UpdateStrokeStyleValue(Value);
+                }
+            }
+        }
+        Parent.DiagramContent.Diagram.EndGroupAction();
+    }
+    #endregion
+
+    //To add a child to the selected node
+    public async Task AddNode(string orientation, string? label = "Node")
+    {
+        SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+        if(diagram.SelectionSettings.Nodes.Count > 0)
+        {
+            Node SelectedNode = diagram.SelectionSettings.Nodes[0];
+            if (SelectedNode.ID != "rootNode")
+            {
+                string selectedNodeOrientation = Convert.ToString(SelectedNode.AdditionalInfo["Orientation"]);
+                orientation = selectedNodeOrientation;
+            }
+            Dictionary<string, object> MindMapData = new Dictionary<string, object>();
+            diagram.BeginUpdate();
+            diagram.StartGroupAction();
+            MindMapData = GetMindMapShape(SelectedNode, label);
+            Node node = MindMapData["Node"] as Node;
+            AddMindMapLevels("Level" + Convert.ToString(node.AdditionalInfo["Level"]));
+            node.ID = "node" + node.ID;
+            if (node.AdditionalInfo != null)
+                node.AdditionalInfo["Orientation"] = orientation;
+            else
+                node.AdditionalInfo.Add("Orientation", orientation);
+            Connector connector = SetConnectorDefault(diagram, orientation, (MindMapData["Connector"] as Connector), SelectedNode.ID, node.ID);
+            await diagram.AddDiagramElements(new DiagramObjectCollection<NodeBase>() { node, connector });
+            if(PatternChange)
+                MindmapPatternChange(PatternValue);
+            Node node1 = diagram.GetObject(node.ID) as Node;
+            await diagram.DoLayout();
+            diagram.EndGroupAction();
+            await diagram.EndUpdate();
+            DiagramRect bound = new DiagramRect((node1.OffsetX - (node1.Width / 2)), node1.OffsetY - (node1.Height / 2), node1.Width, node1.Height);
+            diagram.BeginUpdate();
+            diagram.Select(new ObservableCollection<IDiagramObject>() { node1 });
+            diagram.StartTextEdit(node1);
+            await diagram.EndUpdate();
+        }
+    }
+
+    //To update the added node's shape and style properties
+    public Dictionary<string, object> GetMindMapShape(Node ParentNode, string? Label = "Node")
+    {
+        Dictionary<string, object> items = new Dictionary<string, object>();
+        Node childNode;
+        Connector childConnector = new Connector();
+        Dictionary<string, object> addInfo = ParentNode.AdditionalInfo;
+        string newLevel = Convert.ToString(addInfo["Level"]);
+        int levelValue = int.Parse(newLevel);
+        if (Parent.OpenDialog.TemplateType == "Template1")
+        {
+            Dictionary<string, object> ChildInfo = new Dictionary<string, object>();
+            ChildInfo.Add("Level", (levelValue + 1).ToString());
+            childNode = new Node()
+            {
+                Width = 100,
+                Height = 30,
+                Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle },
+                    Annotations = new DiagramObjectCollection<ShapeAnnotation>() { new ShapeAnnotation() { Content = Label} },
+                Style = new ShapeStyle() { Fill = "#000000", StrokeColor = "#000000" },
+                AdditionalInfo = ChildInfo
+            };
+            childConnector = new Connector()
+            {
+                Type = ConnectorSegmentType.Bezier,
+                Style = new ShapeStyle() { StrokeWidth = 3 }
+            };
+        }
+        else
+        {
+            Dictionary<string, object> ChildInfo = new Dictionary<string, object>();
+            ChildInfo.Add("Level", (levelValue + 1).ToString());
+            childNode = new Node()
+            {
+                Height = 30,
+                Width = 100,
+                Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle },
+                Annotations = new DiagramObjectCollection<ShapeAnnotation>() { new ShapeAnnotation() { Content = Label } },
+                Style = new ShapeStyle() { Fill = "#000000", StrokeColor = "#000000" },
+                AdditionalInfo = ChildInfo
+            };
+            if (Parent.OpenDialog.TemplateType == "Template2")
+            {
+                childConnector = new Connector()
+                {
+                    Type = ConnectorSegmentType.Bezier,
+                    Style = new ShapeStyle() { StrokeWidth = 3, StrokeColor = "#000000" }
+                };             
+            }
+            else if (Parent.OpenDialog.TemplateType == "Template3")
+            {
+                childConnector = new Connector()
+                    {
+                        Type = ConnectorSegmentType.Orthogonal,
+                        Style = new ShapeStyle() { StrokeWidth = 3, StrokeColor = "#000000" }
+                    };    
+            }
+            else
+            {
+                childConnector = new Connector()
+                    {
+                        Type = ConnectorSegmentType.Straight,
+                        Style = new ShapeStyle() { StrokeWidth = 3, StrokeColor = "#000000" }
+                    };    
+            }
+        }
+        if (levelValue < 1)
+        {
+            childNode.Style.Fill = fillColorCode[lastFillIndex];
+            childNode.Style.StrokeColor = borderColorCode[lastFillIndex];
+            childNode.Style.StrokeWidth = 2;
+            if (lastFillIndex + 1 >= fillColorCode.Length)
+                this.lastFillIndex = 0;
+            else
+                lastFillIndex++;
+        }
+        else
+            childNode.Style.StrokeColor = childNode.Style.Fill = ParentNode.Style.Fill;
+        childConnector.Style.StrokeColor = childNode.Style.Fill;
+        childConnector.TargetDecorator = new DecoratorSettings() { Shape = DecoratorShape.None };
+        childConnector.Constraints = ConnectorConstraints.Select | ConnectorConstraints.PointerEvents | ConnectorConstraints.Delete;
+        childNode.Ports = new DiagramObjectCollection<PointPort>()
+        {
+            new PointPort() { ID = "leftPort", Offset = new DiagramPoint() { X= 0, Y=0.5}},
+            new PointPort() { ID = "rightPort", Offset = new DiagramPoint() { X= 1, Y=0.5}},
+        };
+        Node sameLevelNode = GetNodeForPropertyChange("Level"+(levelValue + 1));
+        if(sameLevelNode != null && ParentNode.ID != sameLevelNode.ID)
+        {
+            childNode.Shape = sameLevelNode.Shape.Clone() as Shape;
+        }
+        items.Add("Node", childNode);
+        items.Add("Connector", childConnector);
+        return items;
+    }
+
+    //To get the branch type of the nodes
+    public BranchType GetBranchType(IDiagramObject obj)
+    {
+        string type = Convert.ToString((obj as Node).AdditionalInfo["Orientation"]);
+        BranchType Branch = BranchType.Root;
+        if (type == "Left")
+            Branch = BranchType.Left;
+        else if (type == "Right")
+            Branch = BranchType.Right;
+        else if (type == "Center")
+            Branch = BranchType.Root;
+        return Branch;
+    }
+
+    //To add the new midmap level in the level dropdown datasource
+    public void AddMindMapLevels(string Level)
+    {
+        List<DefaultDropDownField> dropdowndatasource = MindMapLevels;
+        DefaultDropDownField lastItem = dropdowndatasource[dropdowndatasource.Count - 1];
+        dropdowndatasource.RemoveAt(dropdowndatasource.Count - 1);
+        bool isExist = false;
+        for (int i = 0; i < dropdowndatasource.Count; i++)
+        {
+            DefaultDropDownField data = dropdowndatasource[i];
+            if (data.Text == Level)
+            {
+                isExist = true;
+            }
+        }
+        if (!isExist)
+        {
+            DefaultDropDownField newData = new DefaultDropDownField() { Text = Level, Value = Level };
+            dropdowndatasource.Add(newData);
+        }
+        dropdowndatasource.Add(lastItem);
+        MindMapLevels = dropdowndatasource;
+        StateHasChanged();
+    }
+
+    //This method is used to update the defalut vale for the newly added connectors
+    public Connector SetConnectorDefault(SfDiagramComponent diagram, string orientation, Connector connector, string sourceID, string targetID)
+    {
+        connector.ID = "connector" + connector.ID;
+        connector.SourceID = sourceID;
+        connector.TargetID = targetID;
+        connector.SourcePortID = "right";
+        connector.TargetPortID = "left";
+        if (orientation == "Right")
+        {
+            connector.SourcePortID = "left";
+            connector.TargetPortID = "right";
+        }
+        connector.Style.StrokeWidth = 2;
+        connector.Type = connectorType;
+        return connector;
+    }
+
+    //This method is used t add the sibling nodetor the selected node
+    public async Task AddSiblingChild(string orientation)
+    {
+        SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+        if(diagram.SelectionSettings.Nodes.Count > 0)
+        {
+            Node SelectedNode = diagram.SelectionSettings.Nodes[0];
+            if (SelectedNode.ID != "rootNode")
+            {
+                string selectedNodeOrientation = Convert.ToString(SelectedNode.AdditionalInfo["Orientation"]);
+                orientation = selectedNodeOrientation;
+            }
+            Connector childConnector = GetConnector(diagram.Connectors, SelectedNode.InEdges[0]);
+            Dictionary<string, object> MindMapData = new Dictionary<string, object>();
+            diagram.BeginUpdate();
+            diagram.StartGroupAction();
+            MindMapData = GetMindMapShape(GetNode(diagram.Nodes, childConnector.SourceID));
+            Node node = MindMapData["Node"] as Node;
+            node.ID = "node" + node.ID;
+            if (node.AdditionalInfo != null)
+                node.AdditionalInfo["Orientation"] = orientation;
+            else
+                node.AdditionalInfo.Add("Orientation", orientation);
+            Connector connector = SetConnectorDefault(diagram, orientation, (MindMapData["Connector"] as Connector), childConnector.SourceID, node.ID);
+            await diagram.AddDiagramElements(new DiagramObjectCollection<NodeBase>() { node, connector });
+            if(PatternChange)
+                MindmapPatternChange(PatternValue);
+            Node node1 = GetNode(diagram.Nodes, node.ID);
+            await diagram.DoLayout();
+            diagram.EndGroupAction();
+            await diagram.EndUpdate();
+            diagram.BeginUpdate();
+            diagram.Select(new ObservableCollection<IDiagramObject>() { node1 });
+            diagram.StartTextEdit(node1);
+            await diagram.EndUpdate();
+        }
+    }
+
+    //To get the connectors by node's inedges and outedges
+    private Connector GetConnector(DiagramObjectCollection<Connector> diagramConnectors, string name)
+    {
+        for (int i = 0; i < diagramConnectors.Count; i++)
+        {
+            if (diagramConnectors[i].ID == name)
+            {
+                return diagramConnectors[i];
+            }
+        }
+        return null;
+    }
+
+    //To get the Nodes by connectors sourceID and targetID
+    private Node GetNode(DiagramObjectCollection<Node> diagramNodes, string name)
+    {
+        for (int i = 0; i < diagramNodes.Count; i++)
+        {
+            if (diagramNodes[i].ID == name)
+            {
+                return diagramNodes[i];
+            }
+        }
+        return null;
+    }
+
+    //To remove the selected node from the layout
+    public async Task RemoveChild()
+    {
+        SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+        if (diagram.SelectionSettings.Nodes.Count > 0)
+        {
+            diagram.BeginUpdate();
+            diagram.StartGroupAction();
+            //PreventPropertyChange = true;
+            RemoveSubChild(diagram.SelectionSettings.Nodes[0], diagram);
+            await diagram.DoLayout();
+            diagram.EndGroupAction();
+            await diagram.EndUpdate();
+            //PreventPropertyChange = false;
+        }
+    }
+
+    //To remove selected node's children from the layout
+    public void RemoveSubChild(Node node, SfDiagramComponent diagram)
+    {
+        for (int i = node.OutEdges.Count - 1; i >= 0; i--)
+        {
+            Connector connector = GetConnector(diagram.Connectors, node.OutEdges[i]);
+            Node childNode = GetNode(diagram.Nodes, connector.TargetID);
+            if (childNode != null && childNode.OutEdges.Count > 0)
+                RemoveSubChild(childNode, diagram);
+            else
+                diagram.Nodes.Remove(childNode);
+        }
+        for (int j = node.InEdges.Count - 1; j >= 0; j--)
+        {
+            Connector connector = GetConnector(diagram.Connectors, node.InEdges[j]);
+            Node childNode = GetNode(diagram.Nodes, connector.SourceID);
+            var index = childNode.OutEdges.IndexOf(connector.ID);
+            if (childNode.OutEdges.Count > 1 && index == 0)
+                index = childNode.OutEdges.Count;
+            if (index > 0)
+            {
+                var node1 = childNode.OutEdges[index - 1];
+                Connector connector1 = diagram.GetObject(node1) as Connector;
+                Node node2 = GetNode(diagram.Nodes, connector1.TargetID);
+                diagram.Select(new ObservableCollection<IDiagramObject>() { node2 });
+            }
+            else
+                diagram.Select(new ObservableCollection<IDiagramObject>() { childNode });
+        }
+        if (node.ID != "rootNode")
+            diagram.Nodes.Remove(node);
+    }
+
+    //To edit the node's label
+    public async Task EditNode()
+    {
+        SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+        diagram.BeginUpdate();
+        if (diagram.SelectionSettings.Nodes.Count > 0)
+        {
+            Node node = diagram.SelectionSettings.Nodes[0];
+            diagram.StartTextEdit(node);
+        }
+        await diagram.EndUpdate();
+    }
+    //To Update the selected node's text in bold in style
+    public void TextBold()
+    {
+        SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+        if (diagram.SelectionSettings.Nodes.Count > 0)
+        {
+            Node node = diagram.SelectionSettings.Nodes[0];
+            if (node.Annotations.Count > 0)
+                node.Annotations[0].Style.Bold = true;
+        }
+        if (!BoldCss.Contains("tb-item-selected"))
+        {
+            BoldCss += " tb-item-selected";
+            StateHasChanged();
+        }
+    }
+    //To Update the selected node's text in italic in style
+    public void TextItalic()
+    {
+        SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+        if (diagram.SelectionSettings.Nodes.Count > 0)
+        {
+            Node node = diagram.SelectionSettings.Nodes[0];
+            if (node.Annotations.Count > 0)
+                node.Annotations[0].Style.Italic = true;
+        }
+        if (!ItalicCss.Contains("tb-item-selected"))
+        {
+            ItalicCss += " tb-item-selected";
+            StateHasChanged();
+        }
+    }
+    //To Update the selected node's text in underline in style
+    public void TextUnderline()
+    {
+        SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+        if (diagram.SelectionSettings.Nodes.Count > 0)
+        {
+            Node node = diagram.SelectionSettings.Nodes[0];
+            if (node.Annotations.Count > 0)
+                node.Annotations[0].Style.TextDecoration = TextDecoration.Underline;
+        }
+        if (!UnderlineCss.Contains("tb-item-selected"))
+        {
+            UnderlineCss += " tb-item-selected";
+            StateHasChanged();
+        }
+    }
+    //To update the diagram in fitToPage
+    public void FitPage()
+    {
+        SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+        FitOptions fitoption = new FitOptions()
+            {
+                Mode = FitMode.Both,
+                Region = DiagramRegion.PageSettings,
+            };
+        Parent.DiagramContent.Diagram.FitToPage(fitoption);
+    }
+    //To hide the quick commands
+    public void OnHideNodeClick()
+    {
+        SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+        Node node = GetNode(diagram.Nodes, "textNode");
+        node.IsVisible = !node.IsVisible;
+    }
+
+    //To copy the element with its children
+    public void CopyLayout()
+    {
+        SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+        if (diagram.SelectionSettings.Nodes.Count > 0)
+        {
+            Node selectedNode = diagram.SelectionSettings.Nodes[0];
+            if (selectedNode.ID != "rootNode")
+                PasteData = CloneSelectedItemswithChildElements();
+        }
+    }
+    private DiagramObjectCollection<NodeBase> CloneSelectedItemswithChildElements()
+    {
+        return CloneChild();
+    }
+    //To clone the selected node
+    private DiagramObjectCollection<NodeBase> CloneChild()
+    {
+        DiagramObjectCollection<NodeBase> selectedItems1 = new DiagramObjectCollection<NodeBase>();
+        SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+        if (diagram.SelectionSettings.Nodes.Count > 0)
+        {
+            Node node = diagram.SelectionSettings.Nodes[0];
+            if (node.AdditionalInfo != null)
+                node.AdditionalInfo["IsFirstNode"] = true;
+            else
+                node.AdditionalInfo.Add("IsFirstNode", true);
+            selectedItems1.Add(node);
+            selectedItems1 = CloneSubChildSubChild(node, selectedItems1);
+        }
+        return selectedItems1;
+    }
+    //To clone the selected node's children
+    private DiagramObjectCollection<NodeBase> CloneSubChildSubChild(Node node, DiagramObjectCollection<NodeBase> select)
+    {
+        SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+        DiagramObjectCollection<NodeBase> select1 = new DiagramObjectCollection<NodeBase>();
+        select1 = select;
+        for (int i = node.OutEdges.Count - 1; i >= 0; i--)
+        {
+            Connector connector = diagram.GetObject(node.OutEdges[i]) as Connector;
+            Node childNode = diagram.GetObject(connector.TargetID) as Node;
+            select1.Add(connector);
+            select1.Add(childNode);
+            if (childNode.OutEdges.Count > 0)
+            {
+                CloneSubChildSubChild(childNode, select1);
+            }
+        }
+        return SortCollection(select1);
+    }
+    //To sort the nodes and connectors
+    private DiagramObjectCollection<NodeBase> SortCollection(DiagramObjectCollection<NodeBase> select1)
+    {
+        DiagramObjectCollection<NodeBase> select = new DiagramObjectCollection<NodeBase>();
+        for (int i = select1.Count - 1; i >= 0; i--)
+        {
+            if (select1[i] is Node)
+                select.Add(select1[i]);
+        }
+        for (int j = select1.Count - 1; j >= 0; j--)
+        {
+            if (select1[j] is Connector)
+                select.Add(select1[j]);
+        }
+        return select;
+    }
+    //To Cut the element with its children
+    public async Task CutLayout()
+    {
+        SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+        if (diagram.SelectionSettings.Nodes.Count > 0)
+        {
+            CopyLayout();
+            await RemoveChild();
+            await diagram.DoLayout();
+        }
+    }
+    //To Paste the copied elements in the layout
+    #region   
+    public async Task PasteLayout()
+    {
+        IsCopyLayoutElement = true;
+        await MindMapPaste();
+        IsCopyLayoutElement = false;
+        PasteData.Clear();
+        PastedFirstItem = null;
+    }
+    private async Task MindMapPaste()
+    {
+        SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+        Node selectedNode = diagram.SelectionSettings.Nodes[0];
+        Node selectedelement = null;
+        Dictionary<string, NodeBase> objectTable = new Dictionary<string, NodeBase>();
+        Dictionary<string, string> keyTable = new Dictionary<string, string>();
+        Dictionary<string, object> MindMapData = new Dictionary<string, object>();
+        string selecteditemOrientation = string.Empty;
+        if (PasteData.Count > 0)
+        {
+            diagram.BeginUpdate();
+            diagram.StartGroupAction();
+            DiagramObjectCollection<NodeBase> newElements = new DiagramObjectCollection<NodeBase>();
+            foreach (NodeBase copy in PasteData)
+            {
+                objectTable[copy.ID] = copy;
+            }
+            for (int j = 0; j < PasteData.Count; j++)
+            {
+                NodeBase copy = PasteData[j];
+                if (copy is Connector)
+                    newElements = UpdateClonedConnector(copy as Connector, objectTable, keyTable, newElements);
+                else
+                    newElements = UpdateClonedNode(copy as Node, objectTable, keyTable, newElements);
+            }
+            await diagram.AddDiagramElements(newElements);
+            if (selectedNode.ID != "rootNode")
+                selecteditemOrientation = Convert.ToString(selectedNode.AdditionalInfo["Orientation"]);
+            else
+                selecteditemOrientation = Convert.ToString(PastedFirstItem.AdditionalInfo["Orientation"]);
+            selectedelement = PastedFirstItem;
+            MindMapData = GetMindMapShape(selectedNode);
+            Connector connector = SetConnectorDefault(diagram, selecteditemOrientation, (MindMapData["Connector"] as Connector), selectedNode.ID, selectedelement.ID);
+            await diagram.AddDiagramElements(new DiagramObjectCollection<NodeBase>() { connector });
+            string newLevel = Convert.ToString(selectedNode.AdditionalInfo["Level"]);
+            int selectedNodeLevel = 0;
+            selectedNodeLevel = int.Parse(newLevel);
+            UpdateLevel(selectedelement, selectedNodeLevel, selecteditemOrientation);
+            await diagram.DoLayout();
+            diagram.EndGroupAction();
+            diagram.Select(new ObservableCollection<IDiagramObject>() { selectedelement });
+            await diagram.EndUpdate();
+            Node viewNode = diagram.Nodes[diagram.Nodes.Count - 1];
+            DiagramRect bound = new DiagramRect((viewNode.OffsetX - (viewNode.Width / 2)), viewNode.OffsetY - (viewNode.Height / 2), viewNode.Width, viewNode.Height);
+            //diagram.BringIntoView(bound);
+        }
+    }
+    //To Return a cloned nodes
+    private DiagramObjectCollection<NodeBase> UpdateClonedConnector(Connector copy, Dictionary<string, NodeBase> objectTable, Dictionary<string, string> keyTable, DiagramObjectCollection<NodeBase> newElements)
+    {
+        Connector clonedObj = copy.Clone() as Connector;
+        clonedObj.ID = clonedObj.ID + Parent.DiagramContent.RandomId();
+        newElements.Add(clonedObj);
+        string nodeId = clonedObj.SourceID;
+        clonedObj.SourceID = string.Empty;
+        if (!string.IsNullOrEmpty(nodeId) && objectTable.ContainsKey(nodeId) && keyTable.ContainsKey(nodeId))
+        {
+            clonedObj.SourceID = keyTable[nodeId];
+        }
+        nodeId = clonedObj.TargetID;
+        clonedObj.TargetID = string.Empty;
+        if (!string.IsNullOrEmpty(nodeId) && objectTable.ContainsKey(nodeId) && keyTable.ContainsKey(nodeId))
+        {
+            clonedObj.TargetID = keyTable[nodeId];
+        }
+        return newElements;
+    }
+    //To return a cloned connectors
+    private DiagramObjectCollection<NodeBase> UpdateClonedNode(Node copy, Dictionary<string, NodeBase> objectTable, Dictionary<string, string> keyTable, DiagramObjectCollection<NodeBase> newElements)
+    {
+        SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+        Node newNode = copy.Clone() as Node;
+        newNode.ID = newNode.ID + Parent.DiagramContent.RandomId();
+        newElements.Add(newNode);
+        newNode.ZIndex = -1;
+        if (newNode != null) { keyTable[copy.ID] = newNode.ID; }
+        return newElements;
+    }
+    //To Update the level of the elements that has to be pasted
+    private void UpdateLevel(Node parentNode, int level, string orientation)
+    {
+        SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+        Node lastNode = parentNode;
+        string level1 = string.Empty;
+        int newLevel = level + 1;
+        parentNode.AdditionalInfo["Level"] = newLevel.ToString();
+        level1 = "Level" + parentNode.AdditionalInfo["Level"];
+        AddMindMapLevels(level1);
+        parentNode.AdditionalInfo["Orientation"] = orientation;
+        for (int i = parentNode.OutEdges.Count - 1; i >= 0; i--)
+        {
+            Connector connector = GetConnector(diagram.Connectors, lastNode.OutEdges[i]);
+            Node childNode = GetNode(diagram.Nodes, connector.TargetID);
+            connector.SourcePortID = "right";
+            connector.TargetPortID = "left";
+            if (orientation == "Right")
+            {
+                connector.SourcePortID = "left";
+                connector.TargetPortID = "right";
+            }
+            if (childNode.OutEdges.Count > 0)
+            {
+                string parentNodeLevel = Convert.ToString(parentNode.AdditionalInfo["Level"]);
+                int nodeLevel = int.Parse(parentNodeLevel);
+                UpdateLevel(childNode, nodeLevel, orientation);
+            }
+            else
+            {
+                string childLevel = Convert.ToString(parentNode.AdditionalInfo["Level"]);
+                int childNewLevel = int.Parse(childLevel) + 1;
+                childNode.AdditionalInfo["Level"] = childNewLevel;
+                level1 = "Level" + childNode.AdditionalInfo["Level"];
+                AddMindMapLevels(level1);
+            }
+        }
+    }
+    #endregion
+
+    //To navigate between the nodes
+    public void NavigateChild(string direction)
+    {
+        SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+        Node? node = null;
+        List<Node> sameLevelNodes = new List<Node>();
+        if (direction == "Top" || direction == "Bottom")
+        {
+            sameLevelNodes = GetSameLevelNodes();
+            int index = sameLevelNodes.IndexOf(diagram.SelectionSettings.Nodes[0]);
+            node = direction == "Top" ? sameLevelNodes[index == 0 ? 0 : index - 1] : sameLevelNodes[index == (sameLevelNodes.Count-1) ? index :  index + 1];
+        }
+        else
+            node = GetMinDistanceNode(diagram, direction);
+        if (node != null)
+        {
+            diagram.Select(new ObservableCollection<IDiagramObject>() { node });
+        }
+
+    }
+    //To return a same level nodes
+    private List<Node> GetSameLevelNodes()
+    {
+        List<Node> sameLevelNodes = new List<Node>();
+        SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+        if (diagram.SelectionSettings.Nodes.Count > 0)
+        {
+            Node node = diagram.SelectionSettings.Nodes[0];
+            string orientation = Convert.ToString(node.AdditionalInfo["Orientation"]);
+            Connector connector = GetConnector(diagram.Connectors, node.InEdges[0]);
+            Node parentNode = GetNode(diagram.Nodes, connector.SourceID);
+            for (int i = 0; i < parentNode.OutEdges.Count; i++)
+            {
+                connector = GetConnector(diagram.Connectors, parentNode.OutEdges[i]);
+                Node childNode = GetNode(diagram.Nodes, connector.TargetID);
+                if (childNode != null)
+                {
+                    string childOrientation = Convert.ToString(childNode.AdditionalInfo["Orientation"]);
+                    if (orientation == childOrientation)
+                    {
+                        sameLevelNodes.Add(childNode);
+                    }
+                }
+            }
+        }
+        return sameLevelNodes;
+    }
+    //To return a minimum distance node whie navigating between left and right
+    private Node GetMinDistanceNode(SfDiagramComponent diagram, string direction)
+    {
+        Node node = diagram.SelectionSettings.Nodes[0];
+        double? nodeWidth = (node.Width == null) ? node.MinWidth : node.Width;
+        DiagramRect parentBounds = new DiagramRect((node.OffsetX - (nodeWidth / 2)), node.OffsetY - (node.Height / 2), nodeWidth, node.Height);
+        DiagramRect childBounds = new DiagramRect();
+        double oldChildBoundsTop = 0;
+        Node? childNode = null;
+        Node? lastChildNode = null;
+        Node? leftOrientationFirstChild = null;
+        Node? rightOrientationFirstChild = null;
+        if (node.ID == "rootNode")
+        {
+            List<string> edges = node.OutEdges;
+            for (int i = 0; i < edges.Count; i++)
+            {
+                Connector connector = GetConnector(diagram.Connectors, edges[i]);
+                childNode = GetNode(diagram.Nodes, connector.TargetID);
+                if (Convert.ToString(childNode.AdditionalInfo["Orientation"]) == direction)
+                {
+                    if (direction == "Left" && leftOrientationFirstChild == null)
+                        leftOrientationFirstChild = childNode;
+                    if (direction == "Right" && rightOrientationFirstChild == null)
+                        rightOrientationFirstChild = childNode;
+                    double? childNodeWidth = (childNode.Width == null) ? childNode.MinWidth : childNode.Width;
+                    childBounds = new DiagramRect((childNode.OffsetX - (childNodeWidth / 2)), childNode.OffsetY - (childNode.Height / 2), childNodeWidth, childNode.Height);
+                    if (parentBounds.Top >= childBounds.Top && (childBounds.Top >= oldChildBoundsTop || oldChildBoundsTop == 0))
+                    {
+                        oldChildBoundsTop = childBounds.Top;
+                        lastChildNode = childNode;
+                    }
+                }
+            }
+            if (lastChildNode != null)
+                lastChildNode = direction == "Left" ? leftOrientationFirstChild : rightOrientationFirstChild;
+        }
+        else
+        {
+            List<string> edges = new List<string>();
+            string selectType = string.Empty;
+            string orientation = Convert.ToString(node.AdditionalInfo["Orientation"]);
+            if (orientation == "Left")
+            {
+                edges = direction == "Left" ? node.OutEdges : node.InEdges;
+                selectType = direction == "Left" ? "Target" : "Source";
+            }
+            else
+            {
+                edges = direction == "Right" ? node.OutEdges : node.InEdges;
+                selectType = direction == "Right" ? "Target" : "Source";
+            }
+            for (int i = 0; i < edges.Count; i++)
+            {
+                Connector connector = GetConnector(diagram.Connectors, edges[i]);
+                childNode = GetNode(diagram.Nodes, selectType == "Target" ? connector.TargetID : connector.SourceID);
+                if (childNode.ID == "rootNode")
+                    lastChildNode = childNode;
+                else
+                {
+                    double? childNodeWidth = (childNode.Width == null) ? childNode.MinWidth : childNode.Width;
+                    childBounds = new DiagramRect((childNode.OffsetX - (childNodeWidth / 2)), childNode.OffsetY - (childNode.Height / 2), childNodeWidth, childNode.Height);
+                    if (selectType == "Target")
+                    {
+                        if (parentBounds.Top >= childBounds.Top && (childBounds.Top >= oldChildBoundsTop || oldChildBoundsTop == 0))
+                        {
+                            oldChildBoundsTop = childBounds.Top;
+                            lastChildNode = childNode;
+                        }
+                    }
+                    else
+                        lastChildNode = childNode;
+                }
+            }
+        }
+        return lastChildNode;
+    }
+    //This is used to drop the node on another and form layout
+    public async Task Drop(DropEventArgs args)
+    {
+        SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+        Node Element = (args.Element as DiagramSelectionSettings).Nodes[0] as Node;
+        Node Target = args.Target as Node;
+        bool isParent = false;
+        List<string> edges = Element.OutEdges;
+        if (edges != null && edges.Count > 0)
+        {
+            for (int i = 0; i < edges.Count; i++)
+            {
+                Connector connector = GetConnector(diagram.Connectors, edges[i]);
+                Node childNode = GetNode(diagram.Nodes, connector.TargetID);
+                if (Target.ID == childNode.ID)
+                    isParent = true;
+            }
+        }
+        if (!isParent)
+        {
+            Connector connector = GetConnector(diagram.Connectors, Element.InEdges[0]);
+            Node childNode = GetNode(diagram.Nodes, connector.TargetID);
+            Parent.DiagramContent.Diagram.BeginUpdate();
+            connector.SourceID = Target.ID;            
+            if (Target.ID != "rootNode")
+                Element.AdditionalInfo["Orientation"] = Target.AdditionalInfo["Orientation"];
+            GetOrientation(Target, connector);
+            if (edges != null && edges.Count > 0)
+            {
+                UpdateLayout(edges, Target);
+            }
+            _ = Parent.DiagramContent.Diagram.EndUpdate();
+            await diagram.DoLayout();
+        }
+        else { _= Parent.DiagramContent.Diagram.DoLayout(); }
+    }
+    //To get the orientation of the element that has to be dropped 
+    private void GetOrientation(Node target, Connector connector)
+    {
+        if (Convert.ToString(target.AdditionalInfo["Orientation"]) == "Left")
+        {
+            connector.SourcePortID = "right";
+            connector.TargetPortID = "left";
+        }
+        else if (Convert.ToString(target.AdditionalInfo["Orientation"]) == "Right")
+        {
+            connector.SourcePortID = "left";
+            connector.TargetPortID = "right";
+        }
+    }
+    //To update orienatation the children and update the layout
+    private void UpdateLayout(List<string> edges, Node Target)
+    {
+        SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+        for (int i = 0; i < edges.Count; i++)
+        {
+            Connector childconnector = GetConnector(diagram.Connectors, edges[i]);
+            Node node = GetNode(diagram.Nodes, childconnector.TargetID);
+            node.AdditionalInfo["Orientation"] = Target.AdditionalInfo["Orientation"];
+            List<string> childEdges = node.OutEdges;
+            if (childEdges != null && childEdges.Count > 0)
+            {
+                UpdateLayout(childEdges, Target);
+            }
+            GetOrientation(Target, childconnector);
+        }
+    }
+    //To undo/redo a layout
+    public async Task UndoRedoLayout(Boolean isUndo)
+    {
+        SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+        if (isUndo)
+            diagram.Undo();
+        else
+        {
+            diagram.Redo();
+            await diagram.DoLayout();
+        }
+        if(diagram.SelectionSettings.Nodes.Count == 0)
+        {
+            UpdateSelectionForNode(diagram);
+        }
+    }
+    //To update the selection for the node
+    public void UpdateSelectionForNode(SfDiagramComponent diagram)
+    {
+        for (int i = 0; i < diagram.Nodes.Count; i++)
+        {
+            Node newSelection = diagram.Nodes[i];
+            if (newSelection.ID == "rootNode")
+                diagram.Select(new ObservableCollection<IDiagramObject>() { newSelection });
+        }
+
+    }
+    //To update the property panel visibilty
+    public void UpdatePropertyPanel()
+    {
+        MindMapPropertyVisibility = "none";
+        MultipleChildContainerVisibility = "block";
+        StateHasChanged();
+    }
+    //To reposition the slider when the node gets selected
+    public void slider()
+    {
+        SfSlide.Reposition();
+    }
+    public void sliderText()
+    {
+        SfSlide1.Reposition();
+    }
+    //To get the orientation of the child entered in text box
+    private string GetChildOrientation()
+    {
+        SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+        double leftChildCount = 0;
+        double rightChildCount = 0;
+        string orientation;
+        if(Convert.ToString(diagram.SelectionSettings.Nodes[0].AdditionalInfo["Orientation"]) == "Root")
+        {
+            for(int i = 0; i < diagram.Nodes.Count; i++)
+            {
+                if(Convert.ToString(diagram.Nodes[i].AdditionalInfo["Level"]) == "1")
+                {
+                    if(Convert.ToString(diagram.Nodes[i].AdditionalInfo["Orientation"]) == "Left")
+                        leftChildCount++;
+                    else
+                        rightChildCount++;
+                }
+            }
+            orientation = leftChildCount > rightChildCount ? "Right" : "Left";
+        }
+        else
+        {
+            string selectedNodeOrientation = Convert.ToString(diagram.SelectionSettings.Nodes[0].AdditionalInfo["Orientation"]);
+            orientation = selectedNodeOrientation;
+        }
+        return orientation;
+    }
+    //To split the string by next line which is entered in textbox
+    private void ValueChangedHandler(String args)
+    {
+        Children = args.Split("\n");
+    }
+
+    //private async void OnExpandableChange(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+    //{
+    //    SfDiagramComponent Diagram = Parent.DiagramContent.Diagram;
+    //    DiagramObjectCollection<Node> Nodes = Diagram.Nodes;
+    //    Diagram.BeginUpdate();
+    //    for (int i = 0; i < Nodes.Count; i++)
+    //    {
+    //        Node Node = Nodes[i];
+    //        Node.ExpandIcon.Shape = DiagramExpandIcons.Minus;
+    //        Node.CollapseIcon.Shape = DiagramCollapseIcons.Plus;
+    //    }
+    //    await Diagram.EndUpdate();
+    //}
+    //Add child node by entering a values in the txt box
+    private async void AddChild()
+    {
+        SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
+        DiagramObjectCollection<NodeBase> nodes = new DiagramObjectCollection<NodeBase>();
+        DiagramObjectCollection<NodeBase> connectors = new DiagramObjectCollection<NodeBase>();
+
+        diagram.BeginUpdate();
+        diagram.StartGroupAction();
+        if(diagram.SelectionSettings.Nodes.Count > 0)
+        {
+            string orientation = GetChildOrientation();
+            for(int i = 0; i < Children.Length; i++)
+            {
+                Node SelectedNode = diagram.SelectionSettings.Nodes[0];
+                if (SelectedNode.ID != "rootNode")
+                {
+                    string selectedNodeOrientation = Convert.ToString(SelectedNode.AdditionalInfo["Orientation"]);
+                    orientation = selectedNodeOrientation;
+                }
+                Dictionary<string, object> MindMapData = new Dictionary<string, object>();
+                MindMapData = GetMindMapShape(SelectedNode, string.IsNullOrEmpty(Children[i]) ? "Node" : Children[i]);
+                Node node = MindMapData["Node"] as Node;
+                AddMindMapLevels("Level" + Convert.ToString(node.AdditionalInfo["Level"]));
+                node.ID = "node" + node.ID;
+                if (node.AdditionalInfo != null)
+                    node.AdditionalInfo["Orientation"] = orientation;
+                else
+                    node.AdditionalInfo.Add("Orientation", orientation);
+                Connector connector = SetConnectorDefault(diagram, orientation, (MindMapData["Connector"] as Connector), SelectedNode.ID, node.ID);
+
+                nodes.Add(node); connectors.Add(connector);
+
+                orientation = Convert.ToString(diagram.SelectionSettings.Nodes[0].AdditionalInfo["Orientation"]) != "Root" ? orientation : orientation == "Left" ? "Right" : "Left";
+            }
+            await diagram.AddDiagramElements(nodes);
+            await diagram.AddDiagramElements(connectors);
+            if(PatternChange)
+                MindmapPatternChange(PatternValue);
+            diagram.DoLayout();
+            diagram.EndUpdate();
+            diagram.EndGroupAction();
+            UpdateTextBox();
+        }       
+    }
+    private void Cancel()
+    {
+        UpdateTextBox();
+    }
+    //To update textbox when add/cancel button clicked
+    private void UpdateTextBox()
+    {
+        if(Children != null)
+        Array.Clear(Children, 0, Children.Length);
+        MindMapPropertyVisibility = "block";
+        MultipleChildContainerVisibility = "none";
+        textBox.Value = "";
+        StateHasChanged();
+    }
+}

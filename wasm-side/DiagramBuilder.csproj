@@ -6,6 +6,21 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>$(DefineConstants)TRACE;WASM</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>$(DefineConstants)TRACE;WASM</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Shared\**" />
+    <Content Remove="Shared\**" />
+    <EmbeddedResource Remove="Shared\**" />
+    <None Remove="Shared\**" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.6" PrivateAssets="all" />
@@ -16,28 +31,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Shared\NavMenu.razor" />
-    <Content Remove="Shared\SurveyPrompt.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Shared\MainLayout.razor.css" />
-    <None Remove="Shared\NavMenu.razor.css" />
-  </ItemGroup>
-
-  <ItemGroup>
- <PackageReference Include="Syncfusion.Blazor" Version="*" />
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
 	<PackageReference Include="Markdig" Version="0.23.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Shared\Parent\DiagramMain.razor" />
     <None Include="wwwroot\css\bootstrap\bootstrap.min.css.map" />
     <None Include="wwwroot\css\open-iconic\FONT-LICENSE" />
     <None Include="wwwroot\css\open-iconic\font\fonts\open-iconic.svg" />
     <None Include="wwwroot\css\open-iconic\ICON-LICENSE" />
     <None Include="wwwroot\css\open-iconic\README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\BlazorWasmCommon_NET6.csproj" />
   </ItemGroup>
 
 </Project>
