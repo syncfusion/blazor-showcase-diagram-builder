@@ -217,7 +217,7 @@
         }
     }
 
-    private async Task SelectionChanged(SelectionChangedEventArgs args)
+    private async Task SelectionChanged(Syncfusion.Blazor.Diagram.SelectionChangedEventArgs args)
     {
         await Parent.Toolbar.EnableToolbarItems(args.NewValue, "selectionchange");
         int ObjectsLength = Diagram.SelectionSettings.Nodes.Count + Diagram.SelectionSettings.Connectors.Count;
