@@ -398,14 +398,14 @@
     var json = await System.IO.File.ReadAllTextAsync(files[0]);
     json = json.Replace(System.Environment.NewLine, string.Empty);
     this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
-    await Parent.MenuBar.SoftwareLifeCycleDiagram();
-    TemplateType = "Template4";
-    Parent.MindMapPropertyPanel.bindMindMapProperties();
-    RemoveUnwantedMindmapMenubarItems();
     IsOpenDialogVisible = false;
     this.Parent.DiagramContent.show = false;
     StateHasChanged();
     CurrentDiagramVisibility("mindmap-diagram");
+    await Parent.MenuBar.SoftwareLifeCycleDiagram();
+    TemplateType = "Template4";
+    Parent.MindMapPropertyPanel.bindMindMapProperties();
+    RemoveUnwantedMindmapMenubarItems();
     Parent.LeftSideBar.sidebarVisibility = "none";
     Parent.LeftSideBar.StateChanged();
     #endif
