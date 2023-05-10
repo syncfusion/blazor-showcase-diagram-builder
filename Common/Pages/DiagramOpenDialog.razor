@@ -213,6 +213,24 @@
         Parent.LeftSideBar.sidebarVisibility = "none";
         Parent.LeftSideBar.StateChanged();
         #endif
+        #if MAUI
+        Parent.MindMapPropertyPanel.IsMindMap = true;
+        string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+        var files = Directory.GetFiles(wwwroot,"BlankDiagram.json", SearchOption.AllDirectories);
+        var json = await System.IO.File.ReadAllTextAsync(files[0]);
+        json = json.Replace(System.Environment.NewLine, string.Empty);
+        this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
+        CurrentDiagramVisibility("mindmap-diagram");
+        TemplateType = "Template1";
+        await Parent.Toolbar.HideElements("hide-palette");
+        Parent.MindMapPropertyPanel.bindMindMapProperties();
+        RemoveUnwantedMindmapMenubarItems();
+        IsOpenDialogVisible = false;
+        this.Parent.DiagramContent.show = false;
+        StateHasChanged();
+        Parent.LeftSideBar.sidebarVisibility = "none";
+        Parent.LeftSideBar.StateChanged();
+        #endif
     }
 
     public void BlankOrgChartDiagram()
@@ -251,6 +269,24 @@
     await Parent.MenuBar.BusinessPlanningDiagram();
     TemplateType = "Template2";
     Parent.MindMapPropertyPanel.bindMindMapProperties();   
+    RemoveUnwantedMindmapMenubarItems();
+    Parent.LeftSideBar.sidebarVisibility = "none";
+    Parent.LeftSideBar.StateChanged();
+    #endif
+    #if MAUI
+    Parent.MindMapPropertyPanel.IsMindMap = true;
+    string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+    var files = Directory.GetFiles(wwwroot,"BusinessPlanning.json", SearchOption.AllDirectories);
+    var json = await System.IO.File.ReadAllTextAsync(files[0]);
+    json = json.Replace(System.Environment.NewLine, string.Empty);
+    this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
+    IsOpenDialogVisible = false;
+    this.Parent.DiagramContent.show = false;
+    StateHasChanged();
+    CurrentDiagramVisibility("mindmap-diagram");
+    await Parent.MenuBar.BusinessPlanningDiagram();
+    TemplateType = "Template2";
+    Parent.MindMapPropertyPanel.bindMindMapProperties();
     RemoveUnwantedMindmapMenubarItems();
     Parent.LeftSideBar.sidebarVisibility = "none";
     Parent.LeftSideBar.StateChanged();
@@ -295,7 +331,25 @@
     RemoveUnwantedMindmapMenubarItems();
     Parent.LeftSideBar.sidebarVisibility = "none";
     Parent.LeftSideBar.StateChanged();
-    #endif       
+    #endif      
+    #if MAUI
+    Parent.MindMapPropertyPanel.IsMindMap = true;
+    string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+    var files = Directory.GetFiles(wwwroot,"TQM.json", SearchOption.AllDirectories);
+    var json = await System.IO.File.ReadAllTextAsync(files[0]);
+    json = json.Replace(System.Environment.NewLine, string.Empty);
+    this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
+    IsOpenDialogVisible = false;
+    this.Parent.DiagramContent.show = false;
+    StateHasChanged();
+    CurrentDiagramVisibility("mindmap-diagram");
+    await Parent.MenuBar.TQMDiagram();
+    TemplateType = "Template3";
+    Parent.MindMapPropertyPanel.bindMindMapProperties();
+    RemoveUnwantedMindmapMenubarItems();
+    Parent.LeftSideBar.sidebarVisibility = "none";
+    Parent.LeftSideBar.StateChanged();
+    #endif
     }
 
     public void OrgRenderingStyle2Diagram()
@@ -337,6 +391,23 @@
     Parent.LeftSideBar.sidebarVisibility = "none";
     Parent.LeftSideBar.StateChanged();
     #endif       
+    #if MAUI
+    Parent.MindMapPropertyPanel.IsMindMap = true;
+    string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+    var files = Directory.GetFiles(wwwroot,"SoftwareDevelopmentLifeCycle.json", SearchOption.AllDirectories);
+    var json = await System.IO.File.ReadAllTextAsync(files[0]);
+    json = json.Replace(System.Environment.NewLine, string.Empty);
+    this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
+    await Parent.MenuBar.SoftwareLifeCycleDiagram();
+    TemplateType = "Template4";
+    Parent.MindMapPropertyPanel.bindMindMapProperties();
+    RemoveUnwantedMindmapMenubarItems();
+    IsOpenDialogVisible = false;
+    this.Parent.DiagramContent.show = false;
+    StateHasChanged();
+    Parent.LeftSideBar.sidebarVisibility = "none";
+    Parent.LeftSideBar.StateChanged();
+    #endif
     }
 
     public void OrgRenderingStyle3Diagram()
