@@ -325,7 +325,7 @@
     }
 
     public bool enablePasteButten = false;
-
+    public string SelectNewOption = "";
     public async Task MenuClick(Syncfusion.Blazor.Navigations.MenuEventArgs<ContextMenuItemModel> args)
     {
         bool Edit = false;
@@ -339,8 +339,23 @@
         switch (commandType.ToLower())
         {
             case "new":
+                #if SERVER
+               File = true;
+                await jsRuntime.InvokeVoidAsync("CommonKeyboardCommands_newDiagram");
+                #endif
+                #if WASM
                 File = true;
                 await jsRuntime.InvokeVoidAsync("CommonKeyboardCommands_newDiagram");
+                #endif
+                #if MAUI
+                File = true;
+                if (string.IsNullOrEmpty(SelectNewOption))
+                {
+                    SelectNewOption  = commandType.ToLower();
+                }
+                SaveDialogBox.DiagramfileName = await jsRuntime.InvokeAsync<string>("getDiagramFileName", "");
+                await SaveDialogBox.SaveDialog.Show();
+                #endif
                 break;
             case "open":
                 File = true;
@@ -440,8 +455,19 @@
                 await SaveDialogBox.SaveDialog.Show();
                 break;
             case "print":
+                #if SERVER
                 File = true;
                 await PrintDialogBox.PrintDialog.ShowAsync();
+                #endif
+                #if WASM
+                File = true;
+                await PrintDialogBox.PrintDialog.ShowAsync();
+                #endif
+                #if MAUI
+                File = true;
+                await PrintDialogBox.PrintDialog.ShowAsync();
+                //await jsRuntime.InvokeAsync<string>("printContent",diagram.ID);
+                #endif
                 break;
             case "export":
                 File = true;

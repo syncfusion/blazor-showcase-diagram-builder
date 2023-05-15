@@ -158,7 +158,16 @@ function removeSelectedToolbarItem(tool) {
         document.getElementById('btnDrawConnector').classList.add('tb-item-selected');
     }
 }
-
+function RestartApplication() {
+    location.reload();
+}
+function printContent(diagram) {
+    var content = document.getElementById(diagram);
+    var originalContents = document.body.innerHTML;
+    document.body.innerHTML = content.innerHTML;
+    window.print();
+    document.body.innerHTML = originalContents;
+}
 function CommonKeyboardCommands_newDiagram() {
     var origin = window.location.origin;
     if (!origin) {
