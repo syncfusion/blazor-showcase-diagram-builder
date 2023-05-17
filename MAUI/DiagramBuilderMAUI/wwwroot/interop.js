@@ -167,7 +167,9 @@ function printContent(diagram) {
     document.body.innerHTML = content.innerHTML;
     window.print();
     document.body.innerHTML = originalContents;
+    location.reload();
 }
+
 function CommonKeyboardCommands_newDiagram() {
     var origin = window.location.origin;
     if (!origin) {

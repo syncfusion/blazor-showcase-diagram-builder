@@ -340,7 +340,7 @@
         {
             case "new":
                 #if SERVER
-               File = true;
+                File = true;
                 await jsRuntime.InvokeVoidAsync("CommonKeyboardCommands_newDiagram");
                 #endif
                 #if WASM
@@ -465,8 +465,7 @@
                 #endif
                 #if MAUI
                 File = true;
-                await PrintDialogBox.PrintDialog.ShowAsync();
-                //await jsRuntime.InvokeAsync<string>("printContent",diagram.ID);
+                await jsRuntime.InvokeAsync<string>("printContent",diagram.ID);
                 #endif
                 break;
             case "export":
