@@ -339,11 +339,7 @@
         switch (commandType.ToLower())
         {
             case "new":
-                #if SERVER
-                File = true;
-                await jsRuntime.InvokeVoidAsync("CommonKeyboardCommands_newDiagram");
-                #endif
-                #if WASM
+                #if SERVER || WASM
                 File = true;
                 await jsRuntime.InvokeVoidAsync("CommonKeyboardCommands_newDiagram");
                 #endif
@@ -455,11 +451,7 @@
                 await SaveDialogBox.SaveDialog.Show();
                 break;
             case "print":
-                #if SERVER
-                File = true;
-                await PrintDialogBox.PrintDialog.ShowAsync();
-                #endif
-                #if WASM
+                #if SERVER || WASM
                 File = true;
                 await PrintDialogBox.PrintDialog.ShowAsync();
                 #endif
