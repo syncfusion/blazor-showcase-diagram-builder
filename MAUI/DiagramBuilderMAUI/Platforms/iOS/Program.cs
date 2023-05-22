@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace DiagramBuilderMAUI;
+namespace DiagramBuilder;
 
 public class Program
 {

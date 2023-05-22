@@ -186,23 +186,23 @@
 
     public async Task BlankMindMapDiagram()
     {
-        #if SERVER
         Parent.MindMapPropertyPanel.IsMindMap = true;
+        #if SERVER
         LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/BlankDiagram.json");
-        CurrentDiagramVisibility("mindmap-diagram");
-        //await Task.Delay(2500);
-        TemplateType = "Template1";
-        await Parent.Toolbar.HideElements("hide-palette");
-        Parent.MindMapPropertyPanel.bindMindMapProperties();
-        RemoveUnwantedMindmapMenubarItems();
-        Parent.LeftSideBar.sidebarVisibility = "none";
-        Parent.LeftSideBar.StateChanged();
-        //Parent.MindMapPropertyPanel.MindmapPatternChange("pattern1");
         #endif
         #if WASM
         Parent.MindMapPropertyPanel.IsMindMap = true;
         content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/BlankDiagram.json");
         this.Parent.DiagramContent.LoadNewDiagram(content);
+        #endif
+        #if MAUI
+        Parent.MindMapPropertyPanel.IsMindMap = true;
+        string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+        var files = Directory.GetFiles(wwwroot,"BlankDiagram.json", SearchOption.AllDirectories);
+        var json = await System.IO.File.ReadAllTextAsync(files[0]);
+        json = json.Replace(System.Environment.NewLine, string.Empty);
+        this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
+        #endif
         IsOpenDialogVisible = false;
         StateHasChanged();
         CurrentDiagramVisibility("mindmap-diagram");
@@ -212,7 +212,6 @@
         RemoveUnwantedMindmapMenubarItems();
         Parent.LeftSideBar.sidebarVisibility = "none";
         Parent.LeftSideBar.StateChanged();
-        #endif
     }
 
     public void BlankOrgChartDiagram()
@@ -229,32 +228,32 @@
 
     public async Task BusinessPlanningDiagram()
     {
-    #if SERVER
-    Parent.MindMapPropertyPanel.IsMindMap = true;
-    LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/BusinessPlanning.json");
-    CurrentDiagramVisibility("mindmap-diagram");
-    //await Task.Delay(2500);
-    await Parent.MenuBar.BusinessPlanningDiagram();
-    TemplateType = "Template2";
-    Parent.MindMapPropertyPanel.bindMindMapProperties();
-    RemoveUnwantedMindmapMenubarItems();
-    Parent.LeftSideBar.sidebarVisibility = "none";
-    Parent.LeftSideBar.StateChanged();
-    #endif
-    #if WASM
-    Parent.MindMapPropertyPanel.IsMindMap = true;
-    content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/BusinessPlanning.json");
-    this.Parent.DiagramContent.LoadNewDiagram(content);
-    IsOpenDialogVisible = false;
-    StateHasChanged();
-    CurrentDiagramVisibility("mindmap-diagram");
-    await Parent.MenuBar.BusinessPlanningDiagram();
-    TemplateType = "Template2";
-    Parent.MindMapPropertyPanel.bindMindMapProperties();   
-    RemoveUnwantedMindmapMenubarItems();
-    Parent.LeftSideBar.sidebarVisibility = "none";
-    Parent.LeftSideBar.StateChanged();
-    #endif
+        #if SERVER
+        Parent.MindMapPropertyPanel.IsMindMap = true;
+        LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/BusinessPlanning.json");
+        #endif
+        #if WASM
+        Parent.MindMapPropertyPanel.IsMindMap = true;
+        content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/BusinessPlanning.json");
+        this.Parent.DiagramContent.LoadNewDiagram(content);
+        #endif
+        #if MAUI
+        Parent.MindMapPropertyPanel.IsMindMap = true;
+        string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+        var files = Directory.GetFiles(wwwroot,"BusinessPlanning.json", SearchOption.AllDirectories);
+        var json = await System.IO.File.ReadAllTextAsync(files[0]);
+        json = json.Replace(System.Environment.NewLine, string.Empty);
+        this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
+        #endif
+        IsOpenDialogVisible = false;
+        StateHasChanged();
+        CurrentDiagramVisibility("mindmap-diagram");
+        await Parent.MenuBar.BusinessPlanningDiagram();
+        TemplateType = "Template2";
+        Parent.MindMapPropertyPanel.bindMindMapProperties();
+        RemoveUnwantedMindmapMenubarItems();
+        Parent.LeftSideBar.sidebarVisibility = "none";
+        Parent.LeftSideBar.StateChanged();
     }
 
     public void OrgRenderingStyle1Diagram()
@@ -270,32 +269,32 @@
 
     public async Task TQMDiagram()
     {
-    #if SERVER
+        #if SERVER
         Parent.MindMapPropertyPanel.IsMindMap = true;
-    LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/TQM.json");
-    CurrentDiagramVisibility("mindmap-diagram");
-    //await Task.Delay(2500);
-    Parent.MenuBar.TQMDiagram();
-    TemplateType = "Template3";
-    Parent.MindMapPropertyPanel.bindMindMapProperties();
-    RemoveUnwantedMindmapMenubarItems();
-    Parent.LeftSideBar.sidebarVisibility = "none";
-    Parent.LeftSideBar.StateChanged();
-    #endif
-    #if WASM
-    Parent.MindMapPropertyPanel.IsMindMap = true;
-    content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/TQM.json");
-    this.Parent.DiagramContent.LoadNewDiagram(content);
-    IsOpenDialogVisible = false;
-    StateHasChanged();
-    CurrentDiagramVisibility("mindmap-diagram");
-    await Parent.MenuBar.TQMDiagram();
-    TemplateType = "Template3";
-    Parent.MindMapPropertyPanel.bindMindMapProperties();
-    RemoveUnwantedMindmapMenubarItems();
-    Parent.LeftSideBar.sidebarVisibility = "none";
-    Parent.LeftSideBar.StateChanged();
-    #endif       
+        LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/TQM.json");
+        #endif
+        #if WASM
+        Parent.MindMapPropertyPanel.IsMindMap = true;
+        content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/TQM.json");
+        this.Parent.DiagramContent.LoadNewDiagram(content);
+        #endif      
+        #if MAUI
+        Parent.MindMapPropertyPanel.IsMindMap = true;
+        string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+        var files = Directory.GetFiles(wwwroot,"TQM.json", SearchOption.AllDirectories);
+        var json = await System.IO.File.ReadAllTextAsync(files[0]);
+        json = json.Replace(System.Environment.NewLine, string.Empty);
+        this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
+        #endif
+        IsOpenDialogVisible = false;
+        StateHasChanged();
+        CurrentDiagramVisibility("mindmap-diagram");
+        await Parent.MenuBar.TQMDiagram();
+        TemplateType = "Template3";
+        Parent.MindMapPropertyPanel.bindMindMapProperties();
+        RemoveUnwantedMindmapMenubarItems();
+        Parent.LeftSideBar.sidebarVisibility = "none";
+        Parent.LeftSideBar.StateChanged();
     }
 
     public void OrgRenderingStyle2Diagram()
@@ -311,32 +310,32 @@
 
     public async Task SoftwareLifeCycleDiagram()
     {
-    #if SERVER
-    Parent.MindMapPropertyPanel.IsMindMap = true;
-    LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/SoftwareDevelopmentLifeCycle.json");
-    CurrentDiagramVisibility("mindmap-diagram");
-    //await Task.Delay(2500);
-    Parent.MenuBar.SoftwareLifeCycleDiagram();
-    TemplateType = "Template4";
-    Parent.MindMapPropertyPanel.bindMindMapProperties();
-    RemoveUnwantedMindmapMenubarItems();
-    Parent.LeftSideBar.sidebarVisibility = "none";
-    Parent.LeftSideBar.StateChanged();
-    #endif
-    #if WASM
-    Parent.MindMapPropertyPanel.IsMindMap = true;
-    content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/SoftwareDevelopmentLifeCycle.json");
-    this.Parent.DiagramContent.LoadNewDiagram(content);
-    IsOpenDialogVisible = false;
-    StateHasChanged();
-    CurrentDiagramVisibility("mindmap-diagram");
-    await Parent.MenuBar.SoftwareLifeCycleDiagram();
-    TemplateType = "Template4";
-    Parent.MindMapPropertyPanel.bindMindMapProperties();
-    RemoveUnwantedMindmapMenubarItems();
-    Parent.LeftSideBar.sidebarVisibility = "none";
-    Parent.LeftSideBar.StateChanged();
-    #endif       
+        #if SERVER
+        Parent.MindMapPropertyPanel.IsMindMap = true;
+        LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/SoftwareDevelopmentLifeCycle.json");
+        #endif
+        #if WASM
+        Parent.MindMapPropertyPanel.IsMindMap = true;
+        content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/SoftwareDevelopmentLifeCycle.json");
+        this.Parent.DiagramContent.LoadNewDiagram(content);
+        #endif       
+        #if MAUI
+        Parent.MindMapPropertyPanel.IsMindMap = true;
+        string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+        var files = Directory.GetFiles(wwwroot,"SoftwareDevelopmentLifeCycle.json", SearchOption.AllDirectories);
+        var json = await System.IO.File.ReadAllTextAsync(files[0]);
+        json = json.Replace(System.Environment.NewLine, string.Empty);
+        this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
+        #endif
+        IsOpenDialogVisible = false;
+        StateHasChanged();
+        CurrentDiagramVisibility("mindmap-diagram");
+        await Parent.MenuBar.SoftwareLifeCycleDiagram();
+        TemplateType = "Template4";
+        Parent.MindMapPropertyPanel.bindMindMapProperties();
+        RemoveUnwantedMindmapMenubarItems();
+        Parent.LeftSideBar.sidebarVisibility = "none";
+        Parent.LeftSideBar.StateChanged();
     }
 
     public void OrgRenderingStyle3Diagram()

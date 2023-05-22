@@ -252,7 +252,7 @@
         }
     }
 
-    private async Task SelectionChanged(SelectionChangedEventArgs args)
+    private async Task SelectionChanged(Syncfusion.Blazor.Diagram.SelectionChangedEventArgs args)
     {
         bool hasContinuousDraw = Diagram.InteractionController.HasFlag(DiagramInteractions.ContinuousDraw);
         if ((!hasContinuousDraw) || (hasContinuousDraw && Diagram.DrawingObject != null && args.NewValue.Count > 0))

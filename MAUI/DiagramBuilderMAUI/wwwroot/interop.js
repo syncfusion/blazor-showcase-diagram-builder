@@ -158,6 +158,17 @@ function removeSelectedToolbarItem(tool) {
         document.getElementById('btnDrawConnector').classList.add('tb-item-selected');
     }
 }
+function RestartApplication() {
+    location.reload();
+}
+function printContent(diagram) {
+    var content = document.getElementById(diagram);
+    var originalContents = document.body.innerHTML;
+    document.body.innerHTML = content.innerHTML;
+    window.print();
+    document.body.innerHTML = originalContents;
+    location.reload();
+}
 
 function CommonKeyboardCommands_newDiagram() {
     var origin = window.location.origin;
@@ -390,4 +401,41 @@ function loadFile(file) {
 
 function loadDiagram(event) {
     return event.target.result.toString();
+}
+window.downloadPdf = function downloadPdf(base64String, fileName) {
+    var sliceSize = 512;
+    var byteCharacters = atob(base64String);
+    var byteArrays = [];
+
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+        var byteNumbers = new Array(slice.length);
+
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        var byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+
+    var blob = new Blob(byteArrays, {
+        type: 'application/pdf'
+    });
+    var blobUrl = window.URL.createObjectURL(blob);
+    this.triggerDownload("PDF", fileName, blobUrl);
+}
+
+triggerDownload: function triggerDownload(type, fileName, url) {
+    var anchorElement = document.createElement('a');
+    anchorElement.download = fileName + '.' + type.toLocaleLowerCase();
+    anchorElement.href = url;
+    anchorElement.click();
+}
+function getViewportBounds() {
+
+    var bounds = document.getElementsByClassName('e-control e-diagram e-lib e-droppable e-tooltip')[0].getBoundingClientRect();
+
+    return { width: bounds.width, height: bounds.height };
+
 }
