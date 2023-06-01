@@ -733,7 +733,7 @@
         }
         return tool;
     }
-    public class AddRightTool : DragController
+    public class AddRightTool : InteractionControllerBase
     {
         SfDiagramComponent diagram;
         DiagramMain parent;
@@ -748,7 +748,7 @@
         }
     }
     // Custom tool to add the node.
-    public class AddLeftTool : DragController
+    public class AddLeftTool : InteractionControllerBase
     {
         SfDiagramComponent diagram;
         DiagramMain parent;
@@ -762,7 +762,7 @@
             parent.DiagramContent.AddRemoveChildNode("Left");
         }
     }
-    public class DeleteTool : DragController
+    public class DeleteTool : InteractionControllerBase
     {
         SfDiagramComponent diagram;
         DiagramMain parent;
