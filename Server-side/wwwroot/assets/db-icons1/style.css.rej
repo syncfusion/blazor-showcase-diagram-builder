@@ -1,0 +1,12 @@
+diff a/server-side/wwwroot/assets/db-icons1/style.css b/server-side/wwwroot/assets/db-icons1/style.css	(rejected hunks)
+@@ -5,6 +5,10 @@ url('Fonts/All icons Metrop.ttf') format('truetype'),
+ url('Fonts/All icons Metrop.woff') format('woff'),
+ url('Fonts/All icons Metrop.eot') format('eot'),
+ url('Fonts/All icons Metrop.svg?#All icons Metrop') format('svg');
++/*url('Fonts/Diagram Builder Font Icon.ttf') format('truetype'),
++url('Fonts/Diagram Builder Font Icon.woff') format('woff'),
++url('Fonts/Diagram Builder Font Icon.eot') format('eot'),
++url('Fonts/Diagram Builder Font Icon.svg?#Diagram Builder Font Icon') format('svg');*/
+ font-weight: normal;
+ font-style: normal;
+ }

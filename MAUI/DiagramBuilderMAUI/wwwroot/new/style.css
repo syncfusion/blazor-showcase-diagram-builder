@@ -1,258 +1,371 @@
 @font-face {
-  font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?ftjofa');
-  src:  url('fonts/icomoon.eot?ftjofa#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?ftjofa') format('truetype'),
-    url('fonts/icomoon.woff?ftjofa') format('woff'),
-    url('fonts/icomoon.svg?ftjofa#icomoon') format('svg');
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
+    font-family: 'icomoon';
+    src: url('Fonts/icomoon.ttf') format('truetype'), url('Fonts/icomoon.woff') format('woff'), url('Fonts/icomoon.eot') format('eot'), url('Fonts/icomoon.svg?#icomoon') format('svg');
+    /*url('Fonts/Diagram Builder Font Icon.ttf') format('truetype'),
+url('Fonts/Diagram Builder Font Icon.woff') format('woff'),
+url('Fonts/Diagram Builder Font Icon.eot') format('eot'),
+url('Fonts/Diagram Builder Font Icon.svg?#Diagram Builder Font Icon') format('svg');*/
+    font-weight: normal;
+    font-style: normal;
 }
 
 [class^="sf-icon-"], [class*=" sf-icon-"] {
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'icomoon' !important;
-  speak: never;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-size: 55px;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .sf-icon-Underline:before {
-  content: "\e700";
+    content: "\e700";
 }
+
 .sf-icon-InsertImage:before {
-  content: "\e701";
+    content: "\e701";
 }
+
 .sf-icon-Lock:before {
-  content: "\e702";
+    content: "\e702";
 }
+
 .sf-icon-Search:before {
-  content: "\e703";
+    content: "\e703";
 }
+
 .sf-icon-BringForward:before {
-  content: "\e704";
+    content: "\e704";
 }
+
 .sf-icon-ConnectorMode:before {
-  content: "\e705";
+    content: "\e705";
 }
+
 .sf-icon-Bold:before {
-  content: "\e706";
+    content: "\e706";
 }
+
 .sf-icon-Sendback:before {
-  content: "\e707";
+    content: "\e707";
 }
+
 .sf-icon-ZoomOut:before {
-  content: "\e708";
+    content: "\e708";
 }
+
 .sf-icon-Redo:before {
-  content: "\e709";
+    content: "\e709";
 }
+
 .sf-icon-Unlock1:before {
-  content: "\e70a";
+    content: "\e70a";
 }
+
 .sf-icon-AilgnTop:before {
-  content: "\e70b";
+    content: "\e70b";
 }
+
 .sf-icon-Copy:before {
-  content: "\e70c";
+    content: "\e70c";
 }
+
 .sf-icon-Square:before {
-  content: "\e70d";
+    content: "\e70d";
 }
+
 .sf-icon-Print:before {
-  content: "\e70e";
+    content: "\e70e";
 }
+
 .sf-icon-DistributeVertical:before {
-  content: "\e70f";
+    content: "\e70f";
 }
+
 .sf-icon-AlignHorizontally:before {
-  content: "\e710";
+    content: "\e710";
 }
+
+.sf-icon-BringFront:before {
+    content: "\e711";
+}
+
 .sf-icon-Delete:before {
-  content: "\e712";
+    content: "\e712";
 }
+
 .sf-icon-Unlock:before {
-  content: "\e713";
+    content: "\e713";
 }
+
 .sf-icon-Ungroup:before {
-  content: "\e714";
+    content: "\e714";
 }
+
 .sf-icon-Selection:before {
-  content: "\e715";
+    content: "\e715";
 }
+
 .sf-icon-Ellipse:before {
-  content: "\e716";
+    content: "\e716";
 }
+
 .sf-icon-TextHorizontalCenter:before {
-  content: "\e717";
+    content: "\e717";
 }
+
 .sf-icon-ColorPickers:before {
-  content: "\e718";
+    content: "\e718";
 }
+
 .sf-icon-Expander:before {
-  content: "\e719";
+    content: "\e719";
 }
+
 .sf-icon-TextLeft:before {
-  content: "\e71a";
+    content: "\e71a";
 }
+
 .sf-icon-DownArrow:before {
-  content: "\e71b";
+    content: "\e71b";
 }
+
 .sf-icon-ZoomIn:before {
-  content: "\e71c";
+    content: "\e71c";
 }
+
 .sf-icon-Shape_Rectangle:before {
-  content: "\e71d";
+    content: "\e71d";
 }
+
 .sf-icon-SendBackward:before {
-  content: "\e71e";
+    content: "\e71e";
 }
+
 .sf-icon-ColorFormat:before {
-  content: "\e71f";
+    content: "\e71f";
 }
+
 .sf-icon-Triangle:before {
-  content: "\e720";
+    content: "\e720";
 }
+
 .sf-icon-Up:before {
-  content: "\e721";
+    content: "\e721";
 }
+
 .sf-icon-Group:before {
-  content: "\e722";
+    content: "\e722";
 }
+
 .sf-icon-AlignBottom:before {
-  content: "\e723";
+    content: "\e723";
 }
+
 .sf-icon-TextTop:before {
-  content: "\e724";
+    content: "\e724";
 }
+
 .sf-icon-TextRight:before {
-  content: "\e725";
+    content: "\e725";
 }
+
 .sf-icon-InsertText:before {
-  content: "\e726";
+    content: "\e726";
 }
+
 .sf-icon-RoundedSquare:before {
-  content: "\e727";
+    content: "\e727";
 }
+
 .sf-icon-Collapse1:before {
-  content: "\e728";
+    content: "\e728";
 }
+
 .sf-icon-DistributeHorizontal:before {
-  content: "\e729";
+    content: "\e729";
 }
+
 .sf-icon-Invisible:before {
-  content: "\e72a";
+    content: "\e72a";
 }
+
 .sf-icon-Shape_Circle:before {
-  content: "\e72b";
+    content: "\e72b";
 }
+
 .sf-icon-Down:before {
-  content: "\e72c";
+    content: "\e72c";
 }
+
 .sf-icon-AlignLeft:before {
-  content: "\e72d";
+    content: "\e72d";
 }
+
 .sf-icon-Paste:before {
-  content: "\e72e";
+    content: "\e72e";
 }
+
 .sf-icon-AlignRight:before {
-  content: "\e72f";
+    content: "\e72f";
 }
+
 .sf-icon-AlignVertically:before {
-  content: "\e730";
+    content: "\e730";
 }
+
 .sf-icon-ParaAlignCenter:before {
-  content: "\e731";
+    content: "\e731";
 }
+
 .sf-icon-Plus:before {
-  content: "\e732";
+    content: "\e732";
 }
+
 .sf-icon-View:before {
-  content: "\e733";
+    content: "\e733";
 }
+
 .sf-icon-Italic:before {
-  content: "\e734";
+    content: "\e734";
 }
+
 .sf-icon-Export:before {
-  content: "\e735";
+    content: "\e735";
 }
+
 .sf-icon-StraightLine:before {
-  content: "\e736";
+    content: "\e736";
 }
+
 .sf-icon-Shape_Square:before {
-  content: "\e737";
+    content: "\e737";
 }
+
 .sf-icon-Duplicate:before {
-  content: "\e738";
+    content: "\e738";
 }
+
 .sf-icon-Close:before {
-  content: "\e739";
+    content: "\e739";
 }
+
 .sf-icon-Collapse:before {
-  content: "\e73a";
+    content: "\e73a";
 }
+
 .sf-icon-Rotate1:before {
-  content: "\e73b";
+    content: "\e73b";
 }
+
 .sf-icon-Pan:before {
-  content: "\e73c";
+    content: "\e73c";
 }
+
 .sf-icon-TextBottom:before {
-  content: "\e73d";
+    content: "\e73d";
 }
+
 .sf-icon-ParaAlignLeft:before {
-  content: "\e73e";
+    content: "\e73e";
 }
+
 .sf-icon-ParaAlignRight:before {
-  content: "\e73f";
+    content: "\e73f";
 }
+
 .sf-icon-TextInput:before {
-  content: "\e740";
+    content: "\e740";
 }
+
 .sf-icon-Pickers:before {
-  content: "\e741";
+    content: "\e741";
 }
+
 .sf-icon-TextVerticalCenter:before {
-  content: "\e742";
+    content: "\e742";
 }
+
 .sf-icon-InsertLink:before {
-  content: "\e743";
+    content: "\e743";
 }
+
 .sf-icon-Undo:before {
-  content: "\e744";
+    content: "\e744";
 }
+
 .sf-icon-Cut:before {
-  content: "\e745";
+    content: "\e745";
 }
+
 .sf-icon-Save:before {
-  content: "\e746";
+    content: "\e746";
 }
+
 .sf-icon-DrawingMode:before {
-  content: "\e747";
+    content: "\e747";
 }
+
 .sf-icon-Rotate:before {
-  content: "\e748";
+    content: "\e748";
 }
+
 .sf-icon-Layers:before {
-  content: "\e749";
+    content: "\e749";
 }
+
 .sf-icon-BeizerLine:before {
-  content: "\e74a";
+    content: "\e74a";
 }
+
 .sf-icon-Lock1:before {
-  content: "\e74b";
+    content: "\e74b";
 }
+
 .sf-icon-Order:before {
-  content: "\e74c";
+    content: "\e74c";
 }
+
 .sf-icon-Selector:before {
-  content: "\e74d";
+    content: "\e74d";
+}
+
+.sf-icon-add-child:before {
+    content: "\e74e";
+}
+
+.sf-icon-add-sibling:before {
+    content: "\e74f";
+}
+
+.sf-icon-multiple-child:before {
+    content: "\e750";
+}
+
+.sf-icon-properties:before {
+    content: "\e751";
+}
+
+.sf-icon-aspect-ratio-enable:before {
+    content: "\e752";
+}
+
+.sf-icon-aspect-ratio-disable:before {
+    content: "\e753";
+}
+
+.sf-icon-gradient-alignemnt:before {
+    content: "\e754";
+}
+
+.sf-icon-add-same-level-child:before {
+    content: "\e755";
+}
+
+.sf-icon-move:before {
+    content: "\e756";
 }

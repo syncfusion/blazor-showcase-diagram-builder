@@ -3,6 +3,12 @@ html, body {
     height: 100%;
     overflow: hidden;
 }
+html, body {
+    height: 100%;
+    overflow: hidden;
+    font-family: "Roboto","GeezaPro","DejaVu Serif";
+    letter-spacing: 0.3px;
+}
 
 #DiagramTooltip {
     width: 100% !important;
@@ -13,6 +19,11 @@ html, body {
 .db-menu-container,
 .db-diagram-name-container {
     height: 32px;
+}
+
+.db-header-container {
+    background-color: #046AE5;
+    width: 100%;
 }
 
 .db-diagram-name-container {
@@ -34,6 +45,7 @@ html, body {
 
     .db-diagram-name-container.db-edit-name #diagramEditable {
         display: block;
+        color: black;
     }
 
 #diagramName:hover {
@@ -46,8 +58,7 @@ html, body {
 
 .db-toolbar-editor {
     height: 48px;
-    background-color: #e3e3e3;
-    padding: 10px 20px;
+    padding: 3px 20px;
 }
 
 .db-toolbar-container {
@@ -57,12 +68,18 @@ html, body {
 
 .db-toolbar-hide-btn {
     float: right;
+    margin-top: 5px;
 }
 
     .db-toolbar-hide-btn .e-btn {
         box-shadow: 0 0 0 0;
         background-color: transparent;
     }
+    .db-diagram-name {
+    color: #ffffff;
+    font-size: 12px;
+    float: left;
+}
 
 /* Main Content Customization */
 
@@ -115,16 +132,6 @@ html, body {
     border-left: 1px solid #CBCBCB;
     border-top: 1px solid #CBCBCB;
 }
-
-/* SymbolPalette - Customization Start */
-.e-accordion .e-acrdn-item.e-select.e-selected.e-active > .e-acrdn-header {
-    border-bottom: 1px solid #CBCBCB;
-}
-
-.e-accordion .e-acrdn-item .e-acrdn-header .e-acrdn-header-content {
-    font-size: 12px;
-}
-/* SymbolPalette - Customization End */
 
 /* Window Show/Hide Customization - start */
 
@@ -200,7 +207,114 @@ html, body {
     display: none;
 }
 
+.diagrambuilder-container.custom-diagram .db-palette-more-shapes {
+    display: none;
+}
+
 /* Window Show/Hide Customization - end */
+
+/* Diagram Template Style - Start */
+
+.db-diagram-template-div {
+    padding: 10px 0px 10px 10px;
+    float: left;
+}
+
+.db-diagram-template-image-div {
+    height: 160px;
+    width: 160px;
+    background: #fff;
+    border: 1px solid #D5D5D5;
+    cursor: pointer;
+}
+
+.db-diagram-template-svg-blank-image {
+    background-color: white;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 32px;
+    background-position: center;
+    margin: 64px;
+    pointer-events: none;
+}
+
+.db-diagram-template-svg-image {
+    background-color: white;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 135px;
+    height: 135px;
+    background-position: center;
+    margin: 11.5px;
+    pointer-events: none;
+}
+
+.db-diagram-template-image {
+    background-color: white;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 123px;
+    height: 123px;
+    background-position: center;
+    pointer-events: none;
+}
+
+    .db-diagram-template-image:hover {
+        border-color: #333333;
+    }
+
+.db-diagram-template-text {
+    height: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    color: black;
+    padding-top: 5px;
+}
+
+    .db-diagram-template-text span {
+        display: block;
+        width: 160px;
+        text-align: center;
+    }
+
+.db-diagram-template-parent-text {
+    font-size: 12px;
+    color: black;
+    padding: 8px 0px;
+    padding-left: 16px;
+    cursor: pointer;
+    height: 30px;
+}
+
+    .db-diagram-template-parent-text.active {
+        background-color: #EEEEEE;
+        color: #046AE5;
+    }
+
+    .db-diagram-template-parent-text:hover {
+        background-color: #EEEEEE;
+    }
+
+    .db-diagram-template-parent-text span {
+        pointer-events: none;
+    }
+
+.temp-left-pane {
+    border-right: 1px solid #D4D4D4;
+    height: 424px;
+    padding: 0px;
+}
+
+.temp-right-pane {
+    height: 424px;
+}
+
+#openTemplateDialog .e-dlg-content {
+    padding: 0px;
+}
+
+/* Diagram Template Style - End */
 
 /* Page Options Customizaion - Start */
 
@@ -217,83 +331,6 @@ html, body {
 
 /* Page Options Customizaion - End */
 
-/* Menu Bar Customization - Start */
-.e-dropdown-popup .e-contextmenu {
-    width: 225px;
-}
-
-.e-contextmenu-container ul .e-menu-item.e-blankicon,
-.e-dropdown-popup ul .e-item.e-blank-icon {
-    padding-left: 32px;
-}
-/* Menu Bar Customization - End */
-
-/* Toolbar Customization - Start */
-
-.e-toolbar .e-toolbar-items {
-    height: 28px;
-    width: 100%;
-    background: #e3e3e3;
-}
-
-#toolbarEditor .e-toolbar-items .e-toolbar-item.e-separator {
-    margin: 0px;
-    width: calc((100% - 988px)/8);
-    background-color: #e3e3e3;
-}
-
-.e-toolbar .e-dropdown-btn .e-btn-icon:not(.e-caret) {
-    color: #757575;
-    font-size: 14px;
-    line-height: 0px;
-}
-
-.db-ddl-template-style .ddl-svg-style {
-    background-repeat: no-repeat;
-    width: 140px;
-    height: 24px;
-    display: block;
-    margin-top: 10px;
-}
-
-.e-input-value .db-ddl-template-style .ddl-svg-style {
-    width: 34px;
-}
-
-.db-ddl-template-style {
-    padding: 6px 10px;
-    height: 36px;
-}
-
-.e-input-value .db-ddl-template-style {
-    padding: 2px 10px;
-    height: 30px;
-}
-
-.ddl_linestyle_none {
-    background-image: url('common_images/linestyle/0,0.svg');
-}
-
-.ddl_linestyle_one_two {
-    background-image: url('common_images/linestyle/1,2.svg');
-}
-
-.ddl_linestyle_three_three {
-    background-image: url('common_images/linestyle/3,3.svg');
-}
-
-.ddl_linestyle_five_three {
-    background-image: url('common_images/linestyle/5,3.svg');
-}
-
-.ddl_linestyle_four_four_one {
-    background-image: url('common_images/linestyle/4,4,1.svg');
-}
-
-.e-toolbar .e-toolbar-items:first-child > .e-toolbar-item:last-child {
-    margin-right: 0px;
-}
-
 /* Toolbar Disable - Start */
 
 #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-fill,
@@ -301,33 +338,24 @@ html, body {
 #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-align-category,
 #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-space-category,
 #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-lock-category,
-#toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-group, #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-ungroup,
 #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-order,
+#toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-sibling,
+#toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-child,
 #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-undo, #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-redo {
     pointer-events: none;
 }
 
-    #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-fill .e-dropdown-btn.e-btn,
-    #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-stroke .e-dropdown-btn.e-btn,
-    #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-align-category .e-tbar-btn,
-    #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-space-category .e-tbar-btn,
-    #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-lock-category .e-tbar-btn,
-    #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-group .e-tbar-btn, #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-ungroup .e-tbar-btn,
-    #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-order .e-dropdown-btn,
-    #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-undo .e-tbar-btn, #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-redo .e-tbar-btn {
-        background: #f5f5f5;
+    #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-fill .e-icons.e-btn-icon,
+    #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-stroke .e-icons.e-btn-icon,
+    #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-align-category .e-icons.e-btn-icon,
+    #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-space-category .e-icons.e-btn-icon,
+    #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-lock-category .e-icons.e-btn-icon,
+    #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-order .e-dropdown-btn .e-btn-icon,
+    #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-sibling .e-icons.e-btn-icon,
+    #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-child .e-icons.e-btn-icon,
+    #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-undo .e-icons.e-btn-icon, #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-redo .e-icons.e-btn-icon {
+        color: #bababa;
     }
-
-        #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-fill .e-btn .e-btn-icon,
-        #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-stroke .e-btn .e-btn-icon,
-        #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-align-category .e-icons.e-btn-icon,
-        #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-space-category .e-icons.e-btn-icon,
-        #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-lock-category .e-icons.e-btn-icon,
-        #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-group .e-icons.e-btn-icon, #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-ungroup .e-icons.e-btn-icon,
-        #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-order .e-dropdown-btn .e-btn-icon,
-        #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-undo .e-icons.e-btn-icon, #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-redo .e-icons.e-btn-icon {
-            color: #bababa;
-        }
 
 .diagrambuilder-container.custom-diagram #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-custom-diagram-disable {
     pointer-events: none;
@@ -357,70 +385,70 @@ html, body {
     background: #7d7d7d;
 }
 
-    .e-toolbar .e-toolbar-items .e-toolbar-item.tb-item-selected .e-tbar-btn .e-icons.e-btn-icon,
-    .e-toolbar .e-toolbar-items .e-toolbar-item .e-dropdown-btn.tb-item-selected .e-btn-icon {
-        color: #ffffff;
-    }
-
-
+.e-toolbar .e-toolbar-items .e-toolbar-item.tb-item-selected .e-tbar-btn .e-icons.e-btn-icon,
+.e-toolbar .e-toolbar-items .e-toolbar-item .e-dropdown-btn.tb-item-selected .e-btn-icon,
+.tb-property-open #btnHideProperty .tb-hide-button {
+    color: #ffffff !important;
+}
 /* Toolbar Selected State - End */
 
 /* Toolbar Enable - Start */
 
 .db-toolbar-container.db-select #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-stroke,
-.db-toolbar-container.db-select #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-stroke-multiple-objects,
 .db-toolbar-container.db-select #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-lock-category,
 .db-toolbar-container.db-select #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-order,
 .db-toolbar-container.db-double #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-align-category,
 .db-toolbar-container.db-multiple #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-space-category,
 .db-toolbar-container.db-select.db-node #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-fill,
-.db-toolbar-container.db-select.db-node #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-fill-multiple-nodes,
-.db-toolbar-container.db-select.db-group #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-ungroup,
 .db-toolbar-container.db-undo #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-undo,
+.db-toolbar-container.db-child-sibling #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-child-sibling,
+.db-toolbar-container.db-child-sibling #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-child,
 .db-toolbar-container.db-redo #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-redo {
     pointer-events: all;
 }
-
-    .db-toolbar-container.db-select #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-stroke .e-dropdown-btn.e-btn,
-    .db-toolbar-container.db-select #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-lock-category .e-tbar-btn,
-    .db-toolbar-container.db-select #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-order .e-dropdown-btn,
-    .db-toolbar-container.db-double #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-align-category .e-tbar-btn,
-    .db-toolbar-container.db-multiple #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-space-category .e-tbar-btn,
-    .db-toolbar-container.db-select.db-node #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-fill .e-dropdown-btn.e-btn,
-    .db-toolbar-container.db-select.db-group #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-ungroup .e-tbar-btn,
-    .db-toolbar-container.db-undo #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-undo .e-tbar-btn,
-    .db-toolbar-container.db-redo #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-redo .e-tbar-btn {
-        background: #ffffff;
+    .db-toolbar-container.db-select #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-stroke .e-icons.e-btn-icon,
+    .db-toolbar-container.db-select #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-lock-category .e-icons.e-btn-icon,
+    .db-toolbar-container.db-select #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-order .e-dropdown-btn .e-btn-icon:not(.e-caret),
+    .db-toolbar-container.db-double #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-align-category .e-icons.e-btn-icon,
+    .db-toolbar-container.db-multiple #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-space-category .e-icons.e-btn-icon,
+    .db-toolbar-container.db-select.db-node #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-fill .e-icons.e-btn-icon,
+    .db-toolbar-container.db-undo #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-undo .e-icons.e-btn-icon,
+    .db-toolbar-container.db-child-sibling #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-child-sibling .e-icons.e-btn-icon,
+    .db-toolbar-container.db-child-sibling #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-child .e-icons.e-btn-icon,
+    .db-toolbar-container.db-redo #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-redo .e-icons.e-btn-icon,
+    .db-toolbar-container.db-select #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-stroke .tb-icons.e-btn-icon,
+    .db-toolbar-container.db-select #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-fill .tb-icons.e-btn-icon,
+    .db-toolbar-container.db-select.db-double #toolbarEditor .e-toolbar-items .e-toolbar-item .tb-item-fill-multiple-nodes.tb-icons.e-btn-icon,
+    .db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-pointer .tb-icons.e-btn-icon,
+    .db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-pan .tb-icons.e-btn-icon,
+    .db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-drawtools-dropdown-btn .e-btn-icon,
+    .db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-drawtools-text .tb-icons.e-btn-icon,
+    .db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item .e-zoomoption,
+    .tb-property-close #btnHideProperty .tb-hide-button,
+    #rotateIconBtn .tb-icons e-btn-icon,
+    .e-aspectRatioBtn .e-btn-icon
+    {
+        color: #6C727F;
+    }
+    .e-dropdown-popup ul .e-item .e-menu-icon {
+        color: #6C727F !important;
     }
 
-        .db-toolbar-container.db-select #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-stroke .e-btn .e-btn-icon,
-        .db-toolbar-container.db-select #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-lock-category .e-icons.e-btn-icon,
-        .db-toolbar-container.db-select #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-order .e-dropdown-btn .e-btn-icon:not(.e-caret),
-        .db-toolbar-container.db-double #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-align-category .e-icons.e-btn-icon,
-        .db-toolbar-container.db-multiple #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-space-category .e-icons.e-btn-icon,
-        .db-toolbar-container.db-select.db-node #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-fill .e-btn .e-btn-icon,
-        .db-toolbar-container.db-select.db-group #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-ungroup .e-icons.e-btn-icon,
-        .db-toolbar-container.db-undo #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-undo .e-icons.e-btn-icon,
-        .db-toolbar-container.db-redo #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-redo .e-icons.e-btn-icon {
-            color: #757575;
-        }
+/*.e-numeric.e-input-group.e-control-wrapper:not(.e-float-icon-left):not(.e-float-input).e-input-focus::before,
+.e-numeric.e-input-group.e-control-wrapper:not(.e-float-icon-left):not(.e-float-input).e-input-focus::after {
+    width: 0% !important
+}*/
 
-/* Toolbar Enable - End */
-
-/* Toolbar Hover */
-
-.db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item .e-tbar-btn.e-btn:hover,
-.db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item .e-dropdown-btn:hover,
-.db-property-editor-container .e-toolbar .e-toolbar-items .e-toolbar-item .e-tbar-btn.e-btn:hover {
-    background: #EEEEEE;
+.db-text #rotateIconBtn {
+    background: #f2f2f2;
+    box-shadow: 0px 0px 0px 0px;
 }
 
-    .db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item .e-tbar-btn.e-btn:hover span,
-    .db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item .e-dropdown-btn:hover span,
-    .db-property-editor-container .e-toolbar .e-toolbar-items .e-toolbar-item .e-tbar-btn.e-btn:hover span {
-        color: #757575;
-    }
-
+.db-node-prop-container .db-prop-row .db-text{
+    margin-top: 6px;
+}
+/* Toolbar Enable - End */
+/* Toolbar Hover */
 .db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-selected .e-tbar-btn.e-btn:hover,
 .db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item .e-dropdown-btn.tb-item-selected:hover,
 .db-property-editor-container .e-toolbar .e-toolbar-items .e-toolbar-item.tb-item-selected .e-tbar-btn.e-btn:hover {
@@ -437,14 +465,148 @@ html, body {
     color: #ffffff;
 }
 
-/* Toolbar Customization - End */
+/* Dropdown list for border style - START */
 
+.db-ddl-template-style .ddl-svg-style {
+    background-repeat: no-repeat;
+    width: 140px;
+    height: 24px;
+    display: block;
+    margin-top: 10px;
+}
+
+.e-input-value .db-ddl-template-style .ddl-svg-style {
+    width: 34px;
+}
+
+#lineStyle .e-input-value .db-ddl-template-style .ddl-svg-style {
+    width: 115px;
+}
+
+
+.db-ddl-template-style {
+    padding: 6px 10px;
+    height: 36px;
+}
+
+.e-input-value .db-ddl-template-style {
+    padding: 2px 10px;
+    height: 28px;
+}
+.ddl_linestyle_none {
+    background-image: url('common_images/linestyle/0,0.svg');
+}
+
+.ddl_linestyle_one_two {
+    background-image: url('common_images/linestyle/1,2.svg');
+}
+
+.ddl_linestyle_three_three {
+    background-image: url('common_images/linestyle/3,3.svg');
+}
+
+.ddl_linestyle_five_three {
+    background-image: url('common_images/linestyle/5,3.svg');
+}
+
+.ddl_linestyle_four_four_one {
+    background-image: url('common_images/linestyle/4,4,1.svg');
+}
+
+
+/* Dropdown list for border style - END */
+
+/* Toolbar dropdown customization - START */
+.e-dropDown-button {
+    background-color: transparent;
+    border-color: transparent;
+    font-size: 12px;
+}
+
+.e-dropdown-popup ul {
+    font-size: 12px;
+    min-width: 150px;
+    padding: 0px;
+}
+
+    .e-dropdown-popup ul .e-menu-item, .e-contextmenu-container ul .e-menu-item {
+        height: 24px;
+        line-height: 24px;
+        padding: 0px 8px;
+    }
+
+        .e-contextmenu-container ul .e-menu-item .e-separator, .e-dropdown-popup ul .e-menu-item.e-separator {
+            margin: 0px;
+        }
+
+        .e-contextmenu-container ul .e-menu-item .e-menu-icon, .e-dropdown-popup ul .e-menu-item .e-menu-icon {
+            font-size: 12px;
+            line-height: 24px;
+            margin-right: 8px;
+            color: #888888;
+        }
+
+.e-dropdown-popup.e-arrange-menu ul {
+    width: 225px;
+}
+
+.e-dropDown-button.e-arrange-menu.e-btn-hide{
+    display: none;
+}
+/* Toolbar dropdown customization - End */
+/* Toolbar Customization - End */
 /* Property Panel Customization - Start */
+
+.db-prop-header-text {
+    font-weight: 500;
+    font-size: 13px;
+}
 
 .db-prop-row {
     margin-top: 6px;
 }
 
+.db-prop-import {
+    float: left;
+    background-image: url('./bpmn_images/Note.svg');
+    background-color: white;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    height: 18px;
+    width: 18px;
+    cursor: pointer;
+    border: none;
+    background-position: center;
+    margin-left: 5px;
+}
+
+#DropArea {
+    padding: 50px 25px;
+    margin: 30px auto;
+    border: 1px solid #c3c3c3;
+    text-align: center;
+    width: 20%;
+    display: inline-flex;
+}
+#uploadFiles {
+    width: 60%;
+    display: block;
+    margin-left: 5%;
+}
+
+.db-prop-drop-file {
+    padding: 26px 30%;
+    display: inherit;
+    border: 1px dashed #c3c3cc;
+    font-size: 13px;
+}
+.db-prop-drop-import-file {
+    padding-top: 15px;
+    position: relative;
+    display: inherit;
+    border: 1px dashed #c3c3cc;
+    font-size: 13px
+}
 .db-prop-col-style {
     padding-left: 0px;
     padding-right: 0px;
@@ -457,23 +619,60 @@ html, body {
 
 .db-col-center {
     padding-left: 0px;
-    padding-right: 7px;
+    padding-right: 0px;
+    margin-right: 0px;
 }
 
 .db-col-right {
-    padding-left: 3px;
+    padding-left: 0px;
     padding-right: 0px;
 }
 
 .db-prop-separator {
     margin-top: 15px;
     margin-bottom: 10px;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #E5E7EB;
     margin-left: -10px;
+    width: calc(100% + 20px);
 }
 
+.db-color-container,
+.db-text-container {
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #E0E0E0;
+    height: 32px;
+    border-radius: 3px;
+}
+
+    .db-text-container:hover,
+    .db-color-container:hover {
+        border: 1px solid #B2B2B2;
+    }
+
+.db-color-input {
+    width: 100%;
+}
+
+.db-color-btn {
+    width: 30px;
+    height: 100%;
+}
+
+.db-btn-import {
+    width: 60%;
+    text-transform: none;
+    box-shadow: 0 0 0 0;
+    margin-top: 7px;
+    background-color: #ffffff;
+    border-color: #D5D5D5;
+    color: #515151;
+    min-width: 100px;
+}
+}
 .db-color-input, .db-text-input {
     float: left;
+    height: 100%;
 }
 
 .db-text {
@@ -484,23 +683,56 @@ html, body {
     margin-top: 4px;
     color: #8C8C8C;
 }
-
+.db-info-text {
+    float: left;
+    height: 18px;
+    margin-top: 2px;
+}
+.db-info-style {
+    float: left;
+    background-image: url(./bpmn_images/infoImage.jpg);
+    background-color: white;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    height: 18px;
+    width: 18px;
+    cursor: pointer;
+    border: none;
+    background-position: center;
+    margin-left: 5px;
+}
+.db-dialog-child-prop-row {
+    margin-top: 6px;
+}
 .db-text-input {
     width: calc(100% - 25px);
+    padding-left: 1px;
 }
+
+    .db-text-input input {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
 
 .db-color-container .e-btn,
 .db-text-container .e-btn {
+    width: 100%;
+    height: 100%;
     padding: 0px;
+    background: transparent;
     box-shadow: 0 0 0 0;
 }
 
-    .db-color-container .e-btn .e-btn-icon,
-    .db-text-container .e-btn .e-btn-icon {
-        font-size: 14px;
-        margin-top: -4px;
-        margin-left: -4px;
-    }
+.db-color-container .e-dropdown-btn {
+    width: 30px;
+}
+
+.db-color-container .e-btn .e-btn-icon,
+.db-text-container .e-btn .e-btn-icon {
+    font-size: 14px;
+    margin-top: 0px;
+}
 
 .db-gradient-style-hide .db-col-center,
 .db-gradient-style-hide .db-col-right {
@@ -508,26 +740,28 @@ html, body {
 }
 
 .db-prop-text-style {
-    font-size: 10px;
+    font-size: 13px;
     color: #333;
     font-weight: normal;
 }
+
+.e-btn.e-flat, .e-css.e-btn.e-flat {
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    color: rgba(0, 0, 0, 0.87);
+}
 /* Property Panel Customization - End */
-
-/* Numeric Text box Customization - Start */
-
-.e-numeric.e-input-group .e-input-group-icon {
-    display: none;
+/* SymbolPalette - Customization Start */
+.e-accordion .e-acrdn-item.e-select.e-selected.e-active > .e-acrdn-header {
+    border-bottom: 1px solid #CBCBCB;
 }
 
-.e-numeric.e-input-group:hover .e-input-group-icon {
-    display: block;
+.e-accordion .e-acrdn-item .e-acrdn-header .e-acrdn-header-content {
+    font-size: 14px;
 }
-
-/* Numeric Text box Customization - End */
-
+/* SymbolPalette - Customization End */
 /* Slider Control Customization - Start */
-
 .e-control-wrapper.e-slider-container.e-horizontal,
 .e-control-wrapper.e-slider-container.e-horizontal .e-slider {
     height: 28px;
@@ -538,9 +772,92 @@ html, body {
 
 /* Dialog Customization start */
 
-.e-dialog .e-dlg-header-content + .e-dlg-content input[type="text"]:not(.e-dropdownbase):not(.db-layer-edit):not(.e-input) {
-    width: 100%;
+.e-dialog .e-dlg-header-content + .e-dlg-content {
+    padding: 16px;
 }
+
+    .e-dialog .e-dlg-header-content + .e-dlg-content input[type="text"]:not(.e-dropdownbase):not(.db-layer-edit):not(.e-input) {
+        width: 100%;
+        height: 28px;
+        font-weight: normal;
+        text-indent: 5px;
+        border: 1px solid #D5D5D5;
+    }
+
+.db-dialog-child-prop-row {
+    margin-top: 6px;
+}
+
+.db-dialog-prop-row {
+    margin-top: 8px;
+}
+
+.e-dialog .e-dlg-header-content {
+    height: 36px;
+    padding: 9.5px 4px 9.5px 16px;
+    border-bottom: 1px solid #D5D5D5;
+}
+
+    .e-dialog .e-dlg-header-content .e-btn.e-dlg-closeicon-btn {
+        left: 0px;
+        padding: 0;
+        top: -6px;
+    }
+/* Upload Dialog Customization */
+
+#fileUploadDialog .e-footer-content {
+    padding: 15px 10px 15px 0px;
+}
+
+#uploadInformationDiv {
+    display: none;
+}
+
+#parentChildRelationDiv {
+    display: none;
+}
+
+#moreInformationDiv {
+    display: none;
+}
+
+.e-dlg-content .db-upload-content.firstPage #uploadInformationDiv {
+    display: block;
+}
+
+.e-dlg-content .db-upload-content.secondPage #parentChildRelationDiv {
+    display: block;
+}
+
+.e-dlg-content .db-upload-content.thirdPage #moreInformationDiv {
+    display: block;
+}
+
+#dropArea {
+    padding-top: 15px;
+    position: relative;
+}
+
+#dropRegion {
+    padding: 26px 30%;
+    display: inherit;
+    border: 1px dashed #c3c3cc
+}
+
+.e-upload,
+.e-upload .e-upload-files .e-upload-file-list,
+.e-upload .e-upload-files {
+    border: none;
+}
+/*
+.e-file-select-wrap {
+    display: none;
+}
+*/
+.droparea {
+    font-size: 13px;
+}
+
 /* diagram template Customization */
 
 .db-diagram-template-div {
@@ -644,7 +961,6 @@ html, body {
         stroke-dashoffset: -124;
     }
 }
-
 /* Animation At Initial Rendering End */
 
 /* General Customization - start */
@@ -684,6 +1000,12 @@ html, body {
     background-color: rgba(255, 255, 255, 1);
     overflow: hidden;
     pointer-events: none;
+}
+button, input, select, textarea, .e-control.e-dropdownlist .e-input-group.e-ddl input.e-input,
+.e-numeric.e-input-group input.e-input {
+    font-size: 12px;
+    color: #000000;
+    font-weight: normal;
 }
 
 /*sb-hide */
@@ -765,7 +1087,7 @@ html, body {
 }
 
 #FileMenuItemsNew::after {
-    content: "Ctrl+N";
+    content: "Shift+N";
     float: right;
     padding-right: 8px;
 }
@@ -788,18 +1110,6 @@ html, body {
     padding-right: 8px;
 }
 
-#ArrangeMenuItemsSendToBack::after {
-    content: "Ctrl+Shift+B";
-    float: right;
-    padding-right: 8px;
-}
-
-#ArrangeMenuItemsBringToFront::after {
-    content: "Ctrl+Shift+F";
-    float: right;
-    padding-right: 8px;
-}
-
 #ArrangeMenuItemsGroup::after {
     content: "Ctrl+G";
     float: right;
@@ -811,7 +1121,229 @@ html, body {
     float: right;
     padding-right: 8px;
 }
-
-.e-checkbox-wrapper .e-frame + .e-label, .e-css.e-checkbox-wrapper .e-frame + .e-label {
-    margin-left: 3px !important;
+/* MindMap and OrgChart Property Panel Customization Start */
+.mindmap-pattern-style {
+    width: 100%;
+    height: 50px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
 }
+
+.org-pattern-parent {
+    border: 1px solid #D5D5D5;
+    background-color: #ffffff;
+    padding: 5px;
+    width: calc(50% - 5px);
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+    .org-pattern-parent:hover {
+        border: 1px solid #b2b2b2;
+    }
+
+.mindmap-pattern1 {
+    background-image: url('./mindmap_images/Mind_Map0.svg');
+}
+
+.mindmap-pattern2 {
+    background-image: url('./mindmap_images/Mind_Map1.svg');
+}
+
+.mindmap-pattern3 {
+    background-image: url('./mindmap_images/Mind_Map2.svg');
+}
+
+.mindmap-pattern4 {
+    background-image: url('./mindmap_images/Mind_Map3.svg');
+}
+
+.orgchart-pattern1 {
+    background-image: url('./orgchart_images/org-pattern1.svg');
+}
+
+.orgchart-pattern2 {
+    background-image: url('./orgchart_images/org-pattern2.svg');
+}
+.orgchart-pattern3 {
+    background-image: url('./orgchart_images/org-pattern3.svg');
+}
+.orgchart-pattern4 {
+    background-image: url('./orgchart_images/org-pattern4.svg');
+}
+.orgchart-pattern5 {
+    background-image: url('./orgchart_images/org-pattern5.svg');
+}
+.orgchart-pattern6 {
+    background-image: url('./orgchart_images/org-pattern6.svg');
+}
+
+.orgchart-template1 {
+    background-image: url('./orgchart_images/OrgTemplate1.svg');
+}
+
+.orgchart-template2 {
+    background-image: url('./orgchart_images/OrgTemplate2.svg');
+}
+
+.orgchart-template3 {
+    background-image: url('./orgchart_images/OrgTemplate3.svg');
+}
+
+.orgchart-template4 {
+    background-image: url('./orgchart_images/OrgTemplate4.svg');
+}
+
+.e-dropDown-button {
+    background-color: transparent;
+    color: #ffffff;
+    border-color: transparent;
+    font-size: 12px;
+}
+
+#btnFileMenu.e-btn.e-active, button#btnFileMenu:hover {
+    background-color: #ffffff;
+    color: #046AE5;
+}
+
+#btnEditMenu.e-btn.e-active, button#btnEditMenu:hover {
+    background-color: #ffffff;
+    color: #046AE5;
+}
+
+#btnViewMenu.e-btn.e-active, button#btnViewMenu:hover {
+    background-color: #ffffff;
+    color: #046AE5;
+}
+
+#btnArrangeMenu.e-btn.e-active, button#btnArrangeMenu:hover {
+    background-color: #ffffff;
+    color: #046AE5;
+}
+
+#btnWindowMenu.e-btn.e-active, button#btnWindowMenu:hover {
+    background-color: #ffffff;
+    color: #046AE5;
+}
+
+/* Customization Shortcut key - START */
+.db-html-font-medium {
+    color: #515151;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.db-html-font-normal {
+    color: #515151;
+    font-size: 12px;
+}
+
+/* Customization Shortcut key - END */
+
+/* Some animation occur while click the dropdown value Start */
+
+.e-ripple-element {
+    display: none;
+    visibility: hidden;
+}
+
+.e-dialog {
+    border: 1px solid #E0E0E0;
+    border-radius: 4px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.26);
+}
+.db-custom-prop-info-template {
+    margin-bottom: 8px;
+}
+
+    .db-custom-prop-info-template .propertyNameDiv {
+        width: 30%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        text-align: right;
+        padding-top: 8px;
+    }
+
+    .db-custom-prop-info-template .propertyValueDiv {
+        width: calc(60% - 10px);
+    }
+
+    .db-custom-prop-info-template .propertyLabelDiv {
+        float: left;
+        width: 5%;
+        height: 20px;
+        padding-top: 4px;
+    }
+
+#customPropertyDialog .e-dlg-content .btnRemoveProperty {
+    height: 20px;
+    width: 20px;
+    min-width: 20px;
+    padding: 0px;
+    background: transparent;
+    border: none;
+    box-shadow: 0 0 0 0;
+}
+
+    #customPropertyDialog .e-dlg-content .btnRemoveProperty .e-btn-icon {
+        padding-top: 0.5px;
+        font-size: 14px;
+    }
+
+    #customPropertyDialog .e-dlg-content .btnRemoveProperty:hover {
+        border: 1px solid #D5D5D5;
+    }
+
+.propertyTooltipDiv {
+    width: 5%;
+    float: left;
+    margin-left: 10px;
+    padding-top: 5px;
+}
+
+    .propertyTooltipDiv .e-checkbox-wrapper .e-frame {
+        width: 16px;
+        height: 16px;
+    }
+
+.db-org-diagram .db-place-holder {
+    display: none;
+}
+
+#customPropertyDialog .e-footer-content {
+    display: none;
+}
+
+#themeDialog #themeDialogContent {
+    background-color: #e3e3e3;
+}
+.e-css e-btn e-upload-browse-btn{
+    height:200px;
+    width:300px;
+}
+.db-custom-prop-info-template .propertyLabelDiv {
+    float: left;
+    width: 5%;
+    height: 20px;
+    padding-top: 4px;
+}
+#sendButton {
+    top: 2px;
+    position: relative;
+}
+.tooltip {
+    width: 100%;
+}
+td {
+    padding-right: 5px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+.e-tooltip-wrap {
+    max-width: unset;
+}
+    /* Some animation occur while click the dropdown value End */
+    /* Some animation occur while click the dropdown value End */

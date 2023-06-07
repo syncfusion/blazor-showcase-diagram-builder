@@ -1,1 +1,519 @@
-{"width":"100%","height":"100%","snapSettings":{"horizontalGridlines":{"lineIntervals":[1,9,0.25,9.75,0.25,9.75,0.25,9.75,0.25,9.75,0.25,9.75,0.25,9.75,0.25,9.75,0.25,9.75,0.25,9.75],"lineColor":"#EEEEEE","snapIntervals":[20],"lineDashArray":""},"verticalGridlines":{"lineIntervals":[1,9,0.25,9.75,0.25,9.75,0.25,9.75,0.25,9.75,0.25,9.75,0.25,9.75,0.25,9.75,0.25,9.75,0.25,9.75],"lineColor":"#EEEEEE","snapIntervals":[20],"lineDashArray":""},"constraints":16},"pageSettings":{"background":{"color":"white","source":""},"width":null,"height":null,"multiplePage":true,"margin":{"left":5,"top":5},"orientation":"Landscape","showPageBreaks":false,"boundaryConstraints":"Infinity"},"scrollSettings":{"canAutoScroll":true,"scrollLimit":"Infinity","minZoom":0.25,"maxZoom":30,"viewPortWidth":620.1157836914062,"viewPortHeight":536.7708740234375,"currentZoom":1,"horizontalOffset":0,"verticalOffset":0,"padding":{"left":0,"right":0,"top":0,"bottom":0}},"selectedItems":{"constraints":4096,"nodes":[],"connectors":[],"wrapper":null,"userHandles":[{"name":"leftHandle","pathColor":"white","backgroundColor":"#7d7d7d","borderColor":"white","pathData":"M0,3.063 L7.292,3.063 L7.292,0 L11.924,4.633 L7.292,9.266 L7.292,5.714 L0.001,5.714 L0.001,3.063Z","side":"Right","offset":0.5,"horizontalAlignment":"Center","verticalAlignment":"Center"},{"name":"rightHandle","pathColor":"white","backgroundColor":"#7d7d7d","borderColor":"white","pathData":"M11.924,6.202 L4.633,6.202 L4.633,9.266 L0,4.633 L4.632,0 L4.632,3.551 L11.923,3.551 L11.923,6.202Z","visible":true,"offset":0.5,"side":"Left","horizontalAlignment":"Center","verticalAlignment":"Center"},{"name":"removeHandle","pathColor":"white","backgroundColor":"#7d7d7d","borderColor":"white","pathData":"M 7.04 22.13 L 92.95 22.13 L 92.95 88.8 C 92.95 91.92 91.55 94.58 88.76 96.74 C 85.97 98.91 82.55 100 78.52 100 L 21.48 100 C 17.45 100 14.03 98.91 11.24 96.74 C 8.45 94.58 7.04 91.92 7.04 88.8 z M 32.22 0 L 67.78 0 L 75.17 5.47 L 100 5.47 L 100 16.67 L 0 16.67 L 0 5.47 L 24.83 5.47 z","side":"Bottom","offset":0.5,"horizontalAlignment":"Center","verticalAlignment":"Center"}],"rotateAngle":0},"getNodeDefaults":{},"getConnectorDefaults":{},"commandManager":{"commands":[{"gesture":{"key":9},"canExecute":{},"execute":{},"name":"leftChild","parameter":""},{"gesture":{"key":9,"keyModifiers":4},"canExecute":{},"execute":{},"name":"rightChild","parameter":""},{"gesture":{"key":13},"canExecute":{},"execute":{},"name":"sibilingChildTop","parameter":""},{"gesture":{"key":13,"keyModifiers":4},"canExecute":{},"execute":{},"name":"sibilingChildBottom","parameter":""},{"gesture":{"key":46},"canExecute":{},"execute":{},"name":"deleteChid","parameter":""},{"gesture":{"key":40},"canExecute":{},"execute":{},"name":"navigationDown","parameter":""},{"gesture":{"key":38},"canExecute":{},"execute":{},"name":"navigationUp","parameter":""},{"gesture":{"key":39},"canExecute":{},"execute":{},"name":"navigationLeft","parameter":""},{"gesture":{"key":37},"canExecute":{},"execute":{},"name":"navigationRight","parameter":""},{"gesture":{"key":32},"canExecute":{},"execute":{},"name":"expandCollapse","parameter":""},{"gesture":{"key":113},"canExecute":{},"execute":{},"name":"editing","parameter":""},{"gesture":{"key":112},"canExecute":{},"execute":{},"name":"showShortCut","parameter":""},{"gesture":{"key":90,"keyModifiers":1},"canExecute":{},"execute":{},"name":"undo","parameter":""},{"gesture":{"key":89,"keyModifiers":1},"canExecute":{},"execute":{},"name":"redo","parameter":""},{"gesture":{"key":88,"keyModifiers":1},"canExecute":{},"execute":{},"name":"cutObject","parameter":""},{"gesture":{"key":67,"keyModifiers":1},"canExecute":{},"execute":{},"name":"copyObject","parameter":""},{"gesture":{"key":86,"keyModifiers":1},"canExecute":{},"execute":{},"name":"pasteObject","parameter":""},{"gesture":{"key":78,"keyModifiers":4},"canExecute":{},"execute":{},"name":"New","parameter":""},{"gesture":{"key":78,"keyModifiers":4},"canExecute":{},"execute":{},"name":"New","parameter":""},{"gesture":{"key":79,"keyModifiers":1},"canExecute":{},"execute":{},"name":"Open","parameter":""},{"gesture":{"key":83,"keyModifiers":1},"canExecute":{},"execute":{},"name":"Save","parameter":""},{"gesture":{"key":187,"keyModifiers":1},"canExecute":{},"execute":{},"name":"ZoomIn","parameter":""},{"gesture":{"key":189,"keyModifiers":1},"canExecute":{},"execute":{},"name":"ZoomOut","parameter":""}]},"backgroundColor":"transparent","contextMenuSettings":{"show":false,"items":[{"text":"Duplicate","id":"duplicate"}]},"selectionChange":{},"positionChange":{},"sizeChange":{},"rotateChange":{},"contextMenuOpen":{},"contextMenuClick":{},"dragEnter":{},"historyChange":{},"scrollChange":{},"collectionChange":{},"drop":{},"getCustomTool":{},"textEdit":{},"enableRtl":false,"locale":"en-US","enablePersistence":false,"rulerSettings":{"showRulers":false},"constraints":500,"layout":{"type":"MindMap","enableAnimation":true,"horizontalSpacing":100,"verticalSpacing":50,"getBranch":{},"root":"rootNode","fixedNode":"rootNode"},"dataSourceSettings":{"dataManager":null,"crudAction":{"read":""},"connectionDataSource":{"crudAction":{"read":""}},"id":"","root":""},"mode":"SVG","layers":[{"id":"default_layer","visible":true,"lock":false,"objects":["rootNode","textNode"],"zIndex":0,"addInfo":{"name":"Layer0"}}],"nodes":[{"id":"rootNode","width":150,"minHeight":50,"annotations":[{"content":"MindMap","style":{"strokeWidth":0,"strokeColor":"transparent","fill":"transparent","color":"#000000","bold":false,"textWrapping":"WrapWithOverflow","whiteSpace":"CollapseSpace","fontFamily":"Arial","fontSize":12,"italic":false,"opacity":1,"strokeDashArray":"","textAlign":"Center","textOverflow":"Wrap","textDecoration":"None"},"id":"0annotation","hyperlink":{"link":"","content":"","textDecoration":"None"},"constraints":4,"visibility":true,"rotateAngle":0,"margin":{"right":0,"bottom":0,"left":0,"top":0},"horizontalAlignment":"Center","verticalAlignment":"Center","offset":{"x":0.5,"y":0.5}}],"shape":{"type":"Basic","shape":"Rectangle","cornerRadius":5},"ports":[{"id":"leftPort","offset":{"x":0,"y":0.5},"height":12,"width":12,"shape":"Square","margin":{"right":0,"bottom":0,"left":0,"top":0},"style":{"fill":"white","strokeColor":"black","opacity":1,"strokeDashArray":"","strokeWidth":1},"horizontalAlignment":"Center","verticalAlignment":"Center","visibility":8},{"id":"rightPort","offset":{"x":1,"y":0.5},"height":12,"width":12,"shape":"Square","margin":{"right":0,"bottom":0,"left":0,"top":0},"style":{"fill":"white","strokeColor":"black","opacity":1,"strokeDashArray":"","strokeWidth":1},"horizontalAlignment":"Center","verticalAlignment":"Center","visibility":8}],"addInfo":{"level":0},"style":{"fill":"#D0ECFF","strokeColor":"#80BFEA","strokeWidth":1,"strokeDashArray":"None","opacity":1,"gradient":{"type":"None"}},"constraints":5240750,"zIndex":0,"container":null,"offsetX":575.6134643554688,"offsetY":268.38543701171875,"visible":true,"horizontalAlignment":"Left","verticalAlignment":"Top","backgroundColor":"transparent","borderColor":"none","borderWidth":0,"rotateAngle":0,"pivot":{"x":0.5,"y":0.5},"margin":{},"flip":"None","wrapper":{"actualSize":{"width":150,"height":50},"offsetX":575.6134643554688,"offsetY":268.38543701171875},"isExpanded":true,"expandIcon":{"shape":"None"},"excludeFromLayout":false,"inEdges":[],"outEdges":[],"processId":"","isPhase":false,"isLane":false}],"connectors":[],"basicElements":[],"tooltip":{"content":""},"tool":5,"version":17.1}
+{
+  "Tooltip": null,
+  "bridgeDirection": 2,
+  "ID": "HvLxS",
+  "dataSourceSettings": null,
+  "width": "100%",
+  "contextMenuSettings": {
+    "show": false,
+    "items": null,
+    "showCustomMenuOnly": false
+  },
+  "constraints": 764,
+  "interactionController": 3,
+  "snapSettings": {
+    "verticalGridLines": {
+      "lineColor": "#EEEEEE",
+      "lineDashArray": "",
+      "lineIntervals": [
+        1,
+        9,
+        0.25,
+        9.75,
+        0.25,
+        9.75,
+        0.25,
+        9.75,
+        0.25,
+        9.75,
+        0.25,
+        9.75,
+        0.25,
+        9.75,
+        0.25,
+        9.75,
+        0.25,
+        9.75,
+        0.25,
+        9.75
+      ],
+      "dotIntervals": [
+        1,
+        19,
+        0.5,
+        19.5,
+        0.5,
+        19.5,
+        0.5,
+        19.5,
+        0.5,
+        19.5
+      ],
+      "snapIntervals": [
+        20
+      ]
+    },
+    "horizontalGridLines": {
+      "lineColor": "#EEEEEE",
+      "lineDashArray": "",
+      "lineIntervals": [
+        1,
+        9,
+        0.25,
+        9.75,
+        0.25,
+        9.75,
+        0.25,
+        9.75,
+        0.25,
+        9.75,
+        0.25,
+        9.75,
+        0.25,
+        9.75,
+        0.25,
+        9.75,
+        0.25,
+        9.75,
+        0.25,
+        9.75
+      ],
+      "dotIntervals": [
+        1,
+        19,
+        0.5,
+        19.5,
+        0.5,
+        19.5,
+        0.5,
+        19.5,
+        0.5,
+        19.5
+      ],
+      "snapIntervals": [
+        20
+      ]
+    },
+    "constraints": 0,
+    "snapDistance": 5,
+    "snapAngle": 5,
+    "gridType": 0
+  },
+  "pageSettings": {
+    "width": null,
+    "height": null,
+    "orientation": 0,
+    "boundaryConstraints": 0,
+    "multiplePage": false,
+    "showPageBreaks": false,
+    "margin": {
+      "left": 0,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    },
+    "background": {
+      "imageSource": "",
+      "background": "transparent",
+      "imageScale": 0,
+      "imageAlign": 0
+    }
+  },
+  "scrollSettings": {
+    "horizontalOffset": 0,
+    "verticalOffset": 0,
+    "currentZoom": 1,
+    "minZoom": 0.25,
+    "maxZoom": 30,
+    "scrollLimit": 1,
+    "ScrollableArea": null
+  },
+  "height": "100%",
+  "layout": {
+    "verticalSpacing": 50,
+    "bounds": null,
+    "horizontalSpacing": 100,
+    "orientation": 0,
+    "horizontalAlignment": 4,
+    "verticalAlignment": 4,
+    "arrangement": false,
+    "samePoint": true,
+    "type": 3,
+    "margin": {
+      "left": 50,
+      "right": 0,
+      "top": 50,
+      "bottom": 0
+    }
+  },
+  "commandManager": {
+    "commands": [
+      {
+        "name": "fileNew",
+        "gesture": {
+          "key": 78,
+          "modifiers": 4
+        },
+        "parameter": ""
+      },
+      {
+        "name": "fileOpen",
+        "gesture": {
+          "key": 79,
+          "modifiers": 1
+        },
+        "parameter": ""
+      },
+      {
+        "name": "fileSave",
+        "gesture": {
+          "key": 83,
+          "modifiers": 1
+        },
+        "parameter": ""
+      },
+      {
+        "name": "leftChild",
+        "gesture": {
+          "key": 9,
+          "modifiers": 0
+        },
+        "parameter": ""
+      },
+      {
+        "name": "rightChild",
+        "gesture": {
+          "key": 9,
+          "modifiers": 4
+        },
+        "parameter": ""
+      },
+      {
+        "name": "sibilingChildTop",
+        "gesture": {
+          "key": 13,
+          "modifiers": 0
+        },
+        "parameter": ""
+      },
+      {
+        "name": "sibilingChildBottom",
+        "gesture": {
+          "key": 13,
+          "modifiers": 4
+        },
+        "parameter": ""
+      },
+      {
+        "name": "navigationDown",
+        "gesture": {
+          "key": 40,
+          "modifiers": 0
+        },
+        "parameter": ""
+      },
+      {
+        "name": "navigationUp",
+        "gesture": {
+          "key": 38,
+          "modifiers": 0
+        },
+        "parameter": ""
+      },
+      {
+        "name": "navigationLeft",
+        "gesture": {
+          "key": 37,
+          "modifiers": 0
+        },
+        "parameter": ""
+      },
+      {
+        "name": "navigationRight",
+        "gesture": {
+          "key": 39,
+          "modifiers": 0
+        },
+        "parameter": ""
+      },
+      {
+        "name": "expandCollapseSpace",
+        "gesture": {
+          "key": 32,
+          "modifiers": 0
+        },
+        "parameter": ""
+      },
+      {
+        "name": "expandCollapse",
+        "gesture": {
+          "key": 69,
+          "modifiers": 4
+        },
+        "parameter": ""
+      },
+      {
+        "name": "expandCollapseRoot",
+        "gesture": {
+          "key": 69,
+          "modifiers": 1
+        },
+        "parameter": ""
+      },
+      {
+        "name": "showShortCut",
+        "gesture": {
+          "key": 112,
+          "modifiers": 0
+        },
+        "parameter": ""
+      },
+      {
+        "name": "deleteChid",
+        "gesture": {
+          "key": 46,
+          "modifiers": 0
+        },
+        "parameter": ""
+      },
+      {
+        "name": "editing",
+        "gesture": {
+          "key": 113,
+          "modifiers": 0
+        },
+        "parameter": ""
+      },
+      {
+        "name": "bold",
+        "gesture": {
+          "key": 66,
+          "modifiers": 1
+        },
+        "parameter": ""
+      },
+      {
+        "name": "italic",
+        "gesture": {
+          "key": 73,
+          "modifiers": 1
+        },
+        "parameter": ""
+      },
+      {
+        "name": "underline",
+        "gesture": {
+          "key": 85,
+          "modifiers": 1
+        },
+        "parameter": ""
+      },
+      {
+        "name": "fitPage",
+        "gesture": {
+          "key": 119,
+          "modifiers": 0
+        },
+        "parameter": ""
+      },
+      {
+        "name": "delete",
+        "gesture": {
+          "key": 8,
+          "modifiers": 0
+        },
+        "parameter": ""
+      },
+      {
+        "name": "undo",
+        "gesture": {
+          "key": 90,
+          "modifiers": 1
+        },
+        "parameter": ""
+      },
+      {
+        "name": "redo",
+        "gesture": {
+          "key": 89,
+          "modifiers": 1
+        },
+        "parameter": ""
+      },
+      {
+        "name": "cutObject",
+        "gesture": {
+          "key": 88,
+          "modifiers": 1
+        },
+        "parameter": ""
+      },
+      {
+        "name": "copyObject",
+        "gesture": {
+          "key": 67,
+          "modifiers": 1
+        },
+        "parameter": ""
+      },
+      {
+        "name": "pasteObject",
+        "gesture": {
+          "key": 86,
+          "modifiers": 1
+        },
+        "parameter": ""
+      }
+    ]
+  },
+  "selectedItems": {
+    "width": 0,
+    "height": 0,
+    "offsetX": 0,
+    "offsetY": 0,
+    "rotateAngle": 0,
+    "pivot": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "userHandles": [
+      {
+        "name": "DeleteRight",
+        "id": "DqFJS",
+        "pathData": "M1.0000023,3 L7.0000024,3 7.0000024,8.75 C7.0000024,9.4399996 6.4400025,10 5.7500024,10 L2.2500024,10 C1.5600024,10 1.0000023,9.4399996 1.0000023,8.75 z M2.0699998,0 L5.9300004,0 6.3420029,0.99999994 8.0000001,0.99999994 8.0000001,2 0,2 0,0.99999994 1.6580048,0.99999994 z",
+        "source": null,
+        "backgroundColor": "#7d7d7d",
+        "side": 1,
+        "borderColor": "",
+        "borderWidth": 0.5,
+        "size": 25,
+        "pathColor": "white",
+        "displacement": 10,
+        "visible": true,
+        "offset": 0.5,
+        "margin": {
+          "left": 0,
+          "right": 0,
+          "top": 0,
+          "bottom": 0
+        },
+        "VisibleTarget": 1,
+        "horizontalAlignment": 3,
+        "verticalAlignment": 3,
+        "template": false
+      },
+      {
+        "name": "DeleteLeft",
+        "id": "fukrQ",
+        "pathData": "M1.0000023,3 L7.0000024,3 7.0000024,8.75 C7.0000024,9.4399996 6.4400025,10 5.7500024,10 L2.2500024,10 C1.5600024,10 1.0000023,9.4399996 1.0000023,8.75 z M2.0699998,0 L5.9300004,0 6.3420029,0.99999994 8.0000001,0.99999994 8.0000001,2 0,2 0,0.99999994 1.6580048,0.99999994 z",
+        "source": null,
+        "backgroundColor": "#7d7d7d",
+        "side": 0,
+        "borderColor": "",
+        "borderWidth": 0.5,
+        "size": 25,
+        "pathColor": "white",
+        "displacement": 10,
+        "visible": true,
+        "offset": 0.5,
+        "margin": {
+          "left": 0,
+          "right": 0,
+          "top": 0,
+          "bottom": 0
+        },
+        "VisibleTarget": 1,
+        "horizontalAlignment": 3,
+        "verticalAlignment": 3,
+        "template": false
+      },
+      {
+        "name": "AddRight",
+        "id": "WTmuy",
+        "pathData": "M0,4.55 L8.41,4.55 L8.41,0 L13.75,6.88 L8.41,13.75 L8.41,8.48 L0,8.48 L0,4.55 Z ",
+        "source": null,
+        "backgroundColor": "#7d7d7d",
+        "side": 1,
+        "borderColor": "",
+        "borderWidth": 0.5,
+        "size": 25,
+        "pathColor": "white",
+        "displacement": 10,
+        "visible": true,
+        "offset": 0.5,
+        "margin": {
+          "left": 0,
+          "right": 0,
+          "top": 0,
+          "bottom": 0
+        },
+        "VisibleTarget": 1,
+        "horizontalAlignment": 3,
+        "verticalAlignment": 3,
+        "template": false
+      },
+      {
+        "name": "AddLeft",
+        "id": "THBLh",
+        "pathData": "M13.75,9.2 L5.34,9.2 L5.34,13.75 L0,6.88 L5.34,0 L5.34,5.27 L13.75,5.27 L13.75,9.2 Z ",
+        "source": null,
+        "backgroundColor": "#7d7d7d",
+        "side": 0,
+        "borderColor": "",
+        "borderWidth": 0.5,
+        "size": 25,
+        "pathColor": "white",
+        "displacement": 10,
+        "visible": true,
+        "offset": 0.5,
+        "margin": {
+          "left": 0,
+          "right": 0,
+          "top": 0,
+          "bottom": 0
+        },
+        "VisibleTarget": 1,
+        "horizontalAlignment": 3,
+        "verticalAlignment": 3,
+        "template": false
+      }
+    ],
+    "rubberBandSelectionMode": 0,
+    "constraints": 12288
+  },
+  "drawingObject": null,
+  "nodes": [
+    {
+      "borderColor": "none",
+      "id": "rootNode",
+      "parentId": "",
+      "backgroundColor": "transparent",
+      "verticalAlignment": "Top",
+      "horizontalAlignment": "Left",
+      "flip": "None",
+      "constraints": "AllowDrop, Default",
+      "isExpanded": true,
+      "canShapeLayout": true,
+      "isVisible": true,
+      "borderWidth": 0,
+      "zIndex": 0,
+      "offsetX": 505,
+      "offsetY": 248.66667175292969,
+      "width": 120,
+      "height": 50,
+      "rotateAngle": 0,
+      "additionalInfo": "{\u0022Level\u0022:\u00220\u0022,\u0022Orientation\u0022:\u0022Root\u0022}",
+      "annotations": "[{\u0022offset\u0022:{\u0022x\u0022:0.5,\u0022y\u0022:0.5},\u0022id\u0022:\u0022iarpi\u0022,\u0022content\u0022:\u0022Creativity\u0022,\u0022visibility\u0022:true,\u0022constraints\u0022:4,\u0022hyperlink\u0022:null,\u0022width\u0022:null,\u0022height\u0022:null,\u0022rotationAngle\u0022:0,\u0022style\u0022:{\u0022bold\u0022:false,\u0022color\u0022:\u0022black\u0022,\u0022fontFamily\u0022:\u0022Arial\u0022,\u0022fontSize\u0022:12,\u0022italic\u0022:false,\u0022textAlign\u0022:\u0022Center\u0022,\u0022textDecoration\u0022:\u0022None\u0022,\u0022textOverflow\u0022:\u0022Wrap\u0022,\u0022textWrapping\u0022:\u0022WrapWithOverflow\u0022,\u0022fill\u0022:\u0022transparent\u0022,\u0022gradient\u0022:null,\u0022opacity\u0022:1,\u0022strokeColor\u0022:\u0022transparent\u0022,\u0022strokeDashArray\u0022:\u0022\u0022,\u0022strokeWidth\u0022:0},\u0022horizontalAlignment\u0022:3,\u0022verticalAlignment\u0022:3,\u0022margin\u0022:{\u0022left\u0022:0,\u0022right\u0022:0,\u0022top\u0022:0,\u0022bottom\u0022:0},\u0022additionalInfo\u0022:{}}]",
+      "ports": "[{\u0022offset\u0022:{\u0022x\u0022:0,\u0022y\u0022:0.5},\u0022id\u0022:\u0022left\u0022,\u0022horizontalAlignment\u0022:3,\u0022verticalAlignment\u0022:3,\u0022margin\u0022:{\u0022left\u0022:0,\u0022right\u0022:0,\u0022top\u0022:0,\u0022bottom\u0022:0},\u0022width\u0022:10,\u0022height\u0022:10,\u0022style\u0022:{\u0022fill\u0022:\u0022white\u0022,\u0022gradient\u0022:null,\u0022opacity\u0022:1,\u0022strokeColor\u0022:\u0022black\u0022,\u0022strokeDashArray\u0022:\u0022\u0022,\u0022strokeWidth\u0022:1},\u0022shape\u0022:2,\u0022visibility\u0022:2,\u0022pathData\u0022:null,\u0022constraints\u0022:12,\u0022additionalInfo\u0022:{},\u0022outEdges\u0022:[],\u0022inEdges\u0022:[]},{\u0022offset\u0022:{\u0022x\u0022:0.5,\u0022y\u0022:0},\u0022id\u0022:\u0022top\u0022,\u0022horizontalAlignment\u0022:3,\u0022verticalAlignment\u0022:3,\u0022margin\u0022:{\u0022left\u0022:0,\u0022right\u0022:0,\u0022top\u0022:0,\u0022bottom\u0022:0},\u0022width\u0022:10,\u0022height\u0022:10,\u0022style\u0022:{\u0022fill\u0022:\u0022white\u0022,\u0022gradient\u0022:null,\u0022opacity\u0022:1,\u0022strokeColor\u0022:\u0022black\u0022,\u0022strokeDashArray\u0022:\u0022\u0022,\u0022strokeWidth\u0022:1},\u0022shape\u0022:2,\u0022visibility\u0022:2,\u0022pathData\u0022:null,\u0022constraints\u0022:12,\u0022additionalInfo\u0022:{},\u0022outEdges\u0022:[],\u0022inEdges\u0022:[]},{\u0022offset\u0022:{\u0022x\u0022:0.5,\u0022y\u0022:1},\u0022id\u0022:\u0022bottom\u0022,\u0022horizontalAlignment\u0022:3,\u0022verticalAlignment\u0022:3,\u0022margin\u0022:{\u0022left\u0022:0,\u0022right\u0022:0,\u0022top\u0022:0,\u0022bottom\u0022:0},\u0022width\u0022:10,\u0022height\u0022:10,\u0022style\u0022:{\u0022fill\u0022:\u0022white\u0022,\u0022gradient\u0022:null,\u0022opacity\u0022:1,\u0022strokeColor\u0022:\u0022black\u0022,\u0022strokeDashArray\u0022:\u0022\u0022,\u0022strokeWidth\u0022:1},\u0022shape\u0022:2,\u0022visibility\u0022:2,\u0022pathData\u0022:null,\u0022constraints\u0022:12,\u0022additionalInfo\u0022:{},\u0022outEdges\u0022:[],\u0022inEdges\u0022:[]},{\u0022offset\u0022:{\u0022x\u0022:1,\u0022y\u0022:0.5},\u0022id\u0022:\u0022right\u0022,\u0022horizontalAlignment\u0022:3,\u0022verticalAlignment\u0022:3,\u0022margin\u0022:{\u0022left\u0022:0,\u0022right\u0022:0,\u0022top\u0022:0,\u0022bottom\u0022:0},\u0022width\u0022:10,\u0022height\u0022:10,\u0022style\u0022:{\u0022fill\u0022:\u0022white\u0022,\u0022gradient\u0022:null,\u0022opacity\u0022:1,\u0022strokeColor\u0022:\u0022black\u0022,\u0022strokeDashArray\u0022:\u0022\u0022,\u0022strokeWidth\u0022:1},\u0022shape\u0022:2,\u0022visibility\u0022:2,\u0022pathData\u0022:null,\u0022constraints\u0022:12,\u0022additionalInfo\u0022:{},\u0022outEdges\u0022:[],\u0022inEdges\u0022:[]}]",
+      "fixedUserHandles": "[]",
+      "inEdges": "[]",
+      "outEdges": "[]",
+      "pivot": "{\u0022x\u0022:0.5,\u0022y\u0022:0.5}",
+      "shadow": "{\u0022angle\u0022:45,\u0022color\u0022:\u0022lightgrey\u0022,\u0022distance\u0022:5,\u0022opacity\u0022:0.7}",
+      "shape": "{\r\n  \u0022type\u0022: \u0022Basic\u0022,\r\n  \u0022shape\u0022: \u0022Ellipse\u0022,\r\n  \u0022points\u0022: \u0022null\u0022,\r\n  \u0022cornerRadius\u0022: 0\r\n}",
+      "style": "{\u0022fill\u0022:\u0022#D0ECFF\u0022,\u0022gradient\u0022:null,\u0022opacity\u0022:1,\u0022strokeColor\u0022:\u0022#80BFEA\u0022,\u0022strokeDashArray\u0022:\u0022\u0022,\u0022strokeWidth\u0022:2}",
+      "margin": "{\u0022left\u0022:0,\u0022right\u0022:0,\u0022top\u0022:0,\u0022bottom\u0022:0}"
+    }
+  ],
+  "connectors": []
+}
