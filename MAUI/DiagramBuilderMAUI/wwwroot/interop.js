@@ -158,17 +158,6 @@ function removeSelectedToolbarItem(tool) {
         document.getElementById('btnDrawConnector').classList.add('tb-item-selected');
     }
 }
-function RestartApplication() {
-    location.reload();
-}
-function printContent(diagram) {
-    var content = document.getElementById(diagram);
-    var originalContents = document.body.innerHTML;
-    document.body.innerHTML = content.innerHTML;
-    window.print();
-    document.body.innerHTML = originalContents;
-    location.reload();
-}
 
 function CommonKeyboardCommands_newDiagram() {
     var origin = window.location.origin;
@@ -266,7 +255,17 @@ function getHyperLinkValueFromDocument(id, attribute) {
 function click() {
     document.getElementById('UploadFiles').click();
 }
-
+function RestartApplication() {
+    location.reload();
+}
+function printContent(diagram) {
+    var content = document.getElementById(diagram);
+    var originalContents = document.body.innerHTML;
+    document.body.innerHTML = content.innerHTML;
+    window.print();
+    document.body.innerHTML = originalContents;
+    location.reload();
+}
 function enablePropertyCheckBox(id, value) {
     var element = document.getElementById(id);
     if (value) {

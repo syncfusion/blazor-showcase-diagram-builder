@@ -99,9 +99,58 @@
                 </div>
             </div>
 
+            <div id="shortcutDiv" style="width: 350px;height: 280px;padding: 10px;background-color: #fff7b5;border: 1px solid #fff7b5;position: absolute;margin:3px;display: @ShowOrgShortCutKey">
+                <div id="closeIconDiv" style="float: right;width: 22px;height: 22px;border: 1px solid #fff7b5;" onclick="@ShowHideShortcutKey">
+                    <span class="sf-icon-Close" style="font-size: 10px; cursor: pointer"></span>
+                </div>
+                <div><span class="db-html-font-medium">Quick shortcuts</span></div>
+                <div style="padding-top: 10px">
+                    <ul>
+                        <li>
+                            <span class="db-html-font-medium">Tab : </span><span class="db-html-font-normal">Add a child to the parent</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <ul>
+                        <li>
+                            <span class="db-html-font-medium">Enter : </span><span class="db-html-font-normal">Add a child to the same level</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <ul>
+                        <li>
+                            <span class="db-html-font-medium">Shift + Tab : </span><span class="db-html-font-normal">Move the child parent to the next level</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <ul>
+                        <li>
+                            <span class="db-html-font-medium">Delete : </span><span class="db-html-font-normal">Delete a topic</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <ul>
+                        <li>
+                            <span class="db-html-font-medium">Arrow(Up, Down, Left, Right) : </span><span class="db-html-font-normal">Navigate between topics</span>
+                        </li>
+                    </ul>
+                </div>           
+                <div>
+                    <ul>
+                        <li>
+                            <span class="db-html-font-medium">F1 : </span><span class="db-html-font-normal">Show/Hide shortcut Key</span>
+                        </li>
+                    </ul>
+                </div>       
+            </div>
             <div class=@PropertyPanelClassName style="overflow:auto;">
                 <DiagramPropertyContainer @ref="@DiagramPropertyPanel"></DiagramPropertyContainer>
                 <MindMapPropertyContainer @ref="@MindMapPropertyPanel"></MindMapPropertyContainer>
+                <OrgChartPropertyContainer @ref="@OrgChartPropertyPanel"></OrgChartPropertyContainer>
             </div>
         </div>
     </div>
@@ -119,8 +168,9 @@
     public DiagramLeftSideBar LeftSideBar;
     public DiagramOpenDialog OpenDialog;
     public MindMapPropertyContainer MindMapPropertyPanel;
+    public OrgChartPropertyContainer OrgChartPropertyPanel;
     public string ShowShortCutKey = "none";
-
+    public string ShowOrgShortCutKey = "none";
     [Inject]
     protected IJSRuntime jsRuntime { get; set; }
 
@@ -144,11 +194,14 @@
                 this.OpenDialog.Parent = this;
             if (this.MindMapPropertyPanel != null)
                 this.MindMapPropertyPanel.Parent = this;
+            if (this.OrgChartPropertyPanel != null)
+                this.OrgChartPropertyPanel.Parent = this;
         }
     }
     public void ShowHideShortcutKey()
     {
-        ShowShortCutKey = ShowShortCutKey == "none" ? "block" : "none";
+        if (this.MindMapPropertyPanel.IsMindMap){ShowShortCutKey = ShowShortCutKey == "none" ? "block" : "none";}      
+        else { ShowOrgShortCutKey = ShowOrgShortCutKey == "none" ? "block" : "none"; } 
         int shortcutIndex = MenuBar.WindowMenuItems.FindIndex(item => item.Text == "Show Shortcuts");
         MenuBar.WindowMenuItems[shortcutIndex].IconCss = MenuBar.WindowMenuItems[shortcutIndex].IconCss == "sf-icon-blank" ? "sf-icon-Selection" : "sf-icon-blank";
         StateChanged();

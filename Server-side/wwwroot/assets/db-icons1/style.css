@@ -107,3 +107,9 @@ line-height: 1;
 .sf-icon-aspect-ratio-enable:before { content: "\e752"; }
 .sf-icon-aspect-ratio-disable:before { content: "\e753"; }
 .sf-icon-gradient-alignemnt:before { content: "\e754"; }
+.sf-icon-add-same-level-child:before {
+    content: "\e755";
+}
+.sf-icon-move:before {
+    content: "\e756";
+}

@@ -165,6 +165,39 @@
                 </ToolbarItems>
             </SfToolbar>
         </div>
+        <div ID="toolbarEditor" class="e-control e-toolbar e-lib e-keyboard" style="display:@OrgChartToolBarVisibility">
+            <SfToolbar @ref="@Toolbar" OverflowMode="@OverflowMode.Scrollable">
+                <ToolbarEvents Clicked="@ToolbarEditorClickInOrgChart"></ToolbarEvents>
+                <ToolbarItems>
+                    <ToolbarItem @ref="@UndoItem" PrefixIcon="e-icons sf-icon-Undo tb-icons" TooltipText="Undo" CssClass="tb-item-start tb-item-undo"></ToolbarItem>
+                    <ToolbarItem @ref="@RedoItem" PrefixIcon="e-icons sf-icon-Redo tb-icons" TooltipText="Redo" CssClass="tb-item-end tb-item-redo"></ToolbarItem>
+                    <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
+                    <ToolbarItem @ref="@PanItem" PrefixIcon="e-icons sf-icon-Pan tb-icons" TooltipText="Pan Tool" CssClass="@PanItemCssClass"></ToolbarItem>
+                    <ToolbarItem @ref="@PointerItem" PrefixIcon="e-icons sf-icon-Selector tb-icons" TooltipText="Pointer" CssClass="@PointerItemCssClass"></ToolbarItem>
+                    <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
+                    <ToolbarItem @ref="@AddChid" PrefixIcon="e-icons sf-icon-add-child tb-icons" TooltipText="Add Child" CssClass="tb-item-start tb-item-child"></ToolbarItem>
+                    <ToolbarItem @ref="@AddSibling" PrefixIcon="e-icons sf-icon-add-same-level-child icon" TooltipText="Add a child to the same level" CssClass="@addSiblingCssName"></ToolbarItem>
+                    <ToolbarItem @ref="@AddMultipleChild" PrefixIcon="e-icons sf-icon-move icon" TooltipText="Move the child parent to the next level" CssClass="tb-item-start tb-item-child"></ToolbarItem>
+                    <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
+                    <ToolbarItem @ref="@ZoomItem" PrefixIcon="e-icons tb-item-end tb-zoom-dropdown-btn" id="MindMapZoom" Align="ItemAlign.Right">
+                        <Template>
+                            <SfDropDownButton ID="btnZoomIncrement" @ref="@ZoomItemDropdown" Content="@ZoomItemDropdownContent" CssClass="e-zoomoption e-dropdown-custom">
+                                <DropDownButtonEvents ItemSelected="@DrawZoomChange"></DropDownButtonEvents>
+                                <DropDownMenuItems>
+                                    <DropDownMenuItem Text="Zoom In"></DropDownMenuItem>
+                                    <DropDownMenuItem Text="Zoom Out"></DropDownMenuItem>
+                                    <DropDownMenuItem Text="Zoom to Fit"></DropDownMenuItem>
+                                    <DropDownMenuItem Text="Zoom to 50%"></DropDownMenuItem>
+                                    <DropDownMenuItem Text="Zoom to 100%"></DropDownMenuItem>
+                                    <DropDownMenuItem Text="Zoom to 200%"></DropDownMenuItem>
+                                </DropDownMenuItems>
+                            </SfDropDownButton>
+                        </Template>
+                    </ToolbarItem>
+                    <ToolbarItem Type="@ItemType.Separator" Align="ItemAlign.Right"></ToolbarItem>
+                </ToolbarItems>
+            </SfToolbar>
+        </div>
     </div>
     <div class=@HideButtonCss style="background-color: @HideButtonBackground">
         <SfButton ID="btnHideProperty" IconCss="sf-icon-properties tb-hide-button tb-icons" OnClick="@HidePropertyContainer"></SfButton>
@@ -176,6 +209,7 @@
     internal DiagramMain Parent;
     public string DiagramToolbarVisibility { get; set; } = "block";
     public string MindmapToolbarVisibility { get; set; } = "none";
+    public string OrgChartToolBarVisibility { get; set; } = "none";
     public string ToolbarVisibility { get; set; } = "block";
     public string ShowPropertyVisibiity { get; set; } = "none";
     string HideButtonBackground = "#0078d4";
@@ -282,6 +316,13 @@
     {
         DiagramToolbarVisibility = "none";
         MindmapToolbarVisibility = "block";
+        StateHasChanged();
+    }
+    public void OrgChartToolbarItemsVisibility()
+    {
+        DiagramToolbarVisibility = "none";
+        MindmapToolbarVisibility = "none";
+        OrgChartToolBarVisibility = "block";
         StateHasChanged();
     }
     public void StateChanged()
