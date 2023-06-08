@@ -410,6 +410,18 @@
             {
                 node.Annotations = annotations;
             }
+            for (int s = 0; s < node.Annotations.Count; s++)
+            {
+                if (s == 0)
+                {
+                    node.Annotations[s].Style = new TextStyle() { Color = "black", FontSize = 10, Bold = true };
+                }
+                else
+                {
+                    node.Annotations[s].Style = new TextStyle() { Color = "black", FontSize = 8, Bold = false };
+
+                }
+            }
             node.Tooltip = new DiagramTooltip() { Template = "<table" + " style=" + width + "><tr><td>Name</td><td>:</td><td>" + data.Name + "</td></tr><tr><td>Role</td><td>:</td><td>" + data.Role + "</td></tr><tr><td>Email</td><td>:</td><td>" + data.Email + "</td></tr><tr><td>Department</td><td>:</td><td>" + data.Department + "</td></tr><tr><td>EmployeeID</td><td>:</td><td>" + data.EmployeeID + "</td></tr><tr><td>SupervisorID</td><td>:</td><td>" + data.SupervisorID + "</td></tr><tr><td>SupervisorName</td><td>:</td><td>" + data.SupervisorName + "</td></tr><tr><td>Location</td><td>:</td><td>" + data.Location + "</td></tr><tr><td>Phone</td><td>:</td><td>" + data.Phone + "</td></tr><tr><td>ImageURL</td><td>:</td><td>" + data.ImageURL + "</td></tr></table>", Position = Syncfusion.Blazor.Popups.Position.BottomCenter };
 
             Dictionary<string, object> properties = new Dictionary<string, object>();
@@ -1207,7 +1219,7 @@
         }
         return tool;
     }
-    public class AddRightTool : DragController
+    public class AddRightTool : InteractionControllerBase
     {
         SfDiagramComponent diagram;
         DiagramMain parent;
@@ -1222,7 +1234,7 @@
         }
     }
     // Custom tool to add the node.
-    public class AddLeftTool : DragController
+    public class AddLeftTool : InteractionControllerBase
     {
         SfDiagramComponent diagram;
         DiagramMain parent;
@@ -1291,7 +1303,7 @@
             this.InAction = true;
         }
     }
-    public class DeleteTool : DragController
+    public class DeleteTool : InteractionControllerBase
     {
         SfDiagramComponent diagram;
         DiagramMain parent;
