@@ -226,7 +226,7 @@
         {
             Parent.MenuBar.EditMenuItems.RemoveAt(8);
         }
-        Parent.MenuBar.arrangeButtonCss = "e-dropDown-button e-arrange-menu e-btn-hide";
+        Parent.MenuBar.ArrangeButtonCss = "e-dropDown-button e-arrange-menu e-btn-hide";
         Parent.MenuBar.WindowMenuItems.Add(new DiagramMenuBar.ContextMenuItemModel() { Text = "Show Shortcuts", IconCss = "sf-icon-Selection" });
         Parent.MenuBar.StateChanged();
     }
@@ -270,7 +270,7 @@
         {
             Parent.MenuBar.EditMenuItems.RemoveAt(8);
         }
-        Parent.MenuBar.arrangeButtonCss = "e-dropDown-button e-arrange-menu e-btn-hide";
+        Parent.MenuBar.ArrangeButtonCss = "e-dropDown-button e-arrange-menu e-btn-hide";
         Parent.MenuBar.WindowMenuItems.Add(new DiagramMenuBar.ContextMenuItemModel() { Text = "Show Shortcuts", IconCss = "sf-icon-Selection" });
         Parent.MenuBar.StateChanged();
     }
@@ -299,35 +299,40 @@
     }
     public async Task BlankOrgChartDiagram()
     {
-        #if SERVER
-        Parent.OrgChartPropertyPanel.orgChartStyle = "Blank";
-        this.Value = "Org Chart";
         Parent.OrgChartPropertyPanel.IsOrgChart = true;
-        LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/blank_diagram.json");
-        CurrentDiagramVisibility("OrgChart-diagram");
-        await Parent.Toolbar.HideElements("hide-palette");
-        RemoveUnwantedOrgChartMenubarItems();
-    await UpdateLayout();
-   
+        Parent.OrgChartPropertyPanel.OrgChartStyle = "Blank";
+        this.Value = "Org Chart";
+#if SERVER
+
+    LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/blank_diagram.json");
 #endif
 
-        #if WASM
-     Parent.OrgChartPropertyPanel.IsOrgChart = true;
-     this.Value = "Org Chart";
+#if WASM
+
        content = await Http.GetStringAsync("assets/dbstyle/orgchart_images/blank_diagram.json");
     this.Parent.DiagramContent.LoadNewDiagram(content);
     IsOpenDialogVisible = false;
-      Parent.OrgChartPropertyPanel.orgChartStyle = "Blank";
     StateHasChanged();
-    CurrentDiagramVisibility("OrgChart-diagram");
-    await Parent.Toolbar.HideElements("hide-palette");
     Parent.LeftSideBar.sidebarVisibility = "none";
     Parent.LeftSideBar.StateChanged();
-   RemoveUnwantedOrgChartMenubarItems();
-   await UpdateLayout();
 #endif
+#if MAUI
+    string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+    var files = Directory.GetFiles(wwwroot,"blank_diagram.json", SearchOption.AllDirectories);
+    var json = await System.IO.File.ReadAllTextAsync(files[0]);
+    json = json.Replace(System.Environment.NewLine, string.Empty);
+    this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
+    IsOpenDialogVisible = false;
+    StateHasChanged();
+    Parent.LeftSideBar.sidebarVisibility = "none";
+    Parent.LeftSideBar.StateChanged();
 
-
+#endif
+        CurrentDiagramVisibility("OrgChart-diagram");
+        StateHasChanged();
+        await Parent.Toolbar.HideElements("hide-palette");
+        RemoveUnwantedOrgChartMenubarItems();
+        await UpdateLayout();
     }
 
     public async Task CreditProcessDiagram()
@@ -368,29 +373,39 @@
 
     public async Task OrgRenderingStyle1Diagram()
     {
-         #if SERVER
-        Parent.OrgChartPropertyPanel.orgChartStyle = "Style1";
         Parent.OrgChartPropertyPanel.IsOrgChart = true;
-        LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle1.json");
-        CurrentDiagramVisibility("OrgChart-diagram");
-        await Parent.MenuBar.OrgTemplateStyle1();
-        RemoveUnwantedOrgChartMenubarItems();
-      await UpdateLayout();
+        this.Value = "Org Chart";
+        Parent.OrgChartPropertyPanel.OrgChartStyle = "Style1";
+#if SERVER
+    LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle1.json");
+    await Parent.MenuBar.OrgTemplateStyle1();
 #endif
 
 #if WASM
-     Parent.OrgChartPropertyPanel.IsOrgChart = true;
-     this.Value = "Org Chart";
-      Parent.OrgChartPropertyPanel.orgChartStyle = "Style1";
+
        content = await Http.GetStringAsync("assets/dbstyle/orgchart_images/OrgTemplateStyle1.json");
     this.Parent.DiagramContent.LoadNewDiagram(content);
     IsOpenDialogVisible = false;
     StateHasChanged();
-    CurrentDiagramVisibility("OrgChart-diagram");
-    await Parent.Toolbar.HideElements("hide-palette");
-   RemoveUnwantedOrgChartMenubarItems();
-   await UpdateLayout();
+
 #endif
+#if MAUI
+    string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+    var files = Directory.GetFiles(wwwroot,"OrgTemplateStyle1.json", SearchOption.AllDirectories);
+    var json = await System.IO.File.ReadAllTextAsync(files[0]);
+    json = json.Replace(System.Environment.NewLine, string.Empty);
+    this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
+    IsOpenDialogVisible = false;
+    StateHasChanged();
+    Parent.LeftSideBar.sidebarVisibility = "none";
+    Parent.LeftSideBar.StateChanged();
+
+#endif
+        CurrentDiagramVisibility("OrgChart-diagram");
+        await Parent.Toolbar.HideElements("hide-palette");
+        IsOpenDialogVisible = false;
+        RemoveUnwantedOrgChartMenubarItems();
+        await UpdateLayout();
     }
 
     public void BankTellerFlowDiagram()
@@ -431,29 +446,36 @@
 
     public async Task OrgRenderingStyle2Diagram()
     {
-         #if SERVER
-        Parent.OrgChartPropertyPanel.orgChartStyle = "Style2";
+
         Parent.OrgChartPropertyPanel.IsOrgChart = true;
-        LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle2.json");
-        CurrentDiagramVisibility("OrgChart-diagram");
-        await Parent.MenuBar.OrgTemplateStyle2();
-        RemoveUnwantedOrgChartMenubarItems();
-    await UpdateLayout();
+        Parent.OrgChartPropertyPanel.OrgChartStyle = "Style2";
+        this.Value = "Org Chart";
+#if SERVER
+
+    LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle2.json");
+
+    await Parent.MenuBar.OrgTemplateStyle2();
 #endif
 
 #if WASM
-     Parent.OrgChartPropertyPanel.IsOrgChart = true;
-      Parent.OrgChartPropertyPanel.orgChartStyle = "Style2";
-     this.Value = "Org Chart";
        content = await Http.GetStringAsync("assets/dbstyle/orgchart_images/OrgTemplateStyle2.json");
     this.Parent.DiagramContent.LoadNewDiagram(content);
     IsOpenDialogVisible = false;
     StateHasChanged();
     CurrentDiagramVisibility("OrgChart-diagram");
-    await Parent.Toolbar.HideElements("hide-palette");
-   RemoveUnwantedOrgChartMenubarItems();
-   await UpdateLayout();
 #endif
+#if MAUI
+    string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+    var files = Directory.GetFiles(wwwroot,"OrgTemplateStyle2.json", SearchOption.AllDirectories);
+    var json = await System.IO.File.ReadAllTextAsync(files[0]);
+    json = json.Replace(System.Environment.NewLine, string.Empty);
+    this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
+#endif
+        CurrentDiagramVisibility("OrgChart-diagram");
+        await Parent.Toolbar.HideElements("hide-palette");
+        RemoveUnwantedOrgChartMenubarItems();
+        IsOpenDialogVisible = false;
+        await UpdateLayout();
     }
 
     public void DeveloperWorkFlowDiagram()
@@ -494,29 +516,35 @@
 
     public async Task OrgRenderingStyle3Diagram()
     {
-#if SERVER
-        Parent.OrgChartPropertyPanel.orgChartStyle = "Style3";
         Parent.OrgChartPropertyPanel.IsOrgChart = true;
-        LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle3.json");
-        CurrentDiagramVisibility("OrgChart-diagram");
-        await Parent.MenuBar.OrgTemplateStyle3();
-        RemoveUnwantedOrgChartMenubarItems();
-    await UpdateLayout();
+        Parent.OrgChartPropertyPanel.OrgChartStyle = "Style3";
+        this.Value = "Org Chart";
+#if SERVER
+    LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle3.json");
+    await Parent.MenuBar.OrgTemplateStyle3();
 #endif
 
 #if WASM
-     Parent.OrgChartPropertyPanel.IsOrgChart = true;
-     this.Value = "Org Chart";
-      Parent.OrgChartPropertyPanel.orgChartStyle = "Style3";
+
        content = await Http.GetStringAsync("assets/dbstyle/orgchart_images/OrgTemplateStyle3.json");
     this.Parent.DiagramContent.LoadNewDiagram(content);
     IsOpenDialogVisible = false;
     StateHasChanged();
-    CurrentDiagramVisibility("OrgChart-diagram");
-    await Parent.Toolbar.HideElements("hide-palette");
-   RemoveUnwantedOrgChartMenubarItems();
-   await UpdateLayout();
+
+
 #endif
+#if MAUI
+    string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+    var files = Directory.GetFiles(wwwroot,"OrgTemplateStyle3.json", SearchOption.AllDirectories);
+    var json = await System.IO.File.ReadAllTextAsync(files[0]);
+    json = json.Replace(System.Environment.NewLine, string.Empty);
+    this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
+#endif
+        CurrentDiagramVisibility("OrgChart-diagram");
+        await Parent.Toolbar.HideElements("hide-palette");
+        RemoveUnwantedOrgChartMenubarItems();
+        IsOpenDialogVisible = false;
+        await UpdateLayout();
     }
 
     public void LoadTemplate(string fileLocation)
