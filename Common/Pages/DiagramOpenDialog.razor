@@ -300,6 +300,8 @@
     public async Task BlankOrgChartDiagram()
     {
         Parent.OrgChartPropertyPanel.IsOrgChart = true;
+        Parent.OrgChartPropertyPanel.OrgChartStyle = "Blank";
+        this.Value = "Org Chart";
 #if SERVER
 
     LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/blank_diagram.json");
@@ -327,8 +329,6 @@
 
 #endif
         CurrentDiagramVisibility("OrgChart-diagram");
-        Parent.OrgChartPropertyPanel.OrgChartStyle = "Blank";
-        this.Value = "Org Chart";
         StateHasChanged();
         await Parent.Toolbar.HideElements("hide-palette");
         RemoveUnwantedOrgChartMenubarItems();
@@ -374,6 +374,8 @@
     public async Task OrgRenderingStyle1Diagram()
     {
         Parent.OrgChartPropertyPanel.IsOrgChart = true;
+        this.Value = "Org Chart";
+        Parent.OrgChartPropertyPanel.OrgChartStyle = "Style1";
 #if SERVER
     LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle1.json");
     await Parent.MenuBar.OrgTemplateStyle1();
@@ -399,8 +401,6 @@
     Parent.LeftSideBar.StateChanged();
 
 #endif
-        this.Value = "Org Chart";
-        Parent.OrgChartPropertyPanel.OrgChartStyle = "Style1";
         CurrentDiagramVisibility("OrgChart-diagram");
         await Parent.Toolbar.HideElements("hide-palette");
         IsOpenDialogVisible = false;
@@ -446,7 +446,10 @@
 
     public async Task OrgRenderingStyle2Diagram()
     {
+
         Parent.OrgChartPropertyPanel.IsOrgChart = true;
+        Parent.OrgChartPropertyPanel.OrgChartStyle = "Style2";
+        this.Value = "Org Chart";
 #if SERVER
 
     LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle2.json");
@@ -468,8 +471,6 @@
     json = json.Replace(System.Environment.NewLine, string.Empty);
     this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
 #endif
-        Parent.OrgChartPropertyPanel.OrgChartStyle = "Style2";
-        this.Value = "Org Chart";
         CurrentDiagramVisibility("OrgChart-diagram");
         await Parent.Toolbar.HideElements("hide-palette");
         RemoveUnwantedOrgChartMenubarItems();
@@ -516,6 +517,8 @@
     public async Task OrgRenderingStyle3Diagram()
     {
         Parent.OrgChartPropertyPanel.IsOrgChart = true;
+        Parent.OrgChartPropertyPanel.OrgChartStyle = "Style3";
+        this.Value = "Org Chart";
 #if SERVER
     LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle3.json");
     await Parent.MenuBar.OrgTemplateStyle3();
@@ -537,10 +540,6 @@
     json = json.Replace(System.Environment.NewLine, string.Empty);
     this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
 #endif
-
-        Parent.OrgChartPropertyPanel.OrgChartStyle = "Style3";
-        this.Value = "Org Chart";
-
         CurrentDiagramVisibility("OrgChart-diagram");
         await Parent.Toolbar.HideElements("hide-palette");
         RemoveUnwantedOrgChartMenubarItems();
