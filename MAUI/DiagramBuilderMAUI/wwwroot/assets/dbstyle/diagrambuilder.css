@@ -10,13 +10,6 @@ html, body {
     letter-spacing: 0.3px;
 }
 
-html, body {
-    height: 100%;
-    overflow: hidden;
-    font-family: "Roboto","GeezaPro","DejaVu Serif";
-    letter-spacing: 0.3px;
-}
-
 #DiagramTooltip {
     width: 100% !important;
     height: 100% !important;
@@ -83,12 +76,6 @@ html, body {
         background-color: transparent;
     }
     .db-diagram-name {
-    color: #ffffff;
-    font-size: 12px;
-    float: left;
-}
-
-.db-diagram-name {
     color: #ffffff;
     font-size: 12px;
     float: left;
@@ -398,7 +385,6 @@ html, body {
     background: #7d7d7d;
 }
 
-
 .e-toolbar .e-toolbar-items .e-toolbar-item.tb-item-selected .e-tbar-btn .e-icons.e-btn-icon,
 .e-toolbar .e-toolbar-items .e-toolbar-item .e-dropdown-btn.tb-item-selected .e-btn-icon,
 .tb-property-open #btnHideProperty .tb-hide-button {
@@ -459,27 +445,6 @@ html, body {
 }
 
 .db-node-prop-container .db-prop-row .db-text{
-=======
-    .e-aspectRatioBtn .e-btn-icon {
-        color: #6C727F;
-    }
-
-.e-dropdown-popup ul .e-item .e-menu-icon {
-    color: #6C727F !important;
-}
-
-/*.e-numeric.e-input-group.e-control-wrapper:not(.e-float-icon-left):not(.e-float-input).e-input-focus::before,
-.e-numeric.e-input-group.e-control-wrapper:not(.e-float-icon-left):not(.e-float-input).e-input-focus::after {
-    width: 0% !important
-}*/
-
-.db-text #rotateIconBtn {
-    background: #f2f2f2;
-    box-shadow: 0px 0px 0px 0px;
-}
-
-.db-node-prop-container .db-prop-row .db-text {
->>>>>>> 018127a9d638d36cbf503dcc7c72f7612c637c7a
     margin-top: 6px;
 }
 /* Toolbar Enable - End */
@@ -585,7 +550,7 @@ html, body {
     width: 225px;
 }
 
-.e-dropDown-button.e-arrange-menu.e-btn-hide {
+.e-dropDown-button.e-arrange-menu.e-btn-hide{
     display: none;
 }
 /* Toolbar dropdown customization - End */
@@ -669,29 +634,6 @@ html, body {
     border: 1px solid #E5E7EB;
     margin-left: -10px;
     width: calc(100% + 20px);
-}
-
-.db-color-container,
-.db-text-container {
-    width: 100%;
-    background: #ffffff;
-    border: 1px solid #E0E0E0;
-    height: 32px;
-    border-radius: 3px;
-}
-
-    .db-text-container:hover,
-    .db-color-container:hover {
-        border: 1px solid #B2B2B2;
-    }
-
-.db-color-input {
-    width: 100%;
-}
-
-.db-color-btn {
-    width: 30px;
-    height: 100%;
 }
 
 .db-color-container,
@@ -907,11 +849,11 @@ html, body {
 .e-upload .e-upload-files {
     border: none;
 }
-
+/*
 .e-file-select-wrap {
     display: none;
 }
-
+*/
 .droparea {
     font-size: 13px;
 }
@@ -1059,13 +1001,6 @@ html, body {
     overflow: hidden;
     pointer-events: none;
 }
-button, input, select, textarea, .e-control.e-dropdownlist .e-input-group.e-ddl input.e-input,
-.e-numeric.e-input-group input.e-input {
-    font-size: 12px;
-    color: #000000;
-    font-weight: normal;
-}
-
 button, input, select, textarea, .e-control.e-dropdownlist .e-input-group.e-ddl input.e-input,
 .e-numeric.e-input-group input.e-input {
     font-size: 12px;
