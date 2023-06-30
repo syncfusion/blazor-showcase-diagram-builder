@@ -110,7 +110,10 @@ namespace DiagramBuilder
                     Parent.DiagramContent.UpdatePointerTool();
                     break;
                 case "add child":
-                    Parent.OrgChartPropertyPanel.AddNode(diagram.SelectionSettings.Nodes[0].ID);
+                    if (diagram.SelectionSettings.Nodes.Count > 0)
+                    {
+                        Parent.OrgChartPropertyPanel.AddNode(diagram.SelectionSettings.Nodes[0].ID);
+                    }
                     break;
                 case "add a child to the same level":
                     Parent.OrgChartPropertyPanel.AddRightChild();

@@ -1,11 +1,8 @@
-@using Newtonsoft.Json;
 @using Syncfusion.Blazor.Diagram
 @using Syncfusion.Blazor.Buttons
 @using System.Collections.ObjectModel
-@using static DiagramBuilder.OrgChartPropertyContainer;
-
+@using System.Text.Json;
 @inherits SampleBaseComponent;
-
 @namespace DiagramBuilder
 
 <div class="db-diagram-container">
@@ -46,14 +43,15 @@
                     </NodeTemplate>
                 </DiagramTemplates>
                 <ContextMenuSettings @bind-Show="@show"></ContextMenuSettings>
-                <DataSourceSettings  ></DataSourceSettings>
                 <CommandManager @bind-Commands="@commands" Execute="@ExecuteCommand" CanExecute="@CanExecute" />
-                <Layout @bind-HorizontalSpacing="@HorizontalSpacing" @bind-VerticalSpacing="@VerticalSpacing" @bind-HorizontalAlignment="@HorizontalAlignment" @bind-VerticalAlignment="@VerticalAlignment" GetBranch="@getbranch" GetLayoutInfo="@getlayoutinfo"></Layout>
+                <Layout @bind-HorizontalSpacing="@HorizontalSpacing" @bind-VerticalSpacing="@VerticalSpacing" @bind-HorizontalAlignment="@horizontalAlignment" @bind-VerticalAlignment="@verticalAlignment" GetBranch="@getbranch" GetLayoutInfo="@getLayoutInfo"></Layout>
         </SfDiagramComponent>
     </div>
 </div>
 
-@code {
+    @code {
+    private HorizontalAlignment horizontalAlignment = HorizontalAlignment.Auto;
+    private VerticalAlignment verticalAlignment = VerticalAlignment.Auto;
     internal DiagramMain Parent;
     public SpinnerComponent DiagramSpinnerObj { get; set; }
 
@@ -92,17 +90,9 @@
     public bool DynamicGrid = false;
     int VerticalSpacing = 50;
     int HorizontalSpacing = 100;
-    public HorizontalAlignment HorizontalAlignment = HorizontalAlignment.Auto;
-    public VerticalAlignment VerticalAlignment = VerticalAlignment.Auto;
     public bool show = true;
     public bool diagramSelected = false;
     DiagramObjectCollection<KeyboardCommand> commands = new DiagramObjectCollection<KeyboardCommand>();
-
-    public class NodeAddInfo
-    {
-        public string Level;
-        public string Orientation;
-    }
 
     List<PageOptionElement> PageList = new List<PageOptionElement>();
     PageOptionElement ActivePage;
@@ -114,7 +104,6 @@
         {
 
             new KeyboardCommand() { Name = "fileNew", Gesture = new KeyGesture(){ Key = DiagramKeys.N, Modifiers = ModifierKeys.Shift } },
-              new KeyboardCommand() { Name = "copy", Gesture = new KeyGesture(){ Key = DiagramKeys.C, Modifiers = ModifierKeys.Control } },
             new KeyboardCommand() { Name = "fileOpen", Gesture = new KeyGesture(){ Key = DiagramKeys.O, Modifiers = ModifierKeys.Control } },
             new KeyboardCommand() { Name = "fileSave", Gesture = new KeyGesture(){ Key = DiagramKeys.S, Modifiers = ModifierKeys.Control } },
             new KeyboardCommand() { Name = "duplicate", Gesture = new KeyGesture(){ Key = DiagramKeys.D, Modifiers = ModifierKeys.Control } },
@@ -146,7 +135,6 @@
             this.Service.Prop.RestricMouseEvents = false;
         });
     }
-    private bool isRender = true;
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
@@ -157,16 +145,10 @@
             this.Service.Prop.RestricMouseEvents = false;
         }
     }
-    public class EditUserHandlePropertyPanel
-    {
-        public string PropertyName { get; set; }
-        public string PropertyValue { get; set; }
-        public bool IsChecked { get; set; }
-    }
-    public List<string> annotationDetails = new List<string> { };
     private async Task NodeDefaults(IDiagramObject obj)
     {
         Node node = obj as Node;
+        OrgChartPropertyContainer orgChartPropertyContainer = Parent.OrgChartPropertyPanel;
         node.Ports = new DiagramObjectCollection<PointPort>()
         {
             new PointPort()
@@ -175,8 +157,8 @@
                   Shape = PortShapes.Square,
                   Width = 10,
                   Height = 10,
-                  Visibility = (Parent.MindMapPropertyPanel.IsMindMap || Parent.OrgChartPropertyPanel.IsOrgChart) ? PortVisibility.Hidden : PortVisibility.Connect | PortVisibility.Hover,
-                  Constraints =(Parent.MindMapPropertyPanel.IsMindMap || Parent.OrgChartPropertyPanel.IsOrgChart) ? PortConstraints.Default : PortConstraints.Default|PortConstraints.Draw,
+                  Visibility = (Parent.MindMapPropertyPanel.IsMindMap || orgChartPropertyContainer.IsOrgChart) ? PortVisibility.Hidden : PortVisibility.Connect | PortVisibility.Hover,
+                  Constraints =(Parent.MindMapPropertyPanel.IsMindMap || orgChartPropertyContainer.IsOrgChart) ? PortConstraints.Default : PortConstraints.Default|PortConstraints.Draw,
                   Offset = new DiagramPoint() { X = 0, Y = 0.5 },
             },
             new PointPort()
@@ -185,8 +167,8 @@
                 Shape = PortShapes.Square,
                 Width = 10,
                 Height = 10,
-                Visibility = (Parent.MindMapPropertyPanel.IsMindMap || Parent.OrgChartPropertyPanel.IsOrgChart) ? PortVisibility.Hidden : PortVisibility.Connect | PortVisibility.Hover,
-                Constraints = (Parent.MindMapPropertyPanel.IsMindMap|| Parent.OrgChartPropertyPanel.IsOrgChart) ? PortConstraints.Default : PortConstraints.Default|PortConstraints.Draw,
+                Visibility = (Parent.MindMapPropertyPanel.IsMindMap || orgChartPropertyContainer.IsOrgChart) ? PortVisibility.Hidden : PortVisibility.Connect | PortVisibility.Hover,
+                Constraints = (Parent.MindMapPropertyPanel.IsMindMap|| orgChartPropertyContainer.IsOrgChart) ? PortConstraints.Default : PortConstraints.Default|PortConstraints.Draw,
                 Offset = new DiagramPoint() { X = 0.5, Y = 0 },
             },
             new PointPort()
@@ -195,8 +177,8 @@
                   Shape = PortShapes.Square,
                   Width = 10,
                   Height = 10,
-                  Visibility = (Parent.MindMapPropertyPanel.IsMindMap || Parent.OrgChartPropertyPanel.IsOrgChart) ? PortVisibility.Hidden : PortVisibility.Connect | PortVisibility.Hover,
-                  Constraints = (Parent.MindMapPropertyPanel.IsMindMap || Parent.OrgChartPropertyPanel.IsOrgChart) ? PortConstraints.Default : PortConstraints.Default|PortConstraints.Draw,
+                  Visibility = (Parent.MindMapPropertyPanel.IsMindMap || orgChartPropertyContainer.IsOrgChart) ? PortVisibility.Hidden : PortVisibility.Connect | PortVisibility.Hover,
+                  Constraints = (Parent.MindMapPropertyPanel.IsMindMap || orgChartPropertyContainer.IsOrgChart) ? PortConstraints.Default : PortConstraints.Default|PortConstraints.Draw,
                   Offset = new DiagramPoint() { X = 0.5, Y = 1 },
             },
             new PointPort()
@@ -205,8 +187,8 @@
                   Shape = PortShapes.Square,
                   Width = 10,
                   Height = 10,
-                  Visibility = (Parent.MindMapPropertyPanel.IsMindMap || Parent.OrgChartPropertyPanel.IsOrgChart) ? PortVisibility.Hidden : PortVisibility.Connect | PortVisibility.Hover,
-                  Constraints = (Parent.MindMapPropertyPanel.IsMindMap || Parent.OrgChartPropertyPanel.IsOrgChart) ? PortConstraints.Default : PortConstraints.Default|PortConstraints.Draw,
+                  Visibility = (Parent.MindMapPropertyPanel.IsMindMap || orgChartPropertyContainer.IsOrgChart) ? PortVisibility.Hidden : PortVisibility.Connect | PortVisibility.Hover,
+                  Constraints = (Parent.MindMapPropertyPanel.IsMindMap || orgChartPropertyContainer.IsOrgChart) ? PortConstraints.Default : PortConstraints.Default|PortConstraints.Draw,
                   Offset = new DiagramPoint() { X = 1, Y = 0.5 },
             },
         };
@@ -215,255 +197,268 @@
         {
             node.Constraints |= NodeConstraints.AllowDrop;
         }
-        string width = "width: 100%;";
-        if (Parent.OrgChartPropertyPanel.IsOrgChart && node.AdditionalInfo != null && node.AdditionalInfo.Count > 0 && this.Parent.OrgChartPropertyPanel.isCopy)
+        if (orgChartPropertyContainer.IsOrgChart)
         {
-            var info=node.AdditionalInfo;
-            foreach (KeyValuePair<string, object> keyValuePair in node.AdditionalInfo)
+            List<string> annotationDetails = new List<string> { };
+            string width = "width: 100%;";
+            if (node.AdditionalInfo != null && node.AdditionalInfo.Count > 0 && orgChartPropertyContainer.IsCopy)
             {
-                var nodeID = keyValuePair.Key;
-                if (this.Parent.OrgChartPropertyPanel.OriginalTextBoxValuesDictionary.ContainsKey(node.ID) && this.Parent.OrgChartPropertyPanel.OriginalCheckBoxValuesDictionary.ContainsKey(node.ID) && this.Parent.OrgChartPropertyPanel.TextBoxDictionary.ContainsKey(node.ID) && this.Parent.OrgChartPropertyPanel.CheckBoxDictionary.ContainsKey(node.ID))
+                var info = node.AdditionalInfo;
+                foreach (KeyValuePair<string, object> keyValuePair in node.AdditionalInfo)
                 {
-
-                }
-                else
-                {
-                    var textBox = this.Parent.OrgChartPropertyPanel.OriginalTextBoxValuesDictionary[nodeID];
-                    List<string> deleteInformations = new List<string>();
-                    foreach(KeyValuePair<string,string> propertyNames in textBox)
+                    var nodeID = keyValuePair.Key;
+                    if (!orgChartPropertyContainer.OriginalTextBoxValuesDictionary.ContainsKey(node.ID) && !orgChartPropertyContainer.OriginalCheckBoxValuesDictionary.ContainsKey(node.ID) && !orgChartPropertyContainer.TextBoxDictionary.ContainsKey(node.ID) && !orgChartPropertyContainer.CheckBoxDictionary.ContainsKey(node.ID))
                     {
-                        deleteInformations.Add(propertyNames.Key);
-                    }
-                    Parent.OrgChartPropertyPanel.Deletedictionary.Add(node.ID, deleteInformations);
-                    var checkBox = this.Parent.OrgChartPropertyPanel.OriginalCheckBoxValuesDictionary[nodeID];
-                    this.Parent.OrgChartPropertyPanel.OriginalTextBoxValuesDictionary[node.ID] = (textBox);
-                    this.Parent.OrgChartPropertyPanel.OriginalCheckBoxValuesDictionary[node.ID] = checkBox;
-                    this.Parent.OrgChartPropertyPanel.TextBoxDictionary[node.ID] = textBox;
-                    this.Parent.OrgChartPropertyPanel.CheckBoxDictionary[node.ID] = checkBox;
-                }
-                Node newNode = this.Diagram.GetObject(nodeID) as Node;
-                newNode.AdditionalInfo.Clear();
-            }
-            
-            
-        }
-        if (Parent.OrgChartPropertyPanel.IsOrgChart &&node.AdditionalInfo!=null &&node.AdditionalInfo.Count > 0 && !Parent.OrgChartPropertyPanel.isCopy)
-        {
-            string tooltip = "";
-            Parent.OrgChartPropertyPanel.TextBoxDictionary.Remove(node.ID);
-            Parent.OrgChartPropertyPanel.CheckBoxDictionary.Remove(node.ID);
-            Parent.OrgChartPropertyPanel.OriginalTextBoxValuesDictionary.Remove(node.ID);
-            Parent.OrgChartPropertyPanel.OriginalCheckBoxValuesDictionary.Remove(node.ID);
-            Dictionary<string, bool> dictionary = new Dictionary<string, bool>();
-            Dictionary<string, bool> checkBoxValues = new Dictionary<string, bool>();
-            Dictionary<string, string> textboxValues = new Dictionary<string, string>();
-            foreach (KeyValuePair<string, object> keyValuePair in node.AdditionalInfo)
-            {
-                if (keyValuePair.Value != null)
-                {
-                    var additionalInfo = keyValuePair.Value.ToString();
-                    dictionary = JsonConvert.DeserializeObject<Dictionary<string, bool>>(additionalInfo);
-
-                    foreach (KeyValuePair<string, bool> textcheckbox in dictionary)
-                    {
-
-                        textboxValues.Add(keyValuePair.Key, textcheckbox.Key);
-
-                        checkBoxValues.Add(keyValuePair.Key, textcheckbox.Value);
-
-                        if (node.Data == null && textcheckbox.Value)
+                        var textBox = orgChartPropertyContainer.OriginalTextBoxValuesDictionary[nodeID];
+                        List<string> deleteInformations = new List<string>();
+                        foreach (KeyValuePair<string, string> propertyNames in textBox)
                         {
-                            tooltip += "<tr><td>" + keyValuePair.Key + "</td><td>:</td><td>" + textcheckbox.Key + "</td></tr><tr>";
+                            deleteInformations.Add(propertyNames.Key);
+                        }
+                        orgChartPropertyContainer.DeleteDictionary.Add(node.ID, deleteInformations);
+                        var checkBox = orgChartPropertyContainer.OriginalCheckBoxValuesDictionary[nodeID];
+                        orgChartPropertyContainer.OriginalTextBoxValuesDictionary[node.ID] = (textBox);
+                        orgChartPropertyContainer.OriginalCheckBoxValuesDictionary[node.ID] = checkBox;
+                        orgChartPropertyContainer.TextBoxDictionary[node.ID] = textBox;
+                        orgChartPropertyContainer.CheckBoxDictionary[node.ID] = checkBox;
+                    }
+                    Node newNode = this.Diagram.GetObject(nodeID) as Node;
+                    newNode.AdditionalInfo.Clear();
+                }
+
+
+            }
+            else
+            {
+                if ((node.AdditionalInfo != null && node.AdditionalInfo.Count > 0 && !orgChartPropertyContainer.IsCopy))
+                {
+                    string tooltip = "";
+                    orgChartPropertyContainer.TextBoxDictionary.Remove(node.ID);
+                    orgChartPropertyContainer.CheckBoxDictionary.Remove(node.ID);
+                    orgChartPropertyContainer.OriginalTextBoxValuesDictionary.Remove(node.ID);
+                    orgChartPropertyContainer.OriginalCheckBoxValuesDictionary.Remove(node.ID);
+                    orgChartPropertyContainer.ApplyDictionary.Remove(node.ID);
+                    Dictionary<string, Dictionary<bool, bool>> dictionary = new Dictionary<string, Dictionary<bool, bool>>();
+                    Dictionary<string, bool> checkBoxValues = new Dictionary<string, bool>();
+                    Dictionary<string, string> textboxValues = new Dictionary<string, string>();
+                    bool applyDictionaryValue = false;
+                    List<string> deleteInformation = new List<string>();
+                    foreach (KeyValuePair<string, object> keyValuePair in node.AdditionalInfo)
+                    {
+                        if (keyValuePair.Value != null)
+                        {
+                            string additionalInfo = keyValuePair.Value.ToString();
+                            dictionary = JsonSerializer.Deserialize<Dictionary<string, Dictionary<bool, bool>>>(additionalInfo);
+                            var key = dictionary.Keys.FirstOrDefault();
+                            var values = dictionary.Values.FirstOrDefault();
+
+                            foreach (KeyValuePair<bool, bool> textcheckbox in values)
+                            {
+                                if (textcheckbox.Value)
+                                {
+                                    applyDictionaryValue = textcheckbox.Value;
+                                }
+                                textboxValues.Add(keyValuePair.Key, key);
+
+                                checkBoxValues.Add(keyValuePair.Key, textcheckbox.Key);
+                                var isChecked = textcheckbox.Key;
+                                if (node.Data == null && isChecked)
+                                {
+                                    tooltip += "<tr><td>" + keyValuePair.Key + "</td><td>:</td><td>" + key + "</td></tr><tr>";
+                                }
+                                deleteInformation.Add(keyValuePair.Key);
+                            }
                         }
 
                     }
+                    if (!orgChartPropertyContainer.DeleteDictionary.ContainsKey(node.ID))
+                    {
+                        orgChartPropertyContainer.DeleteDictionary.Add(node.ID, deleteInformation);
+                    }
+                    node.AdditionalInfo.Clear();
+                    if (orgChartPropertyContainer.TextBoxDictionary.ContainsKey(node.ID) && orgChartPropertyContainer.CheckBoxDictionary.ContainsKey(node.ID) && orgChartPropertyContainer.OriginalTextBoxValuesDictionary.ContainsKey(node.ID) && orgChartPropertyContainer.OriginalCheckBoxValuesDictionary.ContainsKey(node.ID))
+                    {
+                        orgChartPropertyContainer.TextBoxDictionary[node.ID] = textboxValues;
+                        orgChartPropertyContainer.CheckBoxDictionary[node.ID] = checkBoxValues;
+                        orgChartPropertyContainer.OriginalTextBoxValuesDictionary[node.ID] = textboxValues;
+                        orgChartPropertyContainer.OriginalCheckBoxValuesDictionary[node.ID] = checkBoxValues;
+                        orgChartPropertyContainer.ApplyDictionary[node.ID] = applyDictionaryValue;
+                    }
+                    else
+                    {
+                        orgChartPropertyContainer.TextBoxDictionary.Add(node.ID, textboxValues);
+                        orgChartPropertyContainer.CheckBoxDictionary.Add(node.ID, checkBoxValues);
+                        orgChartPropertyContainer.OriginalTextBoxValuesDictionary.Add(node.ID, textboxValues);
+                        orgChartPropertyContainer.OriginalCheckBoxValuesDictionary.Add(node.ID, checkBoxValues);
+                        orgChartPropertyContainer.ApplyDictionary.Add(node.ID, applyDictionaryValue);
+                        orgChartPropertyContainer.IsAdditionalInfo = true;
+
+                    }
+                    if (node.Data != null)
+                    {
+                        OrgChartDetails orgChartDetails = System.Text.Json.JsonSerializer.Deserialize<OrgChartDetails>(node.Data.ToString());
+                        node.Data = orgChartDetails;
+                        var data = node.Data as OrgChartDetails;
+                        node.Tooltip = new DiagramTooltip() { Template = "<table" + " style=" + width + "><tr><td>Name</td><td>:</td><td>" + data.Name + "</td></tr><tr><td>Role</td><td>:</td><td>" + data.Role + "</td></tr><tr><td>Email</td><td>:</td><td>" + data.Email + "</td></tr><tr><td>Department</td><td>:</td><td>" + data.Department + "</td></tr><tr><td>EmployeeID</td><td>:</td><td>" + data.EmployeeID + "</td></tr><tr><td>SupervisorID</td><td>:</td><td>" + data.SupervisorID + "</td></tr><tr><td>SupervisorName</td><td>:</td><td>" + data.SupervisorName + "</td></tr><tr><td>Location</td><td>:</td><td>" + data.Location + "</td></tr><tr><td>Phone</td><td>:</td><td>" + data.Phone + "</td></tr><tr><td>ImageURL</td><td>:</td><td>" + data.ImageURL + "</td></tr></table>", Position = Syncfusion.Blazor.Popups.Position.BottomCenter };
+                    }
+                    else
+                    {
+                        node.Tooltip = new DiagramTooltip() { Template = "<table" + " style=" + width + ">" + tooltip + "</table>", Position = Syncfusion.Blazor.Popups.Position.BottomCenter };
+                    }
                 }
-                node.AdditionalInfo.Clear();
-            }
-            if (Parent.OrgChartPropertyPanel.TextBoxDictionary.ContainsKey(node.ID) && Parent.OrgChartPropertyPanel.CheckBoxDictionary.ContainsKey(node.ID) && Parent.OrgChartPropertyPanel.OriginalTextBoxValuesDictionary.ContainsKey(node.ID) && Parent.OrgChartPropertyPanel.OriginalCheckBoxValuesDictionary.ContainsKey(node.ID))
-            {
-                Parent.OrgChartPropertyPanel.TextBoxDictionary[node.ID] = textboxValues;
-                Parent.OrgChartPropertyPanel.CheckBoxDictionary[node.ID] = checkBoxValues;
-                Parent.OrgChartPropertyPanel.OriginalTextBoxValuesDictionary[node.ID] = textboxValues;
-                Parent.OrgChartPropertyPanel.OriginalCheckBoxValuesDictionary[node.ID] = checkBoxValues;
-            }
-            else
-            {
-                Parent.OrgChartPropertyPanel.TextBoxDictionary.Add(node.ID, textboxValues);
-                Parent.OrgChartPropertyPanel.CheckBoxDictionary.Add(node.ID, checkBoxValues);
-                Parent.OrgChartPropertyPanel.OriginalTextBoxValuesDictionary.Add(node.ID, textboxValues);
-                Parent.OrgChartPropertyPanel.OriginalCheckBoxValuesDictionary.Add(node.ID, checkBoxValues);
-                this.Parent.OrgChartPropertyPanel.applyDictionary.Add(node.ID, true);
-                Parent.OrgChartPropertyPanel.isAdditionalInfo = true;
 
             }
-            if (node.Data != null)
-            {
-                string nodeData = node.Data.ToString();
-                OrgChartDetails orgChartDetails = System.Text.Json.JsonSerializer.Deserialize<OrgChartDetails>(nodeData);
-                node.Data = orgChartDetails;
-                var data = node.Data as OrgChartDetails;
-                node.Tooltip = new DiagramTooltip() { Template = "<table" + " style=" + width + "><tr><td>Name</td><td>:</td><td>" + data.Name + "</td></tr><tr><td>Role</td><td>:</td><td>" + data.Role + "</td></tr><tr><td>Email</td><td>:</td><td>" + data.Email + "</td></tr><tr><td>Department</td><td>:</td><td>" + data.Department + "</td></tr><tr><td>EmployeeID</td><td>:</td><td>" + data.EmployeeID + "</td></tr><tr><td>SupervisorID</td><td>:</td><td>" + data.SupervisorID + "</td></tr><tr><td>SupervisorName</td><td>:</td><td>" + data.SupervisorName + "</td></tr><tr><td>Location</td><td>:</td><td>" + data.Location + "</td></tr><tr><td>Phone</td><td>:</td><td>" + data.Phone + "</td></tr><tr><td>ImageURL</td><td>:</td><td>" + data.ImageURL + "</td></tr></table>", Position = Syncfusion.Blazor.Popups.Position.BottomCenter };
-            }
-            else
-            {
-                node.Tooltip = new DiagramTooltip() { Template = "<table" + " style=" + width + ">" + tooltip + "</table>", Position = Syncfusion.Blazor.Popups.Position.BottomCenter };
-            }
 
-        }
-        if (Parent.OrgChartPropertyPanel.IsOrgChart && node.Data == null&&node.AdditionalInfo!=null && node.AdditionalInfo.Count==0)
-        {
-
-            if (Parent.OrgChartPropertyPanel.TextBoxDictionary.ContainsKey(node.ID) && Parent.OrgChartPropertyPanel.CheckBoxDictionary.ContainsKey(node.ID))
+            if (node.Data == null && node.AdditionalInfo != null && node.AdditionalInfo.Count == 0)
             {
-            }
-            else
-            {
-                string tooltipValue = "";
-                Parent.OrgChartPropertyPanel.applyDictionary.Add(node.ID, false);
-                Dictionary<string, string> textBoxValues = new Dictionary<string, string>();
-                Dictionary<string, bool> checkBoxValues = new Dictionary<string, bool>();
-                Dictionary<string, string> originalDictionaryTextBoxValues = new Dictionary<string, string>();
-                Dictionary<string, bool> originalDictionaryCheckBoxValues = new Dictionary<string, bool>();
-                List<string> deleteInformation = new List<string>();
-                EditUserHandlePropertyPanel editUserHandlePropertyPanelDetails = new EditUserHandlePropertyPanel();
-                editUserHandlePropertyPanelDetails.PropertyName = "Name";
-                editUserHandlePropertyPanelDetails.PropertyValue = "Name";
-                editUserHandlePropertyPanelDetails.IsChecked = true;
 
-                tooltipValue += "<tr><td>" + editUserHandlePropertyPanelDetails.PropertyName + "</td><td>:</td><td>" + editUserHandlePropertyPanelDetails.PropertyValue + "</td></tr><tr>";
-                deleteInformation.Add(editUserHandlePropertyPanelDetails.PropertyName);
-                textBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.PropertyValue);
-                checkBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.IsChecked);
-                originalDictionaryTextBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.PropertyValue);
-                originalDictionaryCheckBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.IsChecked);
-                if ((Parent.OrgChartPropertyPanel.templatevalue == "None" && Parent.OrgChartPropertyPanel.orgChartStyle == "Style2") || (Parent.OrgChartPropertyPanel.templatevalue == "None" && Parent.OrgChartPropertyPanel.orgChartStyle == "Style3"))
+                if (!orgChartPropertyContainer.TextBoxDictionary.ContainsKey(node.ID) && !orgChartPropertyContainer.CheckBoxDictionary.ContainsKey(node.ID))
                 {
-                    editUserHandlePropertyPanelDetails.PropertyName = "Role";
-                    editUserHandlePropertyPanelDetails.PropertyValue = "Role";
+                    string tooltipValue = "";
+                    orgChartPropertyContainer.ApplyDictionary.Add(node.ID, false);
+                    Dictionary<string, string> textBoxValues = new Dictionary<string, string>();
+                    Dictionary<string, bool> checkBoxValues = new Dictionary<string, bool>();
+                    Dictionary<string, string> originalDictionaryTextBoxValues = new Dictionary<string, string>();
+                    Dictionary<string, bool> originalDictionaryCheckBoxValues = new Dictionary<string, bool>();
+                    List<string> deleteInformation = new List<string>();
+                    EditUserHandlePropertyPanel editUserHandlePropertyPanelDetails = new EditUserHandlePropertyPanel();
+                    editUserHandlePropertyPanelDetails.PropertyName = "Name";
+                    editUserHandlePropertyPanelDetails.PropertyValue = "Name";
                     editUserHandlePropertyPanelDetails.IsChecked = true;
+
                     tooltipValue += "<tr><td>" + editUserHandlePropertyPanelDetails.PropertyName + "</td><td>:</td><td>" + editUserHandlePropertyPanelDetails.PropertyValue + "</td></tr><tr>";
                     deleteInformation.Add(editUserHandlePropertyPanelDetails.PropertyName);
                     textBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.PropertyValue);
                     checkBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.IsChecked);
                     originalDictionaryTextBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.PropertyValue);
                     originalDictionaryCheckBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.IsChecked);
-                }
+                    if ((orgChartPropertyContainer.Templatevalue == "None" && orgChartPropertyContainer.OrgChartStyle == "Style2") || (orgChartPropertyContainer.Templatevalue == "None" && orgChartPropertyContainer.OrgChartStyle == "Style3"))
+                    {
+                        editUserHandlePropertyPanelDetails.PropertyName = "Role";
+                        editUserHandlePropertyPanelDetails.PropertyValue = "Role";
+                        editUserHandlePropertyPanelDetails.IsChecked = true;
+                        tooltipValue += "<tr><td>" + editUserHandlePropertyPanelDetails.PropertyName + "</td><td>:</td><td>" + editUserHandlePropertyPanelDetails.PropertyValue + "</td></tr><tr>";
+                        deleteInformation.Add(editUserHandlePropertyPanelDetails.PropertyName);
+                        textBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.PropertyValue);
+                        checkBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.IsChecked);
+                        originalDictionaryTextBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.PropertyValue);
+                        originalDictionaryCheckBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.IsChecked);
+                    }
 
 
-                editUserHandlePropertyPanelDetails.PropertyName = "Version";
-                editUserHandlePropertyPanelDetails.PropertyValue = "";
-                editUserHandlePropertyPanelDetails.IsChecked = false;
-                deleteInformation.Add(editUserHandlePropertyPanelDetails.PropertyName);
-                textBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.PropertyValue);
-                checkBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.IsChecked);
-                originalDictionaryTextBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.PropertyValue);
-                originalDictionaryCheckBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.IsChecked);
-                if (node.Shape is ImageShape)
-                {
-                    editUserHandlePropertyPanelDetails.PropertyName = "ImageURL";
-                    editUserHandlePropertyPanelDetails.PropertyValue = (node.Shape as ImageShape).Source;
-                    editUserHandlePropertyPanelDetails.IsChecked = true;
-                    tooltipValue += "<tr><td>" + editUserHandlePropertyPanelDetails.PropertyName + "</td><td>:</td><td>" + editUserHandlePropertyPanelDetails.PropertyValue + "</td></tr><tr>";
+                    editUserHandlePropertyPanelDetails.PropertyName = "Version";
+                    editUserHandlePropertyPanelDetails.PropertyValue = "";
+                    editUserHandlePropertyPanelDetails.IsChecked = false;
+                    deleteInformation.Add(editUserHandlePropertyPanelDetails.PropertyName);
                     textBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.PropertyValue);
                     checkBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.IsChecked);
                     originalDictionaryTextBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.PropertyValue);
                     originalDictionaryCheckBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.IsChecked);
+                    if (node.Shape is ImageShape)
+                    {
+                        editUserHandlePropertyPanelDetails.PropertyName = "ImageURL";
+                        editUserHandlePropertyPanelDetails.PropertyValue = (node.Shape as ImageShape).Source;
+                        editUserHandlePropertyPanelDetails.IsChecked = true;
+                        tooltipValue += "<tr><td>" + editUserHandlePropertyPanelDetails.PropertyName + "</td><td>:</td><td>" + editUserHandlePropertyPanelDetails.PropertyValue + "</td></tr><tr>";
+                        textBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.PropertyValue);
+                        checkBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.IsChecked);
+                        originalDictionaryTextBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.PropertyValue);
+                        originalDictionaryCheckBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.IsChecked);
+                    }
+                    orgChartPropertyContainer.TextBoxDictionary.Add(node.ID, textBoxValues);
+                    orgChartPropertyContainer.CheckBoxDictionary.Add(node.ID, checkBoxValues);
+                    orgChartPropertyContainer.OriginalTextBoxValuesDictionary.Add(node.ID, originalDictionaryTextBoxValues);
+                    orgChartPropertyContainer.OriginalCheckBoxValuesDictionary.Add(node.ID, originalDictionaryCheckBoxValues);
+                    orgChartPropertyContainer.DeleteDictionary.Add(node.ID, deleteInformation);
+                    node.Tooltip = new DiagramTooltip() { Template = "<table" + " style=" + width + ">" + tooltipValue + "</table>", Position = Syncfusion.Blazor.Popups.Position.BottomCenter };
+
+
                 }
-                Parent.OrgChartPropertyPanel.TextBoxDictionary.Add(node.ID, textBoxValues);
-                Parent.OrgChartPropertyPanel.CheckBoxDictionary.Add(node.ID, checkBoxValues);
-                Parent.OrgChartPropertyPanel.OriginalTextBoxValuesDictionary.Add(node.ID, originalDictionaryTextBoxValues);
-                Parent.OrgChartPropertyPanel.OriginalCheckBoxValuesDictionary.Add(node.ID, originalDictionaryCheckBoxValues);
-                Parent.OrgChartPropertyPanel.Deletedictionary.Add(node.ID, deleteInformation);
-                node.Tooltip = new DiagramTooltip() { Template = "<table" + " style=" + width + ">" + tooltipValue + "</table>", Position = Syncfusion.Blazor.Popups.Position.BottomCenter };
-
 
             }
-
-        }
-        if (Parent.OrgChartPropertyPanel.IsOrgChart && Parent.OrgChartPropertyPanel.isLayout&&node.Data!=null&&node.AdditionalInfo!=null&&node.AdditionalInfo.Count==0)
-        {
-            annotationDetails = new List<string>();
-            var data = node.Data as OrgChartDetails;
-
-            if (data != null && this.Parent.OrgChartPropertyPanel.templatevalue != "template1" && this.Parent.OrgChartPropertyPanel.templatevalue != "template2" && Parent.OrgChartPropertyPanel.isUploader)
+            if ( orgChartPropertyContainer.IsLayout && node.Data != null && node.AdditionalInfo != null && node.AdditionalInfo.Count == 0)
             {
-                node.Shape = new ImageShape { Type = NodeShapes.Image, Source = data.ImageURL, ImageAlign = ImageAlignment.XMinYMin, Scale = DiagramScale.None };
-            }
-            foreach (KeyValuePair<string, bool> keyValues in Parent.OrgChartPropertyPanel.DataSourceDictionary)
-            {
-                if (keyValues.Value)
+                annotationDetails = new List<string>();
+                var data = node.Data as OrgChartDetails;
+
+                if (data != null && orgChartPropertyContainer.Templatevalue != "template1" && orgChartPropertyContainer.Templatevalue != "template2" && orgChartPropertyContainer.IsUploader || ((data != null && orgChartPropertyContainer.IsUploader && orgChartPropertyContainer.IsUploderFirstTime)))
                 {
-                    UpdateAnnotation(node, keyValues.Key);
+                    node.Shape = new ImageShape { Type = NodeShapes.Image, Source = data.ImageURL, ImageAlign = ImageAlignment.XMinYMin, Scale = DiagramScale.None };
                 }
-
-            }
-            var annotations = new DiagramObjectCollection<ShapeAnnotation>();
-            for (var i = 0; i < annotationDetails.Count; i++)
-            {
-                var content = annotationDetails[i];
-                var annotation1 = new ShapeAnnotation() {  Content = content != null ? content.ToString() : "" };
-                annotation1.Style = new TextStyle() { FontSize = 10};
-                await annotations.AddAsync(annotation1);
-            }
-            if (annotations.Count > 0)
-            {
-                node.Annotations = annotations;
-            }
-            for (int s = 0; s < node.Annotations.Count; s++)
-            {
-                if (s == 0)
+                bool isApply = false;
+                if (orgChartPropertyContainer.ApplyDictionary.ContainsKey(node.ID))
                 {
-                    node.Annotations[s].Style = new TextStyle() { Color = "black", FontSize = 10, Bold = true };
+                    isApply = orgChartPropertyContainer.ApplyDictionary[node.ID];
                 }
-                else
+                if (!isApply || Parent.MenuBar.IsOpenClick)
                 {
-                    node.Annotations[s].Style = new TextStyle() { Color = "black", FontSize = 8, Bold = false };
+                    foreach (KeyValuePair<string, bool> keyValues in orgChartPropertyContainer.DataSourceDictionary)
+                    {
+                        if (keyValues.Value && data != null)
+                        {
+                            UpdateAnnotation(node, keyValues.Key,annotationDetails);
+                        }
 
+                    }
                 }
+                var annotations = new DiagramObjectCollection<ShapeAnnotation>();
+                for (var i = 0; i < annotationDetails.Count; i++)
+                {
+                    var content = annotationDetails[i];
+                    var annotation1 = new ShapeAnnotation() { Content = content != null ? content.ToString() : "" };
+                    annotation1.Style = new TextStyle() { FontSize = 10 };
+                    await annotations.AddAsync(annotation1);
+                }
+                if (annotations.Count > 0)
+                {
+                    node.Annotations = annotations;
+                }
+                orgChartPropertyContainer.UpdateAnnotationStyle(node);
+                if (data != null && !orgChartPropertyContainer.IsAddNode)
+                {
+                    node.Tooltip = new DiagramTooltip() { Template = "<table" + " style=" + width + "><tr><td>Name</td><td>:</td><td>" + data.Name + "</td></tr><tr><td>Role</td><td>:</td><td>" + data.Role + "</td></tr><tr><td>Email</td><td>:</td><td>" + data.Email + "</td></tr><tr><td>Department</td><td>:</td><td>" + data.Department + "</td></tr><tr><td>EmployeeID</td><td>:</td><td>" + data.EmployeeID + "</td></tr><tr><td>SupervisorID</td><td>:</td><td>" + data.SupervisorID + "</td></tr><tr><td>SupervisorName</td><td>:</td><td>" + data.SupervisorName + "</td></tr><tr><td>Location</td><td>:</td><td>" + data.Location + "</td></tr><tr><td>Phone</td><td>:</td><td>" + data.Phone + "</td></tr><tr><td>ImageURL</td><td>:</td><td>" + data.ImageURL + "</td></tr></table>", Position = Syncfusion.Blazor.Popups.Position.BottomCenter };
+                }
+                Dictionary<string, object> properties = new Dictionary<string, object>();
+                Dictionary<string, string> textBoxValues = new Dictionary<string, string>();
+                Dictionary<string, bool> checkBoxValues = new Dictionary<string, bool>();
+                EditUserHandlePropertyPanel editUserHandlePropertyPanelDetails = new EditUserHandlePropertyPanel();
+                if (!isApply)
+                {
+                    foreach (KeyValuePair<string, bool> keyValue in orgChartPropertyContainer.DataSourceDictionary)
+                    {
+                        editUserHandlePropertyPanelDetails.PropertyName = keyValue.Key;
+                        editUserHandlePropertyPanelDetails.IsChecked = keyValue.Value;
+                        UpdateTextfield(node, keyValue.Key, textBoxValues);
+                        checkBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.IsChecked);
+                    }
+                    if (orgChartPropertyContainer.TextBoxDictionary.ContainsKey(node.ID) && orgChartPropertyContainer.OriginalCheckBoxValuesDictionary.ContainsKey(node.ID) && orgChartPropertyContainer.CheckBoxDictionary.ContainsKey(node.ID) && orgChartPropertyContainer.OriginalCheckBoxValuesDictionary.ContainsKey(node.ID))
+                    {
+                        if (!orgChartPropertyContainer.IsAddNode)
+                        {
+                            orgChartPropertyContainer.TextBoxDictionary[node.ID] = (textBoxValues);
+                            orgChartPropertyContainer.CheckBoxDictionary[node.ID] = (checkBoxValues);
+                            orgChartPropertyContainer.OriginalTextBoxValuesDictionary[node.ID] = (textBoxValues);
+                            orgChartPropertyContainer.OriginalCheckBoxValuesDictionary[node.ID] = (checkBoxValues);
+                        }
+                    }
+                    else
+                    {
+                        orgChartPropertyContainer.TextBoxDictionary.Add(node.ID, textBoxValues);
+                        orgChartPropertyContainer.CheckBoxDictionary.Add(node.ID, checkBoxValues);
+                        orgChartPropertyContainer.OriginalTextBoxValuesDictionary.Add(node.ID, textBoxValues);
+                        orgChartPropertyContainer.OriginalCheckBoxValuesDictionary.Add(node.ID, checkBoxValues);
+                    }
+                }
+                orgChartPropertyContainer.UpdateAnnotationPosition(node);
+                node.Style.Fill = "#88C65C";
+                node.Style.StrokeColor = "#88C65C";
             }
-            node.Tooltip = new DiagramTooltip() { Template = "<table" + " style=" + width + "><tr><td>Name</td><td>:</td><td>" + data.Name + "</td></tr><tr><td>Role</td><td>:</td><td>" + data.Role + "</td></tr><tr><td>Email</td><td>:</td><td>" + data.Email + "</td></tr><tr><td>Department</td><td>:</td><td>" + data.Department + "</td></tr><tr><td>EmployeeID</td><td>:</td><td>" + data.EmployeeID + "</td></tr><tr><td>SupervisorID</td><td>:</td><td>" + data.SupervisorID + "</td></tr><tr><td>SupervisorName</td><td>:</td><td>" + data.SupervisorName + "</td></tr><tr><td>Location</td><td>:</td><td>" + data.Location + "</td></tr><tr><td>Phone</td><td>:</td><td>" + data.Phone + "</td></tr><tr><td>ImageURL</td><td>:</td><td>" + data.ImageURL + "</td></tr></table>", Position = Syncfusion.Blazor.Popups.Position.BottomCenter };
-
-            Dictionary<string, object> properties = new Dictionary<string, object>();
-            Dictionary<string, string> textBoxValues = new Dictionary<string, string>();
-            Dictionary<string, bool> checkBoxValues = new Dictionary<string, bool>();
-            EditUserHandlePropertyPanel editUserHandlePropertyPanelDetails = new EditUserHandlePropertyPanel();
-            foreach(KeyValuePair<string,bool> keyValue in Parent.OrgChartPropertyPanel.DataSourceDictionary)
-            {
-                editUserHandlePropertyPanelDetails.PropertyName = keyValue.Key;
-                editUserHandlePropertyPanelDetails.IsChecked = keyValue.Value;
-                UpdateTextfield(node, keyValue.Key, textBoxValues);
-                checkBoxValues.Add(editUserHandlePropertyPanelDetails.PropertyName, editUserHandlePropertyPanelDetails.IsChecked);
-            }
-            if (Parent.OrgChartPropertyPanel.TextBoxDictionary.ContainsKey(node.ID) && Parent.OrgChartPropertyPanel.OriginalCheckBoxValuesDictionary.ContainsKey(node.ID) && Parent.OrgChartPropertyPanel.CheckBoxDictionary.ContainsKey(node.ID) && Parent.OrgChartPropertyPanel.OriginalCheckBoxValuesDictionary.ContainsKey(node.ID))
-            {
-                Parent.OrgChartPropertyPanel.TextBoxDictionary[node.ID]=(textBoxValues);
-                Parent.OrgChartPropertyPanel.CheckBoxDictionary[node.ID]=(checkBoxValues);
-                Parent.OrgChartPropertyPanel.OriginalTextBoxValuesDictionary[node.ID]=(textBoxValues);
-                Parent.OrgChartPropertyPanel.OriginalCheckBoxValuesDictionary[node.ID]=(checkBoxValues);
-            }
-            else
-            {
-                Parent.OrgChartPropertyPanel.TextBoxDictionary.Add(node.ID, textBoxValues);
-                Parent.OrgChartPropertyPanel.CheckBoxDictionary.Add(node.ID, checkBoxValues);
-                Parent.OrgChartPropertyPanel.OriginalTextBoxValuesDictionary.Add(node.ID, textBoxValues);
-                Parent.OrgChartPropertyPanel.OriginalCheckBoxValuesDictionary.Add(node.ID, checkBoxValues);
-            }
-            Parent.OrgChartPropertyPanel.UpdateAnnotationPosition(node);
-            node.Style.Fill = "#88C65C";
-            node.Style.StrokeColor = "#88C65C";
-        }
-        if (Parent.OrgChartPropertyPanel.IsOrgChart)
-        {
-            foreach(ShapeAnnotation annotation in node.Annotations)
+            foreach (ShapeAnnotation annotation in node.Annotations)
             {
                 annotation.Constraints = AnnotationConstraints.ReadOnly;
             }
             node.Constraints = NodeConstraints.Default | NodeConstraints.Tooltip;
             node.AdditionalInfo.Clear();
-
-
-
         }
     }
     public void UpdateTextfield(Node node, string key,Dictionary<string, string> properties)
@@ -506,7 +501,7 @@
 
         }
     }
-    public void UpdateAnnotation(Node node, string key)
+    public void UpdateAnnotation(Node node, string key, List<string> annotationDetails)
     {
         var data = node.Data as OrgChartDetails;
         switch (key)
@@ -567,7 +562,7 @@
     private void PositionChanged(PositionChangedEventArgs args)
     {
         Parent.DiagramPropertyPanel.UpdatePropertyPanel();
-        
+
     }
     private void SizeChanged(SizeChangedEventArgs args)
     {
@@ -648,6 +643,9 @@
                 {
                     if (Diagram.SelectionSettings.Nodes.Count == 1)
                     {
+                        Diagram.SelectionSettings.UserHandles[0].Visible = true;
+                        Diagram.SelectionSettings.UserHandles[1].Visible = true;
+                        Diagram.SelectionSettings.UserHandles[2].Visible = true;
                         Parent.DiagramPropertyPanel.PanelVisibility();
                         Parent.DiagramPropertyPanel.slider();
 
@@ -671,7 +669,15 @@
                 Parent.DiagramPropertyPanel.BindDiagramProperties();
                 Parent.Toolbar.DiagramSelectionToolbarItems();
             }
-             //this.Diagram.Constraints|=DiagramConstraints.UndoRedo;
+            if (this.Parent.OrgChartPropertyPanel.IsOrgChart && args.NewValue.Count > 1)
+            {
+                if (Diagram.SelectionSettings.Nodes.Count > 1)
+                {
+                    Diagram.SelectionSettings.UserHandles[0].Visible = false;
+                    Diagram.SelectionSettings.UserHandles[1].Visible = false;
+                    Diagram.SelectionSettings.UserHandles[2].Visible = false;
+                }
+            }
             StateHasChanged();
         }
     }
@@ -890,22 +896,22 @@
         switch (alignment)
         {
             case "Align Left":
-                HorizontalAlignment = HorizontalAlignment.Left;
+                horizontalAlignment = HorizontalAlignment.Left;
                 break;
             case "Align Right":
-                HorizontalAlignment = HorizontalAlignment.Right;
+                horizontalAlignment = HorizontalAlignment.Right;
                 break;
             case "Align Center":
-                HorizontalAlignment = HorizontalAlignment.Center;
+                horizontalAlignment = HorizontalAlignment.Center;
                 break;
             case "Align Top":
-                VerticalAlignment = VerticalAlignment.Top;
+                verticalAlignment = VerticalAlignment.Top;
                 break;
             case "Align Middle":
-                VerticalAlignment = VerticalAlignment.Center;
+                verticalAlignment = VerticalAlignment.Center;
                 break;
             case "Align Bottom":
-                VerticalAlignment = VerticalAlignment.Bottom;
+                verticalAlignment = VerticalAlignment.Bottom;
                 break;
         }
         await diagram.EndUpdate();
@@ -942,6 +948,7 @@
     // Method to execute the custom command
     public async Task ExecuteCommand(CommandKeyArgs obj)
     {
+        OrgChartPropertyContainer orgChartPropertyContainer = Parent.OrgChartPropertyPanel;
         if(Parent.MindMapPropertyPanel.IsMindMap)
         {
             if(obj.Name == "leftChild")
@@ -1025,35 +1032,35 @@
                 Parent.MindMapPropertyPanel.UndoRedoLayout(false);
             }
         }
-        else if(Parent.OrgChartPropertyPanel.IsOrgChart)
+        else if(orgChartPropertyContainer.IsOrgChart)
         {
             if (obj.Name == "addChild")
             {
-                Parent.OrgChartPropertyPanel.AddNode(Diagram.SelectionSettings.Nodes[0].ID);
+                orgChartPropertyContainer.AddNode(Diagram.SelectionSettings.Nodes[0].ID);
             }
             if (obj.Name == "navigationDown")
             {
-                Parent.OrgChartPropertyPanel.NavigateChild("Bottom");
+                orgChartPropertyContainer.NavigateChild("Bottom");
             }
             if (obj.Name == "navigationUp")
             {
-                Parent.OrgChartPropertyPanel.NavigateChild("Top");
+                orgChartPropertyContainer.NavigateChild("Top");
             }
             if (obj.Name == "navigationLeft")
             {
-                Parent.OrgChartPropertyPanel.NavigateChild("Left");
+                orgChartPropertyContainer.NavigateChild("Left");
             }
             if (obj.Name == "navigationRight")
             {
-                Parent.OrgChartPropertyPanel.NavigateChild("Right");
+                orgChartPropertyContainer.NavigateChild("Right");
             }
             if (obj.Name == "addRightChild")
             {
-                Parent.OrgChartPropertyPanel.AddRightChild();
+                orgChartPropertyContainer.AddRightChild();
             }
             if (obj.Name == "changeChildParent")
             {
-                Parent.OrgChartPropertyPanel.changeChildParent();
+                await orgChartPropertyContainer.changeChildParent();
             }
             if (obj.Name == "showShortCut")
             {
@@ -1061,34 +1068,22 @@
             }
             if (obj.Name == "undo")
             {
-                Parent.OrgChartPropertyPanel.UndoRedoLayout(true);
+                await orgChartPropertyContainer.UndoRedoLayout(true);
             }
             if (obj.Name == "redo")
             {
-                Parent.MindMapPropertyPanel.UndoRedoLayout(false);
+                await orgChartPropertyContainer.UndoRedoLayout(false);
             }
             if (obj.Name == "copyObject")
             {
-                List<string> nodeIDs = new List<string>();
-                if (this.Parent.OrgChartPropertyPanel.IsOrgChart)
-                {
-                    foreach (Node node in this.Diagram.SelectionSettings.Nodes)
-                    {
-                        string nodeID = node.ID;
-
-                        Dictionary<string, object> objectdictionary = new Dictionary<string, object>();
-                        objectdictionary.Add(node.ID, null);
-
-                        node.AdditionalInfo = objectdictionary;
-                    }
-                }
-                this.Parent.OrgChartPropertyPanel.isCopy = true;
+                Parent.MenuBar.CopyEditUserHandleDetails(this.Diagram);
+                orgChartPropertyContainer.IsCopy = true;
                 Diagram.Copy();
             }
             if (obj.Name == "pasteObject")
             {
                 Diagram.Paste();
-                this.Parent.OrgChartPropertyPanel.isCopy = false;
+                orgChartPropertyContainer.IsCopy = false;
             }
         }
         else
@@ -1125,32 +1120,17 @@
         }
         if (obj.Name == "fileOpen")
         {
+            if (orgChartPropertyContainer.IsOrgChart)
+            {
+                Parent.MenuBar.IsOpenClick = true;
+            }
             await Parent.MenuBar.OpenUploadBox(true, ".json");
         }
         if (obj.Name == "fileSave")
         {
-            if (this.Parent.OrgChartPropertyPanel.IsOrgChart)
+            if (orgChartPropertyContainer.IsOrgChart)
             {
-                foreach (Node node in Diagram.Nodes)
-                {
-                    string nodeID = node.ID;
-                    Dictionary<string, string> textBoxValues = this.Parent.OrgChartPropertyPanel.TextBoxDictionary[nodeID];
-
-                    Dictionary<string, bool> checkBoxValues = new Dictionary<string, bool>();
-
-                    Dictionary<string, object> objectdictionary = new Dictionary<string, object>();
-
-                    foreach (var key in textBoxValues)
-                    {
-                        string textValue = this.Parent.OrgChartPropertyPanel.TextBoxDictionary[nodeID][key.Key];
-                        bool checkboxValue = this.Parent.OrgChartPropertyPanel.CheckBoxDictionary[nodeID][key.Key];
-                        checkBoxValues = new Dictionary<string, bool>();
-                        checkBoxValues.Add(textValue, checkboxValue);
-                        objectdictionary.Add(key.Key, checkBoxValues);
-                    }
-
-                    node.AdditionalInfo = objectdictionary;
-                }
+                Parent.MenuBar.SaveEditUserHandleDetails(this.Diagram);
             }
             string fileName = await jsRuntime.InvokeAsync<string>("getDiagramFileName", "");
             await Parent.MenuBar.Download(fileName);
@@ -1180,11 +1160,11 @@
         return Parent.MindMapPropertyPanel.GetBranchType(obj);
     }
 
-    private TreeInfo getlayoutinfo(IDiagramObject obj, TreeInfo options)
+    private TreeInfo getLayoutInfo(IDiagramObject obj, TreeInfo options)
     {
         if(Parent.OrgChartPropertyPanel.IsOrgChart)
         {
-            return Parent.OrgChartPropertyPanel.getlayoutinfo(obj, options);
+            return Parent.OrgChartPropertyPanel.GetLayoutInfo(obj, options);
         }
         return options;     
     }
@@ -1260,7 +1240,7 @@
         }
         public override async void OnMouseDown(DiagramMouseEventArgs args)
         {
-            parent.DiagramContent.AddRemoveOrgChartNode("AddNode");
+            await parent.DiagramContent.AddRemoveOrgChartNode("AddNode");
         }
     }
     public class OrgRemoveHandleTool : DragController
@@ -1277,11 +1257,11 @@
         {
             deleteObject = (diagram.SelectionSettings.Nodes[0]) as Node;
         }
-        public override void OnMouseUp(DiagramMouseEventArgs args)
+        public override async void OnMouseUp(DiagramMouseEventArgs args)
         {
             if (deleteObject != null)
             {
-                parent.DiagramContent.AddRemoveOrgChartNode("DelNode");
+                await parent.DiagramContent.AddRemoveOrgChartNode("DeleteNode");
             }
             base.OnMouseUp(args);
             this.InAction = true;
@@ -1337,17 +1317,18 @@
 
     private async Task AddRemoveOrgChartNode(string type)
     {
+      OrgChartPropertyContainer  orgChartPropertyContainer = Parent.OrgChartPropertyPanel;
         if(type=="AddNode")
         {
-            Parent.OrgChartPropertyPanel.AddNode(Diagram.SelectionSettings.Nodes[0].ID);
+            await orgChartPropertyContainer.AddNode(Diagram.SelectionSettings.Nodes[0].ID);
         }
-        else if (type=="DelNode")
+        else if (type == "DeleteNode")
         {
-            Parent.OrgChartPropertyPanel.RemoveChildNode();
+            await orgChartPropertyContainer.RemoveChildNode();
         }
         else
         {
-            await Parent.OrgChartPropertyPanel.EditHandle();
+            await orgChartPropertyContainer.EditHandle();
         }
     }
     public string RandomId()
@@ -1361,19 +1342,10 @@
     }
     private async void Created(object args)
     {
-        if (Parent.MindMapPropertyPanel.IsMindMap && Diagram.Nodes.Count>0)
+        if (Parent.MindMapPropertyPanel.IsMindMap && Diagram.Nodes.Count > 0 || (Parent.OrgChartPropertyPanel.IsOrgChart && Diagram.Nodes.Count > 0))
         {
             Diagram.Select(new ObservableCollection<IDiagramObject>() { Diagram.Nodes[0] });
         }
-        if (Parent.OrgChartPropertyPanel.IsOrgChart && Diagram.Nodes.Count > 0)
-        {
-            Diagram.Select(new ObservableCollection<IDiagramObject>() { Diagram.Nodes[0] });
-        }
-        //if (Parent.OrgChartPropertyPanel.IsOrgChart)
-        //{
-        //    await Diagram.DoLayout();
-        //}
-
     }
     private async void TextChanged(TextChangeEventArgs args)
     {
@@ -1395,7 +1367,7 @@
             }
         }
     }
-    private async Task CollectionChanged(CollectionChangedEventArgs args)
+    private void CollectionChanged(CollectionChangedEventArgs args)
     {
        
         if (Parent.MindMapPropertyPanel.IsMindMap)

@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components.WebView.Maui;
 using DiagramBuilderMAUI.Data;
-using DiagramBuilderMAUI.Shared;
+using DiagramBuilder.Shared;
 using Syncfusion.Blazor;
+using Syncfusion.Blazor.Popups;
 
-namespace DiagramBuilderMAUI;
+namespace DiagramBuilder;
 
 public static class MauiProgram
 {
@@ -16,9 +17,10 @@ public static class MauiProgram
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 			});
-
-		builder.Services.AddMauiBlazorWebView();
-		builder.Services.AddSyncfusionBlazor(options => { options.IgnoreScriptIsolation = false; });
+        Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NGaF5cXmdCeUxwWmFZfV1gdl9DaVZRTWYuP1ZhSXxQdkNhXn9ccnZWRWJYWUQ=");
+        builder.Services.AddMauiBlazorWebView();
+		builder.Services.AddSyncfusionBlazor();
+        builder.Services.AddScoped<SfDialogService>();
 #if DEBUG
         builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
