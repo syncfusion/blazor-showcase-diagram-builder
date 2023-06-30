@@ -1,0 +1,378 @@
+{
+  "Tooltip": null,
+  "bridgeDirection": 2,
+  "ID": "KAbAH",
+  "dataSourceSettings": null,
+  "width": "100%",
+  "contextMenuSettings": {
+    "show": true,
+    "items": null,
+    "showCustomMenuOnly": false
+  },
+  "constraints": 764,
+  "interactionController": 3,
+  "snapSettings": {
+    "verticalGridLines": {
+      "lineColor": "lightgray",
+      "lineDashArray": "",
+      "lineIntervals": [
+        1.25,
+        18.75,
+        0.25,
+        19.75,
+        0.25,
+        19.75,
+        0.25,
+        19.75,
+        0.25,
+        19.75
+      ],
+      "dotIntervals": [
+        1,
+        19,
+        0.5,
+        19.5,
+        0.5,
+        19.5,
+        0.5,
+        19.5,
+        0.5,
+        19.5
+      ],
+      "snapIntervals": [
+        20
+      ]
+    },
+    "horizontalGridLines": {
+      "lineColor": "lightgray",
+      "lineDashArray": "",
+      "lineIntervals": [
+        1.25,
+        18.75,
+        0.25,
+        19.75,
+        0.25,
+        19.75,
+        0.25,
+        19.75,
+        0.25,
+        19.75
+      ],
+      "dotIntervals": [
+        1,
+        19,
+        0.5,
+        19.5,
+        0.5,
+        19.5,
+        0.5,
+        19.5,
+        0.5,
+        19.5
+      ],
+      "snapIntervals": [
+        20
+      ]
+    },
+    "constraints": 0,
+    "snapDistance": 5,
+    "snapAngle": 5,
+    "gridType": 0
+  },
+  "pageSettings": {
+    "width": null,
+    "height": null,
+    "orientation": 0,
+    "boundaryConstraints": 0,
+    "multiplePage": false,
+    "showPageBreaks": false,
+    "margin": {
+      "left": 0,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    },
+    "background": {
+      "imageSource": "",
+      "background": "transparent",
+      "imageScale": 0,
+      "imageAlign": 0
+    }
+  },
+  "scrollSettings": {
+    "horizontalOffset": 0,
+    "verticalOffset": 0,
+    "currentZoom": 1,
+    "minZoom": 0.2,
+    "maxZoom": 30,
+    "scrollLimit": 0,
+    "ScrollableArea": null
+  },
+  "height": "100%",
+  "layout": {
+    "verticalSpacing": 50,
+    "bounds": null,
+    "horizontalSpacing": 50,
+    "orientation": 0,
+    "horizontalAlignment": 4,
+    "verticalAlignment": 4,
+    "arrangement": false,
+    "samePoint": true,
+    "type": 2,
+    "margin": {
+      "left": 50,
+      "right": 0,
+      "top": 50,
+      "bottom": 0
+    }
+  },
+  "commandManager": {
+    "commands": [
+      {
+        "name": "addChild",
+        "gesture": {
+          "key": 9,
+          "modifiers": 0
+        },
+        "parameter": ""
+      },
+      {
+        "name": "fileNew",
+        "gesture": {
+          "key": 78,
+          "modifiers": 4
+        },
+        "parameter": ""
+      },
+      {
+        "name": "fileOpen",
+        "gesture": {
+          "key": 79,
+          "modifiers": 1
+        },
+        "parameter": ""
+      },
+      {
+        "name": "fileSave",
+        "gesture": {
+          "key": 83,
+          "modifiers": 1
+        },
+        "parameter": ""
+      },
+      {
+        "name": "navigationDown",
+        "gesture": {
+          "key": 40,
+          "modifiers": 0
+        },
+        "parameter": ""
+      },
+      {
+        "name": "navigationUp",
+        "gesture": {
+          "key": 38,
+          "modifiers": 0
+        },
+        "parameter": ""
+      },
+      {
+        "name": "navigationLeft",
+        "gesture": {
+          "key": 37,
+          "modifiers": 0
+        },
+        "parameter": ""
+      },
+      {
+        "name": "navigationRight",
+        "gesture": {
+          "key": 39,
+          "modifiers": 0
+        },
+        "parameter": ""
+      },
+      {
+        "name": "addRightChild",
+        "gesture": {
+          "key": 13,
+          "modifiers": 0
+        },
+        "parameter": ""
+      },
+      {
+        "name": "changeChildParent",
+        "gesture": {
+          "key": 9,
+          "modifiers": 4
+        },
+        "parameter": ""
+      },
+      {
+        "name": "copyObject",
+        "gesture": {
+          "key": 67,
+          "modifiers": 1
+        },
+        "parameter": ""
+      },
+      {
+        "name": "pasteObject",
+        "gesture": {
+          "key": 86,
+          "modifiers": 1
+        },
+        "parameter": ""
+      },
+      {
+        "name": "undo",
+        "gesture": {
+          "key": 90,
+          "modifiers": 1
+        },
+        "parameter": ""
+      },
+      {
+        "name": "redo",
+        "gesture": {
+          "key": 89,
+          "modifiers": 1
+        },
+        "parameter": ""
+      },
+      {
+        "name": "showShortCut",
+        "gesture": {
+          "key": 112,
+          "modifiers": 0
+        },
+        "parameter": ""
+      }
+    ]
+  },
+  "selectedItems": {
+    "width": 0,
+    "height": 0,
+    "offsetX": 0,
+    "offsetY": 0,
+    "rotateAngle": 0,
+    "pivot": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "userHandles": [
+      {
+        "name": "OrgAddHandle",
+        "id": "oFquo",
+        "pathData": "M 30.05 15.03 L 30.05 30.05 L 15.02 30.05 L 15.02 39.9 L 30.05 39.9 L 30.05 54.93 L 39.9 54.93 L 39.9 39.9 L 54.93 39.9 L 54.93 30.05 L 39.9 30.05 L 39.9 15.03 z",
+        "source": null,
+        "backgroundColor": "#7d7d7d",
+        "side": 0,
+        "borderColor": "",
+        "borderWidth": 0.5,
+        "size": 23,
+        "pathColor": "white",
+        "displacement": 10,
+        "visible": true,
+        "offset": 0,
+        "margin": {
+          "left": 0,
+          "right": 0,
+          "top": 0,
+          "bottom": 0
+        },
+        "VisibleTarget": 1,
+        "horizontalAlignment": 3,
+        "verticalAlignment": 3,
+        "template": false
+      },
+      {
+        "name": "OrgRemoveHandle",
+        "id": "JOeRK",
+        "pathData": "M 7.04 22.13 L 92.95 22.13 L 92.95 88.8 C 92.95 91.92 91.55 94.58 88.76 96.74 C 85.97 98.91 82.55 100 78.52 100 L 21.48 100 C 17.45 100 14.03 98.91 11.24 96.74 C 8.45 94.58 7.04 91.92 7.04 88.8 z M 32.22 0 L 67.78 0 L 75.17 5.47 L 100 5.47 L 100 16.67 L 0 16.67 L 0 5.47 L 24.83 5.47 z",
+        "source": null,
+        "backgroundColor": "#7d7d7d",
+        "side": 1,
+        "borderColor": "",
+        "borderWidth": 0.5,
+        "size": 23,
+        "pathColor": "white",
+        "displacement": 10,
+        "visible": true,
+        "offset": 1,
+        "margin": {
+          "left": 0,
+          "right": 0,
+          "top": 0,
+          "bottom": 0
+        },
+        "VisibleTarget": 1,
+        "horizontalAlignment": 3,
+        "verticalAlignment": 3,
+        "template": false
+      },
+      {
+        "name": "OrgEditHandle",
+        "id": "QGozx",
+        "pathData": "M 42.65 30.41 L 67.5 53.99 L 41.2 78.73 C 39.41 80.42 37.34 81.27 34.99 81.27 C 32.65 81.27 30.57 80.49 28.78 78.93 L 25.05 82.44 L 0 82.44 L 16.36 67.05 C 14.57 65.36 13.67 63.41 13.67 61.2 C 13.67 58.99 14.57 56.98 16.36 55.16 z M 78.42 25.49 C 78.57 0 78.73 0.01 78.88 0.01 C 81.09 -0.12 83.09 0.66 84.88 2.35 L 97.52 14.04 C 99.17 15.86 100 17.87 100 20.09 C 100 22.29 99.17 24.24 97.52 25.93 L 71.84 50.09 L 46.79 26.51 L 72.47 2.35 C 74.15 0.77 76.13 -0.02 78.42 25.49 z",
+        "source": null,
+        "backgroundColor": "#7d7d7d",
+        "side": 1,
+        "borderColor": "",
+        "borderWidth": 0.5,
+        "size": 23,
+        "pathColor": "white",
+        "displacement": 10,
+        "visible": true,
+        "offset": 0,
+        "margin": {
+          "left": 0,
+          "right": 0,
+          "top": 0,
+          "bottom": 0
+        },
+        "VisibleTarget": 1,
+        "horizontalAlignment": 3,
+        "verticalAlignment": 3,
+        "template": false
+      }
+    ],
+    "rubberBandSelectionMode": 0,
+    "constraints": 12288
+  },
+  "drawingObject": null,
+  "nodes": [
+    {
+      "borderColor": "none",
+      "id": "rootNode",
+      "parentId": "",
+      "backgroundColor": "transparent",
+      "verticalAlignment": "Top",
+      "horizontalAlignment": "Left",
+      "flip": "None",
+      "constraints": "Default",
+      "isExpanded": true,
+      "canShapeLayout": true,
+      "isVisible": true,
+      "borderWidth": 0,
+      "zIndex": 0,
+      "offsetX": 500,
+      "offsetY": 250,
+      "width": 150,
+      "height": 50,
+      "rotateAngle": 0,
+      "additionalInfo": "{}",
+      "annotations": "[{\u0022offset\u0022:{\u0022x\u0022:0.5,\u0022y\u0022:0.5},\u0022id\u0022:\u0022fSKQA\u0022,\u0022content\u0022:\u0022Name\u0022,\u0022visibility\u0022:true,\u0022constraints\u0022:4,\u0022hyperlink\u0022:null,\u0022width\u0022:10,\u0022height\u0022:null,\u0022rotationAngle\u0022:0,\u0022style\u0022:{\u0022bold\u0022:true,\u0022color\u0022:\u0022black\u0022,\u0022fontFamily\u0022:\u0022Arial\u0022,\u0022fontSize\u0022:10,\u0022italic\u0022:false,\u0022textAlign\u0022:\u0022Center\u0022,\u0022textDecoration\u0022:\u0022None\u0022,\u0022textOverflow\u0022:\u0022Wrap\u0022,\u0022textWrapping\u0022:\u0022WrapWithOverflow\u0022,\u0022fill\u0022:\u0022transparent\u0022,\u0022gradient\u0022:null,\u0022opacity\u0022:1,\u0022strokeColor\u0022:\u0022transparent\u0022,\u0022strokeDashArray\u0022:\u0022\u0022,\u0022strokeWidth\u0022:1},\u0022horizontalAlignment\u0022:3,\u0022verticalAlignment\u0022:3,\u0022margin\u0022:{\u0022left\u0022:0,\u0022right\u0022:0,\u0022top\u0022:0,\u0022bottom\u0022:0},\u0022additionalInfo\u0022:{}}]",
+      "ports": "[]",
+      "fixedUserHandles": "[]",
+      "inEdges": "[]",
+      "outEdges": "[]",
+      "pivot": "{\u0022x\u0022:0.5,\u0022y\u0022:0.5}",
+      "shadow": "{\u0022angle\u0022:45,\u0022color\u0022:\u0022lightgrey\u0022,\u0022distance\u0022:5,\u0022opacity\u0022:0.7}",
+      "shape": "{\r\n  \u0022type\u0022: \u0022Basic\u0022,\r\n  \u0022shape\u0022: \u0022Rectangle\u0022,\r\n  \u0022points\u0022: \u0022null\u0022,\r\n  \u0022cornerRadius\u0022: 10\r\n}",
+      "style": "{\u0022fill\u0022:\u0022#C4F2E8\u0022,\u0022gradient\u0022:null,\u0022opacity\u0022:1,\u0022strokeColor\u0022:\u0022#8BC1B7\u0022,\u0022strokeDashArray\u0022:\u0022\u0022,\u0022strokeWidth\u0022:2}",
+      "margin": "{\u0022left\u0022:0,\u0022right\u0022:0,\u0022top\u0022:0,\u0022bottom\u0022:0}"
+    }
+  ],
+  "connectors": []
+}

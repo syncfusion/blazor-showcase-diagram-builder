@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components.WebView.Maui;
 using DiagramBuilderMAUI.Data;
-using DiagramBuilderMAUI.Shared;
+using DiagramBuilder.Shared;
 using Syncfusion.Blazor;
 
-namespace DiagramBuilderMAUI;
+namespace DiagramBuilder;
 
 public static class MauiProgram
 {
@@ -18,7 +18,8 @@ public static class MauiProgram
 			});
 
 		builder.Services.AddMauiBlazorWebView();
-		builder.Services.AddSyncfusionBlazor(options => { options.IgnoreScriptIsolation = false; });
+		builder.Services.AddSyncfusionBlazor();
+     
 #if DEBUG
         builder.Services.AddBlazorWebViewDeveloperTools();
 #endif

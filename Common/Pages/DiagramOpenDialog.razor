@@ -1,5 +1,8 @@
 ﻿@using Syncfusion.Blazor.Popups
+@using Syncfusion.Blazor.Diagram
 @inject HttpClient Http
+@using System.Text.Json;
+@using System.Text.Json.Serialization;
 
 @namespace DiagramBuilder
 
@@ -28,6 +31,13 @@
                             <div class=@ClassName @onclick="@ShowMindMapTemplates">
                                 <span>Mind Map</span>
                             </div>
+                            if (this.Value == "Org Chart")
+                                ClassName = "row db-diagram-template-parent-text orgchart-template active";
+                            else
+                                ClassName = "row db-diagram-template-parent-text orgchart-template";
+                            <div class=@ClassName @onclick="@ShowOrgChartTemplates">
+                                <span>Org Chart</span>
+                            </div>
                         }
                     </div>
                     <div class="col-xs-9 diagramTemplates temp-right-pane" style="padding-left:0px;padding-right:0px">
@@ -45,6 +55,13 @@
                                     {
                                         <div class="db-diagram-template-image-div" id="mindmap_child0" @onclick="@BlankMindMapDiagram">
                                             <div class="db-diagram-template-svg-image" style="background-image: url(&quot;./assets/dbstyle/common_images/blank_diagram_mind.svg&quot;);">
+                                            </div>
+                                        </div>
+                                    }
+                                    else if (this.Value == "Org Chart")
+                                    {
+                                        <div class="db-diagram-template-image-div" id="orgchart_child0" @onclick="@BlankOrgChartDiagram">
+                                            <div class="db-diagram-template-svg-image" style="background-image: url(&quot;./assets/dbstyle/common_images/blank_diagram_org.svg&quot;);">
                                             </div>
                                         </div>
                                     }
@@ -75,6 +92,16 @@
                                             <span id="diagramTemplateText">Business Planning</span>
                                         </div>
                                     }
+                                    else if (this.Value == "Org Chart")
+                                    {
+                                        <div class="db-diagram-template-image-div" id="orgchart_child1" @onclick="@OrgRenderingStyle1Diagram">
+                                            <div class="db-diagram-template-svg-image" style="background-image: url(&quot;./assets/dbstyle/orgchart_images/OrgRenderingStyle_1.SVG&quot;);">
+                                            </div>
+                                        </div>
+                                        <div class="db-diagram-template-text">
+                                            <span id="diagramTemplateText">Org Template Style - 1</span>
+                                        </div>
+                                    }
                                 }
                             </div>
                             <div id="" class="db-diagram-template-div" style="">
@@ -87,6 +114,16 @@
                                         </div>
                                         <div class="db-diagram-template-text">
                                             <span id="diagramTemplateText">Quality Management</span>
+                                        </div>
+                                    }
+                                    else if (this.Value == "Org Chart")
+                                    {
+                                        <div class="db-diagram-template-image-div" id="orgchart_child2" @onclick="@OrgRenderingStyle2Diagram">
+                                            <div class="db-diagram-template-svg-image" style="background-image: url(&quot;./assets/dbstyle/orgchart_images/OrgRenderingStyle_2.SVG&quot;);">
+                                            </div>
+                                        </div>
+                                        <div class="db-diagram-template-text">
+                                            <span id="diagramTemplateText">Org Template Style - 2</span>
                                         </div>
                                     }
                                 }
@@ -103,6 +140,16 @@
                                             <span id="diagramTemplateText">Software Life Cycle</span>
                                         </div>
                                     }
+                                    else if (this.Value == "Org Chart")
+                                   {
+                                        <div class="db-diagram-template-image-div" id="orgchart_child3" @onclick="@OrgRenderingStyle3Diagram">
+                                            <div class="db-diagram-template-svg-image" style="background-image: url(&quot;./assets/dbstyle/orgchart_images/OrgRenderingStyle_3.SVG&quot;);">
+                                            </div>
+                                        </div>
+                                        <div class="db-diagram-template-text">
+                                            <span id="diagramTemplateText">Org Template Style - 3</span>
+                                        </div>
+                                   }
                                 }
                             </div>
                         </div>
@@ -186,23 +233,23 @@
 
     public async Task BlankMindMapDiagram()
     {
-        #if SERVER
         Parent.MindMapPropertyPanel.IsMindMap = true;
+        #if SERVER
         LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/BlankDiagram.json");
-        CurrentDiagramVisibility("mindmap-diagram");
-        //await Task.Delay(2500);
-        TemplateType = "Template1";
-        await Parent.Toolbar.HideElements("hide-palette");
-        Parent.MindMapPropertyPanel.bindMindMapProperties();
-        RemoveUnwantedMindmapMenubarItems();
-        Parent.LeftSideBar.sidebarVisibility = "none";
-        Parent.LeftSideBar.StateChanged();
-        //Parent.MindMapPropertyPanel.MindmapPatternChange("pattern1");
         #endif
         #if WASM
         Parent.MindMapPropertyPanel.IsMindMap = true;
         content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/BlankDiagram.json");
         this.Parent.DiagramContent.LoadNewDiagram(content);
+        #endif
+        #if MAUI
+        Parent.MindMapPropertyPanel.IsMindMap = true;
+        string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+        var files = Directory.GetFiles(wwwroot,"BlankDiagram.json", SearchOption.AllDirectories);
+        var json = await System.IO.File.ReadAllTextAsync(files[0]);
+        json = json.Replace(System.Environment.NewLine, string.Empty);
+        this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
+        #endif
         IsOpenDialogVisible = false;
         StateHasChanged();
         CurrentDiagramVisibility("mindmap-diagram");
@@ -212,13 +259,75 @@
         RemoveUnwantedMindmapMenubarItems();
         Parent.LeftSideBar.sidebarVisibility = "none";
         Parent.LeftSideBar.StateChanged();
-        #endif
     }
-
-    public void BlankOrgChartDiagram()
+    public void RemoveUnwantedOrgChartMenubarItems()
     {
+        if (Parent.MenuBar.WindowMenuItems[1].Text == "Show Stencil")
+        {
+            Parent.MenuBar.WindowMenuItems.RemoveAt(1);
+        }
+        if (Parent.MenuBar.EditMenuItems[8].Text == "Duplicate")
+        {
+            Parent.MenuBar.EditMenuItems.RemoveAt(8);
+        }
+        Parent.MenuBar.arrangeButtonCss = "e-dropDown-button e-arrange-menu e-btn-hide";
+        Parent.MenuBar.WindowMenuItems.Add(new DiagramMenuBar.ContextMenuItemModel() { Text = "Show Shortcuts", IconCss = "sf-icon-Selection" });
+        Parent.MenuBar.StateChanged();
+    }
+    public async Task UpdateLayout()
+    {
+        await Task.Delay(800);
+        object bounds = await jsRuntime.InvokeAsync<object>("getViewportBounds").ConfigureAwait(true);
+        if (bounds != null)
+        {
+            JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+                };
+            DiagramSize dataObj = System.Text.Json.JsonSerializer.Deserialize<DiagramSize>(bounds.ToString(), options);
+            if (dataObj != null)
+            {
+                Parent.DiagramContent.Diagram.BeginUpdate();
+                Parent.DiagramContent.Diagram.Width = dataObj.Width + "px";
+                Parent.DiagramContent.Diagram.Height = dataObj.Height + "px";
+                Parent.DiagramContent.Diagram.EndUpdate();
+            }
+
+        }
+        await Parent.DiagramContent.Diagram.DoLayout();
+    }
+    public async Task BlankOrgChartDiagram()
+    {
+        #if SERVER
+        Parent.OrgChartPropertyPanel.orgChartStyle = "Blank";
         this.Value = "Org Chart";
-        StateHasChanged();
+        Parent.OrgChartPropertyPanel.IsOrgChart = true;
+        LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/blank_diagram.json");
+        CurrentDiagramVisibility("OrgChart-diagram");
+        await Parent.Toolbar.HideElements("hide-palette");
+        RemoveUnwantedOrgChartMenubarItems();
+    await UpdateLayout();
+   
+#endif
+
+        #if WASM
+     Parent.OrgChartPropertyPanel.IsOrgChart = true;
+     this.Value = "Org Chart";
+       content = await Http.GetStringAsync("assets/dbstyle/orgchart_images/blank_diagram.json");
+    this.Parent.DiagramContent.LoadNewDiagram(content);
+    IsOpenDialogVisible = false;
+      Parent.OrgChartPropertyPanel.orgChartStyle = "Blank";
+    StateHasChanged();
+    CurrentDiagramVisibility("OrgChart-diagram");
+    await Parent.Toolbar.HideElements("hide-palette");
+    Parent.LeftSideBar.sidebarVisibility = "none";
+    Parent.LeftSideBar.StateChanged();
+   RemoveUnwantedOrgChartMenubarItems();
+   await UpdateLayout();
+#endif
+
+
     }
 
     public async Task CreditProcessDiagram()
@@ -229,37 +338,59 @@
 
     public async Task BusinessPlanningDiagram()
     {
-    #if SERVER
-    Parent.MindMapPropertyPanel.IsMindMap = true;
-    LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/BusinessPlanning.json");
-    CurrentDiagramVisibility("mindmap-diagram");
-    //await Task.Delay(2500);
-    await Parent.MenuBar.BusinessPlanningDiagram();
-    TemplateType = "Template2";
-    Parent.MindMapPropertyPanel.bindMindMapProperties();
-    RemoveUnwantedMindmapMenubarItems();
-    Parent.LeftSideBar.sidebarVisibility = "none";
-    Parent.LeftSideBar.StateChanged();
-    #endif
-    #if WASM
-    Parent.MindMapPropertyPanel.IsMindMap = true;
-    content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/BusinessPlanning.json");
+        #if SERVER
+        Parent.MindMapPropertyPanel.IsMindMap = true;
+        LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/BusinessPlanning.json");
+        #endif
+        #if WASM
+        Parent.MindMapPropertyPanel.IsMindMap = true;
+        content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/BusinessPlanning.json");
+        this.Parent.DiagramContent.LoadNewDiagram(content);
+        #endif
+        #if MAUI
+        Parent.MindMapPropertyPanel.IsMindMap = true;
+        string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+        var files = Directory.GetFiles(wwwroot,"BusinessPlanning.json", SearchOption.AllDirectories);
+        var json = await System.IO.File.ReadAllTextAsync(files[0]);
+        json = json.Replace(System.Environment.NewLine, string.Empty);
+        this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
+        #endif
+        IsOpenDialogVisible = false;
+        StateHasChanged();
+        CurrentDiagramVisibility("mindmap-diagram");
+        await Parent.MenuBar.BusinessPlanningDiagram();
+        TemplateType = "Template2";
+        Parent.MindMapPropertyPanel.bindMindMapProperties();
+        RemoveUnwantedMindmapMenubarItems();
+        Parent.LeftSideBar.sidebarVisibility = "none";
+        Parent.LeftSideBar.StateChanged();
+    }
+
+    public async Task OrgRenderingStyle1Diagram()
+    {
+         #if SERVER
+        Parent.OrgChartPropertyPanel.orgChartStyle = "Style1";
+        Parent.OrgChartPropertyPanel.IsOrgChart = true;
+        LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle1.json");
+        CurrentDiagramVisibility("OrgChart-diagram");
+        await Parent.MenuBar.OrgTemplateStyle1();
+        RemoveUnwantedOrgChartMenubarItems();
+      await UpdateLayout();
+#endif
+
+#if WASM
+     Parent.OrgChartPropertyPanel.IsOrgChart = true;
+     this.Value = "Org Chart";
+      Parent.OrgChartPropertyPanel.orgChartStyle = "Style1";
+       content = await Http.GetStringAsync("assets/dbstyle/orgchart_images/OrgTemplateStyle1.json");
     this.Parent.DiagramContent.LoadNewDiagram(content);
     IsOpenDialogVisible = false;
     StateHasChanged();
-    CurrentDiagramVisibility("mindmap-diagram");
-    await Parent.MenuBar.BusinessPlanningDiagram();
-    TemplateType = "Template2";
-    Parent.MindMapPropertyPanel.bindMindMapProperties();   
-    RemoveUnwantedMindmapMenubarItems();
-    Parent.LeftSideBar.sidebarVisibility = "none";
-    Parent.LeftSideBar.StateChanged();
-    #endif
-    }
-
-    public void OrgRenderingStyle1Diagram()
-    {
-        LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle1.json");
+    CurrentDiagramVisibility("OrgChart-diagram");
+    await Parent.Toolbar.HideElements("hide-palette");
+   RemoveUnwantedOrgChartMenubarItems();
+   await UpdateLayout();
+#endif
     }
 
     public void BankTellerFlowDiagram()
@@ -270,37 +401,59 @@
 
     public async Task TQMDiagram()
     {
-    #if SERVER
+        #if SERVER
         Parent.MindMapPropertyPanel.IsMindMap = true;
-    LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/TQM.json");
-    CurrentDiagramVisibility("mindmap-diagram");
-    //await Task.Delay(2500);
-    Parent.MenuBar.TQMDiagram();
-    TemplateType = "Template3";
-    Parent.MindMapPropertyPanel.bindMindMapProperties();
-    RemoveUnwantedMindmapMenubarItems();
-    Parent.LeftSideBar.sidebarVisibility = "none";
-    Parent.LeftSideBar.StateChanged();
-    #endif
-    #if WASM
-    Parent.MindMapPropertyPanel.IsMindMap = true;
-    content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/TQM.json");
+        LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/TQM.json");
+        #endif
+        #if WASM
+        Parent.MindMapPropertyPanel.IsMindMap = true;
+        content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/TQM.json");
+        this.Parent.DiagramContent.LoadNewDiagram(content);
+        #endif
+        #if MAUI
+        Parent.MindMapPropertyPanel.IsMindMap = true;
+        string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+        var files = Directory.GetFiles(wwwroot,"TQM.json", SearchOption.AllDirectories);
+        var json = await System.IO.File.ReadAllTextAsync(files[0]);
+        json = json.Replace(System.Environment.NewLine, string.Empty);
+        this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
+        #endif
+        IsOpenDialogVisible = false;
+        StateHasChanged();
+        CurrentDiagramVisibility("mindmap-diagram");
+        await Parent.MenuBar.TQMDiagram();
+        TemplateType = "Template3";
+        Parent.MindMapPropertyPanel.bindMindMapProperties();
+        RemoveUnwantedMindmapMenubarItems();
+        Parent.LeftSideBar.sidebarVisibility = "none";
+        Parent.LeftSideBar.StateChanged();
+    }
+
+    public async Task OrgRenderingStyle2Diagram()
+    {
+         #if SERVER
+        Parent.OrgChartPropertyPanel.orgChartStyle = "Style2";
+        Parent.OrgChartPropertyPanel.IsOrgChart = true;
+        LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle2.json");
+        CurrentDiagramVisibility("OrgChart-diagram");
+        await Parent.MenuBar.OrgTemplateStyle2();
+        RemoveUnwantedOrgChartMenubarItems();
+    await UpdateLayout();
+#endif
+
+#if WASM
+     Parent.OrgChartPropertyPanel.IsOrgChart = true;
+      Parent.OrgChartPropertyPanel.orgChartStyle = "Style2";
+     this.Value = "Org Chart";
+       content = await Http.GetStringAsync("assets/dbstyle/orgchart_images/OrgTemplateStyle2.json");
     this.Parent.DiagramContent.LoadNewDiagram(content);
     IsOpenDialogVisible = false;
     StateHasChanged();
-    CurrentDiagramVisibility("mindmap-diagram");
-    await Parent.MenuBar.TQMDiagram();
-    TemplateType = "Template3";
-    Parent.MindMapPropertyPanel.bindMindMapProperties();
-    RemoveUnwantedMindmapMenubarItems();
-    Parent.LeftSideBar.sidebarVisibility = "none";
-    Parent.LeftSideBar.StateChanged();
-    #endif       
-    }
-
-    public void OrgRenderingStyle2Diagram()
-    {
-        LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle2.json");
+    CurrentDiagramVisibility("OrgChart-diagram");
+    await Parent.Toolbar.HideElements("hide-palette");
+   RemoveUnwantedOrgChartMenubarItems();
+   await UpdateLayout();
+#endif
     }
 
     public void DeveloperWorkFlowDiagram()
@@ -311,37 +464,59 @@
 
     public async Task SoftwareLifeCycleDiagram()
     {
-    #if SERVER
-    Parent.MindMapPropertyPanel.IsMindMap = true;
-    LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/SoftwareDevelopmentLifeCycle.json");
-    CurrentDiagramVisibility("mindmap-diagram");
-    //await Task.Delay(2500);
-    Parent.MenuBar.SoftwareLifeCycleDiagram();
-    TemplateType = "Template4";
-    Parent.MindMapPropertyPanel.bindMindMapProperties();
-    RemoveUnwantedMindmapMenubarItems();
-    Parent.LeftSideBar.sidebarVisibility = "none";
-    Parent.LeftSideBar.StateChanged();
-    #endif
-    #if WASM
-    Parent.MindMapPropertyPanel.IsMindMap = true;
-    content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/SoftwareDevelopmentLifeCycle.json");
+        #if SERVER
+        Parent.MindMapPropertyPanel.IsMindMap = true;
+        LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/SoftwareDevelopmentLifeCycle.json");
+        #endif
+        #if WASM
+        Parent.MindMapPropertyPanel.IsMindMap = true;
+        content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/SoftwareDevelopmentLifeCycle.json");
+        this.Parent.DiagramContent.LoadNewDiagram(content);
+        #endif
+        #if MAUI
+        Parent.MindMapPropertyPanel.IsMindMap = true;
+        string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+        var files = Directory.GetFiles(wwwroot,"SoftwareDevelopmentLifeCycle.json", SearchOption.AllDirectories);
+        var json = await System.IO.File.ReadAllTextAsync(files[0]);
+        json = json.Replace(System.Environment.NewLine, string.Empty);
+        this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
+        #endif
+        IsOpenDialogVisible = false;
+        StateHasChanged();
+        CurrentDiagramVisibility("mindmap-diagram");
+        await Parent.MenuBar.SoftwareLifeCycleDiagram();
+        TemplateType = "Template4";
+        Parent.MindMapPropertyPanel.bindMindMapProperties();
+        RemoveUnwantedMindmapMenubarItems();
+        Parent.LeftSideBar.sidebarVisibility = "none";
+        Parent.LeftSideBar.StateChanged();
+    }
+
+    public async Task OrgRenderingStyle3Diagram()
+    {
+#if SERVER
+        Parent.OrgChartPropertyPanel.orgChartStyle = "Style3";
+        Parent.OrgChartPropertyPanel.IsOrgChart = true;
+        LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle3.json");
+        CurrentDiagramVisibility("OrgChart-diagram");
+        await Parent.MenuBar.OrgTemplateStyle3();
+        RemoveUnwantedOrgChartMenubarItems();
+    await UpdateLayout();
+#endif
+
+#if WASM
+     Parent.OrgChartPropertyPanel.IsOrgChart = true;
+     this.Value = "Org Chart";
+      Parent.OrgChartPropertyPanel.orgChartStyle = "Style3";
+       content = await Http.GetStringAsync("assets/dbstyle/orgchart_images/OrgTemplateStyle3.json");
     this.Parent.DiagramContent.LoadNewDiagram(content);
     IsOpenDialogVisible = false;
     StateHasChanged();
-    CurrentDiagramVisibility("mindmap-diagram");
-    await Parent.MenuBar.SoftwareLifeCycleDiagram();
-    TemplateType = "Template4";
-    Parent.MindMapPropertyPanel.bindMindMapProperties();
-    RemoveUnwantedMindmapMenubarItems();
-    Parent.LeftSideBar.sidebarVisibility = "none";
-    Parent.LeftSideBar.StateChanged();
-    #endif       
-    }
-
-    public void OrgRenderingStyle3Diagram()
-    {
-        LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle3.json");
+    CurrentDiagramVisibility("OrgChart-diagram");
+    await Parent.Toolbar.HideElements("hide-palette");
+   RemoveUnwantedOrgChartMenubarItems();
+   await UpdateLayout();
+#endif
     }
 
     public void LoadTemplate(string fileLocation)
@@ -363,11 +538,25 @@
         if (DiagramName == "mindmap-diagram")
         {
             Parent.ShowShortCutKey = "block";
+            Parent.ShowOrgShortCutKey = "none";
             Parent.MindMapPropertyPanel.MindMapProperty = true;
+            Parent.OrgChartPropertyPanel.OrgChartPropertyVisibility = "none";
             Parent.MindMapPropertyPanel.MindMapPropertyVisibility = "block";
             Parent.DiagramPropertyPanel.DiagramPropertyVisibility = "none";
             Parent.DiagramPropertyPanel.PropertyPanelVisibility();
             Parent.Toolbar.MindMapToolbarItemsVisibility();
+        }
+        else if (DiagramName == "OrgChart-diagram")
+        {
+            Parent.ShowShortCutKey = "none";
+            Parent.ShowOrgShortCutKey = "block";
+            Parent.OrgChartPropertyPanel.OrgChartProperty = true;
+            Parent.OrgChartPropertyPanel.OrgChartPropertyVisibility = "block";
+            Parent.MindMapPropertyPanel.MindMapPropertyVisibility = "none";
+            Parent.DiagramPropertyPanel.DiagramPropertyVisibility = "none";
+            Parent.DiagramPropertyPanel.PropertyPanelVisibility();
+            Parent.Toolbar.OrgChartToolbarItemsVisibility();
+            Parent.OrgChartPropertyPanel.statehaschanged();
         }
         else
         {

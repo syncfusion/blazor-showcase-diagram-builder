@@ -884,6 +884,7 @@
     {
         BackgroundValue = args.Value;
         bool Value = BackgroundValue == "Gradient" ? true : false;
+
         gradientPropertyVisibility("gradientStyle", Value);
         OnUpdateNodeProperties("Gradient", ((!Value) ? "false" : "true"));
     }
@@ -948,16 +949,17 @@
         ConnectorPropertyVisibility = "none";
         DiagramPropertyVisibility = "none";
         TextPropertyVisibility = "none";
-        if(Parent.DiagramContent.Diagram.SelectionSettings.Nodes.Count>0 && !Parent.MindMapPropertyPanel.MindMapProperty) {
+        if(Parent.DiagramContent.Diagram.SelectionSettings.Nodes.Count>0 && !Parent.MindMapPropertyPanel.MindMapProperty && !Parent.OrgChartPropertyPanel.OrgChartProperty) {
             NodePropertyVisibility = "block";
             NodeRotateAngle = Diagram.SelectionSettings.Nodes[0].RotationAngle;
             SingleNodeSelection();
         }
-        else if(Parent.DiagramContent.Diagram.SelectionSettings.Connectors.Count>0 && !Parent.MindMapPropertyPanel.MindMapProperty){
+        else if (Parent.DiagramContent.Diagram.SelectionSettings.Connectors.Count > 0 && !Parent.MindMapPropertyPanel.MindMapProperty && !Parent.OrgChartPropertyPanel.OrgChartProperty)
+        {
             ConnectorPropertyVisibility="block";
             SingleConnectorSelection();
         }
-        else if(!Parent.MindMapPropertyPanel.MindMapProperty)
+        else if(!Parent.MindMapPropertyPanel.MindMapProperty && !Parent.OrgChartPropertyPanel.OrgChartProperty)
         {
             DiagramPropertyVisibility = "block";
             BindDiagramProperties();
@@ -975,7 +977,15 @@
     }
     public void TextPropertyPanelVisibility()
     {
-        TextPropertyVisibility = "block";
+        if (this.Parent.OrgChartPropertyPanel.IsOrgChart)
+        {
+            TextPropertyVisibility = "none";
+        }
+        else
+        {
+           TextPropertyVisibility = "block";
+        }
+        
         StateHasChanged();
     }
     public void gradientPropertyVisibility(string id, bool value)
@@ -1043,7 +1053,7 @@
     {
         TextPositionValue = GetNodeTextPositionValue(Annotation.Offset);
         BindAnnotationStyleProperties(Annotation.Style);
-        BindAnnotationAlignProperties(Annotation.HorizontalAlignment, Annotation.VerticalAlignment);
+        BindAnnotationAlignProperties(Annotation.HorizontalAlignment, Annotation.VerticalAlignment);  
     }
 
     public void BindAnnotationAlignProperties(HorizontalAlignment HorizontalAlig, VerticalAlignment VerticalAlig)
@@ -1647,7 +1657,7 @@
                 {
                     Parent.DiagramContent.Diagram.BeginUpdate();
                     ShapeAnnotation Annotation = null;
-                    if(Nodes[i].Annotations.Count > 0)
+                    if (Nodes[i].Annotations.Count > 0)
                         Annotation = Nodes[i].Annotations[0];
                     TextStyle ContentStyle = Annotation != null ? Annotation.Style : Nodes[i].Style as TextStyle;
                     switch (prop)
@@ -1659,7 +1669,9 @@
                             ContentStyle.FontSize = Int32.Parse(Value);
                             break;
                         case "TextPosition":
+                        if(!this.Parent.OrgChartPropertyPanel.IsOrgChart){
                             Annotation.Offset = GetNodeAnnotationOffset(Value);
+                        }
                             break;
                         case "FontColor":
                             ContentStyle.Color = Value;
@@ -1734,7 +1746,7 @@
             Node Node = Nodes[i];
             if (Node != null && (Node.Annotations.Count > 0 || Node.Shape is TextShape ))
             {
-                OnAnnotationTextStyle(commandType, Node.Shape is TextShape ? Node.Style as TextStyle : Node.Annotations[0].Style);
+                    OnAnnotationTextStyle(commandType, Node.Shape is TextShape ? Node.Style as TextStyle : Node.Annotations[0].Style);
             }
         }
     }

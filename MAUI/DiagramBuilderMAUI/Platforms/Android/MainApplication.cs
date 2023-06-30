@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace DiagramBuilderMAUI;
+namespace DiagramBuilder;
 
 [Application]
 public class MainApplication : MauiApplication

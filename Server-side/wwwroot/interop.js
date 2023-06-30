@@ -15,6 +15,33 @@ function getDiagramFileName(dialogName) {
     else
         return document.getElementById('diagramName').innerHTML.toString();
 }
+function importDescription(formatName) {
+    if (formatName === 'CSV')
+    {
+        document.getElementById('descriptionText1').innerHTML = "Make sure that each column of the table has a header";
+        document.getElementById('descriptionText2').innerHTML = "Each employee should have a reporting person (except the top most employee of the organization), and it should be indicated by any field from the data source.";
+        
+    }
+    else if (formatName == 'XML')
+    {
+        document.getElementById('descriptionText1').innerHTML = "Make sure that XML document has a unique root element and start-tags have matching end-tags.";
+        document.getElementById('descriptionText2').innerHTML = "All XML elements will be considered employees and will act as a reporting person for its child XML elements.";
+    
+    }
+    else
+    {
+        document.getElementById('descriptionText1').innerHTML = "Make sure that you have defined a valid JSON format.";
+        document.getElementById('descriptionText2').innerHTML = "Each employee should have a reporting person (except the top most employee of the organization), and it should be indicated by any field from the data source.";
+    }
+        
+}
+importData = function (object) {
+    var orgDataSource = [];var columnsList = []
+    orgDataSource = JSON.parse(object);
+    var dada = orgDataSource[0];
+    for (var prop in dada) {columnsList.push(prop) }
+    return columnsList
+};
 function saveDiagram(data, filename) {
     if (window.navigator.msSaveBlob) {
         let blob = new Blob([data], { type: 'data:text/json;charset=utf-8,' });
@@ -28,6 +55,96 @@ function saveDiagram(data, filename) {
         a.click();
         a.remove();
     }
+}
+
+function downloadCsv() {
+    var csv = 'Name,EmployeeID,Role,Department,Location,Phone,Email,SupervisorName,SupervisorID,ImageURL\n';
+    var data = [
+        {
+            'Name': 'Maria Anders', 'EmployeeID': '1', 'Role': 'Managing Director', 'Department': '',
+            'Location': 'US', 'Phone': '(555) 111-1111', 'Email': 'mariaanders@fakecompany.com', 'Supervisor Name': '',
+            'Supervisor ID': '', 'Image URL': '/assets/dbstyle/orgchart_images/blank-male.jpg'
+        },
+        {
+            'Name': 'Carine Schmitt', 'EmployeeID': '2', 'Role': 'Project Manager', 'Department': 'Development',
+            'Location': 'US', 'Phone': '(555) 222-2222', 'Email': 'carineschmitt@fakecompany.com', 'Supervisor Name': 'Maria Anders',
+            'Supervisor ID': '1', 'Image URL': '/assets/dbstyle/orgchart_images/blank-male.jpg'
+        },
+        {
+            'Name': 'Daniel Tonini', 'EmployeeID': '3', 'Role': 'Project Manager', 'Department': 'Development',
+            'Location': 'US', 'Phone': '(555) 333-3333', 'Email': 'danieltonini@fakecompany.com', 'Supervisor Name': 'Maria Anders',
+            'Supervisor ID': '1', 'Image URL': '/assets/dbstyle/orgchart_images/blank-male.jpg'
+        },
+        {
+            'Name': 'Alex Camino', 'EmployeeID': '4', 'Role': 'Project Lead', 'Department': 'Development',
+            'Location': 'US', 'Phone': '(555) 444-4444', 'Email': 'alexcamino@fakecompany.com', 'Supervisor Name': 'Daniel Tonini',
+            'Supervisor ID': '3', 'Image URL': '/assets/dbstyle/orgchart_images/blank-male.jpg'
+        },
+        {
+            'Name': 'Jones Bergson', 'EmployeeID': '5', 'Role': 'Project Lead', 'Department': 'Development',
+            'Location': 'US', 'Phone': '(555) 555-5555', 'Email': 'jonesbergson@fakecompany.com', 'Supervisor Name': 'Daniel Tonini',
+            'Supervisor ID': '3', 'Image URL': '/assets/dbstyle/orgchart_images/blank-male.jpg'
+        },
+        {
+            'Name': 'Rene Phillips', 'EmployeeID': '6', 'Role': 'Project Lead', 'Department': 'Development',
+            'Location': 'US', 'Phone': '(555) 666-6666', 'Email': 'renephillips@fakecompany.com', 'Supervisor Name': 'Daniel Tonini',
+            'Supervisor ID': '3', 'Image URL': '/assets/dbstyle/orgchart_images/blank-male.jpg'
+        },
+    ];
+    data.forEach(function (row) {
+        for (var prop in row) {
+            csv += row[prop].toString() + ',';
+        }
+        csv += '\n';
+    });
+    if (window.navigator.msSaveBlob) {
+        var blob = new Blob([csv], { type: 'text/plain;charset=utf-8;' });
+        window.navigator.msSaveOrOpenBlob(blob, 'people.csv');
+    }
+    else {
+        var hiddenElement = document.createElement('a');
+        hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+        hiddenElement.target = '_blank';
+        hiddenElement.download = 'people.csv';
+        document.body.appendChild(hiddenElement);
+        hiddenElement.click();
+        hiddenElement.remove();
+    }
+}
+
+function downloadXML() {
+    var xmltext = '<?xml version="1.0" encoding="utf-8" ?><people>' +
+        '<person Name="Maria Anders" Role="Managing Director" Department="Development"  Location="US" Phone="(555) 111-1111" Email="mariaanders@fakecompany.com" SupervisorName="Maria Anders" ImageURL="/assets/dbstyle/orgchart_images/blank-male.jpg">' +
+        '<person Name="Carine Schmitt" Role="Project Manager" Department="Development" Location="US" Phone="(555) 222-2222" Email="carineschmitt@fakecompany.com" SupervisorName="Maria Anders" ImageURL="/assets/dbstyle/orgchart_images/blank-male.jpg"></person>' +
+        '<person Name="Daniel Tonini" Role="Project Manager" Department="Development" Location="US" Phone="(555) 333-3333" Email="danieltonini@fakecompany.com" SupervisorName="Maria Anders" ImageURL="/assets/dbstyle/orgchart_images/blank-male.jpg">' +
+        '<person Name="Alex Camino" Role="Project Manager" Department="Development" Location="US" Phone="(555) 444-4444" Email="alexcamino@fakecompany.com" SupervisorName="Daniel Tonini" ImageURL="/assets/dbstyle/orgchart_images/blank-male.jpg"></person>' +
+        '<person Name="Jones Bergson" Role="Project Lead" Department="Development" Location="US" Phone="(555) 555-5555" Email="jonesbergson@fakecompany.com" SupervisorName="Daniel Tonini" ImageURL="/assets/dbstyle/orgchart_images/blank-male.jpg"></person>' +
+        '<person Name="Rene Phillips" Role="Project Lead" Department="Development" Location="US" Phone="(555) 666-6666" Email="renephillips@fakecompany.com" SupervisorName="Daniel Tonini" ImageURL="/assets/dbstyle/orgchart_images/blank-male.jpg"></person>' +
+        '</person>' +
+        '</person>' +
+        '</people>';
+    var filename = 'people.xml';
+    var bb = new Blob([xmltext], { type: 'text/plain' });
+    if (window.navigator.msSaveBlob) {
+        window.navigator.msSaveOrOpenBlob(bb, filename);
+    }
+    else {
+        var pom = document.createElement('a');
+        pom.setAttribute('href', window.URL.createObjectURL(bb));
+        pom.setAttribute('download', filename);
+        document.body.appendChild(pom);
+        pom.click();
+        pom.remove();
+    }
+}
+function downloadFile(data, filename) {
+    let dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(data);
+    let a = document.createElement('a');
+    a.href = dataStr;
+    a.download = filename + '.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
 }
 UtilityMethods_hideElements = function (elementType, diagramType) {
     var diagramContainer = document.getElementsByClassName('diagrambuilder-container')[0];
@@ -69,9 +186,26 @@ function loadFile(file) {
     var json = atob(base64)
     return json;
 }
-function loadDiagram(event) {
-    return event.target.result.toString();
+function loadCSVFile(file) {
+
+    var base64 = file.rawFile.replace("data:text/csv;base64,", "");
+    var json = atob(base64)
+    return json;
+    
 }
+function loadXMLFile(file) {
+
+    var base64 = file.rawFile.replace("data:text/xml;base64,", "");
+    var json = atob(base64)
+    return json;
+
+}
+function loadDiagram(event) {
+    //var reader = new FileReader();
+    //var str=  reader.readAsText(event);
+    return str.target.result.toString();
+}
+
 function diagramNameKeyDown(args) {
     if (args.which === 13) {
         document.getElementById('diagramName').innerHTML = document.getElementById('diagramEditable').value;
@@ -134,6 +268,7 @@ triggerDownload: function triggerDownload(type, fileName, url) {
     anchorElement.href = url;
     anchorElement.click();
 }
+var getId;
 function getViewportBounds() {
 
     var bounds = document.getElementsByClassName('e-control e-diagram e-lib e-droppable e-tooltip')[0].getBoundingClientRect();

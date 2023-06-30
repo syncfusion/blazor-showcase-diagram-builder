@@ -86,6 +86,55 @@ namespace DiagramBuilder
             }
             ZoomItemDropdownContent = FormattableString.Invariant($"{Math.Round(Parent.DiagramContent.CurrentZoom * 100)}") + "%";
         }
+        private async Task ToolbarEditorClickInOrgChart(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+        {
+            var diagram = Parent.DiagramContent.Diagram;
+            var commandType = args.Item.TooltipText.ToLower(new CultureInfo("en-US"));
+            switch (commandType)
+            {
+                case "undo":
+                    diagram.Undo();
+                    await EnableToolbarItems(new object() { }, "historychange");
+                    break;
+                case "redo":
+                    diagram.Redo();
+                    await EnableToolbarItems(new object() { }, "historychange");
+                    break;
+                case "pan tool":
+                    Parent.DiagramContent.UpdateTool();
+                    diagram.ClearSelection();
+                    Parent.DiagramPropertyPanel.PanelVisibility();
+                    break;
+                case "pointer":
+                    Parent.DiagramContent.DiagramDrawingObject = null;
+                    Parent.DiagramContent.UpdatePointerTool();
+                    break;
+                case "add child":
+                    Parent.OrgChartPropertyPanel.AddNode(diagram.SelectionSettings.Nodes[0].ID);
+                    break;
+                case "add a child to the same level":
+                    Parent.OrgChartPropertyPanel.AddRightChild();
+                    break;
+                case "move the child parent to the next level":
+                    Parent.OrgChartPropertyPanel.changeChildParent();
+                    break;
+            }
+            if (commandType == "pan tool" || commandType == "pointer")
+            {
+#pragma warning disable CA1307 // Specify StringComparison
+                if (args.Item.CssClass.IndexOf("tb-item-selected") == -1)
+#pragma warning restore CA1307 // Specify StringComparison
+                {
+                    if (commandType == "pan tool")
+                        PanItemCssClass += " tb-item-selected";
+                    if (commandType == "pointer")
+                        PointerItemCssClass += " tb-item-selected";
+                    await removeSelectedToolbarItem(commandType).ConfigureAwait(true);
+                }
+            }
+            Parent.DiagramPropertyPanel.PanelVisibility();
+            Parent.DiagramContent.StateChanged();
+        }
         private async Task ToolbarEditorClick(Syncfusion.Blazor.Navigations.ClickEventArgs args)
         {
             var diagram = Parent.DiagramContent.Diagram;
@@ -110,7 +159,7 @@ namespace DiagramBuilder
                     Parent.DiagramContent.UpdatePointerTool();
                     break;
                 case "text tool":
-                    Parent.DiagramContent.DiagramDrawingObject = new Node() { Shape = new TextShape() { Type = NodeShapes.Text } }; 
+                    Parent.DiagramContent.DiagramDrawingObject = new Node() { Shape = new TextShape() { Type = NodeShapes.Text } };
                     Parent.DiagramContent.DiagramTool = DiagramInteractions.ContinuousDraw;
                     break;
                 case "delete":
@@ -147,7 +196,7 @@ namespace DiagramBuilder
                     diagram.SetDistribute(DistributeOptions.BottomToTop);
                     break;
                 case "add child":
-                    Parent.MindMapPropertyPanel.AddNode("Left");                 
+                    Parent.MindMapPropertyPanel.AddNode("Left");
                     break;
                 case "add sibling":
                     Parent.MindMapPropertyPanel.AddSiblingChild("Bottom");
@@ -266,7 +315,7 @@ namespace DiagramBuilder
                     if (!isPreventPropertyChange)
                     {
                         connector.Constraints = ConnectorConstraints.Default;
-                    } 
+                    }
                     else
                         isLock = true;
                 }
@@ -295,7 +344,7 @@ namespace DiagramBuilder
             {
                 PointerItemCssClass = PointerItemCssClass.Replace(" tb-item-selected", "");
             }
-            if(tool != "text tool" && TextItemCssClass.IndexOf("tb-item-selected") != -1)
+            if (tool != "text tool" && TextItemCssClass.IndexOf("tb-item-selected") != -1)
             {
                 TextItemCssClass = TextItemCssClass.Replace(" tb-item-selected", "");
             }
@@ -331,7 +380,7 @@ namespace DiagramBuilder
         public void SingleSelectionToolbarItems()
         {
             bool diagram = Parent.DiagramContent.diagramSelected;
-            ShowFill = diagram ? false : !ShowFill ? true: ShowFill;
+            ShowFill = diagram ? false : !ShowFill ? true : ShowFill;
             ShowStroke = diagram ? false : !ShowStroke ? true : ShowStroke;
             ShowStyleSeparator = diagram ? false : !ShowStyleSeparator ? true : ShowStyleSeparator;
             ShowOrder = diagram ? false : !ShowOrder ? true : ShowOrder;
@@ -352,7 +401,7 @@ namespace DiagramBuilder
             ShowAlignSeparator = ShowAlignSeparator ? false : ShowAlignSeparator;
             if (Parent.DiagramContent.Diagram.SelectionSettings.Nodes.Count > 0 && Parent.DiagramContent.Diagram.SelectionSettings.Nodes[0] is NodeGroup)
                 ShowGroup = diagram ? false : !ShowGroup ? true : ShowGroup;
-            if(Parent.DiagramContent.Diagram.SelectionSettings.Nodes.Count > 0 || Parent.DiagramContent.Diagram.SelectionSettings.Connectors.Count > 0)
+            if (Parent.DiagramContent.Diagram.SelectionSettings.Nodes.Count > 0 || Parent.DiagramContent.Diagram.SelectionSettings.Connectors.Count > 0)
             {
                 _ = LockObject(true).ConfigureAwait(true);
             }
@@ -450,7 +499,7 @@ namespace DiagramBuilder
             {
                 toolbarClassName += " db-redo";
             }
-            if (SelectedObjects.Count == 1 && !Parent.MindMapPropertyPanel.IsMindMap)
+            if (SelectedObjects.Count == 1 && !Parent.MindMapPropertyPanel.IsMindMap && !Parent.OrgChartPropertyPanel.IsOrgChart)
             {
                 toolbarClassName = toolbarClassName + " db-select";
 
@@ -458,7 +507,7 @@ namespace DiagramBuilder
                 {
                     if ((SelectedObjects[0] as NodeGroup).Children.Length > 2)
                     {
-                        toolbarClassName = toolbarClassName + " db-select db-double db-multiple db-node db-group";;
+                        toolbarClassName = toolbarClassName + " db-select db-double db-multiple db-node db-group"; ;
                     }
                     else
                     {
@@ -505,7 +554,12 @@ namespace DiagramBuilder
                 toolbarClassName = toolbarClassName + " db-child-sibling";
                 addSiblingCssName = SelectedObjects[0].ID == "rootNode" ? "tb-item-start tb-item-sibling" : "tb-item-start tb-item-child";
             }
-            if(SelectedObjects.Count > 1)
+            else if (SelectedObjects.Count > 0 && Parent.OrgChartPropertyPanel.IsOrgChart)
+            {
+                toolbarClassName = toolbarClassName + " db-child-sibling";
+                addSiblingCssName = SelectedObjects[0].ID == "rootNode" ? "tb-item-start tb-item-sibling" : "tb-item-start tb-item-child";
+            }
+            if (SelectedObjects.Count > 1)
                 StateHasChanged();
         }
         public async Task HidePropertyContainer()
@@ -515,7 +569,7 @@ namespace DiagramBuilder
             HideButtonBackground = (Parent.MenuBar.WindowMenuItems[index].IconCss == "sf-icon-Selection") ? "#0078d4" : "rgb(227, 227, 227)";
             HideButtonCss = (Parent.MenuBar.WindowMenuItems[index].IconCss == "sf-icon-Selection") ? "db-toolbar-hide-btn tb-property-open" : "db-toolbar-hide-btn tb-property-close";
             await this.HideElements("hide-properties");
-            if (Parent.MindMapPropertyPanel.IsMindMap)
+            if (Parent.MindMapPropertyPanel.IsMindMap|| Parent.OrgChartPropertyPanel.IsOrgChart)
             {
                 await Task.Delay(800);
                 object bounds = await jsRuntime.InvokeAsync<object>("getViewportBounds").ConfigureAwait(true);

@@ -36,6 +36,12 @@
         string fileName = await jsRuntime.InvokeAsync<string>("getDiagramFileName", "save");
         await Parent.Download(fileName);
         await SaveDialog.Hide();
+        #if MAUI
+            if (Parent.SelectNewOption.Equals("new"))
+            {
+                await jsRuntime.InvokeVoidAsync("RestartApplication");
+            }
+        #endif
     }
     private async Task btnCancelClick()
     {

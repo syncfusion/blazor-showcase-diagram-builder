@@ -325,7 +325,7 @@
     }
 
     public bool enablePasteButten = false;
-
+    public string SelectNewOption = "";
     public async Task MenuClick(Syncfusion.Blazor.Navigations.MenuEventArgs<ContextMenuItemModel> args)
     {
         bool Edit = false;
@@ -339,8 +339,19 @@
         switch (commandType.ToLower())
         {
             case "new":
+                #if SERVER || WASM
                 File = true;
                 await jsRuntime.InvokeVoidAsync("CommonKeyboardCommands_newDiagram");
+                #endif
+                #if MAUI
+                File = true;
+                if (string.IsNullOrEmpty(SelectNewOption))
+                {
+                    SelectNewOption  = commandType.ToLower();
+                }
+                SaveDialogBox.DiagramfileName = await jsRuntime.InvokeAsync<string>("getDiagramFileName", "");
+                await SaveDialogBox.SaveDialog.Show();
+                #endif
                 break;
             case "open":
                 File = true;
@@ -372,17 +383,46 @@
                 break;
             case "cut":
                 Edit = true;
+                if (this.Parent.OrgChartPropertyPanel.IsOrgChart)
+                {
+                    foreach (Node node in diagram.SelectionSettings.Nodes)
+                    {
+                        string nodeID = node.ID;
+
+                        Dictionary<string, object> objectdictionary = new Dictionary<string, object>();
+                        objectdictionary.Add(node.ID, null);
+
+                        node.AdditionalInfo = objectdictionary;
+                    }
+                }
+                this.Parent.OrgChartPropertyPanel.isCopy = true;
                 diagram.Cut();
                 enablePasteButten = true;
                 break;
             case "copy":
                 Edit = true;
                 enablePasteButten = true;
+                List<string> nodeIDs = new List<string>();
+                if (this.Parent.OrgChartPropertyPanel.IsOrgChart)
+                {
+                    foreach (Node node in diagram.SelectionSettings.Nodes)
+                    {
+                        string nodeID = node.ID;
+
+                        Dictionary<string, object> objectdictionary = new Dictionary<string, object>();
+                        objectdictionary.Add(node.ID, null);
+
+                        node.AdditionalInfo = objectdictionary;
+                    }
+                }
                 diagram.Copy();
+                this.Parent.OrgChartPropertyPanel.isCopy = true;
+
                 break;
             case "paste":
                 Edit = true;
                 diagram.Paste();
+                this.Parent.OrgChartPropertyPanel.isCopy = false;
                 break;
             case "delete":
                 Edit = true;
@@ -431,17 +471,70 @@
                 break;
             case "save":
                 File = true;
+                if (this.Parent.OrgChartPropertyPanel.IsOrgChart)
+                {
+                    foreach (Node node in diagram.Nodes)
+                    {
+
+                        string nodeID = node.ID;
+                        Dictionary<string, string> textBoxValues = this.Parent.OrgChartPropertyPanel.TextBoxDictionary[nodeID];
+
+                        Dictionary<string, bool> checkBoxValues = new Dictionary<string, bool>();
+
+                        Dictionary<string, object> objectdictionary = new Dictionary<string, object>();
+
+                        foreach (var key in textBoxValues)
+                        {
+                            string textValue = this.Parent.OrgChartPropertyPanel.TextBoxDictionary[nodeID][key.Key];
+                            bool checkboxValue = this.Parent.OrgChartPropertyPanel.CheckBoxDictionary[nodeID][key.Key];
+                            checkBoxValues = new Dictionary<string, bool>();
+                            checkBoxValues.Add(textValue, checkboxValue);
+                            objectdictionary.Add(key.Key, checkBoxValues);
+                        }
+
+                        node.AdditionalInfo = objectdictionary;
+                    }
+                }
                 string fileName = await jsRuntime.InvokeAsync<string>("getDiagramFileName", "");
                 await Download(fileName);
                 break;
             case "saveas":
                 File = true;
+                if (this.Parent.OrgChartPropertyPanel.IsOrgChart)
+                {
+                    foreach (Node node in diagram.Nodes)
+                    {
+                        string nodeID = node.ID;
+                        Dictionary<string, string> textBoxValues = this.Parent.OrgChartPropertyPanel.TextBoxDictionary[nodeID];
+
+                        Dictionary<string, bool> checkBoxValues = new Dictionary<string, bool>();
+
+                        Dictionary<string, object> objectdictionary = new Dictionary<string, object>();
+
+                        foreach (var key in textBoxValues)
+                        {
+                            string textValue = this.Parent.OrgChartPropertyPanel.TextBoxDictionary[nodeID][key.Key];
+                            bool checkboxValue = this.Parent.OrgChartPropertyPanel.CheckBoxDictionary[nodeID][key.Key];
+                            checkBoxValues = new Dictionary<string, bool>();
+                            checkBoxValues.Add(textValue, checkboxValue);
+                            objectdictionary.Add(key.Key, checkBoxValues);
+                        }
+
+                        node.AdditionalInfo = objectdictionary;
+                    }
+                }
                 SaveDialogBox.DiagramfileName = await jsRuntime.InvokeAsync<string>("getDiagramFileName", "");
                 await SaveDialogBox.SaveDialog.Show();
                 break;
             case "print":
+                #if SERVER || WASM
                 File = true;
                 await PrintDialogBox.PrintDialog.ShowAsync();
+                #endif
+                #if MAUI
+                File = true;
+                await jsRuntime.InvokeAsync<string>("printContent",diagram.ID);
+                #endif
                 break;
             case "export":
                 File = true;
@@ -670,7 +763,7 @@
             }
         }
         this.DisableCollection = DisableCollection;
-        if (Parent.MindMapPropertyPanel.IsMindMap)
+        if (Parent.MindMapPropertyPanel.IsMindMap || Parent.OrgChartPropertyPanel.IsOrgChart)
         {
             ViewMenuItems[5].IconCss = Parent.DiagramContent.SnapConstraint.HasFlag(SnapConstraints.ShowLines) ? "sf-icon-Selection" : "sf-icon-blank";
         }
@@ -900,6 +993,24 @@
     {
         diagramName = "Software Life Cycle";
         Parent.MindMapPropertyPanel.connectorType = ConnectorSegmentType.Straight;
+        await Parent.Toolbar.HideElements("hide-palette");
+        StateHasChanged();
+    }
+    public async Task OrgTemplateStyle1()
+    {
+        diagramName = "Organization Template 1";
+        await Parent.Toolbar.HideElements("hide-palette");
+        StateHasChanged();
+    }
+    public async Task OrgTemplateStyle2()
+    {
+        diagramName = "Organization Template 2";
+        await Parent.Toolbar.HideElements("hide-palette");
+        StateHasChanged();
+    }
+    public async Task OrgTemplateStyle3()
+    {
+        diagramName = "Organization Template 3";
         await Parent.Toolbar.HideElements("hide-palette");
         StateHasChanged();
     }

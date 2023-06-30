@@ -1,4 +1,4 @@
-﻿namespace DiagramBuilderMAUI;
+﻿namespace DiagramBuilder;
 
 public partial class App : Application
 {
