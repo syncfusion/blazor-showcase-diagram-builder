@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\assets\db-icons1\Fonts\All icons Metrop.svg" />
+    <None Include="wwwroot\assets\db-icons1\Fonts\Diagram Builder Font Icon.svg" />
     <None Include="wwwroot\assets\db-icons1\Fonts\Final diagram icons copy.svg" />
     <None Include="wwwroot\assets\db-icons1\Fonts\New_DiagramBuilder_Font.svg" />
     <None Include="wwwroot\assets\dbstyle\bpmn_images\Note.svg" />
@@ -91,6 +92,7 @@
     <None Include="wwwroot\assets\dbstyle\mindmap_images\Mind_Map3.svg" />
     <None Include="wwwroot\assets\dbstyle\mindmap_images\SoftwareLifeCycle.SVG" />
     <None Include="wwwroot\assets\dbstyle\mindmap_images\TQM.SVG" />
+    <None Include="wwwroot\assets\dbstyle\orgchart_images\blank_diagram_org.svg" />
     <None Include="wwwroot\assets\dbstyle\orgchart_images\org-pattern1.svg" />
     <None Include="wwwroot\assets\dbstyle\orgchart_images\org-pattern2.svg" />
     <None Include="wwwroot\assets\dbstyle\orgchart_images\org-pattern3.svg" />
@@ -113,6 +115,8 @@
     <None Include="wwwroot\css\open-iconic\font\fonts\open-iconic.svg" />
     <None Include="wwwroot\css\open-iconic\ICON-LICENSE" />
     <None Include="wwwroot\css\open-iconic\README.md" />
+    <None Include="wwwroot\new\fonts\icomoon.svg" />
+    <None Include="wwwroot\syncfusion-blazor.min.js" />
   </ItemGroup>
 
   <ItemGroup>

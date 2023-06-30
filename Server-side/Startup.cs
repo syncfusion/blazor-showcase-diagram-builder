@@ -13,6 +13,7 @@ using Syncfusion.Blazor;
 using DiagramBuilder.Shared;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
+using Syncfusion.Blazor.Popups;
 using Microsoft.Extensions.Options;
 
 namespace DiagramBuilder
@@ -37,8 +38,8 @@ namespace DiagramBuilder
                 e.MaximumReceiveMessageSize = 102400000;
             });
             services.AddRazorPages();
+            services.AddScoped<SfDialogService>();
             services.AddServerSideBlazor();
-            //Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mgo+DSMBaFt/QHRqVVhjVFpFaV1AQmFJfFBmQGlaelRwfUU3HVdTRHRdQ19hQX5XdkxmUH5acHI=;Mgo+DSMBPh8sVXJ0S0J+XE9HflRDQmFLYVF2R2BJelRzcV9GaUwgOX1dQl9hSHxRfkVnWXZbeXVQQGY=;ORg4AjUWIQA/Gnt2VVhkQlFadVdJXHxLfEx0RWFab1t6d1BMYFVBNQtUQF1hS39RdE1jXX9XdX1UQWNa;ODI4NTE2QDMyMzAyZTM0MmUzMFo1amQ0SDBicFM2QUh1c3lUQ29QM0duUndhdWNnTis5TkZ6WVErOGpQOU09;ODI4NTE3QDMyMzAyZTM0MmUzMGI4SlRxNmtMeW9zeEdyaU54allqeGRKSndlczFQU2pZalpUZ3JYaThGaE09;NRAiBiAaIQQuGjN/V0Z+WE9EaFxKVmJWfFFpR2NbfE51flZDalxYVAciSV9jS3xSdEdrWXteeXFcRGRdVw==;ODI4NTE5QDMyMzAyZTM0MmUzMExKU29GQnlpanZvNDFHUWxGcU13RGxGMURyQ013dnNoU3hENFpReW1SWlk9;ODI4NTIwQDMyMzAyZTM0MmUzMFRGMi82cjBLa3lLanZ2MkloRVVYdE0zdkxHYTJkREJuZExyVXFidzR0OVk9;Mgo+DSMBMAY9C3t2VVhkQlFadVdJXHxLfEx0RWFab1t6d1BMYFVBNQtUQF1hS39RdE1jXX9XdX1XT2la;ODI4NTIyQDMyMzAyZTM0MmUzMGNrZlA2RDdCN2MybUNIMFNpK3hlTHBYKzhjZ3BMVElsQkh1aUgwOHdRZjg9;ODI4NTIzQDMyMzAyZTM0MmUzMEptNm54a3p4WXp4QTU0RkVWRm8xRGdqRVJpRnhvcFY0ZHhIU244aTlSck09;ODI4NTI0QDMyMzAyZTM0MmUzMExKU29GQnlpanZvNDFHUWxGcU13RGxGMURyQ013dnNoU3hENFpReW1SWlk9");
             services.AddSyncfusionBlazor();
             services.AddScoped<SampleService>();
             // Register the Syncfusion locale service to customize the SyncfusionBlazor component locale culture

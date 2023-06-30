@@ -16,6 +16,15 @@ namespace DiagramBuilder
                 Convert.ToString(data), fileName).ConfigureAwait(true);
 #pragma warning restore CA1305 // Specify IFormatProvider
         }
+
+        public async static Task DownloadFile(IJSRuntime js, string data, string fileName)
+        {
+            await js.InvokeAsync<object>(
+                "downloadFile",
+#pragma warning disable CA1305 // Specify IFormatProvider
+                Convert.ToString(data), fileName).ConfigureAwait(true);
+#pragma warning restore CA1305 // Specify IFormatProvider
+        }
         public async static Task Click(IJSRuntime js)
         {
             await js.InvokeAsync<object>(
@@ -26,10 +35,20 @@ namespace DiagramBuilder
             return await js.InvokeAsync<string>(
                   "loadFile", data).ConfigureAwait(true);
         }
-
+        public async static Task<string> LoadCSVFile(IJSRuntime js, object data)
+        {
+            return await js.InvokeAsync<string>(
+                  "loadCSVFile", data).ConfigureAwait(true);
+        }
+        public async static Task<string> LoadXMLFile(IJSRuntime js, object data)
+        {
+            return await js.InvokeAsync<string>(
+                  "loadXMLFile", data).ConfigureAwait(true);
+        }
         public async static Task SetGradient(IJSRuntime js, int level)
         {
             await js.InvokeAsync<object>("setWaterLevel", level).ConfigureAwait(true);
         }
+
     }
 }

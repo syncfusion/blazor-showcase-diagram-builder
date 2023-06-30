@@ -1,16 +1,20 @@
 @font-face {
-font-family: 'Final diagram icons copy';
+font-family: 'icomoon';
 src:
-url('Fonts/Final diagram icons copy.ttf') format('truetype'),
-url('Fonts/Final diagram icons copy.woff') format('woff'),
-url('Fonts/Final diagram icons copy.eot') format('eot'),
-url('Fonts/Final diagram icons copy.svg?#Final diagram icons copy') format('svg');
+url('Fonts/icomoon.ttf') format('truetype'),
+url('Fonts/icomoon.woff') format('woff'),
+url('Fonts/icomoon.eot') format('eot'),
+url('Fonts/icomoon.svg?#icomoon') format('svg');
+/*url('Fonts/Diagram Builder Font Icon.ttf') format('truetype'),
+url('Fonts/Diagram Builder Font Icon.woff') format('woff'),
+url('Fonts/Diagram Builder Font Icon.eot') format('eot'),
+url('Fonts/Diagram Builder Font Icon.svg?#Diagram Builder Font Icon') format('svg');*/
 font-weight: normal;
 font-style: normal;
 }
 
 [class^="sf-icon-"], [class*=" sf-icon-"] {
- font-family: 'Final diagram icons copy' !important;
+ font-family: 'icomoon' !important;
 speak: none;
 font-size: 55px;
 font-style: normal;
@@ -24,6 +28,7 @@ line-height: 1;
 
 .sf-icon-Underline:before { content: "\e700"; }
 .sf-icon-InsertImage:before { content: "\e701"; }
+.sf-icon-Lock:before { content: "\e702"; }
 .sf-icon-Search:before { content: "\e703"; }
 .sf-icon-BringForward:before { content: "\e704"; }
 .sf-icon-ConnectorMode:before { content: "\e705"; }
@@ -47,6 +52,7 @@ line-height: 1;
 .sf-icon-TextHorizontalCenter:before { content: "\e717"; }
 .sf-icon-ColorPickers:before { content: "\e718"; }
 .sf-icon-Expander:before { content: "\e719"; }
+.sf-icon-TextLeft:before { content: "\e71a"; }
 .sf-icon-DownArrow:before { content: "\e71b"; }
 .sf-icon-ZoomIn:before { content: "\e71c"; }
 .sf-icon-Shape_Rectangle:before { content: "\e71d"; }
@@ -56,6 +62,8 @@ line-height: 1;
 .sf-icon-Up:before { content: "\e721"; }
 .sf-icon-Group:before { content: "\e722"; }
 .sf-icon-AlignBottom:before { content: "\e723"; }
+.sf-icon-TextTop:before { content: "\e724"; }
+.sf-icon-TextRight:before { content: "\e725"; }
 .sf-icon-InsertText:before { content: "\e726"; }
 .sf-icon-RoundedSquare:before { content: "\e727"; }
 .sf-icon-Collapse1:before { content: "\e728"; }
@@ -70,36 +78,42 @@ line-height: 1;
 .sf-icon-ParaAlignCenter:before { content: "\e731"; }
 .sf-icon-Plus:before { content: "\e732"; }
 .sf-icon-View:before { content: "\e733"; }
-.sf-icon-Export:before { content: "\e734"; }
-.sf-icon-StraightLine:before { content: "\e735"; }
-.sf-icon-Shape_Square:before { content: "\e736"; }
-.sf-icon-Duplicate:before { content: "\e737"; }
-.sf-icon-Close:before { content: "\e738"; }
-.sf-icon-Collapse:before { content: "\e739"; }
-.sf-icon-Rotate1:before { content: "\e73a"; }
-.sf-icon-Pan:before { content: "\e73b"; }
-.sf-icon-ParaAlignLeft:before { content: "\e73d"; }
-.sf-icon-ParaAlignRight:before { content: "\e73e"; }
-.sf-icon-TextInput:before { content: "\e73f"; }
-.sf-icon-Pickers:before { content: "\e740"; }
-.sf-icon-TextVerticalCenter:before { content: "\e741"; }
-.sf-icon-InsertLink:before { content: "\e742"; }
-.sf-icon-Undo:before { content: "\e743"; }
-.sf-icon-Cut:before { content: "\e744"; }
-.sf-icon-Save:before { content: "\e745"; }
-.sf-icon-DrawingMode:before { content: "\e746"; }
-.sf-icon-Rotate:before { content: "\e747"; }
-.sf-icon-Layers:before { content: "\e748"; }
-.sf-icon-BeizerLine:before { content: "\e749"; }
-.sf-icon-Order:before { content: "\e74a"; }
-.sf-icon-Selector:before { content: "\e74b"; }
-.sf-icon-TextLeft:before { content: "\e74c"; }
-.sf-icon-TextBottom:before { content: "\e74d"; }
-.sf-icon-TextCenterVertical:before { content: "\e74e"; }
-.sf-icon-TextHorizondalCenter:before { content: "\e74f"; }
-.sf-icon-TextTop:before { content: "\e750"; }
-.sf-icon-TextRight:before { content: "\e751"; }
-.sf-icon-FillColor:before { content: "\e752"; }
-.sf-icon-Italic:before { content: "\e753"; }
-.sf-icon-DownArrow2:before { content: "\e754"; }
-.sf-icon-Lock:before { content: "\e755"; }
+.sf-icon-Italic:before { content: "\e734"; }
+.sf-icon-Export:before { content: "\e735"; }
+.sf-icon-StraightLine:before { content: "\e736"; }
+.sf-icon-Shape_Square:before { content: "\e737"; }
+.sf-icon-Duplicate:before { content: "\e738"; }
+.sf-icon-Close:before { content: "\e739"; }
+.sf-icon-Collapse:before { content: "\e73a"; }
+.sf-icon-Rotate1:before { content: "\e73b"; }
+.sf-icon-Pan:before { content: "\e73c"; }
+.sf-icon-TextBottom:before { content: "\e73d"; }
+.sf-icon-ParaAlignLeft:before { content: "\e73e"; }
+.sf-icon-ParaAlignRight:before { content: "\e73f"; }
+.sf-icon-TextInput:before { content: "\e740"; }
+.sf-icon-Pickers:before { content: "\e741"; }
+.sf-icon-TextVerticalCenter:before { content: "\e742"; }
+.sf-icon-InsertLink:before { content: "\e743"; }
+.sf-icon-Undo:before { content: "\e744"; }
+.sf-icon-Cut:before { content: "\e745"; }
+.sf-icon-Save:before { content: "\e746"; }
+.sf-icon-DrawingMode:before { content: "\e747"; }
+.sf-icon-Rotate:before { content: "\e748"; }
+.sf-icon-Layers:before { content: "\e749"; }
+.sf-icon-BeizerLine:before { content: "\e74a"; }
+.sf-icon-Lock1:before { content: "\e74b"; }
+.sf-icon-Order:before { content: "\e74c"; }
+.sf-icon-Selector:before { content: "\e74d"; }
+.sf-icon-add-child:before { content: "\e74e"; }
+.sf-icon-add-sibling:before { content: "\e74f"; }
+.sf-icon-multiple-child:before { content: "\e750"; }
+.sf-icon-properties:before { content: "\e751"; }
+.sf-icon-aspect-ratio-enable:before { content: "\e752"; }
+.sf-icon-aspect-ratio-disable:before { content: "\e753"; }
+.sf-icon-gradient-alignemnt:before { content: "\e754"; }
+.sf-icon-add-same-level-child:before {
+    content: "\e755";
+}
+.sf-icon-move:before {
+    content: "\e756";
+}

@@ -1,4 +1,4 @@
-@using Newtonsoft.Json
+@using System.Text.Json
 @using Syncfusion.Blazor.Buttons
 @using System.Collections.Generic
 @using Syncfusion.Blazor.DropDowns
@@ -414,7 +414,7 @@
                 node = Diagram.Nodes[0] as Node;
         }
         var obj = System.Text.Json.JsonSerializer.Serialize(node.AdditionalInfo);
-        DiagramMainContent.NodeAddInfo NodeInfo = JsonConvert.DeserializeObject<DiagramMainContent.NodeAddInfo>(obj);
+        NodeAddInfo NodeInfo = JsonSerializer.Deserialize<NodeAddInfo>(obj.ToString());
         if(LevelType != "Selected Item")
         {
             MindMapLevelValue = "Level" + NodeInfo.Level;
@@ -685,7 +685,7 @@
             if (node.AdditionalInfo != null && node.AdditionalInfo.Count > 0)
             {
                 var obj = System.Text.Json.JsonSerializer.Serialize(node.AdditionalInfo);
-                DiagramMainContent.NodeAddInfo NodeInfo = JsonConvert.DeserializeObject<DiagramMainContent.NodeAddInfo>(obj);
+                NodeAddInfo NodeInfo = JsonSerializer.Deserialize<NodeAddInfo>(obj.ToString());
                 if ("Level" + NodeInfo.Level.ToString() == MindMapLevel || NodeInfo.Level.ToString() == MindMapLevel)
                 {
                     PreventBindingPropertyChange = true;    
@@ -713,7 +713,7 @@
                 if (node.AdditionalInfo != null && node.AdditionalInfo.Count > 0)
                 {
                     var obj = System.Text.Json.JsonSerializer.Serialize(node.AdditionalInfo);
-                    DiagramMainContent.NodeAddInfo NodeInfo = JsonConvert.DeserializeObject<DiagramMainContent.NodeAddInfo>(obj);
+                    NodeAddInfo NodeInfo = JsonSerializer.Deserialize<NodeAddInfo>(obj.ToString());
                     if(levelType != null)
                     {
                         if("Level" + NodeInfo.Level.ToString() == levelType || NodeInfo.Level.ToString() == levelType)
@@ -820,7 +820,6 @@
         UpdateMindMapProperties(commandType, "true");
         StateHasChanged();
     }
-
     //To update stroke style
     private void UpdateStrokeStyleValue(string strokeVal)
     {
@@ -848,7 +847,11 @@
                 break;
         }
     }
-
+    public class NodeAddInfo
+    {
+        public string Level { get; set; }
+        public string Orientation { get; set; }
+    }
     //To Update mindmap properties
     public void UpdateMindMapProperties(string prop, string Value)
     {
@@ -867,8 +870,7 @@
                         if (node.AdditionalInfo != null && node.AdditionalInfo.Count > 0)
                         {
                             var obj = System.Text.Json.JsonSerializer.Serialize(node.AdditionalInfo);
-                            DiagramMainContent.NodeAddInfo NodeInfo = JsonConvert.DeserializeObject<DiagramMainContent.NodeAddInfo>(obj);
-
+                            NodeAddInfo NodeInfo = System.Text.Json.JsonSerializer.Deserialize<NodeAddInfo>(obj.ToString());
                             if ("Level" + NodeInfo.Level.ToString() == MindMapLevel || NodeInfo.Level.ToString() == MindMapLevel || LevelType == "Selected Item")
                             {
                                 switch (prop)

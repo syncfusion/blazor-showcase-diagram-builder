@@ -1,5 +1,8 @@
 ﻿@using Syncfusion.Blazor.Popups
+@using Syncfusion.Blazor.Diagram
 @inject HttpClient Http
+@using System.Text.Json;
+@using System.Text.Json.Serialization;
 
 @namespace DiagramBuilder
 
@@ -28,6 +31,13 @@
                             <div class=@ClassName @onclick="@ShowMindMapTemplates">
                                 <span>Mind Map</span>
                             </div>
+                            if (this.Value == "Org Chart")
+                                ClassName = "row db-diagram-template-parent-text orgchart-template active";
+                            else
+                                ClassName = "row db-diagram-template-parent-text orgchart-template";
+                            <div class=@ClassName @onclick="@ShowOrgChartTemplates">
+                                <span>Org Chart</span>
+                            </div>
                         }
                     </div>
                     <div class="col-xs-9 diagramTemplates temp-right-pane" style="padding-left:0px;padding-right:0px">
@@ -45,6 +55,13 @@
                                     {
                                         <div class="db-diagram-template-image-div" id="mindmap_child0" @onclick="@BlankMindMapDiagram">
                                             <div class="db-diagram-template-svg-image" style="background-image: url(&quot;./assets/dbstyle/common_images/blank_diagram_mind.svg&quot;);">
+                                            </div>
+                                        </div>
+                                    }
+                                    else if (this.Value == "Org Chart")
+                                    {
+                                        <div class="db-diagram-template-image-div" id="orgchart_child0" @onclick="@BlankOrgChartDiagram">
+                                            <div class="db-diagram-template-svg-image" style="background-image: url(&quot;./assets/dbstyle/common_images/blank_diagram_org.svg&quot;);">
                                             </div>
                                         </div>
                                     }
@@ -75,6 +92,16 @@
                                             <span id="diagramTemplateText">Business Planning</span>
                                         </div>
                                     }
+                                    else if (this.Value == "Org Chart")
+                                    {
+                                        <div class="db-diagram-template-image-div" id="orgchart_child1" @onclick="@OrgRenderingStyle1Diagram">
+                                            <div class="db-diagram-template-svg-image" style="background-image: url(&quot;./assets/dbstyle/orgchart_images/OrgRenderingStyle_1.SVG&quot;);">
+                                            </div>
+                                        </div>
+                                        <div class="db-diagram-template-text">
+                                            <span id="diagramTemplateText">Org Template Style - 1</span>
+                                        </div>
+                                    }
                                 }
                             </div>
                             <div id="" class="db-diagram-template-div" style="">
@@ -87,6 +114,16 @@
                                         </div>
                                         <div class="db-diagram-template-text">
                                             <span id="diagramTemplateText">Quality Management</span>
+                                        </div>
+                                    }
+                                    else if (this.Value == "Org Chart")
+                                    {
+                                        <div class="db-diagram-template-image-div" id="orgchart_child2" @onclick="@OrgRenderingStyle2Diagram">
+                                            <div class="db-diagram-template-svg-image" style="background-image: url(&quot;./assets/dbstyle/orgchart_images/OrgRenderingStyle_2.SVG&quot;);">
+                                            </div>
+                                        </div>
+                                        <div class="db-diagram-template-text">
+                                            <span id="diagramTemplateText">Org Template Style - 2</span>
                                         </div>
                                     }
                                 }
@@ -103,6 +140,16 @@
                                             <span id="diagramTemplateText">Software Life Cycle</span>
                                         </div>
                                     }
+                                    else if (this.Value == "Org Chart")
+                                   {
+                                        <div class="db-diagram-template-image-div" id="orgchart_child3" @onclick="@OrgRenderingStyle3Diagram">
+                                            <div class="db-diagram-template-svg-image" style="background-image: url(&quot;./assets/dbstyle/orgchart_images/OrgRenderingStyle_3.SVG&quot;);">
+                                            </div>
+                                        </div>
+                                        <div class="db-diagram-template-text">
+                                            <span id="diagramTemplateText">Org Template Style - 3</span>
+                                        </div>
+                                   }
                                 }
                             </div>
                         </div>
@@ -179,7 +226,7 @@
         {
             Parent.MenuBar.EditMenuItems.RemoveAt(8);
         }
-        Parent.MenuBar.arrangeButtonCss = "e-dropDown-button e-arrange-menu e-btn-hide";
+        Parent.MenuBar.ArrangeButtonCss = "e-dropDown-button e-arrange-menu e-btn-hide";
         Parent.MenuBar.WindowMenuItems.Add(new DiagramMenuBar.ContextMenuItemModel() { Text = "Show Shortcuts", IconCss = "sf-icon-Selection" });
         Parent.MenuBar.StateChanged();
     }
@@ -213,11 +260,79 @@
         Parent.LeftSideBar.sidebarVisibility = "none";
         Parent.LeftSideBar.StateChanged();
     }
-
-    public void BlankOrgChartDiagram()
+    public void RemoveUnwantedOrgChartMenubarItems()
     {
+        if (Parent.MenuBar.WindowMenuItems[1].Text == "Show Stencil")
+        {
+            Parent.MenuBar.WindowMenuItems.RemoveAt(1);
+        }
+        if (Parent.MenuBar.EditMenuItems[8].Text == "Duplicate")
+        {
+            Parent.MenuBar.EditMenuItems.RemoveAt(8);
+        }
+        Parent.MenuBar.ArrangeButtonCss = "e-dropDown-button e-arrange-menu e-btn-hide";
+        Parent.MenuBar.WindowMenuItems.Add(new DiagramMenuBar.ContextMenuItemModel() { Text = "Show Shortcuts", IconCss = "sf-icon-Selection" });
+        Parent.MenuBar.StateChanged();
+    }
+    public async Task UpdateLayout()
+    {
+        await Task.Delay(800);
+        object bounds = await jsRuntime.InvokeAsync<object>("getViewportBounds").ConfigureAwait(true);
+        if (bounds != null)
+        {
+            JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+                };
+            DiagramSize dataObj = System.Text.Json.JsonSerializer.Deserialize<DiagramSize>(bounds.ToString(), options);
+            if (dataObj != null)
+            {
+                Parent.DiagramContent.Diagram.BeginUpdate();
+                Parent.DiagramContent.Diagram.Width = dataObj.Width + "px";
+                Parent.DiagramContent.Diagram.Height = dataObj.Height + "px";
+                Parent.DiagramContent.Diagram.EndUpdate();
+            }
+
+        }
+        await Parent.DiagramContent.Diagram.DoLayout();
+    }
+    public async Task BlankOrgChartDiagram()
+    {
+        Parent.OrgChartPropertyPanel.IsOrgChart = true;
+#if SERVER
+
+    LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/blank_diagram.json");
+#endif
+
+#if WASM
+
+       content = await Http.GetStringAsync("assets/dbstyle/orgchart_images/blank_diagram.json");
+    this.Parent.DiagramContent.LoadNewDiagram(content);
+    IsOpenDialogVisible = false;
+    StateHasChanged();
+    Parent.LeftSideBar.sidebarVisibility = "none";
+    Parent.LeftSideBar.StateChanged();
+#endif
+#if MAUI
+    string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+    var files = Directory.GetFiles(wwwroot,"blank_diagram.json", SearchOption.AllDirectories);
+    var json = await System.IO.File.ReadAllTextAsync(files[0]);
+    json = json.Replace(System.Environment.NewLine, string.Empty);
+    this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
+    IsOpenDialogVisible = false;
+    StateHasChanged();
+    Parent.LeftSideBar.sidebarVisibility = "none";
+    Parent.LeftSideBar.StateChanged();
+
+#endif
+        CurrentDiagramVisibility("OrgChart-diagram");
+        Parent.OrgChartPropertyPanel.OrgChartStyle = "Blank";
         this.Value = "Org Chart";
         StateHasChanged();
+        await Parent.Toolbar.HideElements("hide-palette");
+        RemoveUnwantedOrgChartMenubarItems();
+        await UpdateLayout();
     }
 
     public async Task CreditProcessDiagram()
@@ -256,9 +371,41 @@
         Parent.LeftSideBar.StateChanged();
     }
 
-    public void OrgRenderingStyle1Diagram()
+    public async Task OrgRenderingStyle1Diagram()
     {
-        LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle1.json");
+        Parent.OrgChartPropertyPanel.IsOrgChart = true;
+#if SERVER
+    LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle1.json");
+    await Parent.MenuBar.OrgTemplateStyle1();
+#endif
+
+#if WASM
+
+       content = await Http.GetStringAsync("assets/dbstyle/orgchart_images/OrgTemplateStyle1.json");
+    this.Parent.DiagramContent.LoadNewDiagram(content);
+    IsOpenDialogVisible = false;
+    StateHasChanged();
+
+#endif
+#if MAUI
+    string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+    var files = Directory.GetFiles(wwwroot,"OrgTemplateStyle1.json", SearchOption.AllDirectories);
+    var json = await System.IO.File.ReadAllTextAsync(files[0]);
+    json = json.Replace(System.Environment.NewLine, string.Empty);
+    this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
+    IsOpenDialogVisible = false;
+    StateHasChanged();
+    Parent.LeftSideBar.sidebarVisibility = "none";
+    Parent.LeftSideBar.StateChanged();
+
+#endif
+        this.Value = "Org Chart";
+        Parent.OrgChartPropertyPanel.OrgChartStyle = "Style1";
+        CurrentDiagramVisibility("OrgChart-diagram");
+        await Parent.Toolbar.HideElements("hide-palette");
+        IsOpenDialogVisible = false;
+        RemoveUnwantedOrgChartMenubarItems();
+        await UpdateLayout();
     }
 
     public void BankTellerFlowDiagram()
@@ -277,7 +424,7 @@
         Parent.MindMapPropertyPanel.IsMindMap = true;
         content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/TQM.json");
         this.Parent.DiagramContent.LoadNewDiagram(content);
-        #endif      
+        #endif
         #if MAUI
         Parent.MindMapPropertyPanel.IsMindMap = true;
         string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
@@ -297,9 +444,37 @@
         Parent.LeftSideBar.StateChanged();
     }
 
-    public void OrgRenderingStyle2Diagram()
+    public async Task OrgRenderingStyle2Diagram()
     {
-        LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle2.json");
+        Parent.OrgChartPropertyPanel.IsOrgChart = true;
+#if SERVER
+
+    LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle2.json");
+
+    await Parent.MenuBar.OrgTemplateStyle2();
+#endif
+
+#if WASM
+       content = await Http.GetStringAsync("assets/dbstyle/orgchart_images/OrgTemplateStyle2.json");
+    this.Parent.DiagramContent.LoadNewDiagram(content);
+    IsOpenDialogVisible = false;
+    StateHasChanged();
+    CurrentDiagramVisibility("OrgChart-diagram");
+#endif
+#if MAUI
+    string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+    var files = Directory.GetFiles(wwwroot,"OrgTemplateStyle2.json", SearchOption.AllDirectories);
+    var json = await System.IO.File.ReadAllTextAsync(files[0]);
+    json = json.Replace(System.Environment.NewLine, string.Empty);
+    this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
+#endif
+        Parent.OrgChartPropertyPanel.OrgChartStyle = "Style2";
+        this.Value = "Org Chart";
+        CurrentDiagramVisibility("OrgChart-diagram");
+        await Parent.Toolbar.HideElements("hide-palette");
+        RemoveUnwantedOrgChartMenubarItems();
+        IsOpenDialogVisible = false;
+        await UpdateLayout();
     }
 
     public void DeveloperWorkFlowDiagram()
@@ -318,7 +493,7 @@
         Parent.MindMapPropertyPanel.IsMindMap = true;
         content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/SoftwareDevelopmentLifeCycle.json");
         this.Parent.DiagramContent.LoadNewDiagram(content);
-        #endif       
+        #endif
         #if MAUI
         Parent.MindMapPropertyPanel.IsMindMap = true;
         string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
@@ -338,9 +513,39 @@
         Parent.LeftSideBar.StateChanged();
     }
 
-    public void OrgRenderingStyle3Diagram()
+    public async Task OrgRenderingStyle3Diagram()
     {
-        LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle3.json");
+        Parent.OrgChartPropertyPanel.IsOrgChart = true;
+#if SERVER
+    LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle3.json");
+    await Parent.MenuBar.OrgTemplateStyle3();
+#endif
+
+#if WASM
+
+       content = await Http.GetStringAsync("assets/dbstyle/orgchart_images/OrgTemplateStyle3.json");
+    this.Parent.DiagramContent.LoadNewDiagram(content);
+    IsOpenDialogVisible = false;
+    StateHasChanged();
+
+
+#endif
+#if MAUI
+    string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+    var files = Directory.GetFiles(wwwroot,"OrgTemplateStyle3.json", SearchOption.AllDirectories);
+    var json = await System.IO.File.ReadAllTextAsync(files[0]);
+    json = json.Replace(System.Environment.NewLine, string.Empty);
+    this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
+#endif
+
+        Parent.OrgChartPropertyPanel.OrgChartStyle = "Style3";
+        this.Value = "Org Chart";
+
+        CurrentDiagramVisibility("OrgChart-diagram");
+        await Parent.Toolbar.HideElements("hide-palette");
+        RemoveUnwantedOrgChartMenubarItems();
+        IsOpenDialogVisible = false;
+        await UpdateLayout();
     }
 
     public void LoadTemplate(string fileLocation)
@@ -362,11 +567,25 @@
         if (DiagramName == "mindmap-diagram")
         {
             Parent.ShowShortCutKey = "block";
+            Parent.ShowOrgShortCutKey = "none";
             Parent.MindMapPropertyPanel.MindMapProperty = true;
+            Parent.OrgChartPropertyPanel.OrgChartPropertyVisibility = "none";
             Parent.MindMapPropertyPanel.MindMapPropertyVisibility = "block";
             Parent.DiagramPropertyPanel.DiagramPropertyVisibility = "none";
             Parent.DiagramPropertyPanel.PropertyPanelVisibility();
             Parent.Toolbar.MindMapToolbarItemsVisibility();
+        }
+        else if (DiagramName == "OrgChart-diagram")
+        {
+            Parent.ShowShortCutKey = "none";
+            Parent.ShowOrgShortCutKey = "block";
+            Parent.OrgChartPropertyPanel.OrgChartProperty = true;
+            Parent.OrgChartPropertyPanel.OrgChartPropertyVisibility = "block";
+            Parent.MindMapPropertyPanel.MindMapPropertyVisibility = "none";
+            Parent.DiagramPropertyPanel.DiagramPropertyVisibility = "none";
+            Parent.DiagramPropertyPanel.PropertyPanelVisibility();
+            Parent.Toolbar.OrgChartToolbarItemsVisibility();
+            Parent.OrgChartPropertyPanel.statehaschanged();
         }
         else
         {

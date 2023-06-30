@@ -2,6 +2,7 @@
 using DiagramBuilderMAUI.Data;
 using DiagramBuilder.Shared;
 using Syncfusion.Blazor;
+using Syncfusion.Blazor.Popups;
 
 namespace DiagramBuilder;
 
@@ -16,10 +17,9 @@ public static class MauiProgram
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 			});
-
-		builder.Services.AddMauiBlazorWebView();
+        builder.Services.AddMauiBlazorWebView();
 		builder.Services.AddSyncfusionBlazor();
-     
+        builder.Services.AddScoped<SfDialogService>();
 #if DEBUG
         builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
