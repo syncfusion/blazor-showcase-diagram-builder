@@ -16,32 +16,40 @@ function getDiagramFileName(dialogName) {
         return document.getElementById('diagramName').innerHTML.toString();
 }
 function importDescription(formatName) {
-    if (formatName === 'CSV')
-    {
+    if (formatName === 'CSV') {
         document.getElementById('descriptionText1').innerHTML = "Make sure that each column of the table has a header";
         document.getElementById('descriptionText2').innerHTML = "Each employee should have a reporting person (except the top most employee of the organization), and it should be indicated by any field from the data source.";
-        
+
     }
-    else if (formatName == 'XML')
-    {
+    else if (formatName == 'XML') {
         document.getElementById('descriptionText1').innerHTML = "Make sure that XML document has a unique root element and start-tags have matching end-tags.";
         document.getElementById('descriptionText2').innerHTML = "All XML elements will be considered employees and will act as a reporting person for its child XML elements.";
-    
+
     }
-    else
-    {
+    else {
         document.getElementById('descriptionText1').innerHTML = "Make sure that you have defined a valid JSON format.";
         document.getElementById('descriptionText2').innerHTML = "Each employee should have a reporting person (except the top most employee of the organization), and it should be indicated by any field from the data source.";
     }
-        
+
 }
 importData = function (object) {
-    var orgDataSource = [];var columnsList = []
+    var orgDataSource = []; var columnsList = []
     orgDataSource = JSON.parse(object);
     var dada = orgDataSource[0];
-    for (var prop in dada) {columnsList.push(prop) }
+    for (var prop in dada) { columnsList.push(prop) }
     return columnsList
 };
+function RestartApplication() {
+    location.reload();
+}
+function printContent(diagram) {
+    var content = document.getElementById(diagram);
+    var originalContents = document.body.innerHTML;
+    document.body.innerHTML = content.innerHTML;
+    window.print();
+    document.body.innerHTML = originalContents;
+    location.reload();
+}
 function saveDiagram(data, filename) {
     if (window.navigator.msSaveBlob) {
         let blob = new Blob([data], { type: 'data:text/json;charset=utf-8,' });
@@ -113,7 +121,7 @@ function downloadCsv() {
 }
 
 function downloadXML() {
-    var xmltext = '<?xml version="1.0" encoding="utf-8" ?><people>' +
+    var xmlText = '<?xml version="1.0" encoding="utf-8" ?><people>' +
         '<person Name="Maria Anders" Role="Managing Director" Department="Development"  Location="US" Phone="(555) 111-1111" Email="mariaanders@fakecompany.com" SupervisorName="Maria Anders" ImageURL="/assets/dbstyle/orgchart_images/blank-male.jpg">' +
         '<person Name="Carine Schmitt" Role="Project Manager" Department="Development" Location="US" Phone="(555) 222-2222" Email="carineschmitt@fakecompany.com" SupervisorName="Maria Anders" ImageURL="/assets/dbstyle/orgchart_images/blank-male.jpg"></person>' +
         '<person Name="Daniel Tonini" Role="Project Manager" Department="Development" Location="US" Phone="(555) 333-3333" Email="danieltonini@fakecompany.com" SupervisorName="Maria Anders" ImageURL="/assets/dbstyle/orgchart_images/blank-male.jpg">' +
@@ -124,27 +132,27 @@ function downloadXML() {
         '</person>' +
         '</people>';
     var filename = 'people.xml';
-    var bb = new Blob([xmltext], { type: 'text/plain' });
+    var bb = new Blob([xmlText], { type: 'text/plain' });
     if (window.navigator.msSaveBlob) {
         window.navigator.msSaveOrOpenBlob(bb, filename);
     }
     else {
-        var pom = document.createElement('a');
-        pom.setAttribute('href', window.URL.createObjectURL(bb));
-        pom.setAttribute('download', filename);
-        document.body.appendChild(pom);
-        pom.click();
-        pom.remove();
+        var anchorTag = document.createElement('a');
+        anchorTag.setAttribute('href', window.URL.createObjectURL(bb));
+        anchorTag.setAttribute('download', filename);
+        document.body.appendChild(anchorTag);
+        anchorTag.click();
+        anchorTag.remove();
     }
 }
 function downloadFile(data, filename) {
-    let dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(data);
-    let a = document.createElement('a');
-    a.href = dataStr;
-    a.download = filename + '.json';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
+    let dataString = 'data:text/json;charset=utf-8,' + encodeURIComponent(data);
+    let anchorElement = document.createElement('a');
+    anchorElement.href = dataString;
+    anchorElement.download = filename + '.json';
+    document.body.appendChild(anchorElement);
+    anchorElement.click();
+    anchorElement.remove();
 }
 UtilityMethods_hideElements = function (elementType, diagramType) {
     var diagramContainer = document.getElementsByClassName('diagrambuilder-container')[0];
@@ -191,7 +199,7 @@ function loadCSVFile(file) {
     var base64 = file.rawFile.replace("data:text/csv;base64,", "");
     var json = atob(base64)
     return json;
-    
+
 }
 function loadXMLFile(file) {
 
@@ -231,7 +239,7 @@ function renameDiagram1(args) {
     element.select();
 }
 UtilityMethods_native = function (object) {
-    var selectedItems = JSON.parse(object);    
+    var selectedItems = JSON.parse(object);
     console.log(selectedItems);
 };
 function pageSizeUpdate() {

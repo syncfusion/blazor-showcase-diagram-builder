@@ -9,7 +9,7 @@
 @namespace DiagramBuilder
 
 <div class="db-header-container">
-    <div class= '@menuclass'>
+    <div class='@menuClass'>
         <h1 id='diagramName' style="width: 250px; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" class="db-diagram-name"
               @onclick="@renameDiagram">@diagramName</h1>
         <input id='diagramEditable' @ref="input" type="text" class="db-diagram-name" @onkeydown="@diagramNameKeyDown" @onfocusout="@diagramNameChange"  @bind-value="@value"/>
@@ -46,7 +46,7 @@
                 </SfContextMenu>
             </PopupContent>
         </SfDropDownButton>
-        <SfDropDownButton @ref="ArrangeButton" Id="btnArrangeMenu" Content="Arrange" CssClass="@arrangeButtonCss">
+        <SfDropDownButton @ref="ArrangeButton" Id="btnArrangeMenu" Content="Arrange" CssClass="@ArrangeButtonCss">
             <ChildContent>
                 <DropDownButtonEvents OnOpen="@DropDownArrangeButtonOpen"></DropDownButtonEvents>
             </ChildContent>
@@ -79,10 +79,9 @@
 
 @code {
 
-    internal DiagramMain Parent;
+
     DiagramPrintDialog PrintDialogBox;
     DiagramExportDialog ExportDialogBox;
-    private ElementReference input;
     DiagramSaveDialog SaveDialogBox;
     SfDropDownButton FileButton;
     SfDropDownButton WindowButton;
@@ -93,14 +92,19 @@
     string ExtensionType = ".json";
     SfContextMenu<ContextMenuItemModel> ContextMenu;
     private List<string> DisableCollection;
+    private ElementReference input;
+    private bool enablePasteButten = false;
+    private string menuClass { get; set; } = "db-diagram-name-container";
+    internal DiagramMain Parent;
+    internal string ArrangeButtonCss = "e-dropDown-button e-arrange-menu";
     public string diagramName { get; set; } = "Untitled Diagram";
     public string value { get; set; }
-    public string menuclass { get; set; } = "db-diagram-name-container";
-    internal string arrangeButtonCss = "e-dropDown-button e-arrange-menu";
+    public string SelectNewOption = "";
+    public bool IsOpenClick = false;
 
     private async Task renameDiagram()
     {
-        menuclass += " db-edit-name";
+        menuClass += " db-edit-name";
         value = diagramName;
         await input.FocusAsync();
         await jsRuntime.InvokeVoidAsync("renameDiagram1", input);
@@ -111,10 +115,10 @@
         {
             diagramName = "";
             string edit = " db-edit-name";
-            if (menuclass.Contains(edit))
+            if (menuClass.Contains(edit))
             {
-                int first = menuclass.IndexOf(edit);
-                menuclass = menuclass.Remove(first);
+                int first = menuClass.IndexOf(edit);
+                menuClass = menuClass.Remove(first);
             }
         }
     }
@@ -123,10 +127,10 @@
     {
         diagramName = value;
         string edit = " db-edit-name";
-        if (menuclass.Contains(edit))
+        if (menuClass.Contains(edit))
         {
-            int first = menuclass.IndexOf(edit);
-            menuclass = menuclass.Remove(first);
+            int first = menuClass.IndexOf(edit);
+            menuClass = menuClass.Remove(first);
         }
     }
     private void DropDownButtonOpen() {
@@ -323,9 +327,6 @@
         }
 
     }
-
-    public bool enablePasteButten = false;
-    public string SelectNewOption = "";
     public async Task MenuClick(Syncfusion.Blazor.Navigations.MenuEventArgs<ContextMenuItemModel> args)
     {
         bool Edit = false;
@@ -333,7 +334,7 @@
         bool Window = false;
         bool view = false;
         bool Arrange = false;
-
+        OrgChartPropertyContainer orgChartPropertyContainer = this.Parent.OrgChartPropertyPanel;
         Syncfusion.Blazor.Diagram.SfDiagramComponent diagram = Parent.DiagramContent.Diagram;
         string commandType = args.Item.Text.Replace(" ", "");
         switch (commandType.ToLower())
@@ -356,6 +357,7 @@
             case "open":
                 File = true;
                 await OpenUploadBox(true, ".json");
+                IsOpenClick = true;
                 break;
             case "undo":
                 Edit = true;
@@ -383,46 +385,29 @@
                 break;
             case "cut":
                 Edit = true;
-                if (this.Parent.OrgChartPropertyPanel.IsOrgChart)
+                if (orgChartPropertyContainer.IsOrgChart)
                 {
-                    foreach (Node node in diagram.SelectionSettings.Nodes)
-                    {
-                        string nodeID = node.ID;
-
-                        Dictionary<string, object> objectdictionary = new Dictionary<string, object>();
-                        objectdictionary.Add(node.ID, null);
-
-                        node.AdditionalInfo = objectdictionary;
-                    }
+                    CopyEditUserHandleDetails(diagram);
                 }
-                this.Parent.OrgChartPropertyPanel.isCopy = true;
                 diagram.Cut();
+                orgChartPropertyContainer.IsCopy = true;
                 enablePasteButten = true;
                 break;
             case "copy":
                 Edit = true;
                 enablePasteButten = true;
-                List<string> nodeIDs = new List<string>();
-                if (this.Parent.OrgChartPropertyPanel.IsOrgChart)
+                if (orgChartPropertyContainer.IsOrgChart)
                 {
-                    foreach (Node node in diagram.SelectionSettings.Nodes)
-                    {
-                        string nodeID = node.ID;
-
-                        Dictionary<string, object> objectdictionary = new Dictionary<string, object>();
-                        objectdictionary.Add(node.ID, null);
-
-                        node.AdditionalInfo = objectdictionary;
-                    }
+                    CopyEditUserHandleDetails(diagram);
                 }
                 diagram.Copy();
-                this.Parent.OrgChartPropertyPanel.isCopy = true;
+                orgChartPropertyContainer.IsCopy = true;
 
                 break;
             case "paste":
                 Edit = true;
                 diagram.Paste();
-                this.Parent.OrgChartPropertyPanel.isCopy = false;
+                orgChartPropertyContainer.IsCopy = false;
                 break;
             case "delete":
                 Edit = true;
@@ -471,69 +456,30 @@
                 break;
             case "save":
                 File = true;
-                if (this.Parent.OrgChartPropertyPanel.IsOrgChart)
+                if (orgChartPropertyContainer.IsOrgChart)
                 {
-                    foreach (Node node in diagram.Nodes)
-                    {
-
-                        string nodeID = node.ID;
-                        Dictionary<string, string> textBoxValues = this.Parent.OrgChartPropertyPanel.TextBoxDictionary[nodeID];
-
-                        Dictionary<string, bool> checkBoxValues = new Dictionary<string, bool>();
-
-                        Dictionary<string, object> objectdictionary = new Dictionary<string, object>();
-
-                        foreach (var key in textBoxValues)
-                        {
-                            string textValue = this.Parent.OrgChartPropertyPanel.TextBoxDictionary[nodeID][key.Key];
-                            bool checkboxValue = this.Parent.OrgChartPropertyPanel.CheckBoxDictionary[nodeID][key.Key];
-                            checkBoxValues = new Dictionary<string, bool>();
-                            checkBoxValues.Add(textValue, checkboxValue);
-                            objectdictionary.Add(key.Key, checkBoxValues);
-                        }
-
-                        node.AdditionalInfo = objectdictionary;
-                    }
+                    SaveEditUserHandleDetails(diagram);
                 }
                 string fileName = await jsRuntime.InvokeAsync<string>("getDiagramFileName", "");
                 await Download(fileName);
                 break;
             case "saveas":
                 File = true;
-                if (this.Parent.OrgChartPropertyPanel.IsOrgChart)
+                if (orgChartPropertyContainer.IsOrgChart)
                 {
-                    foreach (Node node in diagram.Nodes)
-                    {
-                        string nodeID = node.ID;
-                        Dictionary<string, string> textBoxValues = this.Parent.OrgChartPropertyPanel.TextBoxDictionary[nodeID];
-
-                        Dictionary<string, bool> checkBoxValues = new Dictionary<string, bool>();
-
-                        Dictionary<string, object> objectdictionary = new Dictionary<string, object>();
-
-                        foreach (var key in textBoxValues)
-                        {
-                            string textValue = this.Parent.OrgChartPropertyPanel.TextBoxDictionary[nodeID][key.Key];
-                            bool checkboxValue = this.Parent.OrgChartPropertyPanel.CheckBoxDictionary[nodeID][key.Key];
-                            checkBoxValues = new Dictionary<string, bool>();
-                            checkBoxValues.Add(textValue, checkboxValue);
-                            objectdictionary.Add(key.Key, checkBoxValues);
-                        }
-
-                        node.AdditionalInfo = objectdictionary;
-                    }
+                    StoreEditUserHandleDetails(diagram);
                 }
                 SaveDialogBox.DiagramfileName = await jsRuntime.InvokeAsync<string>("getDiagramFileName", "");
                 await SaveDialogBox.SaveDialog.Show();
                 break;
             case "print":
                 #if SERVER || WASM
-                File = true;
-                await PrintDialogBox.PrintDialog.ShowAsync();
+            File = true;
+            await PrintDialogBox.PrintDialog.ShowAsync();
                 #endif
                 #if MAUI
-                File = true;
-                await jsRuntime.InvokeAsync<string>("printContent",diagram.ID);
+        File = true;
+    await jsRuntime.InvokeAsync<string>("printContent",diagram.ID);
                 #endif
                 break;
             case "export":
@@ -691,7 +637,76 @@
         if (Arrange)
             ArrangeButton.Toggle();
     }
+    public void StoreEditUserHandleDetails(SfDiagramComponent diagram)
+    {
+        OrgChartPropertyContainer orgChartPropertyContainer= this.Parent.OrgChartPropertyPanel;
+        foreach (Node node in diagram.Nodes)
+        {
+            string nodeID = node.ID;
+            Dictionary<string, string> textBoxValues = orgChartPropertyContainer.TextBoxDictionary[nodeID];
 
+            Dictionary<string, bool> checkBoxValues = new Dictionary<string, bool>();
+
+            Dictionary<string, object> objectDictionary = new Dictionary<string, object>();
+
+            foreach (var key in textBoxValues)
+            {
+                string textValue = orgChartPropertyContainer.TextBoxDictionary[nodeID][key.Key];
+                bool checkboxValue = orgChartPropertyContainer.CheckBoxDictionary[nodeID][key.Key];
+                checkBoxValues = new Dictionary<string, bool>();
+                checkBoxValues.Add(textValue, checkboxValue);
+                objectDictionary.Add(key.Key, checkBoxValues);
+            }
+
+            node.AdditionalInfo = objectDictionary;
+        }
+    }
+    public void CopyEditUserHandleDetails(SfDiagramComponent diagram)
+    {
+        foreach (Node node in diagram.SelectionSettings.Nodes)
+        {
+            string nodeID = node.ID;
+
+            Dictionary<string, object> objectdictionary = new Dictionary<string, object>();
+            objectdictionary.Add(node.ID, null);
+
+            node.AdditionalInfo = objectdictionary;
+        }
+    }
+    public void SaveEditUserHandleDetails(SfDiagramComponent diagram)
+    {
+        OrgChartPropertyContainer orgChartPropertyContainer = this.Parent.OrgChartPropertyPanel;
+        foreach (Node node in diagram.Nodes)
+        {
+
+            string nodeID = node.ID;
+            Dictionary<string, string> textBoxValues = orgChartPropertyContainer.TextBoxDictionary[nodeID];
+
+            Dictionary<string, Dictionary<bool, bool>> checkBoxValues = new Dictionary<string, Dictionary<bool, bool>>();
+            Dictionary<string, object> objectDictionary = new Dictionary<string, object>();
+
+            foreach (var key in textBoxValues)
+            {
+                string textValue = orgChartPropertyContainer.TextBoxDictionary[nodeID][key.Key];
+                bool checkboxValue = orgChartPropertyContainer.CheckBoxDictionary[nodeID][key.Key];
+                checkBoxValues = new Dictionary<string, Dictionary<bool, bool>>();
+                var boolValues = new Dictionary<bool, bool>();
+                if (orgChartPropertyContainer.ApplyDictionary.ContainsKey(nodeID))
+                {
+                    boolValues.Add(checkboxValue, orgChartPropertyContainer.ApplyDictionary[nodeID]);
+                }
+                else
+                {
+                    boolValues.Add(checkboxValue, true);
+                }
+                checkBoxValues.Add(textValue, boolValues);
+
+                objectDictionary.Add(key.Key, checkBoxValues);
+            }
+
+            node.AdditionalInfo = objectDictionary;
+        }
+    }
     public async Task OpenUploadBox(bool isOpen, string extensionType)
     {
         ExtensionType = extensionType;

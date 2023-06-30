@@ -147,4 +147,11 @@ namespace DiagramBuilder
             CreateConnector("node10", "node11", default(string), null, true);
         }
     }
+
+    public class EditUserHandlePropertyPanel
+    {
+        public string PropertyName { get; set; }
+        public string PropertyValue { get; set; }
+        public bool IsChecked { get; set; }
+    }
 }
