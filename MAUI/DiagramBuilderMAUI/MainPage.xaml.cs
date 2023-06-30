@@ -1,5 +1,5 @@
 ﻿using Microsoft.Maui.Controls;
-namespace DiagramBuilderMAUI;
+namespace DiagramBuilder;
 
 public partial class MainPage : ContentPage
 {

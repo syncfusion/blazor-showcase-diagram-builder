@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace DiagramBuilderMAUI;
+namespace DiagramBuilder;
 
 [Register("AppDelegate")]
 public class AppDelegate : MauiUIApplicationDelegate

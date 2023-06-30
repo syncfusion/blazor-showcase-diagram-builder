@@ -17,7 +17,6 @@ public static class MauiProgram
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 			});
-        Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NGaF5cXmdCeUxwWmFZfV1gdl9DaVZRTWYuP1ZhSXxQdkNhXn9ccnZWRWJYWUQ=");
         builder.Services.AddMauiBlazorWebView();
 		builder.Services.AddSyncfusionBlazor();
         builder.Services.AddScoped<SfDialogService>();
