@@ -174,7 +174,7 @@
                     </div>
                     <div class="row db-dialog-prop-row">
                         <div class="row">
-                            <div class="text1"> Supervisor Id</div>
+                            <div class="text1"> Supervisor ID</div>
                             <div class="supervisor-id"> </div>
                         </div> 
                         <div class="row db-dialog-child-prop-row"></div>
@@ -728,7 +728,7 @@
         if (node.Annotations.Count < 3)
         {
             node.Height = 50;
-            node.Width = 170;
+            node.Width = 150;
         }
         else
         {
@@ -1947,7 +1947,7 @@
         patternValue = "vertical-alternate";
         subTreeOrientation = Syncfusion.Blazor.Diagram.Orientation.Vertical;
         subTreeAlignment = SubTreeAlignmentType.Alternate;
-        Diagram.EndUpdate();
+        await Diagram.EndUpdate();
         await Diagram.DoLayout();
     }
     public async Task OrgChartPattern2Change()
@@ -1957,7 +1957,7 @@
         patternValue = "vertical-left";
         subTreeOrientation = Syncfusion.Blazor.Diagram.Orientation.Vertical;
         subTreeAlignment = SubTreeAlignmentType.Left;
-        Diagram.EndUpdate();
+        await Diagram.EndUpdate();
         await Diagram.DoLayout();
     }
     public async Task OrgChartPattern3Change()
@@ -1967,7 +1967,7 @@
         patternValue = "vertical-right";
         subTreeOrientation = Syncfusion.Blazor.Diagram.Orientation.Vertical;
         subTreeAlignment = SubTreeAlignmentType.Right;
-        Diagram.EndUpdate();
+        await Diagram.EndUpdate();
         await Diagram.DoLayout();
     }
     public async Task OrgChartPattern4Change()
@@ -1977,7 +1977,7 @@
         patternValue = "horizontal-center";
         subTreeOrientation = Syncfusion.Blazor.Diagram.Orientation.Horizontal;
         subTreeAlignment = SubTreeAlignmentType.Center;
-        Diagram.EndUpdate();
+        await Diagram.EndUpdate();
         await Diagram.DoLayout();
     }
     public async Task OrgChartPattern5Change()
@@ -1987,7 +1987,7 @@
         patternValue = "horizontal-right"; 
         subTreeOrientation = Syncfusion.Blazor.Diagram.Orientation.Horizontal;
         subTreeAlignment = SubTreeAlignmentType.Right;
-        Diagram.EndUpdate();
+        await Diagram.EndUpdate();
         await Diagram.DoLayout();
     }
     public async Task OrgChartPattern6Change()
@@ -1997,7 +1997,7 @@
         patternValue = "horizontal-left";
         subTreeOrientation = Syncfusion.Blazor.Diagram.Orientation.Horizontal;
         subTreeAlignment = SubTreeAlignmentType.Left;
-        Diagram.EndUpdate();
+        await Diagram.EndUpdate();
         await Diagram.DoLayout();
     }
     public async Task changeChildParent()
@@ -2199,7 +2199,6 @@
                             if (Parent.MenuBar.IsOpenClick)
                             {
                                 text=textValues.Key;
-                                tooltip += "<tr><td>" + textValues.Key + "</td><td>:</td><td>" + text + "</td></tr><tr>";
                             }
                         }
                         if (!checkbox.Value && !IsUploader)

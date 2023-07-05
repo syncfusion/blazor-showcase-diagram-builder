@@ -467,7 +467,7 @@
                 File = true;
                 if (orgChartPropertyContainer.IsOrgChart)
                 {
-                    StoreEditUserHandleDetails(diagram);
+                    SaveEditUserHandleDetails(diagram);
                 }
                 SaveDialogBox.DiagramfileName = await jsRuntime.InvokeAsync<string>("getDiagramFileName", "");
                 await SaveDialogBox.SaveDialog.Show();

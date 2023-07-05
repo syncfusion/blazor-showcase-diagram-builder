@@ -223,7 +223,10 @@
                         orgChartPropertyContainer.CheckBoxDictionary[node.ID] = checkBox;
                     }
                     Node newNode = this.Diagram.GetObject(nodeID) as Node;
-                    newNode.AdditionalInfo.Clear();
+                    if (newNode!=null&&newNode.AdditionalInfo.Count > 0)
+                    {
+                        newNode.AdditionalInfo.Clear();
+                    }
                 }
 
 
@@ -241,6 +244,8 @@
                     Dictionary<string, Dictionary<bool, bool>> dictionary = new Dictionary<string, Dictionary<bool, bool>>();
                     Dictionary<string, bool> checkBoxValues = new Dictionary<string, bool>();
                     Dictionary<string, string> textboxValues = new Dictionary<string, string>();
+                    Dictionary<string, bool> originalCheckBoxValues = new Dictionary<string, bool>();
+                    Dictionary<string, string> originalTextboxValues = new Dictionary<string, string>();
                     bool applyDictionaryValue = false;
                     List<string> deleteInformation = new List<string>();
                     foreach (KeyValuePair<string, object> keyValuePair in node.AdditionalInfo)
@@ -259,7 +264,8 @@
                                     applyDictionaryValue = textcheckbox.Value;
                                 }
                                 textboxValues.Add(keyValuePair.Key, key);
-
+                                originalTextboxValues.Add(keyValuePair.Key, key);
+                                originalCheckBoxValues.Add(keyValuePair.Key, textcheckbox.Key);
                                 checkBoxValues.Add(keyValuePair.Key, textcheckbox.Key);
                                 var isChecked = textcheckbox.Key;
                                 if (node.Data == null && isChecked)
@@ -280,16 +286,16 @@
                     {
                         orgChartPropertyContainer.TextBoxDictionary[node.ID] = textboxValues;
                         orgChartPropertyContainer.CheckBoxDictionary[node.ID] = checkBoxValues;
-                        orgChartPropertyContainer.OriginalTextBoxValuesDictionary[node.ID] = textboxValues;
-                        orgChartPropertyContainer.OriginalCheckBoxValuesDictionary[node.ID] = checkBoxValues;
+                        orgChartPropertyContainer.OriginalTextBoxValuesDictionary[node.ID] = originalTextboxValues;
+                        orgChartPropertyContainer.OriginalCheckBoxValuesDictionary[node.ID] = originalCheckBoxValues;
                         orgChartPropertyContainer.ApplyDictionary[node.ID] = applyDictionaryValue;
                     }
                     else
                     {
                         orgChartPropertyContainer.TextBoxDictionary.Add(node.ID, textboxValues);
                         orgChartPropertyContainer.CheckBoxDictionary.Add(node.ID, checkBoxValues);
-                        orgChartPropertyContainer.OriginalTextBoxValuesDictionary.Add(node.ID, textboxValues);
-                        orgChartPropertyContainer.OriginalCheckBoxValuesDictionary.Add(node.ID, checkBoxValues);
+                        orgChartPropertyContainer.OriginalTextBoxValuesDictionary.Add(node.ID, originalTextboxValues);
+                        orgChartPropertyContainer.OriginalCheckBoxValuesDictionary.Add(node.ID, originalCheckBoxValues);
                         orgChartPropertyContainer.ApplyDictionary.Add(node.ID, applyDictionaryValue);
                         orgChartPropertyContainer.IsAdditionalInfo = true;
 
@@ -447,9 +453,11 @@
                         orgChartPropertyContainer.CheckBoxDictionary.Add(node.ID, checkBoxValues);
                         orgChartPropertyContainer.OriginalTextBoxValuesDictionary.Add(node.ID, textBoxValues);
                         orgChartPropertyContainer.OriginalCheckBoxValuesDictionary.Add(node.ID, checkBoxValues);
+                        orgChartPropertyContainer.ApplyDictionary.Add(node.ID, true);
                     }
                 }
                 orgChartPropertyContainer.UpdateAnnotationPosition(node);
+
                 node.Style.Fill = "#88C65C";
                 node.Style.StrokeColor = "#88C65C";
             }
