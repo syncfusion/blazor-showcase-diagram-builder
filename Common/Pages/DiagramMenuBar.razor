@@ -467,7 +467,7 @@
                 File = true;
                 if (orgChartPropertyContainer.IsOrgChart)
                 {
-                    StoreEditUserHandleDetails(diagram);
+                    SaveEditUserHandleDetails(diagram);
                 }
                 SaveDialogBox.DiagramfileName = await jsRuntime.InvokeAsync<string>("getDiagramFileName", "");
                 await SaveDialogBox.SaveDialog.Show();
@@ -636,30 +636,6 @@
             ViewButton.Toggle();
         if (Arrange)
             ArrangeButton.Toggle();
-    }
-    public void StoreEditUserHandleDetails(SfDiagramComponent diagram)
-    {
-        OrgChartPropertyContainer orgChartPropertyContainer= this.Parent.OrgChartPropertyPanel;
-        foreach (Node node in diagram.Nodes)
-        {
-            string nodeID = node.ID;
-            Dictionary<string, string> textBoxValues = orgChartPropertyContainer.TextBoxDictionary[nodeID];
-
-            Dictionary<string, bool> checkBoxValues = new Dictionary<string, bool>();
-
-            Dictionary<string, object> objectDictionary = new Dictionary<string, object>();
-
-            foreach (var key in textBoxValues)
-            {
-                string textValue = orgChartPropertyContainer.TextBoxDictionary[nodeID][key.Key];
-                bool checkboxValue = orgChartPropertyContainer.CheckBoxDictionary[nodeID][key.Key];
-                checkBoxValues = new Dictionary<string, bool>();
-                checkBoxValues.Add(textValue, checkboxValue);
-                objectDictionary.Add(key.Key, checkBoxValues);
-            }
-
-            node.AdditionalInfo = objectDictionary;
-        }
     }
     public void CopyEditUserHandleDetails(SfDiagramComponent diagram)
     {

@@ -223,7 +223,10 @@
                         orgChartPropertyContainer.CheckBoxDictionary[node.ID] = checkBox;
                     }
                     Node newNode = this.Diagram.GetObject(nodeID) as Node;
-                    newNode.AdditionalInfo.Clear();
+                    if (newNode!=null&&newNode.AdditionalInfo.Count > 0)
+                    {
+                        newNode.AdditionalInfo.Clear();
+                    }
                 }
 
 
@@ -241,6 +244,8 @@
                     Dictionary<string, Dictionary<bool, bool>> dictionary = new Dictionary<string, Dictionary<bool, bool>>();
                     Dictionary<string, bool> checkBoxValues = new Dictionary<string, bool>();
                     Dictionary<string, string> textboxValues = new Dictionary<string, string>();
+                    Dictionary<string, bool> originalCheckBoxValues = new Dictionary<string, bool>();
+                    Dictionary<string, string> originalTextboxValues = new Dictionary<string, string>();
                     bool applyDictionaryValue = false;
                     List<string> deleteInformation = new List<string>();
                     foreach (KeyValuePair<string, object> keyValuePair in node.AdditionalInfo)
@@ -259,7 +264,8 @@
                                     applyDictionaryValue = textcheckbox.Value;
                                 }
                                 textboxValues.Add(keyValuePair.Key, key);
-
+                                originalTextboxValues.Add(keyValuePair.Key, key);
+                                originalCheckBoxValues.Add(keyValuePair.Key, textcheckbox.Key);
                                 checkBoxValues.Add(keyValuePair.Key, textcheckbox.Key);
                                 var isChecked = textcheckbox.Key;
                                 if (node.Data == null && isChecked)
@@ -280,16 +286,16 @@
                     {
                         orgChartPropertyContainer.TextBoxDictionary[node.ID] = textboxValues;
                         orgChartPropertyContainer.CheckBoxDictionary[node.ID] = checkBoxValues;
-                        orgChartPropertyContainer.OriginalTextBoxValuesDictionary[node.ID] = textboxValues;
-                        orgChartPropertyContainer.OriginalCheckBoxValuesDictionary[node.ID] = checkBoxValues;
+                        orgChartPropertyContainer.OriginalTextBoxValuesDictionary[node.ID] = originalTextboxValues;
+                        orgChartPropertyContainer.OriginalCheckBoxValuesDictionary[node.ID] = originalCheckBoxValues;
                         orgChartPropertyContainer.ApplyDictionary[node.ID] = applyDictionaryValue;
                     }
                     else
                     {
                         orgChartPropertyContainer.TextBoxDictionary.Add(node.ID, textboxValues);
                         orgChartPropertyContainer.CheckBoxDictionary.Add(node.ID, checkBoxValues);
-                        orgChartPropertyContainer.OriginalTextBoxValuesDictionary.Add(node.ID, textboxValues);
-                        orgChartPropertyContainer.OriginalCheckBoxValuesDictionary.Add(node.ID, checkBoxValues);
+                        orgChartPropertyContainer.OriginalTextBoxValuesDictionary.Add(node.ID, originalTextboxValues);
+                        orgChartPropertyContainer.OriginalCheckBoxValuesDictionary.Add(node.ID, originalCheckBoxValues);
                         orgChartPropertyContainer.ApplyDictionary.Add(node.ID, applyDictionaryValue);
                         orgChartPropertyContainer.IsAdditionalInfo = true;
 
@@ -299,7 +305,8 @@
                         OrgChartDetails orgChartDetails = System.Text.Json.JsonSerializer.Deserialize<OrgChartDetails>(node.Data.ToString());
                         node.Data = orgChartDetails;
                         var data = node.Data as OrgChartDetails;
-                        node.Tooltip = new DiagramTooltip() { Template = "<table" + " style=" + width + "><tr><td>Name</td><td>:</td><td>" + data.Name + "</td></tr><tr><td>Role</td><td>:</td><td>" + data.Role + "</td></tr><tr><td>Email</td><td>:</td><td>" + data.Email + "</td></tr><tr><td>Department</td><td>:</td><td>" + data.Department + "</td></tr><tr><td>EmployeeID</td><td>:</td><td>" + data.EmployeeID + "</td></tr><tr><td>SupervisorID</td><td>:</td><td>" + data.SupervisorID + "</td></tr><tr><td>SupervisorName</td><td>:</td><td>" + data.SupervisorName + "</td></tr><tr><td>Location</td><td>:</td><td>" + data.Location + "</td></tr><tr><td>Phone</td><td>:</td><td>" + data.Phone + "</td></tr><tr><td>ImageURL</td><td>:</td><td>" + data.ImageURL + "</td></tr></table>", Position = Syncfusion.Blazor.Popups.Position.BottomCenter };
+                         string image=(node.Shape is ImageShape)?(node.Shape as ImageShape).Source:"";
+                        node.Tooltip = new DiagramTooltip() { Template = "<table" + " style=" + width + "><tr><td>Name</td><td>:</td><td>" + data.Name + "</td></tr><tr><td>Role</td><td>:</td><td>" + data.Role + "</td></tr><tr><td>Email</td><td>:</td><td>" + data.Email + "</td></tr><tr><td>Department</td><td>:</td><td>" + data.Department + "</td></tr><tr><td>EmployeeID</td><td>:</td><td>" + data.EmployeeID + "</td></tr><tr><td>SupervisorID</td><td>:</td><td>" + data.SupervisorID + "</td></tr><tr><td>SupervisorName</td><td>:</td><td>" + data.SupervisorName + "</td></tr><tr><td>Location</td><td>:</td><td>" + data.Location + "</td></tr><tr><td>Phone</td><td>:</td><td>" + data.Phone + "</td></tr><tr><td>ImageURL</td><td>:</td><td>" + image + "</td></tr></table>", Position = Syncfusion.Blazor.Popups.Position.BottomCenter };
                     }
                     else
                     {
@@ -390,7 +397,7 @@
                 {
                     isApply = orgChartPropertyContainer.ApplyDictionary[node.ID];
                 }
-                if (!isApply || Parent.MenuBar.IsOpenClick)
+                if (!isApply || Parent.MenuBar.IsOpenClick||node.Data!=null)
                 {
                     foreach (KeyValuePair<string, bool> keyValues in orgChartPropertyContainer.DataSourceDictionary)
                     {
@@ -416,7 +423,8 @@
                 orgChartPropertyContainer.UpdateAnnotationStyle(node);
                 if (data != null && !orgChartPropertyContainer.IsAddNode)
                 {
-                    node.Tooltip = new DiagramTooltip() { Template = "<table" + " style=" + width + "><tr><td>Name</td><td>:</td><td>" + data.Name + "</td></tr><tr><td>Role</td><td>:</td><td>" + data.Role + "</td></tr><tr><td>Email</td><td>:</td><td>" + data.Email + "</td></tr><tr><td>Department</td><td>:</td><td>" + data.Department + "</td></tr><tr><td>EmployeeID</td><td>:</td><td>" + data.EmployeeID + "</td></tr><tr><td>SupervisorID</td><td>:</td><td>" + data.SupervisorID + "</td></tr><tr><td>SupervisorName</td><td>:</td><td>" + data.SupervisorName + "</td></tr><tr><td>Location</td><td>:</td><td>" + data.Location + "</td></tr><tr><td>Phone</td><td>:</td><td>" + data.Phone + "</td></tr><tr><td>ImageURL</td><td>:</td><td>" + data.ImageURL + "</td></tr></table>", Position = Syncfusion.Blazor.Popups.Position.BottomCenter };
+                    string image=(node.Shape is ImageShape)?(node.Shape as ImageShape).Source:"";
+                    node.Tooltip = new DiagramTooltip() { Template = "<table" + " style=" + width + "><tr><td>Name</td><td>:</td><td>" + data.Name + "</td></tr><tr><td>Role</td><td>:</td><td>" + data.Role + "</td></tr><tr><td>Email</td><td>:</td><td>" + data.Email + "</td></tr><tr><td>Department</td><td>:</td><td>" + data.Department + "</td></tr><tr><td>EmployeeID</td><td>:</td><td>" + data.EmployeeID + "</td></tr><tr><td>SupervisorID</td><td>:</td><td>" + data.SupervisorID + "</td></tr><tr><td>SupervisorName</td><td>:</td><td>" + data.SupervisorName + "</td></tr><tr><td>Location</td><td>:</td><td>" + data.Location + "</td></tr><tr><td>Phone</td><td>:</td><td>" + data.Phone + "</td></tr><tr><td>ImageURL</td><td>:</td><td>" + image + "</td></tr></table>", Position = Syncfusion.Blazor.Popups.Position.BottomCenter };
                 }
                 Dictionary<string, object> properties = new Dictionary<string, object>();
                 Dictionary<string, string> textBoxValues = new Dictionary<string, string>();
@@ -447,6 +455,7 @@
                         orgChartPropertyContainer.CheckBoxDictionary.Add(node.ID, checkBoxValues);
                         orgChartPropertyContainer.OriginalTextBoxValuesDictionary.Add(node.ID, textBoxValues);
                         orgChartPropertyContainer.OriginalCheckBoxValuesDictionary.Add(node.ID, checkBoxValues);
+                        orgChartPropertyContainer.ApplyDictionary.Add(node.ID, true);
                     }
                 }
                 orgChartPropertyContainer.UpdateAnnotationPosition(node);
