@@ -1754,6 +1754,13 @@
                     TextBoxDictionary[node.ID].Remove("ImageURL");
                     OriginalTextBoxValuesDictionary[node.ID].Remove("ImageURL");
                 }
+                if (TextBoxDictionary[node.ID].ContainsKey("ImageURL") && OriginalTextBoxValuesDictionary[node.ID].ContainsKey("ImageURL")&&!IsUploader)
+                {
+                    CheckBoxDictionary[node.ID].Remove("ImageURL");
+                    OriginalCheckBoxValuesDictionary[node.ID].Remove("ImageURL");
+                    TextBoxDictionary[node.ID].Remove("ImageURL");
+                    OriginalTextBoxValuesDictionary[node.ID].Remove("ImageURL");
+                }
                 foreach (KeyValuePair<string, Dictionary<string, string>> textbox in OriginalTextBoxValuesDictionary)
                 {
                     if (textbox.Key == node.ID)
@@ -1856,6 +1863,14 @@
                         OriginalCheckBoxValuesDictionary[node.ID]["ImageURL"] = true;
                         templatesValue += "<tr><td>ImageURL</td><td>:</td><td>" + imageShape.Source + "</td></tr><tr>";
                     }
+                }
+                if (!TextBoxDictionary[node.ID].ContainsKey("ImageURL")&&!IsUploader)
+                {
+                    string imagePath = imageShape.Source;
+                    TextBoxDictionary[node.ID].Add("ImageURL", imagePath);
+                    CheckBoxDictionary[node.ID].Add("ImageURL", true);
+                    OriginalTextBoxValuesDictionary[node.ID].Add("ImageURL", imagePath);
+                    OriginalCheckBoxValuesDictionary[node.ID].Add("ImageURL", true);
                 }
                 if (applyClick||IsAdditionalInfo)
                 {
