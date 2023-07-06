@@ -565,7 +565,7 @@
                                 {
                                     string checkboxName = valueKey.Key;
                                     isCheck = valueKey.Value;
-                                    if (isCheck)
+                                    if (isCheck||checkboxName=="ImageURL")
                                     {
                                         foreach (KeyValuePair<string, Dictionary<string, string>> key in TextBoxDictionary)
                                         {
@@ -656,7 +656,6 @@
 
                                 };
                         }
-
                     }
 
                     if(tooltipFinalContent.ToString()!=""||node.Data!=null)
@@ -754,9 +753,9 @@
             if (annocount == 3)
             {
                 node.Width = 200;
-                node.Annotations[0].Offset = new DiagramPoint(0.6, 0.20);
-                node.Annotations[1].Offset = new DiagramPoint(0.6, 0.50);
-                node.Annotations[2].Offset = new DiagramPoint(0.6, 0.80);
+                node.Annotations[0].Offset = new DiagramPoint(0.7, 0.20);
+                node.Annotations[1].Offset = new DiagramPoint(0.7, 0.50);
+                node.Annotations[2].Offset = new DiagramPoint(0.7, 0.80);
             }
 
             if (annocount == 4)
@@ -1376,7 +1375,7 @@
         bool ischecked;
         foreach (System.Reflection.PropertyInfo property in typeof(OrgChartDetails).GetProperties())
         {
-            if(property.Name.ToString()=="Name"||property.Name.ToString()=="Role")
+            if (property.Name.ToString() == "Name" || property.Name.ToString() == "Role")
             {
                 ischecked=true;
             }
@@ -1765,17 +1764,28 @@
                                     {
                                         if (valuePair.Key == valuePairs.Key)
                                         {
+
                                             if (valuePairs.Value)
                                             {
                                                 templates += "<tr><td>" + valuePair.Key + "</td><td>:</td><td>" + valuePair.Value + "</td></tr><tr>";
                                             }
+
                                             else
                                             {
+                                                if(valuePair.Key == "ImageURL")
+                                                {
+                                                    OriginalTextBoxValuesDictionary[node.ID][valuePair.Key]= "";
+                                                    TextBoxDictionary[node.ID][valuePair.Key] = "";
+                                                    templates += "<tr><td>" + valuePair.Key + "</td><td>:</td><td></td></tr><tr>";
+                                                }
                                                 if (IsAdditionalInfo||IsUploader)
                                                 {
-                                                    templates += "<tr><td>" + valuePair.Key + "</td><td>:</td><td>" + valuePair.Value + "</td></tr><tr>";
+                                                    if(valuePair.Key != "ImageURL"){
+                                                        templates += "<tr><td>" + valuePair.Key + "</td><td>:</td><td>" + valuePair.Value + "</td></tr><tr>";
+                                                    }
                                                 }
                                             }
+
                                         }
                                     }
 
@@ -1784,10 +1794,7 @@
                         }
                     }
                 }
-                if (!IsUploader)
-                {
-                    node.Tooltip = new DiagramTooltip() { Template = "<table" + " style=" + width + ">" + templates + "</table>", Position = Syncfusion.Blazor.Popups.Position.BottomCenter };
-                }
+                node.Tooltip = new DiagramTooltip() { Template = "<table" + " style=" + width + ">" + templates + "</table>", Position = Syncfusion.Blazor.Popups.Position.BottomCenter };
                 UpdateAnnotationStyle(node);
 
                 node.Constraints = NodeConstraints.Default | NodeConstraints.Tooltip;
@@ -1869,7 +1876,14 @@
                                                 }
                                                 else
                                                 {
-                                                    if (IsAdditionalInfo || IsUploader)
+                                                    if (valuePair.Key == "ImageURL")
+                                                    {
+                                                        string url= imageShape.Source;
+                                                        OriginalTextBoxValuesDictionary[node.ID][valuePair.Key] =url;
+                                                        TextBoxDictionary[node.ID][valuePair.Key] = url;
+                                                        templatesValue += "<tr><td>" + valuePair.Key + "</td><td>:</td><td>" + url + "</td></tr><tr>";
+                                                    }
+                                                    if ((IsAdditionalInfo || IsUploader) && valuePair.Key != "ImageURL")
                                                     {
                                                         templatesValue += "<tr><td>" + valuePair.Key + "</td><td>:</td><td>" + valuePair.Value + "</td></tr><tr>";
                                                     }
@@ -1884,10 +1898,11 @@
                     }
                 }
                 UpdateAnnotationStyle(node);
-                if (!IsUploader){
-
-                    node.Tooltip = new DiagramTooltip() { Template = "<table" + " style=" + width + ">" + templatesValue + "</table>", Position = Syncfusion.Blazor.Popups.Position.BottomCenter };
+                if (node.Data != null)
+                {
+                    (node.Data as OrgChartDetails).ImageURL = (node.Shape is ImageShape) ? (node.Shape as ImageShape).Source : "";
                 }
+                node.Tooltip = new DiagramTooltip() { Template = "<table" + " style=" + width + ">" + templatesValue + "</table>", Position = Syncfusion.Blazor.Popups.Position.BottomCenter };
                 node.Constraints = NodeConstraints.Default | NodeConstraints.Tooltip;
 
             }
@@ -1898,7 +1913,7 @@
         {
             nodeBases.Add(connector);
         }
-
+        
         await Diagram.AddDiagramElements(nodeBases);
         await Diagram.DoLayout();
         nodess.Clear();
@@ -2265,6 +2280,13 @@
                         }
                         else
                         {
+                            if (textValues.Key == "ImageURL")
+                            {
+                                if (node.Shape is ImageShape)
+                                {
+                                    text = (node.Shape as ImageShape).Source;
+                                }
+                            }
                             if (Parent.MenuBar.IsOpenClick)
                             {
                                 text=textValues.Key;

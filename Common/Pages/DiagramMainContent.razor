@@ -420,7 +420,7 @@
                     node.Annotations = annotations;
                 }
                 orgChartPropertyContainer.UpdateAnnotationStyle(node);
-                if (data != null && !orgChartPropertyContainer.IsAddNode)
+                if (data != null && !orgChartPropertyContainer.IsAddNode&&!isApply)
                 {
                     node.Tooltip = new DiagramTooltip() { Template = "<table" + " style=" + width + "><tr><td>Name</td><td>:</td><td>" + data.Name + "</td></tr><tr><td>Role</td><td>:</td><td>" + data.Role + "</td></tr><tr><td>Email</td><td>:</td><td>" + data.Email + "</td></tr><tr><td>Department</td><td>:</td><td>" + data.Department + "</td></tr><tr><td>EmployeeID</td><td>:</td><td>" + data.EmployeeID + "</td></tr><tr><td>SupervisorID</td><td>:</td><td>" + data.SupervisorID + "</td></tr><tr><td>SupervisorName</td><td>:</td><td>" + data.SupervisorName + "</td></tr><tr><td>Location</td><td>:</td><td>" + data.Location + "</td></tr><tr><td>Phone</td><td>:</td><td>" + data.Phone + "</td></tr><tr><td>ImageURL</td><td>:</td><td>" + data.ImageURL + "</td></tr></table>", Position = Syncfusion.Blazor.Popups.Position.BottomCenter };
                 }
@@ -457,7 +457,6 @@
                     }
                 }
                 orgChartPropertyContainer.UpdateAnnotationPosition(node);
-
                 node.Style.Fill = "#88C65C";
                 node.Style.StrokeColor = "#88C65C";
             }
