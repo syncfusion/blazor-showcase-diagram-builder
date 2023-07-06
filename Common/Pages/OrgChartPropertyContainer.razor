@@ -1554,6 +1554,12 @@
     {
         if (importDialog.Header == "Define Employee Information")
         {
+            TextBoxDictionary.Clear();
+            OriginalCheckBoxValuesDictionary.Clear();
+            CheckBoxDictionary.Clear();
+            DeleteDictionary.Clear();
+            ApplyDictionary.Clear();
+            OriginalTextBoxValuesDictionary.Clear();
             await importDialog.Hide(); BindingValues();
         }
         else if (importDialog.Header == "Define Employee - Supervisor Relationship")
