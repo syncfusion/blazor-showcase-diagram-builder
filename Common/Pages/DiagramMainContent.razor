@@ -652,12 +652,14 @@
                 {
                     if (Diagram.SelectionSettings.Nodes.Count == 1)
                     {
-                        Diagram.SelectionSettings.UserHandles[0].Visible = true;
-                        Diagram.SelectionSettings.UserHandles[1].Visible = true;
-                        Diagram.SelectionSettings.UserHandles[2].Visible = true;
                         Parent.DiagramPropertyPanel.PanelVisibility();
                         Parent.DiagramPropertyPanel.slider();
-
+                        if (this.Parent.OrgChartPropertyPanel.IsOrgChart)
+                        {
+                            Diagram.SelectionSettings.UserHandles[0].Visible = true;
+                            Diagram.SelectionSettings.UserHandles[1].Visible = true;
+                            Diagram.SelectionSettings.UserHandles[2].Visible = true;
+                        }
                     }
                     else if (Diagram.SelectionSettings.Connectors.Count == 1)
                     {
@@ -704,7 +706,7 @@
 
     private void MultipleSelectionSettings(ObservableCollection<IDiagramObject> SelectedItems)
     {
-        if(!Parent.MindMapPropertyPanel.MindMapProperty)
+        if (!Parent.MindMapPropertyPanel.MindMapProperty&&!Parent.OrgChartPropertyPanel.IsOrgChart)
         {
             Parent.DiagramPropertyPanel.PropertyPanelVisibility();
             bool showConnectorPanel = false; bool showNodePanel = false;
