@@ -209,16 +209,18 @@
                     var nodeID = keyValuePair.Key;
                     if (!orgChartPropertyContainer.OriginalTextBoxValuesDictionary.ContainsKey(node.ID) && !orgChartPropertyContainer.OriginalCheckBoxValuesDictionary.ContainsKey(node.ID) && !orgChartPropertyContainer.TextBoxDictionary.ContainsKey(node.ID) && !orgChartPropertyContainer.CheckBoxDictionary.ContainsKey(node.ID))
                     {
-                        var textBox = orgChartPropertyContainer.OriginalTextBoxValuesDictionary[nodeID];
+                        var textBox = orgChartPropertyContainer.TextBoxDictionary[nodeID];
+                        var originalTextBox = orgChartPropertyContainer.OriginalTextBoxValuesDictionary[nodeID];
                         List<string> deleteInformations = new List<string>();
                         foreach (KeyValuePair<string, string> propertyNames in textBox)
                         {
                             deleteInformations.Add(propertyNames.Key);
                         }
                         orgChartPropertyContainer.DeleteDictionary.Add(node.ID, deleteInformations);
-                        var checkBox = orgChartPropertyContainer.OriginalCheckBoxValuesDictionary[nodeID];
-                        orgChartPropertyContainer.OriginalTextBoxValuesDictionary[node.ID] = (textBox);
-                        orgChartPropertyContainer.OriginalCheckBoxValuesDictionary[node.ID] = checkBox;
+                        var checkBox = orgChartPropertyContainer.CheckBoxDictionary[nodeID];
+                        var originalCheckBox = orgChartPropertyContainer.OriginalCheckBoxValuesDictionary[nodeID];
+                        orgChartPropertyContainer.OriginalTextBoxValuesDictionary[node.ID] = (originalTextBox);
+                        orgChartPropertyContainer.OriginalCheckBoxValuesDictionary[node.ID] = originalCheckBox;
                         orgChartPropertyContainer.TextBoxDictionary[node.ID] = textBox;
                         orgChartPropertyContainer.CheckBoxDictionary[node.ID] = checkBox;
                     }
@@ -547,7 +549,7 @@
                 annotationDetails.Add(data.Department);
                 break;
 
-
+                 
         }
     }
     private void ConnectorDefaults(IDiagramObject obj)
@@ -555,6 +557,7 @@
         Connector connector = obj as Connector;
         if (Parent.MindMapPropertyPanel.IsMindMap)
             connector.Constraints = ConnectorConstraints.Default & ~ConnectorConstraints.Select;
+            connector.BezierConnectorSettings = new BezierConnectorSettings { AllowSegmentsReset = false };
     }
 
     public async Task CreditProcessDiagram()
@@ -652,12 +655,14 @@
                 {
                     if (Diagram.SelectionSettings.Nodes.Count == 1)
                     {
-                        Diagram.SelectionSettings.UserHandles[0].Visible = true;
-                        Diagram.SelectionSettings.UserHandles[1].Visible = true;
-                        Diagram.SelectionSettings.UserHandles[2].Visible = true;
                         Parent.DiagramPropertyPanel.PanelVisibility();
                         Parent.DiagramPropertyPanel.slider();
-
+                        if (this.Parent.OrgChartPropertyPanel.IsOrgChart)
+                        {
+                            Diagram.SelectionSettings.UserHandles[0].Visible = true;
+                            Diagram.SelectionSettings.UserHandles[1].Visible = true;
+                            Diagram.SelectionSettings.UserHandles[2].Visible = true;
+                        }
                     }
                     else if (Diagram.SelectionSettings.Connectors.Count == 1)
                     {
@@ -704,7 +709,7 @@
 
     private void MultipleSelectionSettings(ObservableCollection<IDiagramObject> SelectedItems)
     {
-        if(!Parent.MindMapPropertyPanel.MindMapProperty)
+        if (!Parent.MindMapPropertyPanel.MindMapProperty&&!Parent.OrgChartPropertyPanel.IsOrgChart)
         {
             Parent.DiagramPropertyPanel.PropertyPanelVisibility();
             bool showConnectorPanel = false; bool showNodePanel = false;
