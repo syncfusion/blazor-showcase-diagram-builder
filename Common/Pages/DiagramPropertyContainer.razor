@@ -1648,7 +1648,7 @@
 
     public void OnUpdateNodeTextProperties(string prop, string Value)
     {
-        if (!PreventPropertyChange)
+        if (!PreventPropertyChange&&!this.Parent.OrgChartPropertyPanel.IsOrgChart)
         {
             ObservableCollection<Node> Nodes = OnSelectedNode();
             for (int i = 0; i < Nodes.Count; i++)

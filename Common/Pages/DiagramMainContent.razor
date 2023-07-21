@@ -828,9 +828,9 @@
     {
         StateHasChanged();
     }
-    public void LoadNewDiagram(string Json)
+    public async Task LoadNewDiagram(string Json)
     {
-        _= Diagram.LoadDiagram(Json);
+        await Diagram.LoadDiagram(Json);
     }
 
     public class PageOptionElement

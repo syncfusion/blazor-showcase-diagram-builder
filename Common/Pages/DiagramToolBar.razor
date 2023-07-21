@@ -177,7 +177,7 @@
                     <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
                     <ToolbarItem @ref="@AddChid" PrefixIcon="e-icons sf-icon-add-child tb-icons" TooltipText="Add Child" CssClass="tb-item-start tb-item-child"></ToolbarItem>
                     <ToolbarItem @ref="@AddSibling" PrefixIcon="e-icons sf-icon-add-same-level-child icon" TooltipText="Add a child to the same level" CssClass="@addSiblingCssName"></ToolbarItem>
-                    <ToolbarItem @ref="@AddMultipleChild" PrefixIcon="e-icons sf-icon-move icon" TooltipText="Move the child parent to the next level" CssClass="tb-item-start tb-item-child"></ToolbarItem>
+                    <ToolbarItem @ref="@AddMultipleChild" PrefixIcon="e-icons sf-icon-move icon" TooltipText="Move the child parent to the next level" CssClass="@changeChildParentCssName"></ToolbarItem>
                     <ToolbarItem Type="@ItemType.Separator"></ToolbarItem>
                     <ToolbarItem @ref="@ZoomItem" PrefixIcon="e-icons tb-item-end tb-zoom-dropdown-btn" id="MindMapZoom" Align="ItemAlign.Right">
                         <Template>
@@ -217,6 +217,7 @@
     SfToolbar Toolbar;
     string toolbarClassName { get; set; } = "db-toolbar-container";
     string addSiblingCssName { get; set; } = "tb-item-start tb-item-sibling";
+    string changeChildParentCssName { get; set; } = "tb-item-start tb-item-child";
     private SfDropDownButton dropdownBtn;
     private SfDropDownButton dropdownBtn1;
     string MenuHideIconCss = "sf-icon-Collapse tb-icons";

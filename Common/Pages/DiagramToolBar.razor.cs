@@ -560,7 +560,9 @@ namespace DiagramBuilder
             else if (SelectedObjects.Count > 0 && Parent.OrgChartPropertyPanel.IsOrgChart)
             {
                 toolbarClassName = toolbarClassName + " db-child-sibling";
-                addSiblingCssName = SelectedObjects[0].ID == "rootNode" ? "tb-item-start tb-item-sibling" : "tb-item-start tb-item-child";
+                var inedges = SelectedObjects[0] is Node ? (SelectedObjects[0] as Node).InEdges.Count : 0;
+                changeChildParentCssName = SelectedObjects[0].ID == "rootNode"|| inedges == 0? "tb-item-start tb-item-sibling" : "tb-item-start tb-item-child";
+                addSiblingCssName = SelectedObjects[0].ID == "rootNode" || inedges==0 ? "tb-item-start tb-item-sibling" : "tb-item-start tb-item-child";
             }
             if (SelectedObjects.Count > 1)
                 StateHasChanged();
