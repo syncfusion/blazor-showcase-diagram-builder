@@ -1,7 +1,7 @@
 {
   "Tooltip": null,
   "bridgeDirection": 2,
-  "ID": "HvLxS",
+  "ID": "GzSou",
   "dataSourceSettings": null,
   "width": "100%",
   "contextMenuSettings": {
@@ -121,6 +121,13 @@
   },
   "scrollSettings": {
     "horizontalOffset": 0,
+    "EnableAutoScroll": false,
+    "AutoScrollPadding": {
+      "left": 20,
+      "right": 20,
+      "top": 20,
+      "bottom": 20
+    },
     "verticalOffset": 0,
     "currentZoom": 1,
     "minZoom": 0.25,
@@ -367,10 +374,10 @@
     ]
   },
   "selectedItems": {
-    "width": 0,
-    "height": 0,
-    "offsetX": 0,
-    "offsetY": 0,
+    "width": 120,
+    "height": 50,
+    "offsetX": 633,
+    "offsetY": 316.8000183105469,
     "rotateAngle": 0,
     "pivot": {
       "x": 0.5,
@@ -382,6 +389,7 @@
         "id": "DqFJS",
         "pathData": "M1.0000023,3 L7.0000024,3 7.0000024,8.75 C7.0000024,9.4399996 6.4400025,10 5.7500024,10 L2.2500024,10 C1.5600024,10 1.0000023,9.4399996 1.0000023,8.75 z M2.0699998,0 L5.9300004,0 6.3420029,0.99999994 8.0000001,0.99999994 8.0000001,2 0,2 0,0.99999994 1.6580048,0.99999994 z",
         "source": null,
+        "imageUrl": null,
         "backgroundColor": "#7d7d7d",
         "side": 1,
         "borderColor": "",
@@ -389,7 +397,7 @@
         "size": 25,
         "pathColor": "white",
         "displacement": 10,
-        "visible": true,
+        "visible": false,
         "offset": 0.5,
         "margin": {
           "left": 0,
@@ -400,13 +408,14 @@
         "VisibleTarget": 1,
         "horizontalAlignment": 3,
         "verticalAlignment": 3,
-        "template": false
+        "Template": false
       },
       {
         "name": "DeleteLeft",
         "id": "fukrQ",
         "pathData": "M1.0000023,3 L7.0000024,3 7.0000024,8.75 C7.0000024,9.4399996 6.4400025,10 5.7500024,10 L2.2500024,10 C1.5600024,10 1.0000023,9.4399996 1.0000023,8.75 z M2.0699998,0 L5.9300004,0 6.3420029,0.99999994 8.0000001,0.99999994 8.0000001,2 0,2 0,0.99999994 1.6580048,0.99999994 z",
         "source": null,
+        "imageUrl": null,
         "backgroundColor": "#7d7d7d",
         "side": 0,
         "borderColor": "",
@@ -414,7 +423,7 @@
         "size": 25,
         "pathColor": "white",
         "displacement": 10,
-        "visible": true,
+        "visible": false,
         "offset": 0.5,
         "margin": {
           "left": 0,
@@ -425,13 +434,14 @@
         "VisibleTarget": 1,
         "horizontalAlignment": 3,
         "verticalAlignment": 3,
-        "template": false
+        "Template": false
       },
       {
         "name": "AddRight",
         "id": "WTmuy",
         "pathData": "M0,4.55 L8.41,4.55 L8.41,0 L13.75,6.88 L8.41,13.75 L8.41,8.48 L0,8.48 L0,4.55 Z ",
         "source": null,
+        "imageUrl": null,
         "backgroundColor": "#7d7d7d",
         "side": 1,
         "borderColor": "",
@@ -450,13 +460,14 @@
         "VisibleTarget": 1,
         "horizontalAlignment": 3,
         "verticalAlignment": 3,
-        "template": false
+        "Template": false
       },
       {
         "name": "AddLeft",
         "id": "THBLh",
         "pathData": "M13.75,9.2 L5.34,9.2 L5.34,13.75 L0,6.88 L5.34,0 L5.34,5.27 L13.75,5.27 L13.75,9.2 Z ",
         "source": null,
+        "imageUrl": null,
         "backgroundColor": "#7d7d7d",
         "side": 0,
         "borderColor": "",
@@ -475,7 +486,7 @@
         "VisibleTarget": 1,
         "horizontalAlignment": 3,
         "verticalAlignment": 3,
-        "template": false
+        "Template": false
       }
     ],
     "rubberBandSelectionMode": 0,
@@ -497,8 +508,8 @@
       "isVisible": true,
       "borderWidth": 0,
       "zIndex": 0,
-      "offsetX": 505,
-      "offsetY": 248.66667175292969,
+      "offsetX": 633,
+      "offsetY": 316.8000183105469,
       "width": 120,
       "height": 50,
       "rotateAngle": 0,

@@ -1360,6 +1360,10 @@
         {
             Diagram.Select(new ObservableCollection<IDiagramObject>() { Diagram.Nodes[0] });
         }
+        if (Parent.MindMapPropertyPanel.IsMindMap || Parent.OrgChartPropertyPanel.IsOrgChart)
+        {
+           await Parent.DiagramContent.Diagram.DoLayout();
+        }
     }
     private async void TextChanged(TextChangeEventArgs args)
     {

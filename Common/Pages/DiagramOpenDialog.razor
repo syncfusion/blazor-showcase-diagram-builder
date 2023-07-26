@@ -234,21 +234,16 @@
     public async Task BlankMindMapDiagram()
     {
         Parent.MindMapPropertyPanel.IsMindMap = true;
-        #if SERVER
-        LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/BlankDiagram.json");
-        #endif
         #if WASM
-        Parent.MindMapPropertyPanel.IsMindMap = true;
         content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/BlankDiagram.json");
-        this.Parent.DiagramContent.LoadNewDiagram(content);
         #endif
         #if MAUI
-        Parent.MindMapPropertyPanel.IsMindMap = true;
-        string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
-        var files = Directory.GetFiles(wwwroot,"BlankDiagram.json", SearchOption.AllDirectories);
-        var json = await System.IO.File.ReadAllTextAsync(files[0]);
-        json = json.Replace(System.Environment.NewLine, string.Empty);
-        this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
+    Parent.MindMapPropertyPanel.IsMindMap = true;
+    string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+    var files = Directory.GetFiles(wwwroot,"BlankDiagram.json", SearchOption.AllDirectories);
+    var json = await System.IO.File.ReadAllTextAsync(files[0]);
+    json = json.Replace(System.Environment.NewLine, string.Empty);
+    this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
         #endif
         IsOpenDialogVisible = false;
         StateHasChanged();
@@ -259,6 +254,12 @@
         RemoveUnwantedMindmapMenubarItems();
         Parent.LeftSideBar.sidebarVisibility = "none";
         Parent.LeftSideBar.StateChanged();
+#if SERVER
+    LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/BlankDiagram.json");
+#endif
+#if WASM
+    this.Parent.DiagramContent.LoadNewDiagram(content);
+#endif
     }
     public void RemoveUnwantedOrgChartMenubarItems()
     {
@@ -279,16 +280,6 @@
         Parent.OrgChartPropertyPanel.IsOrgChart = true;
         Parent.OrgChartPropertyPanel.OrgChartStyle = "Blank";
         this.Value = "Org Chart";
-
-#if WASM
-
-       content = await Http.GetStringAsync("assets/dbstyle/orgchart_images/blank_diagram.json");
-    this.Parent.DiagramContent.LoadNewDiagram(content);
-    IsOpenDialogVisible = false;
-    StateHasChanged();
-    Parent.LeftSideBar.sidebarVisibility = "none";
-    Parent.LeftSideBar.StateChanged();
-#endif
 #if MAUI
     string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
     var files = Directory.GetFiles(wwwroot,"blank_diagram.json", SearchOption.AllDirectories);
@@ -305,9 +296,19 @@
         StateHasChanged();
         await Parent.Toolbar.HideElements("hide-palette");
         RemoveUnwantedOrgChartMenubarItems();
-         #if SERVER
-        LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/blank_diagram.json");
-        #endif
+#if SERVER
+    LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/blank_diagram.json");
+#endif
+#if WASM
+
+       content = await Http.GetStringAsync("assets/dbstyle/orgchart_images/blank_diagram.json");
+    this.Parent.DiagramContent.LoadNewDiagram(content);
+    IsOpenDialogVisible = false;
+    StateHasChanged();
+    Parent.LeftSideBar.sidebarVisibility = "none";
+    Parent.LeftSideBar.StateChanged();
+#endif
+
     }
 
     public async Task CreditProcessDiagram()
@@ -318,22 +319,17 @@
 
     public async Task BusinessPlanningDiagram()
     {
-        #if SERVER
         Parent.MindMapPropertyPanel.IsMindMap = true;
-        LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/BusinessPlanning.json");
-        #endif
         #if WASM
-        Parent.MindMapPropertyPanel.IsMindMap = true;
         content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/BusinessPlanning.json");
-        this.Parent.DiagramContent.LoadNewDiagram(content);
         #endif
         #if MAUI
-        Parent.MindMapPropertyPanel.IsMindMap = true;
-        string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
-        var files = Directory.GetFiles(wwwroot,"BusinessPlanning.json", SearchOption.AllDirectories);
-        var json = await System.IO.File.ReadAllTextAsync(files[0]);
-        json = json.Replace(System.Environment.NewLine, string.Empty);
-        this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
+    Parent.MindMapPropertyPanel.IsMindMap = true;
+    string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+    var files = Directory.GetFiles(wwwroot,"BusinessPlanning.json", SearchOption.AllDirectories);
+    var json = await System.IO.File.ReadAllTextAsync(files[0]);
+    json = json.Replace(System.Environment.NewLine, string.Empty);
+    this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
         #endif
         IsOpenDialogVisible = false;
         StateHasChanged();
@@ -344,6 +340,13 @@
         RemoveUnwantedMindmapMenubarItems();
         Parent.LeftSideBar.sidebarVisibility = "none";
         Parent.LeftSideBar.StateChanged();
+#if WASM
+this.Parent.DiagramContent.LoadNewDiagram(content);
+
+#endif
+#if SERVER
+    LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/BusinessPlanning.json");
+#endif
     }
 
     public async Task OrgRenderingStyle1Diagram()
@@ -351,14 +354,7 @@
         Parent.OrgChartPropertyPanel.IsOrgChart = true;
         this.Value = "Org Chart";
         Parent.OrgChartPropertyPanel.OrgChartStyle = "Style1";
-#if WASM
 
-       content = await Http.GetStringAsync("assets/dbstyle/orgchart_images/OrgTemplateStyle1.json");
-    this.Parent.DiagramContent.LoadNewDiagram(content);
-    IsOpenDialogVisible = false;
-    StateHasChanged();
-
-#endif
 #if MAUI
     string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
     var files = Directory.GetFiles(wwwroot,"OrgTemplateStyle1.json", SearchOption.AllDirectories);
@@ -377,8 +373,16 @@
         IsOpenDialogVisible = false;
         RemoveUnwantedOrgChartMenubarItems();
         #if SERVER
-        LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle1.json");
+    LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle1.json");
        #endif
+#if WASM
+
+       content = await Http.GetStringAsync("assets/dbstyle/orgchart_images/OrgTemplateStyle1.json");
+    this.Parent.DiagramContent.LoadNewDiagram(content);
+    IsOpenDialogVisible = false;
+    StateHasChanged();
+
+#endif
     }
 
     public void BankTellerFlowDiagram()
@@ -389,23 +393,19 @@
 
     public async Task TQMDiagram()
     {
-        #if SERVER
-        Parent.MindMapPropertyPanel.IsMindMap = true;
-        LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/TQM.json");
-        #endif
-        #if WASM
-        Parent.MindMapPropertyPanel.IsMindMap = true;
-        content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/TQM.json");
-        this.Parent.DiagramContent.LoadNewDiagram(content);
-        #endif
+#if WASM
+
+    content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/TQM.json");
+#endif
         #if MAUI
-        Parent.MindMapPropertyPanel.IsMindMap = true;
-        string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
-        var files = Directory.GetFiles(wwwroot,"TQM.json", SearchOption.AllDirectories);
-        var json = await System.IO.File.ReadAllTextAsync(files[0]);
-        json = json.Replace(System.Environment.NewLine, string.Empty);
-        this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
+    Parent.MindMapPropertyPanel.IsMindMap = true;
+    string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+    var files = Directory.GetFiles(wwwroot,"TQM.json", SearchOption.AllDirectories);
+    var json = await System.IO.File.ReadAllTextAsync(files[0]);
+    json = json.Replace(System.Environment.NewLine, string.Empty);
+    this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
         #endif
+        Parent.MindMapPropertyPanel.IsMindMap = true;
         IsOpenDialogVisible = false;
         StateHasChanged();
         CurrentDiagramVisibility("mindmap-diagram");
@@ -415,6 +415,13 @@
         RemoveUnwantedMindmapMenubarItems();
         Parent.LeftSideBar.sidebarVisibility = "none";
         Parent.LeftSideBar.StateChanged();
+#if WASM
+    await this.Parent.DiagramContent.LoadNewDiagram(content);
+#endif
+#if SERVER
+    LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/TQM.json");
+#endif
+
     }
 
     public async Task OrgRenderingStyle2Diagram()
@@ -423,14 +430,6 @@
         Parent.OrgChartPropertyPanel.IsOrgChart = true;
         Parent.OrgChartPropertyPanel.OrgChartStyle = "Style2";
         this.Value = "Org Chart";
-
-#if WASM
-       content = await Http.GetStringAsync("assets/dbstyle/orgchart_images/OrgTemplateStyle2.json");
-    this.Parent.DiagramContent.LoadNewDiagram(content);
-    IsOpenDialogVisible = false;
-    StateHasChanged();
-    CurrentDiagramVisibility("OrgChart-diagram");
-#endif
 #if MAUI
     string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
     var files = Directory.GetFiles(wwwroot,"OrgTemplateStyle2.json", SearchOption.AllDirectories);
@@ -446,6 +445,10 @@
        #if SERVER
        LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle2.json");
        #endif
+#if WASM
+       content = await Http.GetStringAsync("assets/dbstyle/orgchart_images/OrgTemplateStyle2.json");
+    this.Parent.DiagramContent.LoadNewDiagram(content);
+#endif
     }
 
     public void DeveloperWorkFlowDiagram()
@@ -456,32 +459,34 @@
 
     public async Task SoftwareLifeCycleDiagram()
     {
-        #if SERVER
-        Parent.MindMapPropertyPanel.IsMindMap = true;
-        LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/SoftwareDevelopmentLifeCycle.json");
-        #endif
-        #if WASM
-        Parent.MindMapPropertyPanel.IsMindMap = true;
-        content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/SoftwareDevelopmentLifeCycle.json");
-        this.Parent.DiagramContent.LoadNewDiagram(content);
-        #endif
+#if WASM
+    content = await Http.GetStringAsync("assets/dbstyle/mindmap_images/SoftwareDevelopmentLifeCycle.json");
+#endif
         #if MAUI
-        Parent.MindMapPropertyPanel.IsMindMap = true;
-        string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
-        var files = Directory.GetFiles(wwwroot,"SoftwareDevelopmentLifeCycle.json", SearchOption.AllDirectories);
-        var json = await System.IO.File.ReadAllTextAsync(files[0]);
-        json = json.Replace(System.Environment.NewLine, string.Empty);
-        this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
+    Parent.MindMapPropertyPanel.IsMindMap = true;
+    string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+    var files = Directory.GetFiles(wwwroot,"SoftwareDevelopmentLifeCycle.json", SearchOption.AllDirectories);
+    var json = await System.IO.File.ReadAllTextAsync(files[0]);
+    json = json.Replace(System.Environment.NewLine, string.Empty);
+    this.Parent.DiagramContent.LoadNewDiagram(json.ToString());
         #endif
         IsOpenDialogVisible = false;
+        Parent.MindMapPropertyPanel.IsMindMap = true;
         StateHasChanged();
+        TemplateType = "Template4";
         CurrentDiagramVisibility("mindmap-diagram");
         await Parent.MenuBar.SoftwareLifeCycleDiagram();
-        TemplateType = "Template4";
         Parent.MindMapPropertyPanel.bindMindMapProperties();
         RemoveUnwantedMindmapMenubarItems();
         Parent.LeftSideBar.sidebarVisibility = "none";
         Parent.LeftSideBar.StateChanged();
+#if WASM
+    this.Parent.DiagramContent.LoadNewDiagram(content);
+#endif
+#if SERVER
+    LoadTemplate(@"./wwwroot/assets/dbstyle/mindmap_images/SoftwareDevelopmentLifeCycle.json");
+
+#endif
     }
 
     public async Task OrgRenderingStyle3Diagram()
@@ -489,14 +494,6 @@
         Parent.OrgChartPropertyPanel.IsOrgChart = true;
         Parent.OrgChartPropertyPanel.OrgChartStyle = "Style3";
         this.Value = "Org Chart";
-#if WASM
-       content = await Http.GetStringAsync("assets/dbstyle/orgchart_images/OrgTemplateStyle3.json");
-    this.Parent.DiagramContent.LoadNewDiagram(content);
-    IsOpenDialogVisible = false;
-    StateHasChanged();
-
-
-#endif
 #if MAUI
     string wwwroot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
     var files = Directory.GetFiles(wwwroot,"OrgTemplateStyle3.json", SearchOption.AllDirectories);
@@ -509,8 +506,13 @@
         await Parent.Toolbar.HideElements("hide-palette");
         RemoveUnwantedOrgChartMenubarItems();
         IsOpenDialogVisible = false;
+        StateChanged();
 #if SERVER
    LoadTemplate(@"./wwwroot/assets/dbstyle/orgchart_images/OrgTemplateStyle3.json");
+#endif
+#if WASM
+       content = await Http.GetStringAsync("assets/dbstyle/orgchart_images/OrgTemplateStyle3.json");
+    this.Parent.DiagramContent.LoadNewDiagram(content);
 #endif
      
     }

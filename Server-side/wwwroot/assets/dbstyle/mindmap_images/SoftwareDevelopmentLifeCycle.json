@@ -1,7 +1,7 @@
 {
   "Tooltip": null,
   "bridgeDirection": 2,
-  "ID": "gXToa",
+  "ID": "GwKqB",
   "dataSourceSettings": null,
   "width": "100%",
   "contextMenuSettings": {
@@ -121,6 +121,13 @@
   },
   "scrollSettings": {
     "horizontalOffset": 21.333335876464844,
+    "EnableAutoScroll": false,
+    "AutoScrollPadding": {
+      "left": 20,
+      "right": 20,
+      "top": 20,
+      "bottom": 20
+    },
     "verticalOffset": 0.3333320617675781,
     "currentZoom": 1,
     "minZoom": 0.25,
@@ -367,10 +374,10 @@
     ]
   },
   "selectedItems": {
-    "width": 0,
-    "height": 0,
-    "offsetX": 0,
-    "offsetY": 0,
+    "width": 100,
+    "height": 30,
+    "offsetX": 1058,
+    "offsetY": 276.8000183105469,
     "rotateAngle": 0,
     "pivot": {
       "x": 0.5,
@@ -382,6 +389,7 @@
         "id": "xZPmL",
         "pathData": "M1.0000023,3 L7.0000024,3 7.0000024,8.75 C7.0000024,9.4399996 6.4400025,10 5.7500024,10 L2.2500024,10 C1.5600024,10 1.0000023,9.4399996 1.0000023,8.75 z M2.0699998,0 L5.9300004,0 6.3420029,0.99999994 8.0000001,0.99999994 8.0000001,2 0,2 0,0.99999994 1.6580048,0.99999994 z",
         "source": null,
+        "imageUrl": null,
         "backgroundColor": "#7d7d7d",
         "side": 1,
         "borderColor": "",
@@ -389,7 +397,7 @@
         "size": 25,
         "pathColor": "white",
         "displacement": 10,
-        "visible": true,
+        "visible": false,
         "offset": 0.5,
         "margin": {
           "left": 0,
@@ -400,13 +408,14 @@
         "VisibleTarget": 1,
         "horizontalAlignment": 3,
         "verticalAlignment": 3,
-        "template": false
+        "Template": false
       },
       {
         "name": "DeleteLeft",
         "id": "pRNto",
         "pathData": "M1.0000023,3 L7.0000024,3 7.0000024,8.75 C7.0000024,9.4399996 6.4400025,10 5.7500024,10 L2.2500024,10 C1.5600024,10 1.0000023,9.4399996 1.0000023,8.75 z M2.0699998,0 L5.9300004,0 6.3420029,0.99999994 8.0000001,0.99999994 8.0000001,2 0,2 0,0.99999994 1.6580048,0.99999994 z",
         "source": null,
+        "imageUrl": null,
         "backgroundColor": "#7d7d7d",
         "side": 0,
         "borderColor": "",
@@ -425,13 +434,14 @@
         "VisibleTarget": 1,
         "horizontalAlignment": 3,
         "verticalAlignment": 3,
-        "template": false
+        "Template": false
       },
       {
         "name": "AddRight",
         "id": "hcoPr",
         "pathData": "M0,4.55 L8.41,4.55 L8.41,0 L13.75,6.88 L8.41,13.75 L8.41,8.48 L0,8.48 L0,4.55 Z ",
         "source": null,
+        "imageUrl": null,
         "backgroundColor": "#7d7d7d",
         "side": 1,
         "borderColor": "",
@@ -450,13 +460,14 @@
         "VisibleTarget": 1,
         "horizontalAlignment": 3,
         "verticalAlignment": 3,
-        "template": false
+        "Template": false
       },
       {
         "name": "AddLeft",
         "id": "raINI",
         "pathData": "M13.75,9.2 L5.34,9.2 L5.34,13.75 L0,6.88 L5.34,0 L5.34,5.27 L13.75,5.27 L13.75,9.2 Z ",
         "source": null,
+        "imageUrl": null,
         "backgroundColor": "#7d7d7d",
         "side": 0,
         "borderColor": "",
@@ -464,7 +475,7 @@
         "size": 25,
         "pathColor": "white",
         "displacement": 10,
-        "visible": true,
+        "visible": false,
         "offset": 0.5,
         "margin": {
           "left": 0,
@@ -475,7 +486,7 @@
         "VisibleTarget": 1,
         "horizontalAlignment": 3,
         "verticalAlignment": 3,
-        "template": false
+        "Template": false
       }
     ],
     "rubberBandSelectionMode": 0,
@@ -497,8 +508,8 @@
       "isVisible": true,
       "borderWidth": 0,
       "zIndex": 0,
-      "offsetX": 377.5,
-      "offsetY": 248.6666717529297,
+      "offsetX": 633,
+      "offsetY": 316.8000183105469,
       "width": 150,
       "height": 50,
       "rotateAngle": 0,
@@ -528,8 +539,8 @@
       "isVisible": true,
       "borderWidth": 0,
       "zIndex": 1,
-      "offsetX": 602.5,
-      "offsetY": 48.66667175292969,
+      "offsetX": 858,
+      "offsetY": 116.80001831054688,
       "width": 100,
       "height": 30,
       "rotateAngle": 0,
@@ -559,8 +570,8 @@
       "isVisible": true,
       "borderWidth": 0,
       "zIndex": 2,
-      "offsetX": 152.5,
-      "offsetY": 48.66667175292969,
+      "offsetX": 408,
+      "offsetY": 116.80001831054688,
       "width": 100,
       "height": 30,
       "rotateAngle": 0,
@@ -590,8 +601,8 @@
       "isVisible": true,
       "borderWidth": 0,
       "zIndex": 3,
-      "offsetX": 602.5,
-      "offsetY": 208.6666717529297,
+      "offsetX": 858,
+      "offsetY": 276.8000183105469,
       "width": 100,
       "height": 30,
       "rotateAngle": 0,
@@ -621,8 +632,8 @@
       "isVisible": true,
       "borderWidth": 0,
       "zIndex": 4,
-      "offsetX": 152.5,
-      "offsetY": 248.6666717529297,
+      "offsetX": 408,
+      "offsetY": 316.8000183105469,
       "width": 100,
       "height": 30,
       "rotateAngle": 0,
@@ -652,8 +663,8 @@
       "isVisible": true,
       "borderWidth": 0,
       "zIndex": 5,
-      "offsetX": 602.5,
-      "offsetY": 328.6666717529297,
+      "offsetX": 858,
+      "offsetY": 396.8000183105469,
       "width": 100,
       "height": 30,
       "rotateAngle": 0,
@@ -683,8 +694,8 @@
       "isVisible": true,
       "borderWidth": 0,
       "zIndex": 6,
-      "offsetX": 152.5,
-      "offsetY": 448.6666717529297,
+      "offsetX": 408,
+      "offsetY": 516.8000183105469,
       "width": 100,
       "height": 30,
       "rotateAngle": 0,
@@ -714,8 +725,8 @@
       "isVisible": true,
       "borderWidth": 0,
       "zIndex": 7,
-      "offsetX": 602.5,
-      "offsetY": 448.6666717529297,
+      "offsetX": 858,
+      "offsetY": 516.8000183105469,
       "width": 100,
       "height": 30,
       "rotateAngle": 0,
@@ -745,8 +756,8 @@
       "isVisible": true,
       "borderWidth": 0,
       "zIndex": 8,
-      "offsetX": 802.5,
-      "offsetY": -31.333328247070312,
+      "offsetX": 1058,
+      "offsetY": 36.800018310546875,
       "width": 100,
       "height": 30,
       "rotateAngle": 0,
@@ -776,8 +787,8 @@
       "isVisible": true,
       "borderWidth": 0,
       "zIndex": 9,
-      "offsetX": 802.5,
-      "offsetY": 48.66667175292969,
+      "offsetX": 1058,
+      "offsetY": 116.80001831054688,
       "width": 100,
       "height": 30,
       "rotateAngle": 0,
@@ -807,8 +818,8 @@
       "isVisible": true,
       "borderWidth": 0,
       "zIndex": 10,
-      "offsetX": 802.5,
-      "offsetY": 128.6666717529297,
+      "offsetX": 1058,
+      "offsetY": 196.80001831054688,
       "width": 100,
       "height": 30,
       "rotateAngle": 0,
@@ -838,8 +849,8 @@
       "isVisible": true,
       "borderWidth": 0,
       "zIndex": 11,
-      "offsetX": 802.5,
-      "offsetY": 208.6666717529297,
+      "offsetX": 1058,
+      "offsetY": 276.8000183105469,
       "width": 100,
       "height": 30,
       "rotateAngle": 0,
@@ -869,8 +880,8 @@
       "isVisible": true,
       "borderWidth": 0,
       "zIndex": 12,
-      "offsetX": 802.5,
-      "offsetY": 288.6666717529297,
+      "offsetX": 1058,
+      "offsetY": 356.8000183105469,
       "width": 100,
       "height": 30,
       "rotateAngle": 0,
@@ -900,8 +911,8 @@
       "isVisible": true,
       "borderWidth": 0,
       "zIndex": 13,
-      "offsetX": 802.5,
-      "offsetY": 368.6666717529297,
+      "offsetX": 1058,
+      "offsetY": 436.8000183105469,
       "width": 100,
       "height": 30,
       "rotateAngle": 0,
@@ -931,8 +942,8 @@
       "isVisible": true,
       "borderWidth": 0,
       "zIndex": 14,
-      "offsetX": 802.5,
-      "offsetY": 448.6666717529297,
+      "offsetX": 1058,
+      "offsetY": 516.8000183105469,
       "width": 100,
       "height": 30,
       "rotateAngle": 0,
@@ -962,8 +973,8 @@
       "isVisible": true,
       "borderWidth": 0,
       "zIndex": 15,
-      "offsetX": -47.5,
-      "offsetY": -31.333328247070312,
+      "offsetX": 208,
+      "offsetY": 36.800018310546875,
       "width": 100,
       "height": 30,
       "rotateAngle": 0,
@@ -993,8 +1004,8 @@
       "isVisible": true,
       "borderWidth": 0,
       "zIndex": 16,
-      "offsetX": -47.5,
-      "offsetY": 48.66667175292969,
+      "offsetX": 208,
+      "offsetY": 116.80001831054688,
       "width": 100,
       "height": 30,
       "rotateAngle": 0,
@@ -1024,8 +1035,8 @@
       "isVisible": true,
       "borderWidth": 0,
       "zIndex": 17,
-      "offsetX": -47.5,
-      "offsetY": 128.6666717529297,
+      "offsetX": 208,
+      "offsetY": 196.80001831054688,
       "width": 100,
       "height": 30,
       "rotateAngle": 0,
@@ -1055,8 +1066,8 @@
       "isVisible": true,
       "borderWidth": 0,
       "zIndex": 18,
-      "offsetX": -47.5,
-      "offsetY": 208.6666717529297,
+      "offsetX": 208,
+      "offsetY": 276.8000183105469,
       "width": 100,
       "height": 30,
       "rotateAngle": 0,
@@ -1086,8 +1097,8 @@
       "isVisible": true,
       "borderWidth": 0,
       "zIndex": 19,
-      "offsetX": -47.5,
-      "offsetY": 288.6666717529297,
+      "offsetX": 208,
+      "offsetY": 356.8000183105469,
       "width": 100,
       "height": 30,
       "rotateAngle": 0,
@@ -1117,8 +1128,8 @@
       "isVisible": true,
       "borderWidth": 0,
       "zIndex": 20,
-      "offsetX": -47.5,
-      "offsetY": 368.6666717529297,
+      "offsetX": 208,
+      "offsetY": 436.8000183105469,
       "width": 100,
       "height": 30,
       "rotateAngle": 0,
@@ -1148,8 +1159,8 @@
       "isVisible": true,
       "borderWidth": 0,
       "zIndex": 21,
-      "offsetX": -47.5,
-      "offsetY": 448.6666717529297,
+      "offsetX": 208,
+      "offsetY": 516.8000183105469,
       "width": 100,
       "height": 30,
       "rotateAngle": 0,
@@ -1179,8 +1190,8 @@
       "isVisible": true,
       "borderWidth": 0,
       "zIndex": 22,
-      "offsetX": -47.5,
-      "offsetY": 528.6666717529297,
+      "offsetX": 208,
+      "offsetY": 596.8000183105469,
       "width": 100,
       "height": 30,
       "rotateAngle": 0,
@@ -1201,12 +1212,12 @@
     {
       "constraints": 13884,
       "sourcePoint": {
-        "x": 452.5,
-        "y": 248.67
+        "x": 708,
+        "y": 316.8
       },
       "targetPoint": {
-        "x": 552.5,
-        "y": 48.67
+        "x": 808,
+        "y": 116.8
       },
       "shape": null,
       "fixedUserHandles": [],
@@ -1273,6 +1284,12 @@
           "strokeWidth": 1
         }
       },
+      "BezierConnectorSettings": {
+        "ControlPointsVisibility": 14,
+        "SegmentEditOrientation": 1,
+        "Smoothness": 6,
+        "AllowSegmentsReset": false
+      },
       "id": "connector1",
       "Tooltip": null,
       "zIndex": 23,
@@ -1291,12 +1308,12 @@
     {
       "constraints": 13884,
       "sourcePoint": {
-        "x": 302.5,
-        "y": 248.67
+        "x": 558,
+        "y": 316.8
       },
       "targetPoint": {
-        "x": 202.5,
-        "y": 48.67
+        "x": 458,
+        "y": 116.8
       },
       "shape": null,
       "fixedUserHandles": [],
@@ -1363,6 +1380,12 @@
           "strokeWidth": 1
         }
       },
+      "BezierConnectorSettings": {
+        "ControlPointsVisibility": 14,
+        "SegmentEditOrientation": 1,
+        "Smoothness": 6,
+        "AllowSegmentsReset": false
+      },
       "id": "connector2",
       "Tooltip": null,
       "zIndex": 24,
@@ -1381,12 +1404,12 @@
     {
       "constraints": 13884,
       "sourcePoint": {
-        "x": 452.5,
-        "y": 248.67
+        "x": 708,
+        "y": 316.8
       },
       "targetPoint": {
-        "x": 552.5,
-        "y": 208.67
+        "x": 808,
+        "y": 276.8
       },
       "shape": null,
       "fixedUserHandles": [],
@@ -1453,6 +1476,12 @@
           "strokeWidth": 1
         }
       },
+      "BezierConnectorSettings": {
+        "ControlPointsVisibility": 14,
+        "SegmentEditOrientation": 1,
+        "Smoothness": 6,
+        "AllowSegmentsReset": false
+      },
       "id": "connector3",
       "Tooltip": null,
       "zIndex": 25,
@@ -1471,12 +1500,12 @@
     {
       "constraints": 13884,
       "sourcePoint": {
-        "x": 302.5,
-        "y": 248.67
+        "x": 558,
+        "y": 316.8
       },
       "targetPoint": {
-        "x": 202.5,
-        "y": 248.67
+        "x": 458,
+        "y": 316.8
       },
       "shape": null,
       "fixedUserHandles": [],
@@ -1543,6 +1572,12 @@
           "strokeWidth": 1
         }
       },
+      "BezierConnectorSettings": {
+        "ControlPointsVisibility": 14,
+        "SegmentEditOrientation": 1,
+        "Smoothness": 6,
+        "AllowSegmentsReset": false
+      },
       "id": "connector4",
       "Tooltip": null,
       "zIndex": 26,
@@ -1561,12 +1596,12 @@
     {
       "constraints": 13884,
       "sourcePoint": {
-        "x": 452.5,
-        "y": 248.67
+        "x": 708,
+        "y": 316.8
       },
       "targetPoint": {
-        "x": 552.5,
-        "y": 328.67
+        "x": 808,
+        "y": 396.8
       },
       "shape": null,
       "fixedUserHandles": [],
@@ -1633,6 +1668,12 @@
           "strokeWidth": 1
         }
       },
+      "BezierConnectorSettings": {
+        "ControlPointsVisibility": 14,
+        "SegmentEditOrientation": 1,
+        "Smoothness": 6,
+        "AllowSegmentsReset": false
+      },
       "id": "connector5",
       "Tooltip": null,
       "zIndex": 27,
@@ -1651,12 +1692,12 @@
     {
       "constraints": 13884,
       "sourcePoint": {
-        "x": 302.5,
-        "y": 248.67
+        "x": 558,
+        "y": 316.8
       },
       "targetPoint": {
-        "x": 202.5,
-        "y": 448.67
+        "x": 458,
+        "y": 516.8
       },
       "shape": null,
       "fixedUserHandles": [],
@@ -1723,6 +1764,12 @@
           "strokeWidth": 1
         }
       },
+      "BezierConnectorSettings": {
+        "ControlPointsVisibility": 14,
+        "SegmentEditOrientation": 1,
+        "Smoothness": 6,
+        "AllowSegmentsReset": false
+      },
       "id": "connector6",
       "Tooltip": null,
       "zIndex": 28,
@@ -1741,12 +1788,12 @@
     {
       "constraints": 13884,
       "sourcePoint": {
-        "x": 452.5,
-        "y": 248.67
+        "x": 708,
+        "y": 316.8
       },
       "targetPoint": {
-        "x": 552.5,
-        "y": 448.67
+        "x": 808,
+        "y": 516.8
       },
       "shape": null,
       "fixedUserHandles": [],
@@ -1813,6 +1860,12 @@
           "strokeWidth": 1
         }
       },
+      "BezierConnectorSettings": {
+        "ControlPointsVisibility": 14,
+        "SegmentEditOrientation": 1,
+        "Smoothness": 6,
+        "AllowSegmentsReset": false
+      },
       "id": "connector7",
       "Tooltip": null,
       "zIndex": 29,
@@ -1831,12 +1884,12 @@
     {
       "constraints": 13884,
       "sourcePoint": {
-        "x": 652.5,
-        "y": 48.67
+        "x": 908,
+        "y": 116.8
       },
       "targetPoint": {
-        "x": 752.5,
-        "y": -31.33
+        "x": 1008,
+        "y": 36.8
       },
       "shape": null,
       "fixedUserHandles": [],
@@ -1903,6 +1956,12 @@
           "strokeWidth": 1
         }
       },
+      "BezierConnectorSettings": {
+        "ControlPointsVisibility": 14,
+        "SegmentEditOrientation": 1,
+        "Smoothness": 6,
+        "AllowSegmentsReset": false
+      },
       "id": "connector8",
       "Tooltip": null,
       "zIndex": 30,
@@ -1921,12 +1980,12 @@
     {
       "constraints": 13884,
       "sourcePoint": {
-        "x": 652.5,
-        "y": 48.67
+        "x": 908,
+        "y": 116.8
       },
       "targetPoint": {
-        "x": 752.5,
-        "y": 48.67
+        "x": 1008,
+        "y": 116.8
       },
       "shape": null,
       "fixedUserHandles": [],
@@ -1993,6 +2052,12 @@
           "strokeWidth": 1
         }
       },
+      "BezierConnectorSettings": {
+        "ControlPointsVisibility": 14,
+        "SegmentEditOrientation": 1,
+        "Smoothness": 6,
+        "AllowSegmentsReset": false
+      },
       "id": "connector9",
       "Tooltip": null,
       "zIndex": 31,
@@ -2011,12 +2076,12 @@
     {
       "constraints": 13884,
       "sourcePoint": {
-        "x": 652.5,
-        "y": 48.67
+        "x": 908,
+        "y": 116.8
       },
       "targetPoint": {
-        "x": 752.5,
-        "y": 128.67
+        "x": 1008,
+        "y": 196.8
       },
       "shape": null,
       "fixedUserHandles": [],
@@ -2083,6 +2148,12 @@
           "strokeWidth": 1
         }
       },
+      "BezierConnectorSettings": {
+        "ControlPointsVisibility": 14,
+        "SegmentEditOrientation": 1,
+        "Smoothness": 6,
+        "AllowSegmentsReset": false
+      },
       "id": "connector10",
       "Tooltip": null,
       "zIndex": 32,
@@ -2101,12 +2172,12 @@
     {
       "constraints": 13884,
       "sourcePoint": {
-        "x": 652.5,
-        "y": 208.67
+        "x": 908,
+        "y": 276.8
       },
       "targetPoint": {
-        "x": 752.5,
-        "y": 208.67
+        "x": 1008,
+        "y": 276.8
       },
       "shape": null,
       "fixedUserHandles": [],
@@ -2173,6 +2244,12 @@
           "strokeWidth": 1
         }
       },
+      "BezierConnectorSettings": {
+        "ControlPointsVisibility": 14,
+        "SegmentEditOrientation": 1,
+        "Smoothness": 6,
+        "AllowSegmentsReset": false
+      },
       "id": "connector11",
       "Tooltip": null,
       "zIndex": 33,
@@ -2191,12 +2268,12 @@
     {
       "constraints": 13884,
       "sourcePoint": {
-        "x": 652.5,
-        "y": 328.67
+        "x": 908,
+        "y": 396.8
       },
       "targetPoint": {
-        "x": 752.5,
-        "y": 288.67
+        "x": 1008,
+        "y": 356.8
       },
       "shape": null,
       "fixedUserHandles": [],
@@ -2263,6 +2340,12 @@
           "strokeWidth": 1
         }
       },
+      "BezierConnectorSettings": {
+        "ControlPointsVisibility": 14,
+        "SegmentEditOrientation": 1,
+        "Smoothness": 6,
+        "AllowSegmentsReset": false
+      },
       "id": "connector12",
       "Tooltip": null,
       "zIndex": 34,
@@ -2281,12 +2364,12 @@
     {
       "constraints": 13884,
       "sourcePoint": {
-        "x": 652.5,
-        "y": 328.67
+        "x": 908,
+        "y": 396.8
       },
       "targetPoint": {
-        "x": 752.5,
-        "y": 368.67
+        "x": 1008,
+        "y": 436.8
       },
       "shape": null,
       "fixedUserHandles": [],
@@ -2353,6 +2436,12 @@
           "strokeWidth": 1
         }
       },
+      "BezierConnectorSettings": {
+        "ControlPointsVisibility": 14,
+        "SegmentEditOrientation": 1,
+        "Smoothness": 6,
+        "AllowSegmentsReset": false
+      },
       "id": "connector13",
       "Tooltip": null,
       "zIndex": 35,
@@ -2371,12 +2460,12 @@
     {
       "constraints": 13884,
       "sourcePoint": {
-        "x": 652.5,
-        "y": 448.67
+        "x": 908,
+        "y": 516.8
       },
       "targetPoint": {
-        "x": 752.5,
-        "y": 448.67
+        "x": 1008,
+        "y": 516.8
       },
       "shape": null,
       "fixedUserHandles": [],
@@ -2443,6 +2532,12 @@
           "strokeWidth": 1
         }
       },
+      "BezierConnectorSettings": {
+        "ControlPointsVisibility": 14,
+        "SegmentEditOrientation": 1,
+        "Smoothness": 6,
+        "AllowSegmentsReset": false
+      },
       "id": "connector14",
       "Tooltip": null,
       "zIndex": 36,
@@ -2461,12 +2556,12 @@
     {
       "constraints": 13884,
       "sourcePoint": {
-        "x": 102.5,
-        "y": 48.67
+        "x": 358,
+        "y": 116.8
       },
       "targetPoint": {
-        "x": 2.5,
-        "y": -31.33
+        "x": 258,
+        "y": 36.8
       },
       "shape": null,
       "fixedUserHandles": [],
@@ -2533,6 +2628,12 @@
           "strokeWidth": 1
         }
       },
+      "BezierConnectorSettings": {
+        "ControlPointsVisibility": 14,
+        "SegmentEditOrientation": 1,
+        "Smoothness": 6,
+        "AllowSegmentsReset": false
+      },
       "id": "connector15",
       "Tooltip": null,
       "zIndex": 37,
@@ -2551,12 +2652,12 @@
     {
       "constraints": 13884,
       "sourcePoint": {
-        "x": 102.5,
-        "y": 48.67
+        "x": 358,
+        "y": 116.8
       },
       "targetPoint": {
-        "x": 2.5,
-        "y": 48.67
+        "x": 258,
+        "y": 116.8
       },
       "shape": null,
       "fixedUserHandles": [],
@@ -2623,6 +2724,12 @@
           "strokeWidth": 1
         }
       },
+      "BezierConnectorSettings": {
+        "ControlPointsVisibility": 14,
+        "SegmentEditOrientation": 1,
+        "Smoothness": 6,
+        "AllowSegmentsReset": false
+      },
       "id": "connector16",
       "Tooltip": null,
       "zIndex": 38,
@@ -2641,12 +2748,12 @@
     {
       "constraints": 13884,
       "sourcePoint": {
-        "x": 102.5,
-        "y": 48.67
+        "x": 358,
+        "y": 116.8
       },
       "targetPoint": {
-        "x": 2.5,
-        "y": 128.67
+        "x": 258,
+        "y": 196.8
       },
       "shape": null,
       "fixedUserHandles": [],
@@ -2713,6 +2820,12 @@
           "strokeWidth": 1
         }
       },
+      "BezierConnectorSettings": {
+        "ControlPointsVisibility": 14,
+        "SegmentEditOrientation": 1,
+        "Smoothness": 6,
+        "AllowSegmentsReset": false
+      },
       "id": "connector17",
       "Tooltip": null,
       "zIndex": 39,
@@ -2731,12 +2844,12 @@
     {
       "constraints": 13884,
       "sourcePoint": {
-        "x": 102.5,
-        "y": 248.67
+        "x": 358,
+        "y": 316.8
       },
       "targetPoint": {
-        "x": 2.5,
-        "y": 208.67
+        "x": 258,
+        "y": 276.8
       },
       "shape": null,
       "fixedUserHandles": [],
@@ -2803,6 +2916,12 @@
           "strokeWidth": 1
         }
       },
+      "BezierConnectorSettings": {
+        "ControlPointsVisibility": 14,
+        "SegmentEditOrientation": 1,
+        "Smoothness": 6,
+        "AllowSegmentsReset": false
+      },
       "id": "connector18",
       "Tooltip": null,
       "zIndex": 40,
@@ -2821,12 +2940,12 @@
     {
       "constraints": 13884,
       "sourcePoint": {
-        "x": 102.5,
-        "y": 248.67
+        "x": 358,
+        "y": 316.8
       },
       "targetPoint": {
-        "x": 2.5,
-        "y": 288.67
+        "x": 258,
+        "y": 356.8
       },
       "shape": null,
       "fixedUserHandles": [],
@@ -2893,6 +3012,12 @@
           "strokeWidth": 1
         }
       },
+      "BezierConnectorSettings": {
+        "ControlPointsVisibility": 14,
+        "SegmentEditOrientation": 1,
+        "Smoothness": 6,
+        "AllowSegmentsReset": false
+      },
       "id": "connector19",
       "Tooltip": null,
       "zIndex": 41,
@@ -2911,12 +3036,12 @@
     {
       "constraints": 13884,
       "sourcePoint": {
-        "x": 102.5,
-        "y": 448.67
+        "x": 358,
+        "y": 516.8
       },
       "targetPoint": {
-        "x": 2.5,
-        "y": 368.67
+        "x": 258,
+        "y": 436.8
       },
       "shape": null,
       "fixedUserHandles": [],
@@ -2983,6 +3108,12 @@
           "strokeWidth": 1
         }
       },
+      "BezierConnectorSettings": {
+        "ControlPointsVisibility": 14,
+        "SegmentEditOrientation": 1,
+        "Smoothness": 6,
+        "AllowSegmentsReset": false
+      },
       "id": "connector20",
       "Tooltip": null,
       "zIndex": 42,
@@ -3001,12 +3132,12 @@
     {
       "constraints": 13884,
       "sourcePoint": {
-        "x": 102.5,
-        "y": 448.67
+        "x": 358,
+        "y": 516.8
       },
       "targetPoint": {
-        "x": 2.5,
-        "y": 448.67
+        "x": 258,
+        "y": 516.8
       },
       "shape": null,
       "fixedUserHandles": [],
@@ -3073,6 +3204,12 @@
           "strokeWidth": 1
         }
       },
+      "BezierConnectorSettings": {
+        "ControlPointsVisibility": 14,
+        "SegmentEditOrientation": 1,
+        "Smoothness": 6,
+        "AllowSegmentsReset": false
+      },
       "id": "connector21",
       "Tooltip": null,
       "zIndex": 43,
@@ -3091,12 +3228,12 @@
     {
       "constraints": 13884,
       "sourcePoint": {
-        "x": 102.5,
-        "y": 448.67
+        "x": 358,
+        "y": 516.8
       },
       "targetPoint": {
-        "x": 2.5,
-        "y": 528.67
+        "x": 258,
+        "y": 596.8
       },
       "shape": null,
       "fixedUserHandles": [],
@@ -3162,6 +3299,12 @@
           "strokeDashArray": "",
           "strokeWidth": 1
         }
+      },
+      "BezierConnectorSettings": {
+        "ControlPointsVisibility": 14,
+        "SegmentEditOrientation": 1,
+        "Smoothness": 6,
+        "AllowSegmentsReset": false
       },
       "id": "connector22",
       "Tooltip": null,
