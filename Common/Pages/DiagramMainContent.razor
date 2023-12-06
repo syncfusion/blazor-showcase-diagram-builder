@@ -652,9 +652,11 @@
                 {
                     if (Diagram.SelectionSettings.Nodes.Count == 1)
                     {
-                        Diagram.SelectionSettings.UserHandles[0].Visible = true;
-                        Diagram.SelectionSettings.UserHandles[1].Visible = true;
-                        Diagram.SelectionSettings.UserHandles[2].Visible = true;
+                        if (DiagramContainerClassName.Contains("OrgChart-diagram")) { 
+                            Diagram.SelectionSettings.UserHandles[0].Visible = true;
+                            Diagram.SelectionSettings.UserHandles[1].Visible = true;
+                            Diagram.SelectionSettings.UserHandles[2].Visible = true;
+                        }
                         Parent.DiagramPropertyPanel.PanelVisibility();
                         Parent.DiagramPropertyPanel.slider();
 

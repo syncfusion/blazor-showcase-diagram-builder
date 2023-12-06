@@ -462,7 +462,7 @@
     }
     private async Task OnRemoveHandler(RemovingEventArgs args)
     {
-        files = await uploadObj.GetFilesData();
+        files = await uploadObj.GetFilesDataAsync();
 
         fileCount = files.Count;
     }
@@ -1125,7 +1125,7 @@
 
     public async Task OnUploadSuccess(SuccessEventArgs args)
     {
-        files = await uploadObj.GetFilesData();
+        files = await uploadObj.GetFilesDataAsync();
 
         fileCount = files.Count;
         if (args.Operation != "remove")
@@ -1364,7 +1364,7 @@
             DataSourceDictionaryUpdate();
             await supervisorDropdownList.RefreshDataAsync();
             await employeeDropdownList.RefreshDataAsync();
-            files = await uploadObj.GetFilesData();
+            files = await uploadObj.GetFilesDataAsync();
 
             fileCount = files.Count;
         }
@@ -1560,7 +1560,7 @@
             DeleteDictionary.Clear();
             ApplyDictionary.Clear();
             OriginalTextBoxValuesDictionary.Clear();
-            await importDialog.Hide(); BindingValues();
+            await importDialog.HideAsync(); BindingValues();
         }
         else if (importDialog.Header == "Define Employee - Supervisor Relationship")
         {
@@ -1600,7 +1600,7 @@
     }
     public async Task CancelImport()
     {
-        await importDialog.Hide();
+        await importDialog.HideAsync();
     }
     private async Task InsertFile()
     {
