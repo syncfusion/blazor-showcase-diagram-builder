@@ -76,7 +76,7 @@
 
     private async Task CloseDialogHandler()
     {
-        await ExportDialog.Hide();
+        await ExportDialog.HideAsync();
     }
     public IEnumerable<string> FormatValues = Enum.GetNames(typeof(Formats));
     public Formats CurrentFormatValue { get; set; } = Formats.JPEG;

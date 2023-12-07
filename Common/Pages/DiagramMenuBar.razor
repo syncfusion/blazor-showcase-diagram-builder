@@ -351,7 +351,7 @@
                     SelectNewOption  = commandType.ToLower();
                 }
                 SaveDialogBox.DiagramfileName = await jsRuntime.InvokeAsync<string>("getDiagramFileName", "");
-                await SaveDialogBox.SaveDialog.Show();
+                await SaveDialogBox.SaveDialog.ShowAsync();
                 #endif
                 break;
             case "open":
@@ -470,7 +470,7 @@
                     SaveEditUserHandleDetails(diagram);
                 }
                 SaveDialogBox.DiagramfileName = await jsRuntime.InvokeAsync<string>("getDiagramFileName", "");
-                await SaveDialogBox.SaveDialog.Show();
+                await SaveDialogBox.SaveDialog.ShowAsync();
                 break;
             case "print":
                 #if SERVER || WASM

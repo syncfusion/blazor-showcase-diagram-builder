@@ -85,12 +85,12 @@
         Parent.Parent.Parent.SpinnerObj.Show();
         await Parent.DiagramSymbolpalette.UpdatePalettes(SelectedItems);
         Parent.Parent.Parent.SpinnerObj.Hide();
-        await MoreShapesPalette.Hide();
+        await MoreShapesPalette.HideAsync();
     }
 
 
     private async Task btnCancelClick()
     {
-        await MoreShapesPalette.Hide();
+        await MoreShapesPalette.HideAsync();
     }
 }

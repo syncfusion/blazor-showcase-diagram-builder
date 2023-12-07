@@ -35,7 +35,7 @@
     {
         string fileName = await jsRuntime.InvokeAsync<string>("getDiagramFileName", "save");
         await Parent.Download(fileName);
-        await SaveDialog.Hide();
+        await SaveDialog.HideAsync();
         #if MAUI
             if (Parent.SelectNewOption.Equals("new"))
             {
@@ -45,6 +45,6 @@
     }
     private async Task btnCancelClick()
     {
-        await SaveDialog.Hide();
+        await SaveDialog.HideAsync();
     }
 }

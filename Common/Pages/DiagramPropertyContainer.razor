@@ -1492,7 +1492,7 @@
                         await jsRuntime.InvokeAsync<object>("setHyperLinkValuesToDocument", "hyperlink", "");
                         await jsRuntime.InvokeAsync<object>("setHyperLinkValuesToDocument", "hyperlinkText", "");
                         Node.Annotations = new DiagramObjectCollection<ShapeAnnotation>() { new ShapeAnnotation() { Hyperlink = new HyperlinkSettings() { Url = "" , Content = ""} } };
-                        await TextHyperLink.Show();
+                        await TextHyperLink.ShowAsync();
                         if (Node.Annotations.Count > 0)
                         {
                             ShapeAnnotation Annotation = Node.Annotations[0];
@@ -1524,7 +1524,7 @@
                 await jsRuntime.InvokeAsync<object>("setHyperLinkValuesToDocument", "hyperlinkText", "");
                 if(Node.Annotations.Count == 0 )
                     Node.Annotations = new DiagramObjectCollection<ShapeAnnotation>() { new ShapeAnnotation() { Content = "" } };
-                await TextHyperLink.Show();
+                await TextHyperLink.ShowAsync();
                 if (Node.Annotations.Count > 0)
                 {
                     if(Node.Annotations[0].Hyperlink == null)
@@ -1568,12 +1568,12 @@
                 Nodes[i].Annotations[0] = new ShapeAnnotation() { Hyperlink = new Syncfusion.Blazor.Diagram.HyperlinkSettings() { Url = HyperLink, Content = HyperLinkText }, Content = hyperlinkContent};
             }
         }
-        await TextHyperLink.Hide();
+        await TextHyperLink.HideAsync();
     }
 
     public async Task CancelAnnotationLink()
     {
-        await TextHyperLink.Hide();
+        await TextHyperLink.HideAsync();
     }
 
 

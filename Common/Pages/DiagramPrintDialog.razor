@@ -127,11 +127,11 @@
         };
 
         await Parent.PrintDiagram(options);
-        await PrintDialog.Hide();
+        await PrintDialog.HideAsync();
     }
     private async Task PrintDialogCloseHandler()
     {
-        await PrintDialog.Hide();
+        await PrintDialog.HideAsync();
     }
 
     private void OrientationChanged(ChangeArgs<string> args)
