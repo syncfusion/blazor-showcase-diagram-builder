@@ -19,6 +19,7 @@ The samples require the following requirements to run.
 
 ## Demo
 
-### <a href="https://blazor.syncfusion.com/showcase/diagrambuilder/" target="_blank">https://blazor.syncfusion.com/showcase/diagrambuilder/</a>
+### Server -  <a href="https://blazor.syncfusion.com/showcase/diagrambuilder/" target="_blank">https://blazor.syncfusion.com/showcase/diagrambuilder/</a>
+### WebAssembly  - <a href="https://blazor.syncfusion.com/showcase/wasm/diagrambuilder/" target="_blank">https://blazor.syncfusion.com/showcase/wasm/diagrambuilder/</a>
 
 Check all the showcase samples from <a href="https://blazor.syncfusion.com" target="_blank">here</a>.
