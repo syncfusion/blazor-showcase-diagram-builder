@@ -69,7 +69,7 @@
 
         <SfUploader @ref="@UploadFiles" Id ="defaultfileupload" ShowFileList="false" AllowedExtensions="@ExtensionType">
             <UploaderEvents Success="@OnUploadSuccess" OnUploadStart="@OnUploadFileSelected"></UploaderEvents>
-            <UploaderAsyncSettings SaveUrl="https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save" RemoveUrl="https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove"></UploaderAsyncSettings>
+            <UploaderAsyncSettings SaveUrl="https://blazor.syncfusion.com/services/production/api/FileUploader/Save" RemoveUrl="https://blazor.syncfusion.com/services/production/api/FileUploader/Remove"></UploaderAsyncSettings>
         </SfUploader>
         <DiagramSaveDialog @ref="@SaveDialogBox"></DiagramSaveDialog>
         <DiagramExportDialog @ref="@ExportDialogBox"></DiagramExportDialog>
