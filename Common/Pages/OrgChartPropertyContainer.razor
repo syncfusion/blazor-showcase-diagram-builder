@@ -153,7 +153,7 @@
                                
                                 <SfUploader @ref="uploadObj" ID="uploadFile"  AllowMultiple=false AutoUpload="true" DropArea=".db-prop-drop-import-file" AllowedExtensions="@extension">
                                 <UploaderEvents OnRemove="@OnRemoveHandler" BeforeRemove="@BeforeRemovehandler" Success="@OnUploadSuccess" OnUploadStart="@OnUploadFileSelected"></UploaderEvents>
-                                    <UploaderAsyncSettings SaveUrl="https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save" RemoveUrl="https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove"></UploaderAsyncSettings>
+                                    <UploaderAsyncSettings SaveUrl="https://blazor.syncfusion.com/services/production/api/FileUploader/Save" RemoveUrl="https://blazor.syncfusion.com/services/production/api/FileUploader/Remove"></UploaderAsyncSettings>
                                 </SfUploader>
                          </div>
                      </div>
