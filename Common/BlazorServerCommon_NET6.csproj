@@ -19,9 +19,10 @@
   <ItemGroup>
     <None Include="Shared\MainLayout.razor" />
     <None Include="Shared\SpinnerComponent.razor" />
+    <None Include="wwwroot\interop.js" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Syncfusion.Blazor" Version="*" />
+    <PackageReference Include="Syncfusion.Blazor" Version="26.1.35" />
   </ItemGroup>
   
   

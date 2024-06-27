@@ -39,23 +39,23 @@
     <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
 
     <!-- Images -->
-    <MauiImage Include="Resources\Images\*" />
+    <MauiImage Include="Resources\Images\26.1.35" />
     <MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
 
     <!-- Custom Fonts -->
-    <MauiFont Include="Resources\Fonts\*" />
+    <MauiFont Include="Resources\Fonts\26.1.35" />
 
     <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
-    <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+    <MauiAsset Include="Resources\Raw\26.1.3526.1.35" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 
   <ItemGroup>
-    <AndroidResource Remove="Properties\PublishProfiles\**" />
-    <Compile Remove="Properties\PublishProfiles\**" />
-    <Content Remove="Properties\PublishProfiles\**" />
-    <EmbeddedResource Remove="Properties\PublishProfiles\**" />
-    <MauiXaml Remove="Properties\PublishProfiles\**" />
-    <None Remove="Properties\PublishProfiles\**" />
+    <AndroidResource Remove="Properties\PublishProfiles\26.1.3526.1.35" />
+    <Compile Remove="Properties\PublishProfiles\26.1.3526.1.35" />
+    <Content Remove="Properties\PublishProfiles\26.1.3526.1.35" />
+    <EmbeddedResource Remove="Properties\PublishProfiles\26.1.3526.1.35" />
+    <MauiXaml Remove="Properties\PublishProfiles\26.1.3526.1.35" />
+    <None Remove="Properties\PublishProfiles\26.1.3526.1.35" />
   </ItemGroup>
   
   <ItemGroup>
@@ -115,8 +115,10 @@
     <None Include="wwwroot\css\open-iconic\font\fonts\open-iconic.svg" />
     <None Include="wwwroot\css\open-iconic\ICON-LICENSE" />
     <None Include="wwwroot\css\open-iconic\README.md" />
-    <None Include="wwwroot\new\fonts\icomoon.svg" />
-    <None Include="wwwroot\syncfusion-blazor.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Syncfusion.Blazor" Version="26.1.35" />
   </ItemGroup>
 
   <ItemGroup>

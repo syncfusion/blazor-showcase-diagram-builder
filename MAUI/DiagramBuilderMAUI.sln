@@ -4,7 +4,7 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiagramBuilderMAUI", "DiagramBuilderMAUI\DiagramBuilderMAUI.csproj", "{93E74B62-4547-42A7-94CC-B25B3853637E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorMAUICommon_NET6", "..\Common\BlazorMAUICommon_NET6.csproj", "{D267C301-D2D0-4AAC-918E-454ED4BC9F62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorMAUICommon_NET6", "..\Common\BlazorMAUICommon_NET6.csproj", "{DC15E572-D138-4E80-93D4-5D30CF853481}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,10 +18,10 @@ Global
 		{93E74B62-4547-42A7-94CC-B25B3853637E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93E74B62-4547-42A7-94CC-B25B3853637E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{93E74B62-4547-42A7-94CC-B25B3853637E}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{D267C301-D2D0-4AAC-918E-454ED4BC9F62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D267C301-D2D0-4AAC-918E-454ED4BC9F62}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D267C301-D2D0-4AAC-918E-454ED4BC9F62}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D267C301-D2D0-4AAC-918E-454ED4BC9F62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC15E572-D138-4E80-93D4-5D30CF853481}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC15E572-D138-4E80-93D4-5D30CF853481}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC15E572-D138-4E80-93D4-5D30CF853481}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC15E572-D138-4E80-93D4-5D30CF853481}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

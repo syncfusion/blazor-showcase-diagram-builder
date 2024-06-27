@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiagramBuilder", "DiagramBuilder.csproj", "{F6C713E8-80C9-45AA-B8CA-7D3267E95D19}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWasmCommon_NET6", "..\..\common\BlazorWasmCommon_NET6.csproj", "{C16F027A-281D-4D55-BF18-134CF46B2F63}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F6C713E8-80C9-45AA-B8CA-7D3267E95D19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6C713E8-80C9-45AA-B8CA-7D3267E95D19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6C713E8-80C9-45AA-B8CA-7D3267E95D19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6C713E8-80C9-45AA-B8CA-7D3267E95D19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C16F027A-281D-4D55-BF18-134CF46B2F63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C16F027A-281D-4D55-BF18-134CF46B2F63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C16F027A-281D-4D55-BF18-134CF46B2F63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C16F027A-281D-4D55-BF18-134CF46B2F63}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {85A43258-D9A2-4184-ADDB-9A25B4B4D0BC}
+	EndGlobalSection
+EndGlobal
