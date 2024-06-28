@@ -1,0 +1,62 @@
+﻿@inherits LayoutComponentBase
+@inject SampleService Service
+@inject IJSRuntime JsRuntime;
+@inject SyncfusionBlazorService SyncfusionBlazorService;
+@using Syncfusion.Blazor;
+@using DiagramBuilder.Shared
+@inject Microsoft.AspNetCore.Components.NavigationManager UriHelper;
+<SpinnerComponent @ref="SpinnerObj"></SpinnerComponent>
+<DiagramMain @ref="DiagramMain"></DiagramMain>
+
+@code{
+    [Inject]
+    SyncfusionBlazorService SyncfusionService { get; set; }
+
+    public DiagramMain DiagramMain { get; set; }
+    public SpinnerComponent SpinnerObj { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Service.Notify += OnNotify;
+    }
+
+    public async Task OnNotify(NotifyProperties prop)
+    {
+        await InvokeAsync(() =>
+        {
+            this.SpinnerObj.Hide();
+            this.Service.Prop.HideSpinner = false;
+            this.Service.Prop.RestricMouseEvents = false;
+
+        });
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        if (firstRender)
+        {
+            if (this.DiagramMain != null)
+                this.DiagramMain.Parent = this;
+        }
+        if (UriHelper.Uri.IndexOf("material") > 0)
+        {
+
+            SyncfusionService.EnableRipple(); ;
+        }
+        else
+        {
+            SyncfusionService.EnableRipple(); ;
+        }
+        if (this.SpinnerObj.HideClass == "sb-trans")
+        {
+            this.SpinnerObj.Hide();
+            this.Service.Prop.HideSpinner = false;
+            this.Service.Prop.RestricMouseEvents = false;
+        }
+    }
+    public void Dispose()
+    {
+        Service.Notify -= OnNotify;
+    }
+}
