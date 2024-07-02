@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.3.32929.385
+VisualStudioVersion = 17.9.34310.174
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiagramBuilder", "DiagramBuilder.csproj", "{D0CEB6F0-E005-4218-BCED-78542DA0740B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWasmCommon_NET8", "..\common\BlazorWasmCommon_NET8.csproj", "{3F6D9BBD-D7AD-449C-AF50-36549C54FB8B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWasmCommon_NET6", "..\Common\BlazorWasmCommon_NET6.csproj", "{00AB184E-53E4-4CF4-B486-5BBEA89A7457}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiagramBuilder", "DiagramBuilder\DiagramBuilder.csproj", "{3C4449F4-BFFF-48A9-84C4-B5CEAF8E597A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiagramBuilder.Client", "DiagramBuilder.Client\DiagramBuilder.Client.csproj", "{AF7E8A62-3E6B-4737-916E-02B897862A5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,19 +15,23 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D0CEB6F0-E005-4218-BCED-78542DA0740B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D0CEB6F0-E005-4218-BCED-78542DA0740B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D0CEB6F0-E005-4218-BCED-78542DA0740B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D0CEB6F0-E005-4218-BCED-78542DA0740B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{00AB184E-53E4-4CF4-B486-5BBEA89A7457}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{00AB184E-53E4-4CF4-B486-5BBEA89A7457}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{00AB184E-53E4-4CF4-B486-5BBEA89A7457}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{00AB184E-53E4-4CF4-B486-5BBEA89A7457}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F6D9BBD-D7AD-449C-AF50-36549C54FB8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F6D9BBD-D7AD-449C-AF50-36549C54FB8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F6D9BBD-D7AD-449C-AF50-36549C54FB8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F6D9BBD-D7AD-449C-AF50-36549C54FB8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C4449F4-BFFF-48A9-84C4-B5CEAF8E597A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C4449F4-BFFF-48A9-84C4-B5CEAF8E597A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C4449F4-BFFF-48A9-84C4-B5CEAF8E597A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C4449F4-BFFF-48A9-84C4-B5CEAF8E597A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF7E8A62-3E6B-4737-916E-02B897862A5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF7E8A62-3E6B-4737-916E-02B897862A5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF7E8A62-3E6B-4737-916E-02B897862A5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF7E8A62-3E6B-4737-916E-02B897862A5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {7F521E49-4FC4-4A8D-A151-7681CABD4504}
+		SolutionGuid = {DE4820AF-C4C6-4A85-8EDC-339CC7D91658}
 	EndGlobalSection
 EndGlobal

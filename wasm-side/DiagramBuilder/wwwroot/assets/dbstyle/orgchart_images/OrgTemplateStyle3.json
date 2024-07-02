@@ -389,7 +389,7 @@
       "outEdges": "[\u0022connector1\u0022]",
       "pivot": "{\u0022x\u0022:0.5,\u0022y\u0022:0.5}",
       "shadow": "{\u0022angle\u0022:45,\u0022color\u0022:\u0022lightgrey\u0022,\u0022distance\u0022:5,\u0022opacity\u0022:0.7}",
-      "shape": "{\r\n  \u0022type\u0022: \u0022Image\u0022,\r\n  \u0022source\u0022: \u0022/assets/dbstyle/orgchart_images/blank-male.jpg\u0022,\r\n  \u0022align\u0022: 1,\r\n  \u0022scale\u0022: \u00220\u0022\r\n}",
+      "shape": "{\r\n  \u0022type\u0022: \u0022Image\u0022,\r\n  \u0022source\u0022: \u0022./assets/dbstyle/orgchart_images/blank-male.jpg\u0022,\r\n  \u0022align\u0022: 1,\r\n  \u0022scale\u0022: \u00220\u0022\r\n}",
       "style": "{\u0022fill\u0022:\u0022#C4F2E8\u0022,\u0022gradient\u0022:null,\u0022opacity\u0022:1,\u0022strokeColor\u0022:\u0022#8BC1B7\u0022,\u0022strokeDashArray\u0022:\u0022\u0022,\u0022strokeWidth\u0022:2}",
       "margin": "{\u0022left\u0022:0,\u0022right\u0022:0,\u0022top\u0022:0,\u0022bottom\u0022:0}"
     },
@@ -420,7 +420,7 @@
       "outEdges": "[\u0022connector2\u0022,\u0022connector3\u0022,\u0022connector4\u0022]",
       "pivot": "{\u0022x\u0022:0.5,\u0022y\u0022:0.5}",
       "shadow": "{\u0022angle\u0022:45,\u0022color\u0022:\u0022lightgrey\u0022,\u0022distance\u0022:5,\u0022opacity\u0022:0.7}",
-      "shape": "{\r\n  \u0022type\u0022: \u0022Image\u0022,\r\n  \u0022source\u0022: \u0022/assets/dbstyle/orgchart_images/blank-male.jpg\u0022,\r\n  \u0022align\u0022: 1,\r\n  \u0022scale\u0022: \u00220\u0022\r\n}",
+      "shape": "{\r\n  \u0022type\u0022: \u0022Image\u0022,\r\n  \u0022source\u0022: \u0022./assets/dbstyle/orgchart_images/blank-male.jpg\u0022,\r\n  \u0022align\u0022: 1,\r\n  \u0022scale\u0022: \u00220\u0022\r\n}",
       "style": "{\u0022fill\u0022:\u0022#C4F2E8\u0022,\u0022gradient\u0022:null,\u0022opacity\u0022:1,\u0022strokeColor\u0022:\u0022#8BC1B7\u0022,\u0022strokeDashArray\u0022:\u0022\u0022,\u0022strokeWidth\u0022:2}",
       "margin": "{\u0022left\u0022:0,\u0022right\u0022:0,\u0022top\u0022:0,\u0022bottom\u0022:0}"
     },
@@ -451,7 +451,7 @@
       "outEdges": "[]",
       "pivot": "{\u0022x\u0022:0.5,\u0022y\u0022:0.5}",
       "shadow": "{\u0022angle\u0022:45,\u0022color\u0022:\u0022lightgrey\u0022,\u0022distance\u0022:5,\u0022opacity\u0022:0.7}",
-      "shape": "{\r\n  \u0022type\u0022: \u0022Image\u0022,\r\n  \u0022source\u0022: \u0022/assets/dbstyle/orgchart_images/blank-male.jpg\u0022,\r\n  \u0022align\u0022: 1,\r\n  \u0022scale\u0022: \u00220\u0022\r\n}",
+      "shape": "{\r\n  \u0022type\u0022: \u0022Image\u0022,\r\n  \u0022source\u0022: \u0022./assets/dbstyle/orgchart_images/blank-male.jpg\u0022,\r\n  \u0022align\u0022: 1,\r\n  \u0022scale\u0022: \u00220\u0022\r\n}",
       "style": "{\u0022fill\u0022:\u0022#C4F2E8\u0022,\u0022gradient\u0022:null,\u0022opacity\u0022:1,\u0022strokeColor\u0022:\u0022#8BC1B7\u0022,\u0022strokeDashArray\u0022:\u0022\u0022,\u0022strokeWidth\u0022:2}",
       "margin": "{\u0022left\u0022:0,\u0022right\u0022:0,\u0022top\u0022:0,\u0022bottom\u0022:0}"
     },
@@ -482,7 +482,7 @@
       "outEdges": "[]",
       "pivot": "{\u0022x\u0022:0.5,\u0022y\u0022:0.5}",
       "shadow": "{\u0022angle\u0022:45,\u0022color\u0022:\u0022lightgrey\u0022,\u0022distance\u0022:5,\u0022opacity\u0022:0.7}",
-      "shape": "{\r\n  \u0022type\u0022: \u0022Image\u0022,\r\n  \u0022source\u0022: \u0022/assets/dbstyle/orgchart_images/blank-male.jpg\u0022,\r\n  \u0022align\u0022: 1,\r\n  \u0022scale\u0022: \u00220\u0022\r\n}",
+      "shape": "{\r\n  \u0022type\u0022: \u0022Image\u0022,\r\n  \u0022source\u0022: \u0022./assets/dbstyle/orgchart_images/blank-male.jpg\u0022,\r\n  \u0022align\u0022: 1,\r\n  \u0022scale\u0022: \u00220\u0022\r\n}",
       "style": "{\u0022fill\u0022:\u0022#C4F2E8\u0022,\u0022gradient\u0022:null,\u0022opacity\u0022:1,\u0022strokeColor\u0022:\u0022#8BC1B7\u0022,\u0022strokeDashArray\u0022:\u0022\u0022,\u0022strokeWidth\u0022:2}",
       "margin": "{\u0022left\u0022:0,\u0022right\u0022:0,\u0022top\u0022:0,\u0022bottom\u0022:0}"
     },
@@ -513,7 +513,7 @@
       "outEdges": "[]",
       "pivot": "{\u0022x\u0022:0.5,\u0022y\u0022:0.5}",
       "shadow": "{\u0022angle\u0022:45,\u0022color\u0022:\u0022lightgrey\u0022,\u0022distance\u0022:5,\u0022opacity\u0022:0.7}",
-      "shape": "{\r\n  \u0022type\u0022: \u0022Image\u0022,\r\n  \u0022source\u0022: \u0022/assets/dbstyle/orgchart_images/blank-male.jpg\u0022,\r\n  \u0022align\u0022: 1,\r\n  \u0022scale\u0022: \u00220\u0022\r\n}",
+      "shape": "{\r\n  \u0022type\u0022: \u0022Image\u0022,\r\n  \u0022source\u0022: \u0022./assets/dbstyle/orgchart_images/blank-male.jpg\u0022,\r\n  \u0022align\u0022: 1,\r\n  \u0022scale\u0022: \u00220\u0022\r\n}",
       "style": "{\u0022fill\u0022:\u0022#C4F2E8\u0022,\u0022gradient\u0022:null,\u0022opacity\u0022:1,\u0022strokeColor\u0022:\u0022#8BC1B7\u0022,\u0022strokeDashArray\u0022:\u0022\u0022,\u0022strokeWidth\u0022:2}",
       "margin": "{\u0022left\u0022:0,\u0022right\u0022:0,\u0022top\u0022:0,\u0022bottom\u0022:0}"
     }

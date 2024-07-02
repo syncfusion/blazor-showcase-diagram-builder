@@ -115,8 +115,10 @@
     <None Include="wwwroot\css\open-iconic\font\fonts\open-iconic.svg" />
     <None Include="wwwroot\css\open-iconic\ICON-LICENSE" />
     <None Include="wwwroot\css\open-iconic\README.md" />
-    <None Include="wwwroot\new\fonts\icomoon.svg" />
-    <None Include="wwwroot\syncfusion-blazor.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Syncfusion.Blazor" Version="26.1.35" />
   </ItemGroup>
 
   <ItemGroup>
