@@ -14,8 +14,11 @@ The samples require the following requirements to run.
 ### Run
 
 1. Clone this repository.
-2. Open the `.sln` file in VS 2022.
-3. Click the green run button in the toolbar.
+2. Open the project in VS 2022:
+	- For the .NET 8 Server app, open Server-side/DiagramBuilder.sln.
+	- For the .NET 8 WASM app, open wasm-side/DiagramBuilder.sln.
+	- For the MAUI app, open MAUI/DiagramBuilderMAUI.sln.
+3. Run the demo.
 
 ## Demo
 
