@@ -704,7 +704,7 @@
         OriginalTextBoxValuesDictionary.Add(nodeid, TextValues);
         dialogVisibility = false;
         textboxValue = "";
-        await this.Parent.DiagramContent.Diagram.DoLayout();
+        await this.Parent.DiagramContent.Diagram.DoLayoutAsync();
     }
     public void UpdateAnnotationStyle(Node node)
     {
@@ -1532,9 +1532,9 @@
         }
 
 
-        await this.Parent.DiagramContent.Diagram.AddDiagramElements(NodeCollection);
+        await this.Parent.DiagramContent.Diagram.AddDiagramElementsAsync(NodeCollection);
 
-        await this.Parent.DiagramContent.Diagram.DoLayout();
+        await this.Parent.DiagramContent.Diagram.DoLayoutAsync();
         StateHasChanged();
         this.Parent.StateChanged();
         IsUploderFirstTime = false;
@@ -1935,8 +1935,8 @@
             nodeBases.Add(connector);
         }
         
-        await Diagram.AddDiagramElements(nodeBases);
-        await Diagram.DoLayout();
+        await Diagram.AddDiagramElementsAsync(nodeBases);
+        await Diagram.DoLayoutAsync();
         nodess.Clear();
         connectors.Clear();
     }
@@ -1948,7 +1948,7 @@
         else
         {
             diagram.Redo();
-            await diagram.DoLayout();
+            await diagram.DoLayoutAsync();
         }
         if (diagram.SelectionSettings.Nodes.Count == 0)
         {
@@ -1983,8 +1983,8 @@
         patternValue = "vertical-alternate";
         subTreeOrientation = Syncfusion.Blazor.Diagram.Orientation.Vertical;
         subTreeAlignment = SubTreeAlignmentType.Alternate;
-        await Diagram.EndUpdate();
-        await Diagram.DoLayout();
+        await Diagram.EndUpdateAsync();
+        await Diagram.DoLayoutAsync();
     }
     public async Task OrgChartPattern2Change()
     {
@@ -1993,8 +1993,8 @@
         patternValue = "vertical-left";
         subTreeOrientation = Syncfusion.Blazor.Diagram.Orientation.Vertical;
         subTreeAlignment = SubTreeAlignmentType.Left;
-        await Diagram.EndUpdate();
-        await Diagram.DoLayout();
+        await Diagram.EndUpdateAsync();
+        await Diagram.DoLayoutAsync();
     }
     public async Task OrgChartPattern3Change()
     {
@@ -2003,8 +2003,8 @@
         patternValue = "vertical-right";
         subTreeOrientation = Syncfusion.Blazor.Diagram.Orientation.Vertical;
         subTreeAlignment = SubTreeAlignmentType.Right;
-        await Diagram.EndUpdate();
-        await Diagram.DoLayout();
+        await Diagram.EndUpdateAsync();
+        await Diagram.DoLayoutAsync();
     }
     public async Task OrgChartPattern4Change()
     {
@@ -2013,8 +2013,8 @@
         patternValue = "horizontal-center";
         subTreeOrientation = Syncfusion.Blazor.Diagram.Orientation.Horizontal;
         subTreeAlignment = SubTreeAlignmentType.Center;
-        await Diagram.EndUpdate();
-        await Diagram.DoLayout();
+        await Diagram.EndUpdateAsync();
+        await Diagram.DoLayoutAsync();
     }
     public async Task OrgChartPattern5Change()
     {
@@ -2023,8 +2023,8 @@
         patternValue = "horizontal-right"; 
         subTreeOrientation = Syncfusion.Blazor.Diagram.Orientation.Horizontal;
         subTreeAlignment = SubTreeAlignmentType.Right;
-        await Diagram.EndUpdate();
-        await Diagram.DoLayout();
+        await Diagram.EndUpdateAsync();
+        await Diagram.DoLayoutAsync();
     }
     public async Task OrgChartPattern6Change()
     {
@@ -2033,8 +2033,8 @@
         patternValue = "horizontal-left";
         subTreeOrientation = Syncfusion.Blazor.Diagram.Orientation.Horizontal;
         subTreeAlignment = SubTreeAlignmentType.Left;
-        await Diagram.EndUpdate();
-        await Diagram.DoLayout();
+        await Diagram.EndUpdateAsync();
+        await Diagram.DoLayoutAsync();
     }
     public async Task changeChildParent()
     {
@@ -2056,7 +2056,7 @@
             diagram.Select(new ObservableCollection<IDiagramObject>() { node });
 
         }
-        await diagram.DoLayout();
+        await diagram.DoLayoutAsync();
     }
     public void AddRightChild()
     {
@@ -2394,13 +2394,13 @@
             UpdateAnnotationStyle(node);
              UpdateAnnotationPosition(node);
             connector.Constraints = ConnectorConstraints.PointerEvents | ConnectorConstraints.Select | ConnectorConstraints.Delete;           
-            await diagram.AddDiagramElements(new DiagramObjectCollection<NodeBase>() { node, connector });
+            await diagram.AddDiagramElementsAsync(new DiagramObjectCollection<NodeBase>() { node, connector });
        
             var node1 = GetNode(diagram.Nodes,node.ID);
             diagram.EndGroupAction();
-            await diagram.DoLayout();
+            await diagram.DoLayoutAsync();
             diagram.Select(new ObservableCollection<IDiagramObject>() { node1 });
-                  await diagram.EndUpdate();
+                  await diagram.EndUpdateAsync();
             IsAddNode = false;
         }
 
@@ -2414,9 +2414,9 @@
             diagram.BeginUpdate();
             diagram.StartGroupAction();
             RemoveSubChild(diagram.SelectionSettings.Nodes[0], diagram);
-            await diagram.DoLayout();
+            await diagram.DoLayoutAsync();
             diagram.EndGroupAction();
-            await diagram.EndUpdate();
+            await diagram.EndUpdateAsync();
         }
     }
 
