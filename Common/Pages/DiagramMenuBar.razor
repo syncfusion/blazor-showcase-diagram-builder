@@ -443,7 +443,7 @@
                 {
                     diagram.EndGroupAction();
                 }
-                diagram.EndUpdateAsync();
+                diagram.EndUpdate();
                 break;
             case "duplicate":
                 Edit = true;
@@ -598,7 +598,7 @@
                 view = true;
                 diagram.BeginUpdate();
                 Parent.DiagramContent.SnapConstraint = Parent.DiagramContent.SnapConstraint ^ SnapConstraints.ShowLines;
-                diagram.EndUpdateAsync();
+                diagram.EndUpdate();
                 ViewMenuItems[5].IconCss = ViewMenuItems[5].IconCss == "sf-icon-blank" ? "sf-icon-Selection" : "sf-icon-blank";
                 break;
             case "snaptogrid":
@@ -785,7 +785,7 @@
             await Task.Delay(100);
             string json = await FileUtil.LoadFile(jsRuntime, args.FileData);
             json = json.Replace(System.Environment.NewLine, string.Empty);
-            await Parent.DiagramContent.Diagram.LoadDiagramAsync(json.ToString());
+            await Parent.DiagramContent.Diagram.LoadDiagram(json.ToString());
             Parent.DiagramContent.DiagramSpinnerObj.Hide();
         }
         else
@@ -794,7 +794,7 @@
             Node Node = Diagram.SelectionSettings.Nodes[0];
             Diagram.BeginUpdate();
             Node.Shape = new ImageShape() { Type = NodeShapes.Image, Source = args.FileData.RawFile.ToString() };
-            Diagram.EndUpdateAsync();
+            Diagram.EndUpdate();
         }
     }
 
