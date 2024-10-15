@@ -118,7 +118,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Syncfusion.Blazor" Version="26.1.35" />
+    <PackageReference Include="Syncfusion.Blazor" Version="*" />
   </ItemGroup>
 
   <ItemGroup>

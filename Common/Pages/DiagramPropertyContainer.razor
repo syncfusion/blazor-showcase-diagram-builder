@@ -1335,7 +1335,7 @@
                     }
                 }
             }
-            Diagram.EndUpdateAsync();
+            Diagram.EndUpdate();
             Diagram.EndGroupAction();
         }
     }
@@ -1463,7 +1463,7 @@
             ValueLink = value;
         else if(id == "hyperlinkText")
             ValueText = value;
-        Diagram.EndUpdateAsync();
+        Diagram.EndUpdate();
     }
     public string getHyperLinkValueFromDocument(string id, string attribute)
     {
@@ -1475,7 +1475,7 @@
             return ValueText;
         else
             return "";
-        Diagram.EndUpdateAsync();
+        Diagram.EndUpdate();
     }
     private async Task ToolbarInsertClick(Syncfusion.Blazor.Navigations.ClickEventArgs args)
     {
@@ -1641,7 +1641,7 @@
                         break;
                 }
             }
-            Diagram.EndUpdateAsync();
+            Diagram.EndUpdate();
 
         }
     }
@@ -1680,7 +1680,7 @@
                             ContentStyle.Opacity = Double.Parse(Value);
                             break;
                     }
-                    Parent.DiagramContent.Diagram.EndUpdateAsync();
+                    Parent.DiagramContent.Diagram.EndUpdate();
                 }
             }
         }
@@ -1787,7 +1787,7 @@
                 Style.TextAlign = TextAlign.Right;
                 break;
         }
-        Parent.DiagramContent.Diagram.EndUpdateAsync();
+        Parent.DiagramContent.Diagram.EndUpdate();
     }
 
     private void OnTextSubAlignmentClick(Syncfusion.Blazor.Navigations.ClickEventArgs args)
@@ -2437,7 +2437,7 @@
                     break;
             }
         }
-        await Diagram.EndUpdateAsync();
+        await Diagram.EndUpdate();
     }
 
     public PaperSize GetPaperSize(string paperName) {
