@@ -1,4 +1,4 @@
-# Essential Studio for Blazor - Diagram Builder
+# Essential Studio&reg; for Blazor - Diagram Builder
 
 The Blazor diagram builder application is used to create diagrams such as FlowChart and MindMap diagrams. In the diagram builder application, all support diagrams, such as Print, Export, and Drawing Tool support, are available in the Diagram Builder application. You can interact with the diagram or create your own using shapes.
 
