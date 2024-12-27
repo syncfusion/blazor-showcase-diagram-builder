@@ -575,8 +575,8 @@
             connectors.Clear();
             Diagram.ClearSelection();
             Parent.MenuBar.CreditCardProcessing();
-            await Diagram.AddDiagramElements(flowNodes);
-            await Diagram.AddDiagramElements(flowConnectors);
+            await Diagram.AddDiagramElementsAsync(flowNodes);
+            await Diagram.AddDiagramElementsAsync(flowConnectors);
         }
 
 
@@ -610,7 +610,7 @@
                 Parent.DiagramContent.Diagram.StartGroupAction();
                 Parent.MindMapPropertyPanel.Drop(args);
                 Parent.DiagramContent.Diagram.EndGroupAction();
-                _= Parent.DiagramContent.Diagram.EndUpdate();
+                _= Parent.DiagramContent.Diagram.EndUpdateAsync();
             }
         }
 
@@ -839,7 +839,7 @@
         }
         public void LoadNewDiagram(string Json)
         {
-            _= Diagram.LoadDiagram(Json);
+            _= Diagram.LoadDiagramAsync(Json);
         }
 
         public class PageOptionElement
@@ -854,7 +854,7 @@
             this.DiagramSpinnerObj.Show();
             ActivePage.Diagram = Diagram.SaveDiagram();
             ActivePage.PageSwitch = false;
-            await Diagram.LoadDiagram(page.Diagram.ToString());
+            await Diagram.LoadDiagramAsync(page.Diagram.ToString());
             this.DiagramSpinnerObj.Hide();
             page.PageSwitch = true;
             if(ActivePage != page)
@@ -909,7 +909,7 @@
                 HorizontalSpacing = value;
             else if (type == "Vertical")
                 VerticalSpacing = value;
-            await diagram.EndUpdate();
+            await diagram.EndUpdateAsync();
         }
 
         public async Task UpdateAlignment(string alignment)
@@ -937,7 +937,7 @@
                     verticalAlignment = VerticalAlignment.Bottom;
                     break;
             }
-            await diagram.EndUpdate();
+            await diagram.EndUpdateAsync();
         }
 
         public void AddNodes(ObservableCollection<Node> Nodes)
@@ -947,7 +947,7 @@
             {
                 NodesCollection.Add(Nodes[i]);
             }
-            Diagram.EndUpdate();
+            Diagram.EndUpdateAsync();
         }
 
         public void AddConnectors(ObservableCollection<Connector> Connectors)
@@ -957,7 +957,7 @@
             {
                 ConnectorCollection.Add(Connectors[i]);
             }
-            Diagram.EndUpdate();
+            Diagram.EndUpdateAsync();
         }
         public void Dispose()
         {

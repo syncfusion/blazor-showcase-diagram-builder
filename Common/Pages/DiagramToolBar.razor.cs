@@ -589,11 +589,11 @@ namespace DiagramBuilder
                         Parent.DiagramContent.Diagram.BeginUpdate();
                         Parent.DiagramContent.Diagram.Width = dataObj.Width + "px";
                         Parent.DiagramContent.Diagram.Height = dataObj.Height + "px";
-                        Parent.DiagramContent.Diagram.EndUpdate();
+                        Parent.DiagramContent.Diagram.EndUpdateAsync();
                     }
 
                 }
-                await Parent.DiagramContent.Diagram.DoLayout();
+                await Parent.DiagramContent.Diagram.DoLayoutAsync();
             }
             Parent.MenuBar.StateChanged();
         }
