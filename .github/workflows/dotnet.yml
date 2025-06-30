@@ -28,5 +28,3 @@ jobs:
       run: dotnet build ./Server-side/DiagramBuilder.csproj
     - name: Build Wasm
       run: dotnet build ./wasm-side/DiagramBuilder/DiagramBuilder.csproj
-    - name: Build MAUI
-      run: dotnet build ./MAUI/DiagramBuilderMAUI/DiagramBuilderMAUI.csproj
