@@ -1,3 +1,5 @@
+[![.NET](https://github.com/syncfusion/blazor-showcase-diagram-builder/actions/workflows/dotnet.yml/badge.svg)](https://github.com/syncfusion/blazor-showcase-diagram-builder/actions/workflows/dotnet.yml)
+
 # Essential Studio&reg; for Blazor - Diagram Builder
 
 The Blazor diagram builder application is used to create diagrams such as FlowChart and MindMap diagrams. In the diagram builder application, all support diagrams, such as Print, Export, and Drawing Tool support, are available in the Diagram Builder application. You can interact with the diagram or create your own using shapes.
