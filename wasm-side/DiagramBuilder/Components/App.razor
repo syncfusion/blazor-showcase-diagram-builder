@@ -1,20 +1,52 @@
 ﻿@page "/"
+@inject NavigationManager Urihelper
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="description" content="An interactive diagram builder built with Blazor, enabling users to create and customize diagrams such as flowcharts, mind maps, and organizational charts with ease.">
+      <meta name="description" content="An interactive diagram builder built with Blazor, enabling users to create and customize diagrams such as flowcharts, mind maps, and organizational charts with ease.">
     <title>Create flowchart, mind map with syncfusion diagram builder</title>
     <base href="/" />
+    <link href=@Urihelper.Uri rel="canonical" />
+    <!-- Google Tag Manager -->
+    <!-- Load GTM-P3WXFWCW immediately on page load  -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-P3WXFWCW');
+    </script>
+    <!-- Load GTM-W8WD8WN on user interaction -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const events = ["mousemove", "scroll", "keydown", "touchstart"];
+            function loadGTM() {
+                events.forEach(event => document.removeEventListener(event, loadGTM));
+                (function (w, d, s, l, i) {
+                    w[l] = w[l] || []; w[l].push({
+                        'gtm.start':
+                            new Date().getTime(), event: 'gtm.js'
+                    }); var f = d.getElementsByTagName(s)[0],
+                        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                            'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+                })(window, document, 'script', 'dataLayer', 'GTM-W8WD8WN');
+            }
+            events.forEach(event => document.addEventListener(event, loadGTM, { once: true }));
+        });
+    </script>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-    <script src="_content/BlazorWasmCommon_NET8/interop.js"></script>
     <link href="_content/Syncfusion.Blazor/styles/material.css" rel="stylesheet" />
-    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <link href="assets/db-icons1/style.css" rel="stylesheet" />
     <link href="assets/dbstyle/diagrambuilder.css" rel="stylesheet" />
+    <script src="_content/BlazorWasmCommon_NET8/interop.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <script src="_content/Syncfusion.Blazor/scripts/syncfusion-blazor.min.js" type="text/javascript"></script>
     <!--<script src="https://cdn.syncfusion.com/blazor/20.4.38/syncfusion-blazor.min.js" type="text/javascript"></script>-->
     <HeadOutlet @rendermode="@InteractiveWebAssembly" />
@@ -22,6 +54,16 @@
 
 <body>
     <Routes @rendermode="@InteractiveWebAssembly" />
+    <!-- Google Tag Manager (noscript) -->
+    <!--Page Load-->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P3WXFWCW" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!--Interaction-->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W8WD8WN" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <div id="app">Loading...</div>
 
     <div id="blazor-error-ui">

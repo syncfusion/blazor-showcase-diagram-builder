@@ -84,8 +84,8 @@ html, body {
 /* Main Content Customization */
 
 .row {
-    margin-left: 0px;
-    margin-right: 0px;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
 }
 
 .sidebar {
@@ -613,19 +613,19 @@ html, body {
 }
 
 .db-col-left {
-    padding-left: 0px;
-    padding-right: 3px;
+    padding-left: 0px !important;
+    padding-right: 3px !important;
 }
 
 .db-col-center {
-    padding-left: 0px;
-    padding-right: 0px;
-    margin-right: 0px;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    margin-right: 0px !important;
 }
 
 .db-col-right {
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
 }
 
 .db-prop-separator {

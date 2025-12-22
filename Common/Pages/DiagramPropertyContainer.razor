@@ -268,15 +268,15 @@
                     </div>
                 </div>
                 <div class="row db-prop-row">
-                    <div class="col-xs-2 db-col-right db-prop-text-style" style="margin-right: 15px;padding-top: 6px">
+                    <div class="col-xs-2 db-col-right db-prop-text-style" style="margin-right: 15px ;padding-top: 6px">
                         <span class="db-prop-text-style">Opacity</span>
                     </div>
-                    <div class="col-xs-8 db-col-left" style="padding-right:10px">
+                    <div class="col-xs-8 db-col-left" style="padding-right:10px !important">
                         <SfSlider @ref="SfSlide" ID="nodeOpacitySlider" Type="SliderType.MinRange" @bind-Value="@NodeOpacity" Min="0" Max="100" Step="10">
                             <SliderEvents TValue="double" OnChange="@(e => { OnNodeOpacityChange(e.Value); })" ></SliderEvents>
                         </SfSlider>
                     </div>
-                    <div class="col-xs-2 db-col-right" style="margin-left: -15px;padding-left: 8px">
+                    <div class="col-xs-2 db-col-right" style="margin-left: -15px;padding-left: 8px !important">
                         <input id="nodeOpacitySliderText" type="text" value="@NodeOpacity" readOnly="readonly" class="db-readonly-input" />
                     </div>
                 </div>
@@ -399,12 +399,12 @@
             <div class="col-xs-2 db-col-right db-prop-text-style" style="margin-right: 15px;padding-top: 6px">
                 <span class="db-prop-text-style">Opacity</span>
             </div>
-            <div class="col-xs-8 db-col-left" style="padding-right:10px">
+            <div class="col-xs-8 db-col-left" style="padding-right:10px !important">
                 <SfSlider @ref="SfSlide1" ID="connectorOpacitySlider" Type="SliderType.MinRange" @bind-Value="@ConnectorOpacity" Min="0" Max="100" Step="10">
                     <SliderEvents TValue="double" OnChange="@(e => { OnConnectorOpacityChange(e.Value); })"></SliderEvents>
                 </SfSlider>
             </div>
-            <div class="col-xs-2 db-col-right" style="margin-left: -15px;padding-left: 8px">
+            <div class="col-xs-2 db-col-right" style="margin-left: -15px;padding-left: 8px !important">
                 <input type="text" id="connectorOpacitySliderText" value="@ConnectorOpacity" readonly="readonly" class="db-readonly-input" />
             </div>
         </div>
@@ -478,12 +478,12 @@
             <div class="col-xs-2 db-col-right db-prop-text-style" style="margin-right: 15px;padding-top: 6px">
                 <span class="db-prop-text-style">Opacity</span>
             </div>
-            <div class="col-xs-8 db-col-left" style="padding-right:10px">
+            <div class="col-xs-8 db-col-left" style="padding-right:10px !important">
                 <SfSlider ID="textOpacitySlider" Type="SliderType.MinRange" Value="@TextOpacity" Min="0" Max="100" Step="10">
                     <SliderEvents TValue="double" OnChange="@(e => { OnTextOpacityChange(e.Value); })"></SliderEvents>
                 </SfSlider>
             </div>
-            <div class="col-xs-2 db-col-right" style="margin-left: -15px;padding-left: 8px">
+            <div class="col-xs-2 db-col-right" style="margin-left: -15px;padding-left: 8px !important">
                 <input id='textOpacityText' type="text" value="@TextOpacity" class="db-readonly-input" readOnly="readonly" />
             </div>
         </div>
@@ -727,7 +727,7 @@
     public string NodeFillColor { get; set; }
     public bool IsGradient { get; set; }
     public string NodeGradientColor { get; set; }
-    public string NodeGradientDirection { get; set; } = "";
+    public string NodeGradientDirection { get; set; } = "BottomToTop";
     public int NodeGradientDircIndex { get; set; } = 0;
     public string NodeStrokeColor { get; set; }
     public string NodeStrokeDashArray { get; set; } = "1,2";
