@@ -5,7 +5,7 @@ VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiagramBuilder", "DiagramBuilder.csproj", "{38A762A3-7ED8-49C6-88F5-4D5A80406682}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorServerCommon_NET8", "..\Common\BlazorServerCommon_NET8.csproj", "{A422DBEC-21D9-4597-B973-D0B311338090}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorServerCommon_NET10", "..\Common\BlazorServerCommon_NET10.csproj", "{A422DBEC-21D9-4597-B973-D0B311338090}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

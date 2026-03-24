@@ -102,7 +102,7 @@
         public string DiagramContainerClassName = "db-current-diagram-container";
         public IDiagramObject DiagramDrawingObject;
         public DiagramInteractions DiagramTool = DiagramInteractions.Default;
-        public ScrollLimitMode scrollLimit { get; set; } = ScrollLimitMode.Infinity;
+        public ScrollLimitMode scrollLimit { get; set; } = ScrollLimitMode.Diagram;
         public double CurrentZoom { get; set; } = 1;
         public double minZoom { get; set; } = 0.25;
         public double maxZoom { get; set; } = 30;

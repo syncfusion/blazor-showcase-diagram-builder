@@ -10,7 +10,7 @@
 
 <div class="db-header-container">
     <div class='@menuClass'>
-        <h1 id='diagramName' style="width: 250px; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" class="db-diagram-name"
+        <h1 id='diagramName' style="width: 250px; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" class="db-diagram-name"
               @onclick="@renameDiagram">@diagramName</h1>
         <input id='diagramEditable' @ref="input" type="text" class="db-diagram-name" @onkeydown="@diagramNameKeyDown" @onfocusout="@diagramNameChange"  @bind-value="@value"/>
         <span id='diagramreport' class="db-diagram-name db-save-text"></span>
@@ -74,6 +74,16 @@
         <DiagramSaveDialog @ref="@SaveDialogBox"></DiagramSaveDialog>
         <DiagramExportDialog @ref="@ExportDialogBox"></DiagramExportDialog>
         <DiagramPrintDialog @ref="@PrintDialogBox"></DiagramPrintDialog>
+        <div class="promotion-text e-control">
+            <img src="syncfusion_logo.svg" style="margin-right:7px; filter: brightness(0) invert(1)"
+                 alt="Syncfusion Logo" />
+            Powered by&nbsp;
+            <a href="https://www.syncfusion.com/blazor-components/blazor-diagram?tag=es-freetools-diagram-builder-sample-ft"
+               target="_blank"
+               style="text-decoration:none; color:#fff30f;">
+                Syncfusion Diagram Component
+            </a>
+        </div>
     </div>
 </div>
 

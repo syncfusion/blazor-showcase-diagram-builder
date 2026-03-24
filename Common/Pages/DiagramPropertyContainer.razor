@@ -1250,7 +1250,7 @@
         DiagramSelectionSettings SelectedItems = Diagram.SelectionSettings;
         for (int i = 0; i < SelectedItems.Nodes.Count; i++)
         {
-            NodesCollection.Add(Diagram.GetObject(SelectedItems.Nodes[i].ID) as Node);
+            NodesCollection.Add(SelectedItems.Nodes[i] as Node);
         }
         return NodesCollection;
     }
