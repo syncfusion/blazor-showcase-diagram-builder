@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -11,7 +12,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-	<DefineConstants>$(DefineConstants)TRACE;SERVER</DefineConstants>
+	<DefineConstants>$(DefineConstants)TRACE;SERVER;Release</DefineConstants>
   </PropertyGroup>
 	
   <ItemGroup>
@@ -22,7 +23,7 @@
   </ItemGroup>
 	
   <ItemGroup>
-    <ProjectReference Include="..\Common\BlazorServerCommon_NET8.csproj" />
+    <ProjectReference Include="..\Common\BlazorServerCommon_NET10.csproj" />
   </ItemGroup>
 
 </Project>

@@ -8,7 +8,7 @@ The Blazor diagram builder application is used to create diagrams such as FlowCh
 
 * [System requirements](https://blazor.syncfusion.com/documentation/system-requirements/)
 
-* [NET 8 WebAssembly Workload](https://learn.microsoft.com/en-us/aspnet/core/blazor/webassembly-build-tools-and-aot?view=aspnetcore-8.0#net-webassembly-build-tools)
+* [NET 10 WebAssembly Workload](https://learn.microsoft.com/en-us/aspnet/core/blazor/webassembly-build-tools-and-aot?view=aspnetcore-10.0#net-webassembly-build-tools)
 
 #### accelerate Android emulators on Windows with Hyper-V:
 
@@ -35,12 +35,12 @@ Clone the repository. This repository contains Blazor Diagram Builder Server app
 * Open the command prompt from the demo's directory.
 * Run the demo using the following command.
    
-   To run .NET 8 Diagram Builder Server project
+   To run .NET 10 Diagram Builder Server project
    > `dotnet run --project Server-side/DiagramBuilder.csproj`
 
-   To run .NET 8 Diagram Builder WASM project
+   To run .NET 10 Diagram Builder WASM project
    > `dotnet run --project wasm-side/DiagramBuilder.sln`
-* To run Diagram Builder Maui Demos,  Open the `DiagramBuilderMAUI.sln` from 'MAUI' folder via visual studio 2022.
+* To run Diagram Builder Maui Demos,  Open the `DiagramBuilderMAUI.sln` from 'MAUI' folder via visual studio 2026.
 
  - In Visual Studio, select the target platform by expanding the dropdown menu at the top toolbar. 
 

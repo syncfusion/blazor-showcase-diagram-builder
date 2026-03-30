@@ -9,7 +9,22 @@ html, body {
     font-family: "Roboto","GeezaPro","DejaVu Serif";
     letter-spacing: 0.3px;
 }
-
+#diagrambuilder-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+/* Content area should fill remaining space between header and footer */
+.row.content {
+    flex: 1 1 auto;
+    position: relative;
+}
+/* Ensure editor panes fill available height inside flex container */
+#diagrambuilder-container .sidebar,
+#diagrambuilder-container .main-content {
+    top: 0;
+    height: 100%;
+}
 #DiagramTooltip {
     width: 100% !important;
     height: 100% !important;
@@ -54,6 +69,9 @@ html, body {
 
 .db-menu-container {
     padding: 2px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .db-toolbar-editor {
@@ -848,6 +866,8 @@ html, body {
 .e-upload .e-upload-files .e-upload-file-list,
 .e-upload .e-upload-files {
     border: none;
+    width: auto;
+    display: none;
 }
 /*
 .e-file-select-wrap {
@@ -1347,3 +1367,190 @@ td {
 }
     /* Some animation occur while click the dropdown value End */
     /* Some animation occur while click the dropdown value End */
+/* Animation At Initial Rendering End */
+.promotion-text {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 1.5rem;
+    margin-left: auto;
+    color: white;
+}
+/* Footer styles scoped to the sample root */
+.footer {
+    position: static;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(90.4deg, #154db9 0.03%, #081b3f 11.56%, #081b3f 85.56%, #154db9 99.97%);
+    border-top: 1px solid #D8DEE9;
+    padding: 12px;
+    height: 72px;
+    font-family: sans-serif;
+    ;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+.diagram-icon {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+    width: 38px;
+    height: 38px;
+}
+
+.footer-logo {
+    width: 38px;
+    height: 38px;
+}
+
+.footer-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.title span {
+    font-weight: 400;
+    font-size: 16px;
+    color: #e1e3e7;
+}
+
+    .title span .main-title {
+        font-weight: 700;
+        font-size: 16px;
+        color: #ffffff;
+    }
+
+.buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+    .buttons .e-trial-btn::before {
+        content: 'Start Free Trial';
+    }
+
+ .e-trial-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #FFF30F;
+    color: #0F172A;
+    border: transparent;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-weight: 700;
+}
+
+.e-demo-btn {
+    display: flex;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    align-items: center;
+    background-color: transparent;
+    border: transparent;
+    color: white;
+    border-radius: 6px;
+    gap: 10px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: .7px;
+    height: 40px;
+    box-shadow: none;
+    text-transform: none;
+    text-decoration: none;
+    transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+    .e-demo-btn:hover {
+        background-color: #173D87;
+        text-decoration: none;
+        color: white;
+    }
+
+.e-trial-btn::after {
+    content: "\e7f9";
+    font-family: 'e-icons';
+}
+
+.e-trial-btn:hover {
+    background: #F1E50B;
+    text-decoration: none;
+    color: #0F172A;
+}
+
+.e-trial-btn:focus {
+    background: #F1E50B;
+    color: #0F172A;
+}
+/* Responsive handling for footer */
+@media screen and (max-width: 1140px), screen and (max-device-width: 1140px) {
+    .title {
+        display: flex;
+        flex-direction: column;
+    }
+    .footer-content .title span, .footer-content .title span .main-title {
+        font-size: 14px;
+    }
+}
+/* Hide extra footer text on smaller screens */
+@media screen and (max-width: 900px), screen and (max-device-width: 900px) {
+    .e-ribbon .help-pane-content,
+    .title span:last-child {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 730px) {
+    .buttons .e-demo-btn {
+        display: none;
+    }
+
+    .buttons .e-trial-btn::before {
+        content: 'Free Trial';
+    }
+
+    .buttons .e-trial-btn::after {
+        display: none;
+    }
+}
+/* Hide Request Demo button on small screens + increase footer size */
+@media screen and (max-device-width: 730px) {
+    .footer {
+        height: 90px; /* Increased footer height */
+    }
+
+    .buttons .e-demo-btn {
+        display: none;
+    }
+
+    .buttons .e-trial-btn::before {
+        content: 'Free Trial';
+    }
+
+    .buttons .e-trial-btn::after {
+        display: none;
+    }
+
+    .title span,
+    .title span .main-title {
+        font-size: 26px; /* Bigger font for mobile */
+    }
+}
+/* Hide the promotion text */
+@media screen and (max-width: 620px), screen and (max-device-width: 620px) {
+    .promotion-text {
+        display: none;
+    }
+}
