@@ -19,7 +19,7 @@
     <None Include="Shared\SpinnerComponent.razor" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Syncfusion.Blazor" Version="34.1.29" />
+    <PackageReference Include="Syncfusion.Blazor" Version="33.1.44" />
   </ItemGroup>
   
   
