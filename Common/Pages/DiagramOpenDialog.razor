@@ -296,6 +296,10 @@
 
         }
         await Parent.DiagramContent.Diagram.DoLayoutAsync();
+        Parent.DiagramContent.Diagram.ClearHistory();
+        Parent.DiagramContent.IsUndo = false;
+        Parent.DiagramContent.IsRedo = false;
+        await Parent.Toolbar.EnableToolbarItems(new object() { }, "historychange");
     }
     public async Task BlankOrgChartDiagram()
     {

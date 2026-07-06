@@ -577,6 +577,10 @@
             Parent.MenuBar.CreditCardProcessing();
             await Diagram.AddDiagramElementsAsync(flowNodes);
             await Diagram.AddDiagramElementsAsync(flowConnectors);
+            Diagram.ClearHistory();
+            IsUndo = false;
+            IsRedo = false;
+            await Parent.Toolbar.EnableToolbarItems(new object() { }, "historychange");
         }
 
 

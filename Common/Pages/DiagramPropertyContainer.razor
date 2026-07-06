@@ -7,7 +7,6 @@
 @using Syncfusion.Blazor.Popups
 @using System.Collections.ObjectModel
 @using Syncfusion.Blazor.SplitButtons
-@using Newtonsoft.Json.Linq
 @using System.Drawing
 @inject IJSRuntime js
 
@@ -43,7 +42,7 @@
                     <div class="db-text">
                         <span>W</span>
                     </div>
-                    <div class="db-text-input">
+                    <div >
                         <SfNumericTextBox Value="@PageWidth" ID="pageWidth" ValidateDecimalOnType="true" Decimals=0 Format="n0">
                             <NumericTextBoxEvents TValue="double" ValueChange="@OnPageWidthChange"></NumericTextBoxEvents>
                         </SfNumericTextBox>
@@ -55,7 +54,7 @@
                     <div class="db-text">
                         <span>H</span>
                     </div>
-                    <div class="db-text-input">
+                    <div >
                         <SfNumericTextBox Value="@PageHeight" ID="pageHeight" ValidateDecimalOnType="true" Decimals=0 Format="n0">
                             <NumericTextBoxEvents TValue="double" ValueChange="@OnPageHeightChange"></NumericTextBoxEvents>
                         </SfNumericTextBox>
@@ -110,7 +109,7 @@
                         <div class="db-text">
                             <span>X</span>
                         </div>
-                        <div class="db-text-input">
+                        <div >
                             <SfNumericTextBox Value="@NodeOffsetX" ID="nodeOffsetX" ValidateDecimalOnType="true" Decimals=0 Format="n0">
                                 <NumericTextBoxEvents TValue="double" ValueChange="@OnNodeOffsetXChange"></NumericTextBoxEvents>
                             </SfNumericTextBox>
@@ -122,7 +121,7 @@
                         <div class="db-text">
                             <span>Y</span>
                         </div>
-                        <div class="db-text-input">
+                        <div>
                             <SfNumericTextBox Value="@NodeOffsetY" ID="nodeOffsetY" ValidateDecimalOnType="true" Decimals=0 Format="n0">
                                 <NumericTextBoxEvents TValue="double" ValueChange="@OnNodeOffsetYChange"></NumericTextBoxEvents>
                             </SfNumericTextBox>
@@ -136,7 +135,7 @@
                         <div class="db-text">
                             <span>W</span>
                         </div>
-                        <div class="db-text-input">
+                        <div>
                             <SfNumericTextBox Value="@NodeWidth" ID="nodeWidth" Min="1" ValidateDecimalOnType="true" Decimals=0 Format="n0">
                                 <NumericTextBoxEvents TValue="double" ValueChange="@OnNodeWidthChange"></NumericTextBoxEvents>
                             </SfNumericTextBox>
@@ -148,7 +147,7 @@
                         <div class="db-text">
                             <span>H</span>
                         </div>
-                        <div class="db-text-input">
+                        <div>
                             <SfNumericTextBox Value="@NodeHeight" ID="nodeHeight" Min="1" ValidateDecimalOnType="true" Decimals=0 Format="n0">
                                 <NumericTextBoxEvents TValue="double" ValueChange="@OnNodeHeightChange"></NumericTextBoxEvents>
                             </SfNumericTextBox>
@@ -167,7 +166,7 @@
                         <div class="db-text">
                             <SfButton ID="rotateIconBtn" IconCss="sf-icon-Rotate1 tb-icons"></SfButton>
                         </div>
-                        <div class="db-text-input">
+                        <div>
                             <SfNumericTextBox ID="nodeRotateAngle" Format="n0" ValidateDecimalOnType="true" Decimals=0 @bind-Value="@NodeRotateAngle">
                                 <NumericTextBoxEvents TValue="double" ValueChange="@OnNodeRotateAngleChange"></NumericTextBoxEvents>
                             </SfNumericTextBox>
@@ -238,7 +237,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-6 db-col-left" style="width:90px;margin-top:1px">
+                    <div class="col-xs-6 db-col-left" style="width:70px">
                         <SfDropDownList TValue="string" TItem="BorderStylesFields" PopupWidth="160px" Index="@NodeStrokeStyle" DataSource="@BorderStyles">
                             <DropDownListTemplates TItem="BorderStylesFields">
                                 <ItemTemplate>
@@ -256,12 +255,10 @@
                             <DropDownListEvents TValue="string" TItem="BorderStylesFields" ValueChange="@OnStrokeDashArrayChange"></DropDownListEvents>
                         </SfDropDownList>
                     </div>
-                    <div class="col-xs-2 db-col-center" style="margin-top:4px">
-                        <div style="width:50px;margin-left:8px">
-                        <SfColorPicker ID="nodeStrokeColor" Mode="ColorPickerMode.Palette" Value="@NodeStrokeColor" ValueChange="@OnStrokeColorChange"></SfColorPicker>
-                        </div>
+                    <div class="col-xs-2 db-col-center" style="width:30px">
+                        <SfColorPicker ID="nodeStrokeColor" Mode="ColorPickerMode.Palette" Value="@NodeStrokeColor" ValueChange="@OnStrokeColorChange" ShowButtons="false"></SfColorPicker>
                     </div>
-                    <div class="col-xs-4 db-col-center" style="width:70px;margin-left: 25px">
+                    <div class="col-xs-4 db-col-right" style="width:95px;margin-left: 37px">
                         <SfNumericTextBox ID="nodeStrokeWidth" Min="0" Step="0.5" ValidateDecimalOnType="true" Decimals=2 Value="@NodeStrokeWidth">
                             <NumericTextBoxEvents TValue="double" ValueChange="@OnStrokeWidthChange"></NumericTextBoxEvents>
                         </SfNumericTextBox>
@@ -319,7 +316,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-8 db-col-left">
+            <div class="col-xs-6 db-col-left">
                  <SfDropDownList TValue="string" TItem="BorderStylesFields" PopupWidth="160px" Index="@ConnectorStrokeStyle" DataSource="@BorderStyles">
                     <DropDownListTemplates TItem="BorderStylesFields">
                         <ItemTemplate>
@@ -337,35 +334,35 @@
                     <DropDownListEvents TValue="string" TItem="BorderStylesFields" ValueChange="@OnStrokeDashArrayChange"></DropDownListEvents>
                  </SfDropDownList>
             </div>
-            <div class="col-xs-4 db-col-right">
+            <div class="col-xs-6 db-col-right">
                 <SfNumericTextBox ID="lineWidth" Min="0.5" Step="0.5" ValidateDecimalOnType="true" Decimals=2 Value="@ConnectorStrokeWidth">
                     <NumericTextBoxEvents TValue="double" ValueChange="@OnStrokeWidthChange"></NumericTextBoxEvents>
                 </SfNumericTextBox>
             </div>
         </div>
         <div class="row db-prop-row">
-            <div class="col-xs-8 db-col-left db-prop-text-style">
+            <div class="col-xs-6 db-col-left db-prop-text-style">
                 <span class="db-prop-text-style">Start Arrow</span>
             </div>
-            <div class="col-xs-4 db-col-right db-prop-text-style">
+            <div class="col-xs-6 db-col-right db-prop-text-style">
                 <span class="db-prop-text-style">Size</span>
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-8 db-col-left">
+            <div class="col-xs-6 db-col-left">
                 <SfDropDownList ID="sourceType" TValue="string" TItem="DecoratorListFields" PopupWidth="160px"  DataSource="@DecoratorList" @bind-Value="@ConnectorSrcShape">
                     <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
                     <DropDownListEvents TValue="string" TItem="DecoratorListFields" ValueChange="@OnConnectorSourceShapeChange"></DropDownListEvents>
                 </SfDropDownList>
             </div>
-            <div class="col-xs-4 db-col-right">
+            <div class="col-xs-6 db-col-right">
                 <SfNumericTextBox ID="sourceSize" Min="1" Step="1" ValidateDecimalOnType="true" Decimals=0 Value="@ConnectorSrcShapeSize">
                     <NumericTextBoxEvents TValue="double" ValueChange="@OnConnectorSourceShapeSizeChange"></NumericTextBoxEvents>
                 </SfNumericTextBox>
             </div>
         </div>
         <div class="row db-prop-row">
-            <div class="col-xs-8 db-col-left db-prop-text-style">
+            <div class="col-xs-6 db-col-left db-prop-text-style">
                 <span class="db-prop-text-style">End Arrow</span>
             </div>
             <div class="col-xs-4 db-col-right db-prop-text-style">
@@ -373,7 +370,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-8 db-col-left">
+            <div class="col-xs-6 db-col-left">
                 <SfDropDownList ID="targetType" TValue="string" TItem="DecoratorListFields" PopupWidth="160px"  DataSource="@DecoratorList" @bind-Value="@ConnectortarShape">
                     <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
                     <DropDownListEvents TValue="string" TItem="DecoratorListFields" ValueChange="@OnConnectorTargetShapeChange"></DropDownListEvents>
@@ -416,13 +413,13 @@
             Text
         </div>
         <div class="row db-prop-row">
-            <div class="col-xs-8 db-col-left">
+            <div class="col-xs-6 db-col-left">
                 <SfDropDownList ID="fontFamily" TValue="string" TItem="FontFamilyListFields" DataSource="@FontFamilyList" @bind-Value="@TextFontFamily">
                     <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
                     <DropDownListEvents TValue="string" TItem="FontFamilyListFields" ValueChange="@OnFontFamilyChange"></DropDownListEvents>
                 </SfDropDownList>
             </div>
-            <div class="col-xs-4 db-col-right">
+            <div class="col-xs-6 db-col-right">
                 <SfNumericTextBox ID="fontSizeTextProperties" Min="1" Step="1" ValidateDecimalOnType="true" Decimals=0 Value="@TextFontSize">
                     <NumericTextBoxEvents TValue="double" ValueChange="@OnTextFontSizeChanged"></NumericTextBoxEvents>
                 </SfNumericTextBox>
