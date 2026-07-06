@@ -23,7 +23,9 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Syncfusion.Blazor" Version="33.1.44" />
+    <PackageReference Include="Syncfusion.Blazor.Diagram" Version="34.1.29" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="34.1.29" />
+    <PackageReference Include="Syncfusion.PdfExport.Net.Core" Version="34.1.29" />
   </ItemGroup>
   
   

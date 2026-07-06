@@ -2,7 +2,6 @@
 using Microsoft.JSInterop;
 using System;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using Syncfusion.Blazor.Diagram;
